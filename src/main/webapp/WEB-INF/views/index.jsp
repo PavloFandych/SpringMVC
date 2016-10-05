@@ -41,6 +41,9 @@
             </div>
         </c:when>
     </c:choose>
+    <div align="right">
+        <c:out value="Created by Pavlo Fandych"/>
+    </div>
 </div>
 </body>
 </html>
