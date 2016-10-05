@@ -3,6 +3,7 @@ package org.total.spring.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,9 +30,7 @@ public class AuthController {
 
     @RequestMapping(value = "/authorization",
             method = RequestMethod.POST)
-    public String authorization(Model uiModel,
-                                @ModelAttribute("loginBean") LoginBean loginBean,
-                                HttpSession httpSession,
+    public String authorization(@ModelAttribute("loginBean") LoginBean loginBean,
                                 HttpServletRequest request) {
         try {
             LOGGER.debug("Status: REQ_ENTRY, auth begin\n");
@@ -48,7 +47,7 @@ public class AuthController {
 
                 if (user != null) {
                     LOGGER.debug("Status: REQ_SUCCESS, auth successful\n");
-                    httpSession.setAttribute("user", user);
+                    request.getSession().setAttribute("user", user);
                     return "/index";
                 } else {
                     if (userService.findByName(loginBean.getLogin()) != null) {
@@ -71,8 +70,8 @@ public class AuthController {
 
     @RequestMapping(value = "/logout",
             method = RequestMethod.GET)
-    public String logout(HttpSession httpSession) {
-        httpSession.invalidate();
+    public String logout(HttpServletRequest request) {
+        request.getSession().invalidate();
         return "/index";
     }
 

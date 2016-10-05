@@ -28,8 +28,7 @@ public class UserInfoController {
 
     @RequestMapping(value = "/userinfo",
             method = RequestMethod.GET)
-    public String userInfo(Model uiModel,
-                           HttpServletRequest request) {
+    public String userInfo(HttpServletRequest request) {
         List<User> users = null;
 
         try {

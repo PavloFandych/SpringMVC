@@ -32,9 +32,7 @@ public class RegisterController {
 
     @RequestMapping(value = "/registration",
             method = RequestMethod.POST)
-    public String registration(Model uiModel,
-                               @ModelAttribute("loginBean") LoginBean loginBean,
-                               HttpSession httpSession,
+    public String registration(@ModelAttribute("loginBean") LoginBean loginBean,
                                HttpServletRequest request) {
 
         try {
@@ -61,7 +59,7 @@ public class RegisterController {
                         userRoleService.assignRoleByUserNameAndRoleType(loginBean.getLogin(), RoleType.GUEST);
                         LOGGER.debug("Status: REQ_SUCCESS, role \"" + RoleType.GUEST + "\" to user " + loginBean.getLogin() + " assigned successful.\n");
 
-                        httpSession.setAttribute("user", userToRegister);
+                        request.getSession().setAttribute("user", userToRegister);
                         return "/index";
                     } catch (Exception e) {
                         LOGGER.error("Status: REQ_FAIL, Error while performing register.\n");

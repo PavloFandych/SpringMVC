@@ -61,6 +61,13 @@ public class AppConfig {
                 setProperty("hibernate.order_updates", "true");
                 setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
                 setProperty("hibernate.globally_quoted_identifiers", "false");
+                setProperty("hibernate.hbm2ddl.auto", "update");
+                setProperty("hibernate.c3p0.min_size", "10");
+                setProperty("hibernate.c3p0.max_size", "20");
+                setProperty("hibernate.c3p0.acquire_increment", "1");
+                setProperty("hibernate.c3p0.idle_test_period", "3000");
+                setProperty("hibernate.c3p0.max_statements", "50");
+                setProperty("hibernate.c3p0.timeout", "1800");
             }
         };
     }
