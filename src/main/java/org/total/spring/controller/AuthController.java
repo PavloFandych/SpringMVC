@@ -49,7 +49,7 @@ public class AuthController {
                 if (user != null) {
                     LOGGER.debug("Status: REQ_SUCCESS, auth successful\n");
                     httpSession.setAttribute("user", user);
-                    return "/management";
+                    return "/index";
                 } else {
                     if (userService.findByName(loginBean.getLogin()) != null) {
                         LOGGER.warn("Status: REQ_FAIL, Invalid credentials.\n");
@@ -66,6 +66,13 @@ public class AuthController {
             LOGGER.error("Status: REQ_FAIL, Error while performing auth ", e);
         }
         request.setAttribute(Constants.ERROR_STRING, Constants.INVALID_CREDENTIALS);
+        return "/index";
+    }
+
+    @RequestMapping(value = "/logout",
+            method = RequestMethod.GET)
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
         return "/index";
     }
 

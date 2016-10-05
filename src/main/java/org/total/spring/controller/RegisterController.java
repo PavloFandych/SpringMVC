@@ -30,7 +30,7 @@ public class RegisterController {
     @Autowired
     private PasswordManager passwordManager;
 
-    @RequestMapping(value = "/register",
+    @RequestMapping(value = "/registration",
             method = RequestMethod.POST)
     public String registration(Model uiModel,
                                @ModelAttribute("loginBean") LoginBean loginBean,
@@ -71,6 +71,12 @@ public class RegisterController {
         } catch (Exception e) {
             LOGGER.error("Status: REQ_FAIL, Error while performing register ", e);
         }
-        return null;
+        return "/index";
+    }
+
+    @RequestMapping(value = "/registration",
+            method = RequestMethod.GET)
+    public String registration() {
+        return "/register";
     }
 }

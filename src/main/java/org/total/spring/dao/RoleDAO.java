@@ -29,5 +29,4 @@ public class RoleDAO extends GenericDAO<Role> implements DAOInterface<Role> {
         }
         return role;
     }
-
 }
