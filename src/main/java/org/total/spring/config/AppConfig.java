@@ -27,7 +27,7 @@ public class AppConfig {
     public DataSource getDataSource() {
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        basicDataSource.setUrl("jdbc:mysql://localhost:3306/spring_mvc");
+        basicDataSource.setUrl("jdbc:mysql://localhost:3306/HibernateInterview");
         basicDataSource.setUsername("root");
         basicDataSource.setPassword("");
         return basicDataSource;
