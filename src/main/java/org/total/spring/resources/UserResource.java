@@ -7,6 +7,10 @@ import org.total.spring.dao.UserDAO;
 import org.total.spring.entity.User;
 import org.total.spring.marshall.ContentHandler;
 import org.total.spring.util.Constants;
+import org.total.spring.util.PasswordManager;
+
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 public class UserResource {
@@ -14,6 +18,9 @@ public class UserResource {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private PasswordManager passwordManager;
 
     @Autowired
     private ContentHandler contentHandler;
@@ -34,12 +41,29 @@ public class UserResource {
         this.userDAO = userDAO;
     }
 
+    public PasswordManager getPasswordManager() {
+        return passwordManager;
+    }
+
+    public void setPasswordManager(PasswordManager passwordManager) {
+        this.passwordManager = passwordManager;
+    }
+
     @RequestMapping(value = "/users",
             method = RequestMethod.GET,
             headers = "Accept=application/xml")
-    public String fetchAllUsers() {
+    public String fetchAllUsers(@RequestHeader("Authorization") String authorization) {
         try {
-            return getContentHandler().marshal(getUserDAO().findAll(), "users");
+            String credentials = getPasswordManager().decodeBase64(authorization);
+
+            List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+
+            User user = getUserDAO().findByUserNameAndPassword(loginAndPassword.get(0),
+                    getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+
+            if (user != null) {
+                return getContentHandler().marshal(getUserDAO().findAll(), "users");
+            }
         } catch (Exception e) {
             LOGGER.error(e, e);
         }

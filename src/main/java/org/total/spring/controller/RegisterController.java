@@ -74,7 +74,7 @@ public class RegisterController {
                     request.setAttribute("error", "user " + loginBean.getLogin() + " already exists.\n");
                     return "/register";
                 } else {
-                    User userToRegister = new User(loginBean.getLogin(), getPasswordManager().encode(loginBean.getPassword()));
+                    User userToRegister = new User(loginBean.getLogin(), getPasswordManager().encodeMD5(loginBean.getPassword()));
                     try {
                         getUserService().persist(userToRegister);
                         getUserRoleService().assignRoleByUserNameAndRoleType(loginBean.getLogin(), RoleType.GUEST);

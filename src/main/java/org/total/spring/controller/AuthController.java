@@ -57,7 +57,7 @@ public class AuthController {
                 LOGGER.debug("Status: REQ_SUCCESS, login=" + loginBean.getLogin() + "\n");
 
                 User user = getUserService().findByUserNameAndPassword(loginBean.getLogin(),
-                        getPasswordManager().encode(loginBean.getPassword()));
+                        getPasswordManager().encodeMD5(loginBean.getPassword()));
 
                 if (user != null) {
                     LOGGER.debug("Status: REQ_SUCCESS, auth successful\n");
