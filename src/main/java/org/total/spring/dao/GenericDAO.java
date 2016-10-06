@@ -10,9 +10,8 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 public abstract class GenericDAO<T> implements DAOInterface<T> {
-
-    private static SessionFactory SESSION_FACTORY = null;
     private static final Logger LOGGER = Logger.getLogger(GenericDAO.class);
+    private static SessionFactory SESSION_FACTORY = null;
     private Class<T> persistentClass;
 
     static {
@@ -27,7 +26,7 @@ public abstract class GenericDAO<T> implements DAOInterface<T> {
     }
 
     public Class<T> getPersistentClass() {
-        return persistentClass;
+        return this.persistentClass;
     }
 
     public static SessionFactory getSessionFactory() {

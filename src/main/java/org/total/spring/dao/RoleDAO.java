@@ -11,7 +11,6 @@ import org.total.spring.entity.RoleType;
 
 @Component("roleDAO")
 public class RoleDAO extends GenericDAO<Role> implements DAOInterface<Role> {
-
     private static final Logger LOGGER = Logger.getLogger(RoleDAO.class);
 
     public Role findByRoleType(RoleType roleType) {

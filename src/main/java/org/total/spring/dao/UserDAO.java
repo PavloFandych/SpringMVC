@@ -10,7 +10,6 @@ import java.util.List;
 
 @Component("userDAO")
 public class UserDAO extends GenericDAO<User> implements DAOInterface<User> {
-
     private static final Logger LOGGER = Logger.getLogger(UserDAO.class);
 
     public User findById(Long id) {
@@ -78,7 +77,7 @@ public class UserDAO extends GenericDAO<User> implements DAOInterface<User> {
             users = (List<User>) session.createQuery("FROM User").list();
             if (users != null && !users.isEmpty()) {
                 for (User user : users)
-                Hibernate.initialize(user.getRoles());
+                    Hibernate.initialize(user.getRoles());
             }
         } catch (HibernateException e) {
             LOGGER.error(e, e);
@@ -87,5 +86,4 @@ public class UserDAO extends GenericDAO<User> implements DAOInterface<User> {
         }
         return users;
     }
-
 }

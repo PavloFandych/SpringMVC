@@ -3,9 +3,7 @@ package org.total.spring.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +14,6 @@ import org.total.spring.util.Constants;
 import org.total.spring.util.PasswordManager;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class AuthController {
@@ -27,6 +24,22 @@ public class AuthController {
 
     @Autowired
     private PasswordManager passwordManager;
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public PasswordManager getPasswordManager() {
+        return passwordManager;
+    }
+
+    public void setPasswordManager(PasswordManager passwordManager) {
+        this.passwordManager = passwordManager;
+    }
 
     @RequestMapping(value = "/authorization",
             method = RequestMethod.POST)
@@ -43,14 +56,15 @@ public class AuthController {
 
                 LOGGER.debug("Status: REQ_SUCCESS, login=" + loginBean.getLogin() + "\n");
 
-                User user = userService.findByUserNameAndPassword(loginBean.getLogin(), passwordManager.encode(loginBean.getPassword()));
+                User user = getUserService().findByUserNameAndPassword(loginBean.getLogin(),
+                        getPasswordManager().encode(loginBean.getPassword()));
 
                 if (user != null) {
                     LOGGER.debug("Status: REQ_SUCCESS, auth successful\n");
                     request.getSession().setAttribute("user", user);
                     return "/index";
                 } else {
-                    if (userService.findByName(loginBean.getLogin()) != null) {
+                    if (getUserService().findByName(loginBean.getLogin()) != null) {
                         LOGGER.warn("Status: REQ_FAIL, Invalid credentials.\n");
                         request.setAttribute(Constants.ERROR_STRING, Constants.INVALID_CREDENTIALS);
                         return "/index";
@@ -73,13 +87,5 @@ public class AuthController {
     public String logout(HttpServletRequest request) {
         request.getSession().invalidate();
         return "/index";
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    public void setPasswordManager(PasswordManager passwordManager) {
-        this.passwordManager = passwordManager;
     }
 }

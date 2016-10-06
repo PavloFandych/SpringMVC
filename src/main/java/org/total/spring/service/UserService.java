@@ -16,5 +16,11 @@ public interface UserService {
     public User findByName(String name);
 
     public void persist(User entity);
+
+    public void update(User entity);
+
+    public void deleteById(Long id);
+
+    public void deleteAllUsers();
 }
 

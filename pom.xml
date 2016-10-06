@@ -8,7 +8,6 @@
     <artifactId>spring-mvc</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-
     <properties>
         <maven.test.failure.ignore>true</maven.test.failure.ignore>
         <spring.framework.version>4.3.3.RELEASE</spring.framework.version>
@@ -193,11 +192,6 @@
             <version>2.9.4</version>
         </dependency>
         <dependency>
-            <groupId>com.google.collections</groupId>
-            <artifactId>google-collections</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.jadira.usertype</groupId>
             <artifactId>usertype.core</artifactId>
             <version>3.2.0.GA</version>
@@ -237,6 +231,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
             <version>3.5.6-Final</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
         </dependency>
     </dependencies>
     <build>

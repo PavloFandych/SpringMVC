@@ -21,29 +21,37 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<User> findAll() {
-        return Lists.newArrayList(userRepository.findAll());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public User findById(Long id) {
-        return userRepository.findOne(id);
-    }
-
-    @Override
-    public User save(User user) {
-        return userRepository.save(user);
+    public UserRepository getUserRepository() {
+        return userRepository;
     }
 
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
+    public UserDAO getUserDAO() {
+        return userDAO;
+    }
+
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<User> findAll() {
+        return Lists.newArrayList(getUserRepository().findAll());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User findById(Long id) {
+        return getUserRepository().findOne(id);
+    }
+
+    @Override
+    public User save(User user) {
+        return getUserRepository().save(user);
     }
 
     @Override
@@ -58,10 +66,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void persist(User entity) {
-        userDAO.persist(entity);
+        getUserDAO().persist(entity);
     }
 
-    public UserDAO getUserDAO() {
-        return userDAO;
+    @Override
+    public void update(User entity) {
+        getUserDAO().update(entity);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        User user = getUserDAO().findById(id);
+        getUserDAO().delete(user);
+    }
+
+    @Override
+    public void deleteAllUsers() {
+        getUserDAO().deleteAll();
     }
 }

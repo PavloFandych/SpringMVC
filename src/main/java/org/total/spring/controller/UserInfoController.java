@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.total.spring.entity.RoleType;
@@ -26,6 +25,22 @@ public class UserInfoController {
     @Autowired
     private RoleService roleService;
 
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public RoleService getRoleService() {
+        return roleService;
+    }
+
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
+
     @RequestMapping(value = "/userinfo",
             method = RequestMethod.GET)
     public String userInfo(HttpServletRequest request) {
@@ -36,8 +51,8 @@ public class UserInfoController {
 
             User user = (User) request.getSession().getAttribute("user");
 
-            if (user.getRoles().contains(roleService.findByRoleType(RoleType.ADMIN))) {
-                users = userService.findAll();
+            if (user.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                users = getUserService().findAll();
             } else {
                 users = new ArrayList<User>();
                 users.add(user);
@@ -49,11 +64,6 @@ public class UserInfoController {
         } catch (Exception e) {
             LOGGER.error("CAUGHT EXCEPTION ", e);
         }
-
         return "/management";
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
     }
 }
