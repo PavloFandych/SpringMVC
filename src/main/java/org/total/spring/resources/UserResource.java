@@ -3,12 +3,16 @@ package org.total.spring.resources;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.total.spring.dao.UserDAO;
+import org.total.spring.entity.RoleType;
 import org.total.spring.entity.User;
 import org.total.spring.marshall.ContentHandler;
+import org.total.spring.service.RoleService;
+import org.total.spring.service.UserService;
 import org.total.spring.util.Constants;
 import org.total.spring.util.PasswordManager;
+import org.total.spring.version.Version;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,7 +21,10 @@ public class UserResource {
     private static final Logger LOGGER = Logger.getLogger(UserResource.class);
 
     @Autowired
-    private UserDAO userDAO;
+    private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @Autowired
     private PasswordManager passwordManager;
@@ -33,12 +40,12 @@ public class UserResource {
         this.contentHandler = contentHandler;
     }
 
-    public UserDAO getUserDAO() {
-        return userDAO;
+    public UserService getUserService() {
+        return userService;
     }
 
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     public PasswordManager getPasswordManager() {
@@ -49,49 +56,173 @@ public class UserResource {
         this.passwordManager = passwordManager;
     }
 
+    public RoleService getRoleService() {
+        return roleService;
+    }
+
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
+
     @RequestMapping(value = "/users",
-            method = RequestMethod.GET,
-            headers = "Accept=application/xml")
-    public String fetchAllUsers(@RequestHeader("Authorization") String authorization) {
-        try {
-            String credentials = getPasswordManager().decodeBase64(authorization);
+            method = RequestMethod.GET)
+    public String fetchAllUsers(@RequestHeader("Authorization") String authorization,
+                                @RequestHeader("Content-Type") String contentType,
+                                @RequestHeader("Version") String version,
+                                HttpServletResponse response) {
+        if (authorization != null
+                && contentType != null
+                && version != null
+                && !authorization.isEmpty()
+                && !contentType.isEmpty()
+                && !version.isEmpty()
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
 
-            List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
-            User user = getUserDAO().findByUserNameAndPassword(loginAndPassword.get(0),
-                    getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+            try {
+                if (Version.valueOf(version).equals(Version.V1)) {
+                    String credentials = getPasswordManager().decodeBase64(authorization);
 
-            if (user != null) {
-                return getContentHandler().marshal(getUserDAO().findAll(), "users");
+                    List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+
+                    User user = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
+                            getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+
+                    if (user != null) {
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName() + " found\n");
+
+                        if (user.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName()
+                                    + " has permitions to get list of users\n");
+
+                            response.setContentType(Constants.CONTENT_TYPE_APPLICATION_XML);
+                            response.setStatus(HttpServletResponse.SC_OK);
+                            return getContentHandler().marshal(getUserService().findAll(), "users");
+                        } else {
+                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
+                                    + user.getUserName() + "\n");
+                        }
+                    }
+                }
+                response.setContentType("text/plain");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return Constants.ERROR;
+            } catch (Exception e) {
+                LOGGER.error(e, e);
             }
-        } catch (Exception e) {
-            LOGGER.error(e, e);
         }
-        return Constants.ERROR_RESPONSE_RESOURCE;
+        response.setContentType("text/plain");
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return Constants.ERROR;
     }
 
     @RequestMapping(value = "/user/{id}",
-            method = RequestMethod.GET,
-            headers = "Accept=application/xml")
-    public String fetchUserById(@PathVariable Long id) {
-        try {
-            return getContentHandler().marshal(getUserDAO().findById(id));
-        } catch (Exception e) {
-            LOGGER.error(e, e);
+            method = RequestMethod.GET)
+    public String fetchUserById(@PathVariable Long id,
+                                @RequestHeader("Authorization") String authorization,
+                                @RequestHeader("Content-Type") String contentType,
+                                @RequestHeader("Version") String version,
+                                HttpServletResponse response) {
+        if (authorization != null
+                && contentType != null
+                && version != null
+                && !authorization.isEmpty()
+                && !contentType.isEmpty()
+                && !version.isEmpty()
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+
+            try {
+                if (Version.valueOf(version).equals(Version.V1)) {
+                    String credentials = getPasswordManager().decodeBase64(authorization);
+
+                    List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+
+                    User user = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
+                            getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+
+                    if (user != null) {
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName() + " found\n");
+
+                        if (user.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName()
+                                    + " has permitions to get user info\n");
+
+                            response.setContentType(Constants.CONTENT_TYPE_APPLICATION_XML);
+                            response.setStatus(HttpServletResponse.SC_OK);
+                            return getContentHandler().marshal(getUserService().findById(id));
+                        } else {
+                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
+                                    + user.getUserName() + "\n");
+                        }
+                    }
+                }
+                response.setContentType("text/plain");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return Constants.ERROR;
+            } catch (Exception e) {
+                LOGGER.error(e, e);
+            }
         }
-        return Constants.ERROR_RESPONSE_RESOURCE;
+        response.setContentType("text/plain");
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return Constants.ERROR;
     }
 
     @RequestMapping(value = "/userName/{userName}",
-            method = RequestMethod.GET,
-            headers = "Accept=application/xml")
-    public String fetchUserByName(@PathVariable String userName) {
-        try {
-            return getContentHandler().marshal(getUserDAO().findByName(userName));
-        } catch (Exception e) {
-            LOGGER.error(e, e);
+            method = RequestMethod.GET)
+    public String fetchUserByName(@PathVariable String userName,
+                                  @RequestHeader("Authorization") String authorization,
+                                  @RequestHeader("Content-Type") String contentType,
+                                  @RequestHeader("Version") String version,
+                                  HttpServletResponse response) {
+        if (authorization != null
+                && contentType != null
+                && version != null
+                && !authorization.isEmpty()
+                && !contentType.isEmpty()
+                && !version.isEmpty()
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+
+            try {
+                if (Version.valueOf(version).equals(Version.V1)) {
+                    String credentials = getPasswordManager().decodeBase64(authorization);
+
+                    List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+
+                    User user = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
+                            getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+
+                    if (user != null) {
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName() + " found\n");
+
+                        if (user.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName()
+                                    + " has permitions to get user info\n");
+
+                            response.setContentType(Constants.CONTENT_TYPE_APPLICATION_XML);
+                            response.setStatus(HttpServletResponse.SC_OK);
+                            return getContentHandler().marshal(getUserService().findByName(userName));
+                        } else {
+                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
+                                    + user.getUserName() + "\n");
+                        }
+                    }
+                }
+                response.setContentType("text/plain");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return Constants.ERROR;
+            } catch (Exception e) {
+                LOGGER.error(e, e);
+            }
         }
-        return Constants.ERROR_RESPONSE_RESOURCE;
+        response.setContentType("text/plain");
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return Constants.ERROR;
     }
 
     @RequestMapping(value = "/user/{id}",
@@ -99,12 +230,12 @@ public class UserResource {
             headers = "Accept=application/xml")
     public String deleteUserById(@PathVariable Long id) {
         try {
-            getUserDAO().delete(getUserDAO().findById(id));
-            return Constants.SUCCESS_RESPONSE_RESOURCE;
+            getUserService().deleteById(id);
+            return Constants.SUCCESS;
         } catch (Exception e) {
             LOGGER.error(e, e);
         }
-        return Constants.ERROR_RESPONSE_RESOURCE;
+        return Constants.ERROR;
     }
 
     @RequestMapping(value = "/users",
@@ -116,15 +247,15 @@ public class UserResource {
 
             if (body == null || body.isEmpty()) {
                 LOGGER.warn("Status: REQ_FAIL");
-                return Constants.ERROR_RESPONSE_RESOURCE;
+                return Constants.ERROR;
             }
 
-            getUserDAO().persist(getContentHandler().unMarshal(User.class, body));
-            return Constants.SUCCESS_RESPONSE_RESOURCE;
+            getUserService().save(getContentHandler().unMarshal(User.class, body));
+            return Constants.SUCCESS;
         } catch (Exception e) {
 
         }
-        return Constants.ERROR_RESPONSE_RESOURCE;
+        return Constants.ERROR;
     }
 
     @RequestMapping(value = "/users",
@@ -136,20 +267,20 @@ public class UserResource {
 
             if (body == null || body.isEmpty()) {
                 LOGGER.warn("Status: REQ_FAIL");
-                return Constants.ERROR_RESPONSE_RESOURCE;
+                return Constants.ERROR;
             }
 
             User userFromRequest = getContentHandler().unMarshal(User.class, body);
-            User userToUpdate = getUserDAO().findByName(userFromRequest.getUserName());
+            User userToUpdate = getUserService().findByName(userFromRequest.getUserName());
 
             userToUpdate.setUserName(userFromRequest.getUserName());
             userToUpdate.setPassword(userFromRequest.getPassword());
 
-            getUserDAO().update(userToUpdate);
-            return Constants.SUCCESS_RESPONSE_RESOURCE;
+            getUserService().update(userToUpdate);
+            return Constants.SUCCESS;
         } catch (Exception e) {
             LOGGER.error(e, e);
         }
-        return Constants.ERROR_RESPONSE_RESOURCE;
+        return Constants.ERROR;
     }
 }

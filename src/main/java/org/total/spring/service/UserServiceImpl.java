@@ -40,13 +40,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public List<User> findAll() {
-        return Lists.newArrayList(getUserRepository().findAll());
+        return getUserDAO().findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
     public User findById(Long id) {
-        return getUserRepository().findOne(id);
+        return getUserDAO().findById(id);
     }
 
     @Override

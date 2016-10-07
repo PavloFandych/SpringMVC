@@ -125,5 +125,4 @@ public abstract class GenericDAO<T> implements DAOInterface<T> {
         }
         return entities;
     }
-
 }

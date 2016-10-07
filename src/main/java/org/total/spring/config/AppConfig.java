@@ -14,10 +14,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-/**
- * Created by total on 6/11/16.
- */
-
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({"org.total.spring"})
@@ -29,7 +25,7 @@ public class AppConfig {
         basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
         basicDataSource.setUrl("jdbc:mysql://localhost:3306/HibernateInterview");
         basicDataSource.setUsername("root");
-        basicDataSource.setPassword("mysqlpass");
+        basicDataSource.setPassword("");
         return basicDataSource;
     }
 

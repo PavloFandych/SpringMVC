@@ -18,9 +18,9 @@
         <h1>Start page</h1>
     </div>
     <c:choose>
-        <c:when test="${sessionScope.user == null}">
-            <c:if test="${requestScope.error != null}">
-                <c:out value="${requestScope.error}"/><br>
+        <c:when test="${sessionScope.User == null}">
+            <c:if test="${requestScope.Error != null}">
+                <c:out value="${requestScope.Error}"/><br>
             </c:if>
             <div align="right">
                 <%@ include file="/WEB-INF/views/authForm.jsp" %>
@@ -29,9 +29,9 @@
                 <a href="/registration">Registration</a>
             </div>
         </c:when>
-        <c:when test="${sessionScope.user != null}">
+        <c:when test="${sessionScope.User != null}">
             <div align="right">
-                <c:out value="Welcome to GOAL, ${sessionScope.user.getUserName()}"/>
+                <c:out value="Welcome to GOAL, ${sessionScope.User.getUserName()}"/>
             </div>
             <div align="right">
                 <a href="/logout">Log out</a>

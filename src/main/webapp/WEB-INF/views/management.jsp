@@ -15,7 +15,7 @@
 <body>
 <div class="container">
     <c:choose>
-        <c:when test="${sessionScope.user == null}">
+        <c:when test="${sessionScope.User == null}">
             <div align="right">
                 <%@ include file="/WEB-INF/views/authForm.jsp" %>
             </div>
@@ -23,7 +23,7 @@
                 <a href="/WEB-INF/views/register.jsp">Registration</a>
             </div>
         </c:when>
-        <c:when test="${sessionScope.user != null}">
+        <c:when test="${sessionScope.User != null}">
             <div align="center">
                 <h1>Management</h1>
             </div>
@@ -36,10 +36,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${requestScope.users}" var="user">
+                    <c:forEach items="${requestScope.Users}" var="User">
                         <tr>
-                            <td>"${user.getUserId()}"</td>
-                            <td>"${user.getUserName()}"</td>
+                            <td>"${User.getUserId()}"</td>
+                            <td>"${User.getUserName()}"</td>
                         </tr>
                     </c:forEach>
                     </tbody>

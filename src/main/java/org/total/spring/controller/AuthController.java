@@ -46,7 +46,7 @@ public class AuthController {
     public String authorization(@ModelAttribute("loginBean") LoginBean loginBean,
                                 HttpServletRequest request) {
         try {
-            LOGGER.debug("Status: REQ_ENTRY, auth begin\n");
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY + " Authorization begin\n");
 
             if (loginBean != null &&
                     loginBean.getLogin() != null &&
@@ -54,31 +54,31 @@ public class AuthController {
                     loginBean.getPassword() != null &&
                     !loginBean.getPassword().isEmpty()) {
 
-                LOGGER.debug("Status: REQ_SUCCESS, login=" + loginBean.getLogin() + "\n");
+                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Login = " + loginBean.getLogin() + "\n");
 
                 User user = getUserService().findByUserNameAndPassword(loginBean.getLogin(),
                         getPasswordManager().encodeMD5(loginBean.getPassword()));
 
                 if (user != null) {
-                    LOGGER.debug("Status: REQ_SUCCESS, auth successful\n");
-                    request.getSession().setAttribute("user", user);
+                    LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Authorization successful\n");
+                    request.getSession().setAttribute("User", user);
                     return "/index";
                 } else {
                     if (getUserService().findByName(loginBean.getLogin()) != null) {
-                        LOGGER.warn("Status: REQ_FAIL, Invalid credentials.\n");
-                        request.setAttribute(Constants.ERROR_STRING, Constants.INVALID_CREDENTIALS);
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.INVALID_CREDENTIALS + "\n");
+                        request.setAttribute(Constants.ERROR, Constants.INVALID_CREDENTIALS);
                         return "/index";
                     } else {
-                        LOGGER.warn("Status: REQ_FAIL, no user " + loginBean.getLogin() + " found.\n");
-                        request.setAttribute(Constants.ERROR_STRING, "no user " + loginBean.getLogin() + " found.");
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " No user " + loginBean.getLogin() + " found.\n");
+                        request.setAttribute(Constants.ERROR, " No user " + loginBean.getLogin() + " found.");
                         return "/index";
                     }
                 }
             }
         } catch (Exception e) {
-            LOGGER.error("Status: REQ_FAIL, Error while performing auth ", e);
+            LOGGER.error(Constants.STATUS_REQ_FAIL + " Error while performing auth ", e);
         }
-        request.setAttribute(Constants.ERROR_STRING, Constants.INVALID_CREDENTIALS);
+        request.setAttribute(Constants.ERROR, Constants.INVALID_CREDENTIALS);
         return "/index";
     }
 

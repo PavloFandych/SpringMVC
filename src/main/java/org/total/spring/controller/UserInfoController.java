@@ -10,6 +10,7 @@ import org.total.spring.entity.RoleType;
 import org.total.spring.entity.User;
 import org.total.spring.service.RoleService;
 import org.total.spring.service.UserService;
+import org.total.spring.util.Constants;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -44,12 +45,12 @@ public class UserInfoController {
     @RequestMapping(value = "/userinfo",
             method = RequestMethod.GET)
     public String userInfo(HttpServletRequest request) {
+        LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+
         List<User> users = null;
 
         try {
-            LOGGER.debug("Status: REQ_ENTRY.\n");
-
-            User user = (User) request.getSession().getAttribute("user");
+            User user = (User) request.getSession().getAttribute("User");
 
             if (user.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
                 users = getUserService().findAll();
@@ -58,11 +59,11 @@ public class UserInfoController {
                 users.add(user);
             }
 
-            LOGGER.info("Users userInfo= " + users);
+            LOGGER.debug("Users userInfo = " + users);
 
-            request.setAttribute("users", users);
+            request.setAttribute("Users", users);
         } catch (Exception e) {
-            LOGGER.error("CAUGHT EXCEPTION ", e);
+            LOGGER.error(Constants.STATUS_REQ_FAIL, e);
         }
         return "/management";
     }

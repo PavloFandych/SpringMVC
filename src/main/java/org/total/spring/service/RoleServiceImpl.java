@@ -1,6 +1,5 @@
 package org.total.spring.service;
 
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -52,7 +51,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(readOnly = true)
     public List<Role> findAll() {
-        return Lists.newArrayList(getRoleRepository().findAll());
+        return getRoleDAO().findAll();
     }
 
     @Override

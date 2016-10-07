@@ -12,8 +12,8 @@
 
 <body>
 <div class="container">
-    <c:if test="${requestScope.error != null}">
-        <c:out value="${requestScope.error}"/><br>
+    <c:if test="${requestScope.Error != null}">
+        <c:out value="${requestScope.Error}"/><br>
     </c:if>
     <div align="center">
         <h1>Registration</h1>

@@ -11,6 +11,7 @@ import org.total.spring.entity.RoleType;
 import org.total.spring.entity.User;
 import org.total.spring.service.UserRoleServiceImpl;
 import org.total.spring.service.UserService;
+import org.total.spring.util.Constants;
 import org.total.spring.util.PasswordManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +58,7 @@ public class RegisterController {
     public String registration(@ModelAttribute("loginBean") LoginBean loginBean,
                                HttpServletRequest request) {
         try {
-            LOGGER.debug("Status: REQ_ENTRY, register begin.\n");
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY + " Registration begin.\n");
 
             if (loginBean != null &&
                     loginBean.getLogin() != null &&
@@ -65,30 +66,30 @@ public class RegisterController {
                     loginBean.getPassword() != null &&
                     !loginBean.getPassword().isEmpty()) {
 
-                LOGGER.debug("Status: REQ_SUCCESS, login = " + loginBean.getLogin() + "\n");
+                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Login = " + loginBean.getLogin() + "\n");
 
                 User user = getUserService().findByName(loginBean.getLogin());
 
                 if (user != null) {
-                    LOGGER.debug("Status: REQ_FAIL, user " + loginBean.getLogin() + " already exists.\n");
-                    request.setAttribute("error", "user " + loginBean.getLogin() + " already exists.\n");
+                    LOGGER.debug(Constants.STATUS_REQ_FAIL + " User " + loginBean.getLogin() + " already exists\n");
+                    request.setAttribute(Constants.ERROR, "User " + loginBean.getLogin() + " already exists\n");
                     return "/register";
                 } else {
                     User userToRegister = new User(loginBean.getLogin(), getPasswordManager().encodeMD5(loginBean.getPassword()));
                     try {
                         getUserService().persist(userToRegister);
                         getUserRoleService().assignRoleByUserNameAndRoleType(loginBean.getLogin(), RoleType.GUEST);
-                        LOGGER.debug("Status: REQ_SUCCESS, role \"" + RoleType.GUEST + "\" to user " + loginBean.getLogin() + " assigned successful.\n");
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " role \"" + RoleType.GUEST + "\" to user " + loginBean.getLogin() + " assigned successful\n");
 
-                        request.getSession().setAttribute("user", userToRegister);
+                        request.getSession().setAttribute("User", userToRegister);
                         return "/index";
                     } catch (Exception e) {
-                        LOGGER.error("Status: REQ_FAIL, Error while performing register.\n");
+                        LOGGER.error(Constants.STATUS_REQ_FAIL + " Error while performing registration\n");
                     }
                 }
             }
         } catch (Exception e) {
-            LOGGER.error("Status: REQ_FAIL, Error while performing register ", e);
+            LOGGER.error(Constants.STATUS_REQ_FAIL + " Error while performing registration ", e);
         }
         return "/index";
     }
