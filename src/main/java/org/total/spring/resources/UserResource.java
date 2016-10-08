@@ -7,6 +7,7 @@ import org.total.spring.entity.RoleType;
 import org.total.spring.entity.User;
 import org.total.spring.marshall.ContentHandler;
 import org.total.spring.service.RoleService;
+import org.total.spring.service.UserRoleService;
 import org.total.spring.service.UserService;
 import org.total.spring.util.Constants;
 import org.total.spring.util.PasswordManager;
@@ -26,6 +27,9 @@ public class UserResource {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private UserRoleService userRoleService;
 
     @Autowired
     private PasswordManager passwordManager;
@@ -65,12 +69,22 @@ public class UserResource {
         this.roleService = roleService;
     }
 
+    public UserRoleService getUserRoleService() {
+        return userRoleService;
+    }
+
+    public void setUserRoleService(UserRoleService userRoleService) {
+        this.userRoleService = userRoleService;
+    }
+
     @RequestMapping(value = "/users",
             method = RequestMethod.GET)
     public String fetchAllUsers(@RequestHeader("Authorization") String authorization,
                                 @RequestHeader("Content-Type") String contentType,
                                 @RequestHeader("Version") String version,
                                 HttpServletResponse response) {
+        response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
+
         if (authorization != null
                 && contentType != null
                 && version != null
@@ -87,14 +101,15 @@ public class UserResource {
 
                     List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    User user = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
+                    User getter = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
                             getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
-                    if (user != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName() + " found\n");
+                    if (getter != null) {
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
+                                + " found\n");
 
-                        if (user.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName()
+                        if (getter.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
                                     + " has permitions to get list of users\n");
 
                             response.setContentType(Constants.CONTENT_TYPE_APPLICATION_XML);
@@ -102,18 +117,23 @@ public class UserResource {
                             return getContentHandler().marshal(getUserService().findAll(), "users");
                         } else {
                             LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
-                                    + user.getUserName() + "\n");
+                                    + getter.getUserName() + "\n");
+
+                            response.setStatus(HttpServletResponse.SC_CONFLICT);
+                            return Constants.PERMITION_DENIED;
                         }
+                    } else {
+                        response.setStatus(HttpServletResponse.SC_CONFLICT);
+                        return Constants.NO_USER_FOUND;
                     }
+                } else {
+                    response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+                    return Constants.VERSION_NOT_SUPPORTED;
                 }
-                response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return Constants.ERROR;
             } catch (Exception e) {
                 LOGGER.error(e, e);
             }
         }
-        response.setContentType("text/plain");
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         return Constants.ERROR;
     }
@@ -125,6 +145,8 @@ public class UserResource {
                                 @RequestHeader("Content-Type") String contentType,
                                 @RequestHeader("Version") String version,
                                 HttpServletResponse response) {
+        response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
+
         if (authorization != null
                 && contentType != null
                 && version != null
@@ -141,15 +163,15 @@ public class UserResource {
 
                     List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    User user = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
+                    User getter = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
                             getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
-                    if (user != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName() + " found\n");
+                    if (getter != null) {
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName() + " found\n");
 
-                        if (user.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName()
-                                    + " has permitions to get user info\n");
+                        if (getter.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
+                                    + " has permitions to get user information\n");
 
                             List<User> users = new ArrayList<>();
                             users.add(getUserService().findById(id));
@@ -158,18 +180,23 @@ public class UserResource {
                             return getContentHandler().marshal(users, "users");
                         } else {
                             LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
-                                    + user.getUserName() + "\n");
+                                    + getter.getUserName() + "\n");
+
+                            response.setStatus(HttpServletResponse.SC_CONFLICT);
+                            return Constants.PERMITION_DENIED;
                         }
+                    } else {
+                        response.setStatus(HttpServletResponse.SC_CONFLICT);
+                        return Constants.NO_USER_FOUND;
                     }
+                } else {
+                    response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+                    return Constants.VERSION_NOT_SUPPORTED;
                 }
-                response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return Constants.ERROR;
             } catch (Exception e) {
                 LOGGER.error(e, e);
             }
         }
-        response.setContentType("text/plain");
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         return Constants.ERROR;
     }
@@ -181,6 +208,8 @@ public class UserResource {
                                   @RequestHeader("Content-Type") String contentType,
                                   @RequestHeader("Version") String version,
                                   HttpServletResponse response) {
+        response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
+
         if (authorization != null
                 && contentType != null
                 && version != null
@@ -197,15 +226,15 @@ public class UserResource {
 
                     List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    User user = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
+                    User getter = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
                             getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
-                    if (user != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName() + " found\n");
+                    if (getter != null) {
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName() + " found\n");
 
-                        if (user.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName()
-                                    + " has permitions to get user info\n");
+                        if (getter.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
+                                    + " has permitions to get user information\n");
 
                             List<User> users = new ArrayList<>();
                             users.add(getUserService().findByName(userName));
@@ -214,18 +243,23 @@ public class UserResource {
                             return getContentHandler().marshal(users, "users");
                         } else {
                             LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
-                                    + user.getUserName() + "\n");
+                                    + getter.getUserName() + "\n");
+
+                            response.setStatus(HttpServletResponse.SC_CONFLICT);
+                            return Constants.PERMITION_DENIED;
                         }
+                    } else {
+                        response.setStatus(HttpServletResponse.SC_CONFLICT);
+                        return Constants.NO_USER_FOUND;
                     }
+                } else {
+                    response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+                    return Constants.VERSION_NOT_SUPPORTED;
                 }
-                response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return Constants.ERROR;
             } catch (Exception e) {
                 LOGGER.error(e, e);
             }
         }
-        response.setContentType("text/plain");
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         return Constants.ERROR;
     }
@@ -247,40 +281,67 @@ public class UserResource {
 
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
+            response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
+
             try {
                 if (Version.valueOf(version).equals(Version.V1)) {
                     String credentials = getPasswordManager().decodeBase64(authorization);
 
                     List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    User user = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
+                    User deleter = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
                             getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
-                    if (user != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName() + " found\n");
+                    if (deleter != null) {
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + deleter.getUserName()
+                                + " found\n");
 
-                        if (user.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName()
-                                    + " has permitions to delete user\n");
+                        if (deleter.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + deleter.getUserName()
+                                    + " has permitions to delete the user by id\n");
 
-                            getUserService().deleteById(id);
-                            response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-                            response.setStatus(HttpServletResponse.SC_OK);
-                            return Constants.SUCCESS;
+                            User userToDelete = getUserService().findById(id);
+
+                            if (userToDelete != null) {
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + "User with id " + userToDelete.getUserId()
+                                        + " found\n");
+
+                                if (getUserService().deleteById(userToDelete.getUserId())) {
+                                    LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + userToDelete.getUserName() +
+                                            " is deleted\n");
+
+                                    response.setStatus(HttpServletResponse.SC_OK);
+                                    return Constants.SUCCESS;
+                                } else {
+                                    LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + userToDelete.getUserName() +
+                                            " is not deleted\n");
+
+                                    response.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
+                                    return Constants.USER_IS_NOT_DELETED;
+                                }
+                            } else {
+                                response.setStatus(HttpServletResponse.SC_CONFLICT);
+                                return Constants.NO_USER_FOUND;
+                            }
                         } else {
                             LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
-                                    + user.getUserName() + "\n");
+                                    + deleter.getUserName() + "\n");
+
+                            response.setStatus(HttpServletResponse.SC_CONFLICT);
+                            return Constants.PERMITION_DENIED;
                         }
+                    } else {
+                        response.setStatus(HttpServletResponse.SC_CONFLICT);
+                        return Constants.NO_USER_FOUND;
                     }
+                } else {
+                    response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+                    return Constants.VERSION_NOT_SUPPORTED;
                 }
-                response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return Constants.ERROR;
             } catch (Exception e) {
                 LOGGER.error(e, e);
             }
         }
-        response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         return Constants.ERROR;
     }
@@ -304,20 +365,22 @@ public class UserResource {
 
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
+            response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
+
             try {
                 if (Version.valueOf(version).equals(Version.V1)) {
                     String credentials = getPasswordManager().decodeBase64(authorization);
 
                     List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    User user = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
+                    User creator = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
                             getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
-                    if (user != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName() + " found\n");
+                    if (creator != null) {
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + creator.getUserName() + " found\n");
 
-                        if (user.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName()
+                        if (creator.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + creator.getUserName()
                                     + " has permitions to create user\n");
 
                             try {
@@ -328,35 +391,39 @@ public class UserResource {
                                 if (userXML != null) {
                                     LOGGER.debug(Constants.STATUS_REQ_FAIL + " User " + users.get(0).getUserName()
                                             + " already exists\n");
-                                    response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-                                    response.setStatus(HttpServletResponse.SC_OK);
+
+                                    response.setStatus(HttpServletResponse.SC_CONFLICT);
                                     return Constants.USER_ALREADY_EXISTS;
                                 } else {
-                                    getUserService().save(userXML);
-                                    response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
+                                    getUserRoleService().assignRoleByUserNameAndRoleType(userXML.getUserName(), RoleType.USER);
+                                    getUserService().persist(userXML);
                                     response.setStatus(HttpServletResponse.SC_OK);
                                     return Constants.SUCCESS;
                                 }
                             } catch (Exception ex) {
                                 LOGGER.error(ex, ex);
                             }
-                            response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
                             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                             return Constants.ERROR;
                         } else {
                             LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
-                                    + user.getUserName() + "\n");
+                                    + creator.getUserName() + "\n");
+
+                            response.setStatus(HttpServletResponse.SC_CONFLICT);
+                            return Constants.PERMITION_DENIED;
                         }
+                    } else {
+                        response.setStatus(HttpServletResponse.SC_CONFLICT);
+                        return Constants.NO_USER_FOUND;
                     }
+                } else {
+                    response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+                    return Constants.VERSION_NOT_SUPPORTED;
                 }
-                response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return Constants.ERROR;
             } catch (Exception e) {
                 LOGGER.error(e, e);
             }
         }
-        response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         return Constants.ERROR;
     }

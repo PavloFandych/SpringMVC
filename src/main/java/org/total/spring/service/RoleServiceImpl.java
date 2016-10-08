@@ -1,25 +1,17 @@
 package org.total.spring.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.dao.RoleDAO;
 import org.total.spring.entity.Role;
 import org.total.spring.entity.RoleType;
-import org.total.spring.repository.RoleRepository;
 
 import java.util.List;
 
-@Repository
-@Transactional
 @Service("roleService")
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDAO roleDAO;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     public RoleDAO getRoleDAO() {
         return roleDAO;
@@ -29,18 +21,9 @@ public class RoleServiceImpl implements RoleService {
         this.roleDAO = roleDAO;
     }
 
-    public RoleRepository getRoleRepository() {
-        return roleRepository;
-    }
-
-    public void setRoleRepository(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
-
     @Override
-    @Transactional(readOnly = true)
     public Role findById(Long id) {
-        return getRoleRepository().findOne(id);
+        return getRoleDAO().findById(id);
     }
 
     @Override
@@ -49,14 +32,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Role> findAll() {
         return getRoleDAO().findAll();
-    }
-
-    @Override
-    public Role save(Role role) {
-        return getRoleRepository().save(role);
     }
 
     @Override
@@ -70,13 +47,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public boolean deleteById(Long id) {
         Role role = getRoleDAO().findById(id);
-        getRoleDAO().delete(role);
-    }
-
-    @Override
-    public void deleteAll() {
-        getRoleDAO().deleteAll();
+        if (role != null) {
+            if (getRoleDAO().deleteById(Role.class, role.getRoleId())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

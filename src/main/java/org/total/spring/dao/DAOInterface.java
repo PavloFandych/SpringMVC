@@ -11,7 +11,5 @@ public interface DAOInterface<T> {
 
     public void update(T entity);
 
-    public void delete(T entity);
-
-    public void deleteAll();
+    public boolean deleteById(Class<T> clazz, Long id);
 }

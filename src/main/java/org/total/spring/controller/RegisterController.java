@@ -71,15 +71,21 @@ public class RegisterController {
                 User user = getUserService().findByName(loginBean.getLogin());
 
                 if (user != null) {
-                    LOGGER.debug(Constants.STATUS_REQ_FAIL + " User " + loginBean.getLogin() + " already exists\n");
-                    request.setAttribute(Constants.ERROR, "User " + loginBean.getLogin() + " already exists\n");
+                    LOGGER.debug(Constants.STATUS_REQ_FAIL + " User " + loginBean.getLogin()
+                            + " already exists\n");
+
+                    request.setAttribute(Constants.ERROR, "User " + loginBean.getLogin()
+                            + " already exists\n");
                     return "/register";
                 } else {
-                    User userToRegister = new User(loginBean.getLogin(), getPasswordManager().encodeMD5(loginBean.getPassword()));
+                    User userToRegister = new User(loginBean.getLogin(), getPasswordManager()
+                            .encodeMD5(loginBean.getPassword()));
                     try {
                         getUserService().persist(userToRegister);
                         getUserRoleService().assignRoleByUserNameAndRoleType(loginBean.getLogin(), RoleType.GUEST);
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " role \"" + RoleType.GUEST + "\" to user " + loginBean.getLogin() + " assigned successful\n");
+
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " role \"" + RoleType.GUEST
+                                + "\" to user " + loginBean.getLogin() + " assigned successful\n");
 
                         request.getSession().setAttribute("User", userToRegister);
                         return "/index";

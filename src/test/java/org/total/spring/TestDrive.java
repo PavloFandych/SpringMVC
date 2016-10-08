@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.total.spring.dao.UserDAO;
+import org.total.spring.entity.Role;
 import org.total.spring.entity.User;
 import org.total.spring.marshall.ContentHandler;
 import org.total.spring.marshall.GenericContentHandler;
@@ -14,7 +16,9 @@ import org.total.spring.service.UserService;
 import org.total.spring.util.PasswordManager;
 import org.total.spring.util.PasswordManagerImpl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TestDrive {
     private static final Logger LOGGER = Logger.getLogger(TestDrive.class);
@@ -24,6 +28,7 @@ public class TestDrive {
     private static final UserRoleService USER_ROLE_SERVICE = (UserRoleService) CONTEXT.getBean("userRoleService");
     private PasswordManager passwordManager = new PasswordManagerImpl();
     private ContentHandler contentHandler = new GenericContentHandler();
+    private UserDAO userDAO = new UserDAO();
 
     public PasswordManager getPasswordManager() {
         return passwordManager;
@@ -236,5 +241,9 @@ public class TestDrive {
         List<User> users = contentHandler.unmarshal(User.class, userXML);
 
         LOGGER.info("SIZE: " + users.size() + " " + users);
+    }
+
+    @Test
+    public void createUserTest() throws Exception {
     }
 }

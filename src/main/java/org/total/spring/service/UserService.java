@@ -9,8 +9,6 @@ public interface UserService {
 
     public User findById(Long id);
 
-    public User save(User user);
-
     public User findByUserNameAndPassword(String username, String password);
 
     public User findByName(String name);
@@ -19,8 +17,6 @@ public interface UserService {
 
     public void update(User entity);
 
-    public void deleteById(Long id);
-
-    public void deleteAllUsers();
+    public boolean deleteById(Long id);
 }
 

@@ -13,4 +13,9 @@ public class Constants {
     public static final String CONTENT_TYPE_TEXT_PLAIN = "text/plain";
 
     public static final String USER_ALREADY_EXISTS = "User already exists";
+    public static final String NO_USER_FOUND = "No user found";
+    public static final String USER_IS_NOT_DELETED = "User is not deleted";
+
+    public static final String PERMITION_DENIED = "Permition denied";
+    public static final String VERSION_NOT_SUPPORTED = "Version not supported";
 }

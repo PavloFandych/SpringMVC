@@ -4,10 +4,13 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 import org.total.spring.entity.Role;
 import org.total.spring.entity.RoleType;
+
+import java.util.List;
 
 @Component("roleDAO")
 public class RoleDAO extends GenericDAO<Role> implements DAOInterface<Role> {

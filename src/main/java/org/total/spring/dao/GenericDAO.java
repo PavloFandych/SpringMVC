@@ -6,8 +6,11 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Criterion;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public abstract class GenericDAO<T> implements DAOInterface<T> {
     private static final Logger LOGGER = Logger.getLogger(GenericDAO.class);
@@ -16,7 +19,8 @@ public abstract class GenericDAO<T> implements DAOInterface<T> {
 
     static {
         Configuration cfg = new Configuration().configure();
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties());
+        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
+                .applySettings(cfg.getProperties());
         SESSION_FACTORY = cfg.buildSessionFactory(builder.build());
     }
 
@@ -86,25 +90,34 @@ public abstract class GenericDAO<T> implements DAOInterface<T> {
         }
     }
 
-    public void delete(T entity) {
-        Session session = null;
-        Transaction transaction;
-        try {
-            session = getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-            session.delete(entity);
-            transaction.commit();
-        } catch (HibernateException e) {
-            LOGGER.error(e, e);
-        } finally {
-            session.close();
-        }
-    }
+    public boolean deleteById(Class<T> clazz, Long id) {
+        Session session = getSessionFactory().openSession();
+        T entity = (T) session.get(clazz, id);
 
-    public void deleteAll() {
-        for (T entity : findAll()) {
-            delete(entity);
+        List<Method> methods = Arrays.asList(clazz.getDeclaredMethods());
+
+        Method methodToInvoke = null;
+
+        for (Method item : methods) {
+            if (item.getName().contains("get") && item.getReturnType().equals(Set.class)) {
+                methodToInvoke = item;
+                break;
+            }
         }
+
+        if (entity != null) {
+            try {
+                Transaction transaction = session.beginTransaction();
+                Set<T> entities = (Set) methodToInvoke.invoke(entity);
+                entities.clear();
+                session.delete(entity);
+                transaction.commit();
+                return true;
+            } catch (Exception e) {/*NOP*/}
+        } else {
+            return false;
+        }
+        return false;
     }
 
     protected List<T> findByCriteria(Criterion... criterion) {
