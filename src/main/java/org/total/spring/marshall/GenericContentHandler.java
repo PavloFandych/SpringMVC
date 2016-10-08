@@ -14,11 +14,11 @@ import java.util.List;
 public class GenericContentHandler implements ContentHandler {
     private static final Logger LOGGER = Logger.getLogger(GenericContentHandler.class);
 
-    public <T> T unMarshal(Class<T> clasz, String content) {
+    public <T> T unMarshal(Class<T> clazz, String content) {
         try {
-            JAXBContext context = JAXBContext.newInstance(clasz);
+            JAXBContext context = JAXBContext.newInstance(clazz);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            return unmarshaller.unmarshal(new StreamSource(new StringReader(content)), clasz).getValue();
+            return unmarshaller.unmarshal(new StreamSource(new StringReader(content)), clazz).getValue();
         } catch (JAXBException e) {
             LOGGER.error(e, e);
         }
@@ -30,6 +30,7 @@ public class GenericContentHandler implements ContentHandler {
             StringWriter stringWriter = new StringWriter();
             JAXBContext context = JAXBContext.newInstance(object.getClass());
             Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(object, stringWriter);
             return stringWriter.toString();
         } catch (JAXBException e) {
@@ -59,10 +60,10 @@ public class GenericContentHandler implements ContentHandler {
             Wrapper wrapper = new Wrapper(list);
 
             JAXBContext context = JAXBContext.newInstance(wrapper.getClass(), list.get(0).getClass());
-            JAXBElement<Wrapper> jaxbElement = new JAXBElement<Wrapper>(qName, Wrapper.class, wrapper);
+            JAXBElement<Wrapper> jaxbElement = new JAXBElement<>(qName, Wrapper.class, wrapper);
 
             Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(jaxbElement, stringWriter);
 
             return stringWriter.toString();

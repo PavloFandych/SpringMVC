@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.13 r1665067">
+<jmeterTestPlan version="1.2" properties="2.7" jmeter="2.12 r1636949">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -46,6 +46,11 @@
             <elementProp name="password" elementType="Argument">
               <stringProp name="Argument.name">password</stringProp>
               <stringProp name="Argument.value">tiger</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="schemaPath" elementType="Argument">
+              <stringProp name="Argument.name">schemaPath</stringProp>
+              <stringProp name="Argument.value">/home/total/IdeaProjects/SpringMVC/src/test/resources/SpringMVC_GOAL.xsd</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
@@ -105,6 +110,10 @@
             </collectionProp>
           </HeaderManager>
           <hashTree/>
+          <XMLSchemaAssertion guiclass="XMLSchemaAssertionGUI" testclass="XMLSchemaAssertion" testname="XML Schema Assertion" enabled="true">
+            <stringProp name="xmlschema_assertion_filename">${schemaPath}</stringProp>
+          </XMLSchemaAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fetch user by Id" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -123,7 +132,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/user/22</stringProp>
+          <stringProp name="HTTPSampler.path">/users/4</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -159,6 +168,10 @@
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <hashTree/>
+          <XMLSchemaAssertion guiclass="XMLSchemaAssertionGUI" testclass="XMLSchemaAssertion" testname="XML Schema Assertion" enabled="true">
+            <stringProp name="xmlschema_assertion_filename">${schemaPath}</stringProp>
+          </XMLSchemaAssertion>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fetch user by name" enabled="true">
@@ -178,7 +191,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/userName/Spring</stringProp>
+          <stringProp name="HTTPSampler.path">/userName/Volf</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -214,6 +227,10 @@
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <hashTree/>
+          <XMLSchemaAssertion guiclass="XMLSchemaAssertionGUI" testclass="XMLSchemaAssertion" testname="XML Schema Assertion" enabled="true">
+            <stringProp name="xmlschema_assertion_filename">${schemaPath}</stringProp>
+          </XMLSchemaAssertion>
           <hashTree/>
         </hashTree>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">

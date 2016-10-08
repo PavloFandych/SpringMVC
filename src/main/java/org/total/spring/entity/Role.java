@@ -4,12 +4,12 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@XmlRootElement
 @Table(
         name = "Role",
         uniqueConstraints = {
@@ -17,44 +17,32 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "roleType")
         }
 )
+@XmlRootElement
+@XmlType(propOrder = {"roleId", "roleType"})
 public class Role implements Serializable {
-
     private long roleId;
     private RoleType roleType;
     private Set<User> users;
-
-    public Role() {}
-
-    public Role(RoleType roleType) {
-        this.roleType = roleType;
-        this.users = new HashSet<User>();
-    }
-
-    public Role(long roleId, RoleType roleType, Set<User> users) {
-        this.roleId = roleId;
-        this.roleType = roleType;
-        this.users = users;
-    }
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "roleId", unique = true, nullable = false)
+    @XmlElement
     public long getRoleId() {
         return roleId;
     }
 
-    @XmlElement
     public void setRoleId(long roleId) {
         this.roleId = roleId;
     }
 
     @Column(name = "roleType", unique = true, nullable = false)
     @Enumerated(EnumType.STRING)
+    @XmlElement
     public RoleType getRoleType() {
         return roleType;
     }
 
-    @XmlElement
     public void setRoleType(RoleType roleType) {
         this.roleType = roleType;
     }
@@ -63,7 +51,7 @@ public class Role implements Serializable {
     @XmlTransient
     public Set<User> getUsers() {
         if (this.users == null) {
-            this.users = new HashSet<User>();
+            this.users = new HashSet<>();
         }
         return users;
     }

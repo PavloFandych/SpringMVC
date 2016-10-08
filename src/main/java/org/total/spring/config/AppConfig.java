@@ -23,13 +23,13 @@ public class AppConfig {
     public DataSource getDataSource() {
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        basicDataSource.setUrl("jdbc:mysql://localhost:3306/HibernateInterview");
+        basicDataSource.setUrl("jdbc:mysql://localhost:3306/GoalDB");
         basicDataSource.setUsername("root");
-        basicDataSource.setPassword("");
+        basicDataSource.setPassword("mysqlpass");
         return basicDataSource;
     }
 
-    @Bean
+    @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(getDataSource());
@@ -64,6 +64,7 @@ public class AppConfig {
                 setProperty("hibernate.c3p0.idle_test_period", "3000");
                 setProperty("hibernate.c3p0.max_statements", "50");
                 setProperty("hibernate.c3p0.timeout", "1800");
+                setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false");
             }
         };
     }

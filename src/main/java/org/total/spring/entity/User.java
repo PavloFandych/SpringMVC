@@ -1,15 +1,12 @@
 package org.total.spring.entity;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@XmlRootElement
 @Table(
         name = "User",
         uniqueConstraints = {
@@ -17,18 +14,21 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "userName")
         }
 )
+@XmlRootElement
+@XmlType(propOrder = {"userId", "userName", "roles"})
 public class User implements Serializable {
     private long userId;
     private String userName;
     private String password;
     private Set<Role> roles;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
-        this.roles = new HashSet<Role>();
+        this.roles = new HashSet<>();
     }
 
     public User(long userId, String userName, String password, Set<Role> roles) {
@@ -48,31 +48,31 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "userId", unique = true, nullable = false)
+    @XmlElement
     public long getUserId() {
         return userId;
     }
 
-    @XmlElement
     public void setUserId(long userId) {
         this.userId = userId;
     }
 
     @Column(name = "userName", unique = true, nullable = false)
+    @XmlElement
     public String getUserName() {
         return userName;
     }
 
-    @XmlElement
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
     @Column(name = "password", nullable = false)
+    @XmlTransient
     public String getPassword() {
         return password;
     }
 
-    @XmlElement
     public void setPassword(String password) {
         this.password = password;
     }
@@ -87,15 +87,15 @@ public class User implements Serializable {
                     @JoinColumn(name = "roleId", nullable = false)
             }
     )
+    @XmlElementWrapper(name = "userRoles")
+    @XmlElement(name = "role")
     public Set<Role> getRoles() {
         if (this.roles == null) {
-            this.roles = new HashSet<Role>();
+            this.roles = new HashSet<>();
         }
         return roles;
     }
 
-    @XmlElementWrapper(name="roles")
-    @XmlElement(name="role")
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
