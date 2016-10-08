@@ -43,7 +43,8 @@ public class GenericContentHandler implements ContentHandler {
         try {
             JAXBContext context = JAXBContext.newInstance(Wrapper.class, clasz);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            Wrapper<T> wrapper = (Wrapper<T>) unmarshaller.unmarshal(new StreamSource(new StringReader(content)), Wrapper.class).getValue();
+            Wrapper<T> wrapper = (Wrapper<T>) unmarshaller
+                    .unmarshal(new StreamSource(new StringReader(content)), Wrapper.class).getValue();
             return wrapper.getItems();
         } catch (JAXBException e) {
             LOGGER.error(e, e);

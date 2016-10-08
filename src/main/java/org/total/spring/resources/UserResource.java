@@ -292,9 +292,11 @@ public class UserResource {
                              @RequestHeader("Content-Type") String contentType,
                              @RequestHeader("Version") String version,
                              HttpServletResponse response) {
-        if (authorization != null
+        if (body != null
+                && authorization != null
                 && contentType != null
                 && version != null
+                && !body.isEmpty()
                 && !authorization.isEmpty()
                 && !contentType.isEmpty()
                 && !version.isEmpty()
@@ -319,11 +321,22 @@ public class UserResource {
                                     + " has permitions to create user\n");
 
                             try {
-                                User userToCreate = getContentHandler().unMarshal(User.class, body);
-                                getUserService().save(userToCreate);
-                                response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-                                response.setStatus(HttpServletResponse.SC_OK);
-                                return Constants.SUCCESS;
+                                List<User> users = contentHandler.unmarshal(User.class, body);
+
+                                User userXML = getUserService().findByName(users.get(0).getUserName());
+
+                                if (userXML != null) {
+                                    LOGGER.debug(Constants.STATUS_REQ_FAIL + " User " + users.get(0).getUserName()
+                                            + " already exists\n");
+                                    response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
+                                    response.setStatus(HttpServletResponse.SC_OK);
+                                    return Constants.USER_ALREADY_EXISTS;
+                                } else {
+                                    getUserService().save(userXML);
+                                    response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
+                                    response.setStatus(HttpServletResponse.SC_OK);
+                                    return Constants.SUCCESS;
+                                }
                             } catch (Exception ex) {
                                 LOGGER.error(ex, ex);
                             }

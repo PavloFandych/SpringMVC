@@ -11,4 +11,6 @@ public class Constants {
 
     public static final String CONTENT_TYPE_APPLICATION_XML = "application/xml";
     public static final String CONTENT_TYPE_TEXT_PLAIN = "text/plain";
+
+    public static final String USER_ALREADY_EXISTS = "User already exists";
 }
