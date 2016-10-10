@@ -3,43 +3,21 @@ package org.total.spring;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.total.spring.entity.RoleType;
-import org.total.spring.entity.User;
-import org.total.spring.marshall.ContentHandler;
-import org.total.spring.marshall.GenericContentHandler;
-import org.total.spring.service.RoleService;
-import org.total.spring.service.UserRoleService;
-import org.total.spring.service.UserService;
-import org.total.spring.util.PasswordManager;
-import org.total.spring.util.PasswordManagerImpl;
+import org.total.spring.root.entity.User;
+import org.total.spring.root.marshall.ContentHandler;
+import org.total.spring.root.marshall.GenericContentHandler;
+import org.total.spring.root.util.PasswordManager;
+import org.total.spring.root.util.PasswordManagerImpl;
 
 import java.util.List;
 
 public class TestDrive {
     private static final Logger LOGGER = Logger.getLogger(TestDrive.class);
-    private static final ApplicationContext CONTEXT = new ClassPathXmlApplicationContext("applicationContext.xml");
-    private static final UserService USER_SERVICE = (UserService) CONTEXT.getBean("userService");
-    private static final RoleService ROLE_SERVICE = (RoleService) CONTEXT.getBean("roleService");
-    private static final UserRoleService USER_ROLE_SERVICE = (UserRoleService) CONTEXT.getBean("userRoleService");
     private PasswordManager passwordManager = new PasswordManagerImpl();
     private ContentHandler contentHandler = new GenericContentHandler();
 
     public PasswordManager getPasswordManager() {
         return passwordManager;
-    }
-
-    public void setPasswordManager(PasswordManager passwordManager) {
-        this.passwordManager = passwordManager;
-    }
-
-    @Test
-    public void findAllUsersTest() throws Exception {
-    }
-
-    @Test
-    public void findUserByUserNameAndPasswordTest() throws Exception {
     }
 
     @Test
@@ -235,14 +213,5 @@ public class TestDrive {
         List<User> users = contentHandler.unmarshal(User.class, userXML);
 
         LOGGER.info("SIZE: " + users.size() + " " + users);
-    }
-
-    @Test
-    public void createUserTest() throws Exception {
-//        LOGGER.info(ROLE_SERVICE.findRoleByRoleType(RoleType.ADMIN));
-//        LOGGER.info(ROLE_SERVICE.findAll());
-
-//        LOGGER.info(ROLE_SERVICE.findById(10l) == null);
-//        LOGGER.info(USER_SERVICE.findAll());
     }
 }

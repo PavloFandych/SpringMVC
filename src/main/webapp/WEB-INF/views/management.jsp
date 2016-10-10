@@ -33,13 +33,15 @@
                     <tr>
                         <td>User Id</td>
                         <td>User Name</td>
+                        <td>User Roles</td>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${requestScope.Users}" var="User">
                         <tr>
-                            <td>"${User.getUserId()}"</td>
-                            <td>"${User.getUserName()}"</td>
+                        <td>"${User.getUserId()}"</td>
+                        <td>"${User.getUserName()}"</td>
+                        <td><c:forEach items="${User.getRoles()}" var="Role">"${Role.getRoleType()}"</c:forEach></td>
                         </tr>
                     </c:forEach>
                     </tbody>

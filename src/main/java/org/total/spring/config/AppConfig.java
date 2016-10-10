@@ -16,8 +16,8 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories("org.total.spring.repository")
-@ComponentScan({"org.total.spring"})
+@EnableJpaRepositories("org.total.spring.root.repository")
+@ComponentScan(value = {"org.total.spring.root"}, lazyInit = true)
 public class AppConfig {
     @Bean
     public DataSource getDataSource() {
@@ -25,7 +25,7 @@ public class AppConfig {
         basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
         basicDataSource.setUrl("jdbc:mysql://localhost:3306/GoalDB");
         basicDataSource.setUsername("root");
-        basicDataSource.setPassword("");
+        basicDataSource.setPassword("mysqlpass");
         return basicDataSource;
     }
 
@@ -34,7 +34,7 @@ public class AppConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(getDataSource());
         entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-        entityManagerFactoryBean.setPackagesToScan("org.total.spring.entity");
+        entityManagerFactoryBean.setPackagesToScan("org.total.spring.root.entity");
         entityManagerFactoryBean.setJpaProperties(hibernateProperties());
         return entityManagerFactoryBean;
     }
