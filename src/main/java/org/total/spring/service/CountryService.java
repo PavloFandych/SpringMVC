@@ -7,13 +7,13 @@ import java.util.List;
 public interface CountryService {
     public List<Country> findAll();
 
-    public Country findById(Long id);
+    public Country findById(Long countryId);
 
-    public Country findByName(String name);
+    public Country save(Country entity);
 
-    public void persist(Country entity);
+    public Country update(Country entity);
 
-    public void update(Country entity);
+    public void deleteCountryByCountryId(Long countryId);
 
-    public boolean deleteById(Long id);
+    public Country findCountryByCountryName(String countryName);
 }

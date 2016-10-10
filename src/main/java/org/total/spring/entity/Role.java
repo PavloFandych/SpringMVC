@@ -23,7 +23,20 @@ public class Role implements Serializable {
     private long roleId;
     private RoleType roleType;
     private Set<User> users;
-    
+
+    public Role() {
+    }
+
+    public Role(RoleType roleType) {
+        this.roleType = roleType;
+    }
+
+    public Role(Role role) {
+        this.roleId = role.getRoleId();
+        this.roleType = role.getRoleType();
+        this.users = role.getUsers();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "roleId", unique = true, nullable = false)

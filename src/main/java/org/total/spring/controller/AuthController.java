@@ -56,7 +56,7 @@ public class AuthController {
 
                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Login = " + loginBean.getLogin() + "\n");
 
-                User user = getUserService().findByUserNameAndPassword(loginBean.getLogin(),
+                User user = getUserService().findUserByUserNameAndPassword(loginBean.getLogin(),
                         getPasswordManager().encodeMD5(loginBean.getPassword()));
 
                 if (user != null) {
@@ -64,7 +64,7 @@ public class AuthController {
                     request.getSession().setAttribute("User", user);
                     return "/index";
                 } else {
-                    if (getUserService().findByName(loginBean.getLogin()) != null) {
+                    if (getUserService().findUserByUserName(loginBean.getLogin()) != null) {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.INVALID_CREDENTIALS + "\n");
                         request.setAttribute(Constants.ERROR, Constants.INVALID_CREDENTIALS);
                         return "/index";

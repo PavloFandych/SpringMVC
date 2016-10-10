@@ -52,7 +52,7 @@ public class UserInfoController {
         try {
             User user = (User) request.getSession().getAttribute("User");
 
-            if (user.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+            if (user.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
                 users = getUserService().findAll();
             } else {
                 users = new ArrayList<User>();

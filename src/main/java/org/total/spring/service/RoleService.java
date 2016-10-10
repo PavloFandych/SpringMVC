@@ -8,13 +8,13 @@ import java.util.List;
 public interface RoleService {
     public List<Role> findAll();
 
-    public Role findById(Long id);
+    public Role findById(Long roleId);
 
-    public Role findByRoleType(RoleType roleType);
+    public Role save(Role entity);
 
-    public void persist(Role entity);
+    public Role update(Role entity);
 
-    public void update(Role entity);
+    public void deleteRoleByRoleId(Long roleId);
 
-    public boolean deleteById(Long id);
+    public Role findRoleByRoleType(RoleType roleType);
 }

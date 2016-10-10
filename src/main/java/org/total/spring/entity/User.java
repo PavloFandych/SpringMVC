@@ -38,6 +38,12 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
+    public User(String userName, String password, Set<Role> roles) {
+        this.userName = userName;
+        this.password = password;
+        this.roles = roles;
+    }
+
     public User(User user) {
         this.userId = user.getUserId();
         this.userName = user.getUserName();
@@ -103,9 +109,10 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "password='" + password + '\'' +
+                "userId=" + userId +
                 ", userName='" + userName + '\'' +
-                ", userId=" + userId +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 

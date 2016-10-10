@@ -5,8 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.total.spring.dao.UserDAO;
-import org.total.spring.entity.Role;
+import org.total.spring.entity.RoleType;
 import org.total.spring.entity.User;
 import org.total.spring.marshall.ContentHandler;
 import org.total.spring.marshall.GenericContentHandler;
@@ -16,9 +15,7 @@ import org.total.spring.service.UserService;
 import org.total.spring.util.PasswordManager;
 import org.total.spring.util.PasswordManagerImpl;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class TestDrive {
     private static final Logger LOGGER = Logger.getLogger(TestDrive.class);
@@ -28,7 +25,6 @@ public class TestDrive {
     private static final UserRoleService USER_ROLE_SERVICE = (UserRoleService) CONTEXT.getBean("userRoleService");
     private PasswordManager passwordManager = new PasswordManagerImpl();
     private ContentHandler contentHandler = new GenericContentHandler();
-    private UserDAO userDAO = new UserDAO();
 
     public PasswordManager getPasswordManager() {
         return passwordManager;
@@ -40,12 +36,10 @@ public class TestDrive {
 
     @Test
     public void findAllUsersTest() throws Exception {
-        LOGGER.debug(USER_SERVICE.findAll());
     }
 
     @Test
     public void findUserByUserNameAndPasswordTest() throws Exception {
-        LOGGER.debug(USER_SERVICE.findByUserNameAndPassword("Tiger", getPasswordManager().encodeMD5("tiger")));
     }
 
     @Test
@@ -245,5 +239,10 @@ public class TestDrive {
 
     @Test
     public void createUserTest() throws Exception {
+//        LOGGER.info(ROLE_SERVICE.findRoleByRoleType(RoleType.ADMIN));
+//        LOGGER.info(ROLE_SERVICE.findAll());
+
+//        LOGGER.info(ROLE_SERVICE.findById(10l) == null);
+//        LOGGER.info(USER_SERVICE.findAll());
     }
 }

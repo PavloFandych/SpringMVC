@@ -101,14 +101,14 @@ public class UserResource {
 
                     List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    User getter = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
+                    User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
                             getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
                                 + " found\n");
 
-                        if (getter.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                        if (getter.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
                                     + " has permitions to get list of users\n");
 
@@ -163,13 +163,13 @@ public class UserResource {
 
                     List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    User getter = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
+                    User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
                             getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName() + " found\n");
 
-                        if (getter.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                        if (getter.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
                                     + " has permitions to get user information\n");
 
@@ -226,18 +226,18 @@ public class UserResource {
 
                     List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    User getter = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
+                    User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
                             getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName() + " found\n");
 
-                        if (getter.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                        if (getter.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
                                     + " has permitions to get user information\n");
 
                             List<User> users = new ArrayList<>();
-                            users.add(getUserService().findByName(userName));
+                            users.add(getUserService().findUserByUserName(userName));
                             response.setContentType(Constants.CONTENT_TYPE_APPLICATION_XML);
                             response.setStatus(HttpServletResponse.SC_OK);
                             return getContentHandler().marshal(users, "users");
@@ -289,14 +289,14 @@ public class UserResource {
 
                     List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    User deleter = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
+                    User deleter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
                             getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
                     if (deleter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + deleter.getUserName()
                                 + " found\n");
 
-                        if (deleter.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                        if (deleter.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + deleter.getUserName()
                                     + " has permitions to delete the user by id\n");
 
@@ -306,19 +306,9 @@ public class UserResource {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS + "User with id " + userToDelete.getUserId()
                                         + " found\n");
 
-                                if (getUserService().deleteById(userToDelete.getUserId())) {
-                                    LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + userToDelete.getUserName() +
-                                            " is deleted\n");
-
-                                    response.setStatus(HttpServletResponse.SC_OK);
-                                    return Constants.SUCCESS;
-                                } else {
-                                    LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + userToDelete.getUserName() +
-                                            " is not deleted\n");
-
-                                    response.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
-                                    return Constants.USER_IS_NOT_DELETED;
-                                }
+                                getUserService().deleteUserByUserId(userToDelete.getUserId());
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + userToDelete.getUserName() +
+                                        " is deleted\n");
                             } else {
                                 response.setStatus(HttpServletResponse.SC_CONFLICT);
                                 return Constants.NO_USER_FOUND;
@@ -373,20 +363,20 @@ public class UserResource {
 
                     List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    User creator = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
+                    User creator = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
                             getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
                     if (creator != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + creator.getUserName() + " found\n");
 
-                        if (creator.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                        if (creator.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + creator.getUserName()
                                     + " has permitions to create user\n");
 
                             try {
                                 List<User> users = contentHandler.unmarshal(User.class, body);
 
-                                User userXML = getUserService().findByName(users.get(0).getUserName());
+                                User userXML = getUserService().findUserByUserName(users.get(0).getUserName());
 
                                 if (userXML != null) {
                                     LOGGER.debug(Constants.STATUS_REQ_FAIL + " User " + users.get(0).getUserName()
@@ -396,7 +386,7 @@ public class UserResource {
                                     return Constants.USER_ALREADY_EXISTS;
                                 } else {
                                     getUserRoleService().assignRoleByUserNameAndRoleType(userXML.getUserName(), RoleType.USER);
-                                    getUserService().persist(userXML);
+                                    getUserService().save(userXML);
                                     response.setStatus(HttpServletResponse.SC_OK);
                                     return Constants.SUCCESS;
                                 }
@@ -451,19 +441,19 @@ public class UserResource {
 
                     List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    User user = getUserService().findByUserNameAndPassword(loginAndPassword.get(0),
+                    User user = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
                             getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
                     if (user != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName() + " found\n");
 
-                        if (user.getRoles().contains(getRoleService().findByRoleType(RoleType.ADMIN))) {
+                        if (user.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName()
                                     + " has permitions to update user\n");
 
                             try {
                                 User userFromRequest = getContentHandler().unMarshal(User.class, body);
-                                User userToUpdate = getUserService().findByName(userFromRequest.getUserName());
+                                User userToUpdate = getUserService().findUserByUserName(userFromRequest.getUserName());
 
                                 userToUpdate.setUserName(userFromRequest.getUserName());
                                 userToUpdate.setPassword(userFromRequest.getPassword());

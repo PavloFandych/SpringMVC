@@ -7,16 +7,16 @@ import java.util.List;
 public interface UserService {
     public List<User> findAll();
 
-    public User findById(Long id);
+    public User findById(Long userId);
 
-    public User findByUserNameAndPassword(String username, String password);
+    public User save(User entity);
 
-    public User findByName(String name);
+    public User update(User entity);
 
-    public void persist(User entity);
+    public void deleteUserByUserId(Long userId);
 
-    public void update(User entity);
+    public User findUserByUserName(String userName);
 
-    public boolean deleteById(Long id);
+    public User findUserByUserNameAndPassword(String userName, String password);
 }
 

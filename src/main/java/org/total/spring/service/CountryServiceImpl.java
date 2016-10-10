@@ -1,50 +1,57 @@
 package org.total.spring.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.total.spring.dao.CountryDAO;
+import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.entity.Country;
+import org.total.spring.repository.CountryRepository;
 
 import java.util.List;
 
+@Repository
+@Transactional
 @Service("countryService")
 public class CountryServiceImpl implements CountryService {
-    private CountryDAO countryDAO;
+    @Autowired
+    private CountryRepository countryRepository;
 
-    public CountryDAO getCountryDAO() {
-        return countryDAO;
+    public CountryRepository getCountryRepository() {
+        return countryRepository;
     }
 
-    public void setCountryDAO(CountryDAO countryDAO) {
-        this.countryDAO = countryDAO;
+    public void setCountryRepository(CountryRepository countryRepository) {
+        this.countryRepository = countryRepository;
     }
 
     @Override
     public List<Country> findAll() {
-        return null;
+        return getCountryRepository().findAll();
     }
 
     @Override
-    public Country findById(Long id) {
-        return null;
+    public Country findById(Long countryId) {
+        return getCountryRepository().findOne(countryId);
     }
 
     @Override
-    public Country findByName(String name) {
-        return null;
+    public Country save(Country entity) {
+        return getCountryRepository().save(entity);
     }
 
     @Override
-    public void persist(Country entity) {
-
+    public Country update(Country entity) {
+        return getCountryRepository().save(entity);
     }
 
     @Override
-    public void update(Country entity) {
-
+    public void deleteCountryByCountryId(Long roleId) {
+        getCountryRepository().delete(roleId);
     }
 
     @Override
-    public boolean deleteById(Long id) {
-        return false;
+    public Country findCountryByCountryName(String countryName) {
+        List<Country> countries = getCountryRepository().findByCountryName(countryName);
+        return (countries != null && !countries.isEmpty()) ? countries.get(0) : null;
     }
 }

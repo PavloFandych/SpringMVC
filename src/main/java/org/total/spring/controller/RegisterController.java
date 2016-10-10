@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.total.spring.bean.LoginBean;
 import org.total.spring.entity.RoleType;
 import org.total.spring.entity.User;
+import org.total.spring.service.UserRoleService;
 import org.total.spring.service.UserRoleServiceImpl;
 import org.total.spring.service.UserService;
 import org.total.spring.util.Constants;
@@ -24,7 +25,7 @@ public class RegisterController {
     private UserService userService;
 
     @Autowired
-    private UserRoleServiceImpl userRoleService;
+    private UserRoleService userRoleService;
 
     @Autowired
     private PasswordManager passwordManager;
@@ -37,11 +38,11 @@ public class RegisterController {
         this.userService = userService;
     }
 
-    public UserRoleServiceImpl getUserRoleService() {
+    public UserRoleService getUserRoleService() {
         return userRoleService;
     }
 
-    public void setUserRoleService(UserRoleServiceImpl userRoleService) {
+    public void setUserRoleService(UserRoleService userRoleService) {
         this.userRoleService = userRoleService;
     }
 
@@ -68,7 +69,7 @@ public class RegisterController {
 
                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Login = " + loginBean.getLogin() + "\n");
 
-                User user = getUserService().findByName(loginBean.getLogin());
+                User user = getUserService().findUserByUserName(loginBean.getLogin());
 
                 if (user != null) {
                     LOGGER.debug(Constants.STATUS_REQ_FAIL + " User " + loginBean.getLogin()
@@ -81,7 +82,7 @@ public class RegisterController {
                     User userToRegister = new User(loginBean.getLogin(), getPasswordManager()
                             .encodeMD5(loginBean.getPassword()));
                     try {
-                        getUserService().persist(userToRegister);
+                        getUserService().save(userToRegister);
                         getUserRoleService().assignRoleByUserNameAndRoleType(loginBean.getLogin(), RoleType.GUEST);
 
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " role \"" + RoleType.GUEST

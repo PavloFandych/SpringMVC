@@ -1,63 +1,63 @@
 package org.total.spring.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.total.spring.dao.UserDAO;
+import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.entity.User;
+import org.total.spring.repository.UserRepository;
 
 import java.util.List;
 
+@Repository
+@Transactional
 @Service("userService")
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UserDAO userDAO;
+    private UserRepository userRepository;
 
-    public UserDAO getUserDAO() {
-        return userDAO;
+    public UserRepository getUserRepository() {
+        return userRepository;
     }
 
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public List<User> findAll() {
-        return getUserDAO().findAll();
+        return getUserRepository().findAllWithRoles();
     }
 
     @Override
-    public User findById(Long id) {
-        return getUserDAO().findById(id);
+    public User findById(Long userId) {
+        return getUserRepository().findByUserIdWithRoles(userId).get(0);
     }
 
     @Override
-    public User findByUserNameAndPassword(String username, String password) {
-        return getUserDAO().findByUserNameAndPassword(username, password);
+    public User save(User entity) {
+        return getUserRepository().save(entity);
     }
 
     @Override
-    public User findByName(String name) {
-        return getUserDAO().findByName(name);
+    public User update(User entity) {
+        return getUserRepository().save(entity);
     }
 
     @Override
-    public void persist(User entity) {
-        getUserDAO().persist(entity);
+    public void deleteUserByUserId(Long userId) {
+        getUserRepository().delete(userId);
     }
 
     @Override
-    public void update(User entity) {
-        getUserDAO().update(entity);
+    public User findUserByUserName(String userName) {
+        List<User> users = getUserRepository().findByUserName(userName);
+        return (users != null && !users.isEmpty()) ? users.get(0) : null;
     }
 
     @Override
-    public boolean deleteById(Long id) {
-        User user = getUserDAO().findById(id);
-        if (user != null) {
-            if (getUserDAO().deleteById(User.class, user.getUserId())) {
-                return true;
-            }
-        }
-        return false;
+    public User findUserByUserNameAndPassword(String userName, String password) {
+        List<User> users = getUserRepository().findByUserNameAndPassword(userName, password);
+        return (users != null && !users.isEmpty()) ? users.get(0) : null;
     }
 }
