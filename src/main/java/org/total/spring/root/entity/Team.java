@@ -1,5 +1,7 @@
 package org.total.spring.root.entity;
 
+import org.total.spring.root.util.Constants;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -10,35 +12,32 @@ import java.io.Serializable;
 @Entity
 @Table(name = "Team",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "teamId"),
-                @UniqueConstraint(columnNames = "teamName"),
-                @UniqueConstraint(columnNames = "teamCode")
+                @UniqueConstraint(name = "teamId", columnNames = "teamId"),
+                @UniqueConstraint(name = "teamCode", columnNames = "teamCode")
         })
 @XmlRootElement
 @XmlType(propOrder = {"teamId", "teamName", "teamCode"})
 public class Team implements Serializable {
     private long teamId;
     private String teamName;
-    private Country country;
     private String teamCode;
+    private City city;
 
     public Team() {
     }
 
-    public Team(long teamId, String teamName, Country country) {
+    public Team(long teamId, String teamName) {
         this.teamId = teamId;
         this.teamName = teamName;
-        this.country = country;
     }
 
-    public Team(String teamName, Country country) {
+    public Team(String teamName) {
         this.teamName = teamName;
-        this.country = country;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "teamId", unique = true, nullable = false)
+    @Column(name = "teamId", nullable = false)
     @XmlElement
     public long getTeamId() {
         return teamId;
@@ -48,7 +47,7 @@ public class Team implements Serializable {
         this.teamId = teamId;
     }
 
-    @Column(name = "teamName", unique = true, nullable = false)
+    @Column(name = "teamName", nullable = false)
     @XmlElement
     public String getTeamName() {
         return teamName;
@@ -58,18 +57,7 @@ public class Team implements Serializable {
         this.teamName = teamName;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "countryId", nullable = false)
-    @XmlTransient
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-
-    @Column(name = "teamCode", unique = true, nullable = false)
+    @Column(name = "teamCode", nullable = false, length = Constants.TEAM_CODE_SIZE)
     @XmlElement
     public String getTeamCode() {
         return teamCode;
@@ -77,6 +65,17 @@ public class Team implements Serializable {
 
     public void setTeamCode(String teamCode) {
         this.teamCode = teamCode;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "cityId", nullable = false, foreignKey = @ForeignKey(name = "FK_cityId"))
+    @XmlTransient
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     @Override
@@ -87,8 +86,9 @@ public class Team implements Serializable {
         Team team = (Team) o;
 
         if (teamId != team.teamId) return false;
-        if (country != null ? !country.equals(team.country) : team.country != null) return false;
-        if (teamName != null ? !teamName.equals(team.teamName) : team.teamName != null) return false;
+        if (!city.equals(team.city)) return false;
+        if (!teamCode.equals(team.teamCode)) return false;
+        if (!teamName.equals(team.teamName)) return false;
 
         return true;
     }
@@ -96,8 +96,9 @@ public class Team implements Serializable {
     @Override
     public int hashCode() {
         int result = (int) (teamId ^ (teamId >>> 32));
-        result = 31 * result + (teamName != null ? teamName.hashCode() : 0);
-        result = 31 * result + (country != null ? country.hashCode() : 0);
+        result = 31 * result + teamName.hashCode();
+        result = 31 * result + teamCode.hashCode();
+        result = 31 * result + city.hashCode();
         return result;
     }
 

@@ -12,17 +12,16 @@ import java.util.Set;
 @Entity
 @Table(name = "Country",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "countryId"),
-                @UniqueConstraint(columnNames = "countryName"),
-                @UniqueConstraint(columnNames = "countryCode")
+                @UniqueConstraint(name = "countryId", columnNames = "countryId"),
+                @UniqueConstraint(name = "countryCode", columnNames = "countryCode")
         })
 @XmlRootElement
-@XmlType(propOrder = {"countryId", "countryName", "countryCode", "teams"})
+@XmlType(propOrder = {"countryId", "countryName", "countryCode", "cities"})
 public class Country implements Serializable {
     private long countryId;
     private String countryName;
     private CountryCode countryCode;
-    private Set<Team> teams;
+    private Set<City> cities;
 
     public Country() {
     }
@@ -31,7 +30,6 @@ public class Country implements Serializable {
         this.countryId = countryId;
         this.countryName = countryName;
         this.countryCode = countryCode;
-        this.teams = teams;
     }
 
     public Country(String countryName, CountryCode countryCode) {
@@ -41,7 +39,7 @@ public class Country implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "countryId", unique = true, nullable = false)
+    @Column(name = "countryId", nullable = false)
     @XmlElement
     public long getCountryId() {
         return countryId;
@@ -51,7 +49,7 @@ public class Country implements Serializable {
         this.countryId = countryId;
     }
 
-    @Column(name = "countryName", unique = true, nullable = false)
+    @Column(name = "countryName", nullable = false)
     @XmlElement
     public String getCountryName() {
         return countryName;
@@ -61,7 +59,7 @@ public class Country implements Serializable {
         this.countryName = countryName;
     }
 
-    @Column(name = "countryCode", unique = true,
+    @Column(name = "countryCode",
             nullable = false,
             length = 3)
     @Enumerated(EnumType.STRING)
@@ -75,17 +73,14 @@ public class Country implements Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
-    @XmlElementWrapper(name = "countryTeames")
-    @XmlElement(name = "team")
-    public Set<Team> getTeams() {
-        if (this.teams == null) {
-            this.teams = new HashSet<>();
-        }
-        return teams;
+    @XmlElementWrapper(name = "countryCities")
+    @XmlElement(name = "city")
+    public Set<City> getCities() {
+        return cities;
     }
 
-    public void setTeams(Set<Team> teams) {
-        this.teams = teams;
+    public void setCities(Set<City> cities) {
+        this.cities = cities;
     }
 
     @Override

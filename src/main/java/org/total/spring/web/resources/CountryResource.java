@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.total.spring.root.entity.Country;
+import org.total.spring.root.entity.CountryCode;
 import org.total.spring.root.entity.RoleType;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.marshall.ContentHandler;
@@ -200,5 +201,37 @@ public class CountryResource {
         }
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         return Constants.ERROR;
+    }
+
+    @RequestMapping(value = "/test1",
+            method = RequestMethod.POST)
+    public String official() {
+//        getCountryService().save(new Country("Ukraine", CountryCode.UKR));
+//        getCountryService().save(new Country("England", CountryCode.ENG));
+//        getCountryService().save(new Country("Germany", CountryCode.GER));
+//        getCountryService().save(new Country("Italy", CountryCode.ITA));
+//        getCountryService().save(new Country("Spain", CountryCode.SPA));
+//        getCountryService().save(new Country("France", CountryCode.FRA));
+//        getCountryService().save(new Country("Portugal", CountryCode.POR));
+//        getCountryService().save(new Country("Netherlands", CountryCode.NED));
+//        getCountryService().save(new Country("Belgium", CountryCode.BEL));
+//        getCountryService().save(new Country("Czech Republic", CountryCode.CZE));
+//        getCountryService().save(new Country("Austria", CountryCode.AUT));
+//        getCountryService().save(new Country("Poland", CountryCode.POL));
+//        getCountryService().save(new Country("Romania", CountryCode.ROU));
+//        getCountryService().save(new Country("Turkey", CountryCode.TUR));
+//        getCountryService().save(new Country("Sweden", CountryCode.SWE));
+//        getCountryService().save(new Country("Norway", CountryCode.NOR));
+//        getCountryService().save(new Country("Finland", CountryCode.FIN));
+//        getCountryService().save(new Country("Greece", CountryCode.GRE));
+//        getCountryService().save(new Country("Belarus", CountryCode.BLR));
+//        getCountryService().save(new Country("Russia", CountryCode.RUS));
+//        getCountryService().save(new Country("Denmark", CountryCode.DEN));
+//        getCountryService().save(new Country("Switzerland", CountryCode.SUI));
+//        getCountryService().save(new Country("Bulgaria", CountryCode.BUL));
+//        getCountryService().save(new Country("Hungary", CountryCode.HUN));
+//        getCountryService().save(new Country("Slovakia", CountryCode.SVK));
+//        getCountryService().save(new Country("Croatia", CountryCode.CRO));
+        return "OK";
     }
 }

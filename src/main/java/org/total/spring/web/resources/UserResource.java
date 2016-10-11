@@ -3,6 +3,7 @@ package org.total.spring.web.resources;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.total.spring.root.entity.Role;
 import org.total.spring.root.entity.RoleType;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.marshall.ContentHandler;
@@ -484,5 +485,11 @@ public class UserResource {
         response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         return Constants.ERROR;
+    }
+
+    @RequestMapping(value = "/test",
+            method = RequestMethod.POST)
+    public String official() {
+        return "OK";
     }
 }

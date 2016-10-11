@@ -207,14 +207,9 @@ public class TeamResource {
 
     @RequestMapping(value = "/teams",
             method = RequestMethod.POST)
-    public String fetchUserById() {
+    public String official() {
 
         List<Team> teams = getTeamService().findAll();
-        for(Team team : teams) {
-            String code = team.getTeamCode().replace("\\", "").toUpperCase();
-            team.setTeamCode(code);
-            getTeamService().update(team);
-        }
 
         return teams.toString();
     }

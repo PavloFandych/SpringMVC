@@ -7,11 +7,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(
-        name = "User",
+@Table(name = "User",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "userId"),
-                @UniqueConstraint(columnNames = "userName")
+                @UniqueConstraint(name = "userId", columnNames = "userId"),
+                @UniqueConstraint(name = "userName", columnNames = "userName")
         }
 )
 @XmlRootElement
@@ -53,7 +52,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "userId", unique = true, nullable = false)
+    @Column(name = "userId", nullable = false)
     @XmlElement
     public long getUserId() {
         return userId;
@@ -63,7 +62,7 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    @Column(name = "userName", unique = true, nullable = false)
+    @Column(name = "userName", nullable = false)
     @XmlElement
     public String getUserName() {
         return userName;
@@ -84,6 +83,8 @@ public class User implements Serializable {
     }
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    /*Still gives strange for foreign keys in middle table. Fixed manually in dump file*/
     @JoinTable(
             name = "User_Role",
             joinColumns = {

@@ -13,8 +13,8 @@ import java.util.Set;
 @Table(
         name = "Role",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "roleId"),
-                @UniqueConstraint(columnNames = "roleType")
+                @UniqueConstraint(name = "roleId", columnNames = "roleId"),
+                @UniqueConstraint(name = "roleType", columnNames = "roleType")
         }
 )
 @XmlRootElement
@@ -39,7 +39,7 @@ public class Role implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "roleId", unique = true, nullable = false)
+    @Column(name = "roleId", nullable = false)
     @XmlElement
     public long getRoleId() {
         return roleId;
@@ -49,7 +49,7 @@ public class Role implements Serializable {
         this.roleId = roleId;
     }
 
-    @Column(name = "roleType", unique = true, nullable = false)
+    @Column(name = "roleType", nullable = false)
     @Enumerated(EnumType.STRING)
     @XmlElement
     public RoleType getRoleType() {
