@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.total.spring.root.bean.LoginBean;
 import org.total.spring.root.entity.RoleType;
 import org.total.spring.root.entity.User;
-import org.total.spring.root.service.UserRoleService;
-import org.total.spring.root.service.UserService;
+import org.total.spring.root.service.interfaces.UserRoleService;
+import org.total.spring.root.service.interfaces.UserService;
 import org.total.spring.root.util.Constants;
 import org.total.spring.root.util.PasswordManager;
 

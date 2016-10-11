@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.total.spring.root.entity.RoleType;
 import org.total.spring.root.entity.User;
-import org.total.spring.root.service.RoleService;
-import org.total.spring.root.service.UserService;
+import org.total.spring.root.service.interfaces.RoleService;
+import org.total.spring.root.service.interfaces.UserService;
 import org.total.spring.root.util.Constants;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,6 +1,10 @@
 package org.total.spring.root.entity;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +16,8 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "countryName"),
                 @UniqueConstraint(columnNames = "countryCode")
         })
+@XmlRootElement
+@XmlType(propOrder = {"countryId", "countryName", "countryCode", "teams"})
 public class Country implements Serializable {
     private long countryId;
     private String countryName;
@@ -28,9 +34,15 @@ public class Country implements Serializable {
         this.teams = teams;
     }
 
+    public Country(String countryName, CountryCode countryCode) {
+        this.countryName = countryName;
+        this.countryCode = countryCode;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "countryId", unique = true, nullable = false)
+    @XmlElement
     public long getCountryId() {
         return countryId;
     }
@@ -40,6 +52,7 @@ public class Country implements Serializable {
     }
 
     @Column(name = "countryName", unique = true, nullable = false)
+    @XmlElement
     public String getCountryName() {
         return countryName;
     }
@@ -52,6 +65,7 @@ public class Country implements Serializable {
             nullable = false,
             length = 3)
     @Enumerated(EnumType.STRING)
+    @XmlElement
     public CountryCode getCountryCode() {
         return countryCode;
     }
@@ -61,6 +75,8 @@ public class Country implements Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
+    @XmlElementWrapper(name = "countryTeames")
+    @XmlElement(name = "team")
     public Set<Team> getTeams() {
         if (this.teams == null) {
             this.teams = new HashSet<>();
@@ -81,8 +97,7 @@ public class Country implements Serializable {
 
         if (countryId != country.countryId) return false;
         if (countryCode != country.countryCode) return false;
-        if (countryName != null ? !countryName.equals(country.countryName) : country.countryName != null) return false;
-        if (teams != null ? !teams.equals(country.teams) : country.teams != null) return false;
+        if (!countryName.equals(country.countryName)) return false;
 
         return true;
     }
@@ -90,9 +105,8 @@ public class Country implements Serializable {
     @Override
     public int hashCode() {
         int result = (int) (countryId ^ (countryId >>> 32));
-        result = 31 * result + (countryName != null ? countryName.hashCode() : 0);
-        result = 31 * result + (countryCode != null ? countryCode.hashCode() : 0);
-        result = 31 * result + (teams != null ? teams.hashCode() : 0);
+        result = 31 * result + countryName.hashCode();
+        result = 31 * result + countryCode.hashCode();
         return result;
     }
 
@@ -102,7 +116,6 @@ public class Country implements Serializable {
                 "countryId=" + countryId +
                 ", countryName='" + countryName + '\'' +
                 ", countryCode=" + countryCode +
-                ", teams=" + teams +
                 '}';
     }
 }
