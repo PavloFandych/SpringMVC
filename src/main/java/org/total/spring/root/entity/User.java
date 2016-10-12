@@ -93,6 +93,8 @@ public class User implements Serializable {
             inverseJoinColumns = {
                     @JoinColumn(name = "roleId", nullable = false)
             }
+            ,foreignKey = @ForeignKey(name = "FK_userId")
+            ,inverseForeignKey = @ForeignKey(name = "FK_roleId")
     )
     @XmlElementWrapper(name = "userRoles")
     @XmlElement(name = "role")
