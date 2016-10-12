@@ -1,0 +1,123 @@
+package org.total.spring.root.entity;
+
+import org.total.spring.root.util.Constants;
+
+import javax.persistence.*;
+import javax.xml.bind.annotation.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "City",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "cityId", columnNames = "cityId"),
+                @UniqueConstraint(name = "cityCode", columnNames = "cityCode"),
+        })
+@XmlRootElement
+@XmlType(propOrder = {"cityId", "cityName", "cityCode", "country", "teams"})
+public class City {
+    private long cityId;
+    private String cityName;
+    private String cityCode;
+    private Country country;
+    private Set<Team> teams;
+
+    public City() {
+    }
+
+    public City(String cityName, String cityCode) {
+        this.cityName = cityName;
+        this.cityCode = cityCode;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "cityId", nullable = false)
+    @XmlElement
+    public long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(long cityId) {
+        this.cityId = cityId;
+    }
+
+    @Column(name = "cityName", nullable = false)
+    @XmlElement
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    @Column(name = "cityCode", nullable = false, length = Constants.CITY_CODE_SIZE)
+    @XmlElement
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "countryId", nullable = false, foreignKey = @ForeignKey(name = "FK_countryId"))
+    @XmlTransient
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "city")
+    @XmlElementWrapper(name = "cityTeames")
+    @XmlElement(name = "team")
+    public Set<Team> getTeams() {
+        if (this.teams == null) {
+            this.teams = new HashSet<>();
+        }
+        return teams;
+    }
+
+    public void setTeams(Set<Team> teams) {
+        this.teams = teams;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        City city = (City) o;
+
+        if (cityId != city.cityId) return false;
+        if (!cityCode.equals(city.cityCode)) return false;
+        if (!cityName.equals(city.cityName)) return false;
+        if (!country.equals(city.country)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (cityId ^ (cityId >>> 32));
+        result = 31 * result + cityName.hashCode();
+        result = 31 * result + cityCode.hashCode();
+        result = 31 * result + country.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "country=" + country +
+                ", cityCode='" + cityCode + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", cityId=" + cityId +
+                '}';
+    }
+}

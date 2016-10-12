@@ -1,0 +1,30 @@
+package org.total.spring.root.entity;
+
+public enum CountryCode {
+    UKR,
+    ENG,
+    GER,
+    ITA,
+    SPA,
+    FRA,
+    POR,
+    NED,
+    BEL,
+    CZE,
+    AUT,
+    POL,
+    ROU,
+    TUR,
+    SWE,
+    NOR,
+    FIN,
+    GRE,
+    BLR,
+    RUS,
+    DEN,
+    SUI,
+    BUL,
+    HUN,
+    SVK,
+    CRO
+}
