@@ -23,6 +23,7 @@ public class Role implements Serializable {
     private long roleId;
     private RoleType roleType;
     private Set<User> users;
+    private Set<Capability> capabilities;
 
     public Role() {
     }
@@ -70,6 +71,17 @@ public class Role implements Serializable {
             this.users = new HashSet<>();
         }
         return users;
+    }
+
+    /*users field mapping*/
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles", cascade = CascadeType.ALL)
+    @XmlTransient
+    public Set<Capability> getCapabilities() {
+        return capabilities;
+    }
+
+    public void setCapabilities(Set<Capability> capabilities) {
+        this.capabilities = capabilities;
     }
 
     public void setUsers(Set<User> users) {

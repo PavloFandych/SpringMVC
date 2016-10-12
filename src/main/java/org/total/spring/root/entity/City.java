@@ -21,6 +21,7 @@ public class City {
     private String cityCode;
     private Country country;
     private Set<Team> teams;
+    private Set<User> users;
 
     public City() {
     }
@@ -63,7 +64,7 @@ public class City {
     }
 
     @ManyToOne
-    @JoinColumn(name = "countryId", nullable = false, foreignKey = @ForeignKey(name = "FK_countryId"))
+    @JoinColumn(name = "countryId", nullable = true, foreignKey = @ForeignKey(name = "FK_cityId_countryId"))
     @XmlTransient
     public Country getCountry() {
         return country;
@@ -85,6 +86,15 @@ public class City {
 
     public void setTeams(Set<Team> teams) {
         this.teams = teams;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "city")
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     @Override

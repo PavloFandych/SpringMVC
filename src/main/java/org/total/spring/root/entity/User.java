@@ -14,12 +14,14 @@ import java.util.Set;
         }
 )
 @XmlRootElement
-@XmlType(propOrder = {"userId", "userName", "roles"})
+@XmlType(propOrder = {"userId", "userName", "roles", "userEmail"})
 public class User implements Serializable {
     private long userId;
     private String userName;
     private String password;
     private Set<Role> roles;
+    private City city;
+    private String userEmail;
 
     public User() {
     }
@@ -96,7 +98,7 @@ public class User implements Serializable {
                     @JoinColumn(name = "roleId", nullable = false)
             },
             foreignKey = @ForeignKey(name = "FK_userId"),
-            inverseForeignKey = @ForeignKey(name = "FK_roleId")
+            inverseForeignKey = @ForeignKey(name = "FK_UserIdroleId")
     )
     @XmlElementWrapper(name = "userRoles")
     @XmlElement(name = "role")
@@ -110,6 +112,32 @@ public class User implements Serializable {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "cityId", nullable = true, foreignKey = @ForeignKey(name = "FK_userId_cityId"))
+    @XmlTransient
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    /*userEmail field mapping*/
+    @Column(name = "userEmail", nullable = false)
+    @XmlElement
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+
+
+
 
     /*Overriding Object methods*/
     @Override
