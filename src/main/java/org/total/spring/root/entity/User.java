@@ -50,6 +50,7 @@ public class User implements Serializable {
         this.roles = user.getRoles();
     }
 
+    /*userId field mapping*/
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "userId", nullable = false)
@@ -62,6 +63,7 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
+    /*userName field mapping*/
     @Column(name = "userName", nullable = false)
     @XmlElement
     public String getUserName() {
@@ -72,6 +74,7 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
+    /*password field mapping*/
     @Column(name = "password", nullable = false)
     @XmlTransient
     public String getPassword() {
@@ -82,9 +85,8 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    /*roles field mapping*/
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-
-    /*Still gives strange for foreign keys in middle table. Fixed manually in dump file*/
     @JoinTable(
             name = "User_Role",
             joinColumns = {
@@ -92,9 +94,9 @@ public class User implements Serializable {
             },
             inverseJoinColumns = {
                     @JoinColumn(name = "roleId", nullable = false)
-            }
-            ,foreignKey = @ForeignKey(name = "FK_userId")
-            ,inverseForeignKey = @ForeignKey(name = "FK_roleId")
+            },
+            foreignKey = @ForeignKey(name = "FK_userId"),
+            inverseForeignKey = @ForeignKey(name = "FK_roleId")
     )
     @XmlElementWrapper(name = "userRoles")
     @XmlElement(name = "role")
@@ -109,6 +111,7 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
+    /*Overriding Object methods*/
     @Override
     public String toString() {
         return "User{" +

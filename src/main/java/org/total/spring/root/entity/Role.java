@@ -37,6 +37,7 @@ public class Role implements Serializable {
         this.users = role.getUsers();
     }
 
+    /*roleId field mapping*/
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "roleId", nullable = false)
@@ -49,6 +50,7 @@ public class Role implements Serializable {
         this.roleId = roleId;
     }
 
+    /*roleType field mapping*/
     @Column(name = "roleType", nullable = false)
     @Enumerated(EnumType.STRING)
     @XmlElement
@@ -60,6 +62,7 @@ public class Role implements Serializable {
         this.roleType = roleType;
     }
 
+    /*users field mapping*/
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles", cascade = CascadeType.ALL)
     @XmlTransient
     public Set<User> getUsers() {
