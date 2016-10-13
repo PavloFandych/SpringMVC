@@ -175,7 +175,7 @@ public class CountryResource {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
                                     + " has permitions to get country information\n");
 
-                            List<Country> countries = new ArrayList<>();
+                            List<Country> countries = new ArrayList<Country>();
                             countries.add(getCountryService().findById(id));
                             response.setContentType(Constants.CONTENT_TYPE_APPLICATION_XML);
                             response.setStatus(HttpServletResponse.SC_OK);

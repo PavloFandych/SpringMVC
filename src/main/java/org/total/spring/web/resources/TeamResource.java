@@ -177,7 +177,7 @@ public class TeamResource {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
                                     + " has permitions to get country information\n");
 
-                            List<Team> teams = new ArrayList<>();
+                            List<Team> teams = new ArrayList<Team>();
                             teams.add(getTeamService().findById(id));
                             response.setContentType(Constants.CONTENT_TYPE_APPLICATION_XML);
                             response.setStatus(HttpServletResponse.SC_OK);

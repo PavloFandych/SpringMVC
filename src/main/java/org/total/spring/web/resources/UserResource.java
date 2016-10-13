@@ -174,7 +174,7 @@ public class UserResource {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
                                     + " has permitions to get user information\n");
 
-                            List<User> users = new ArrayList<>();
+                            List<User> users = new ArrayList<User>();
                             users.add(getUserService().findById(id));
                             response.setContentType(Constants.CONTENT_TYPE_APPLICATION_XML);
                             response.setStatus(HttpServletResponse.SC_OK);
@@ -237,7 +237,7 @@ public class UserResource {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
                                     + " has permitions to get user information\n");
 
-                            List<User> users = new ArrayList<>();
+                            List<User> users = new ArrayList<User>();
                             users.add(getUserService().findUserByUserName(userName));
                             response.setContentType(Constants.CONTENT_TYPE_APPLICATION_XML);
                             response.setStatus(HttpServletResponse.SC_OK);
@@ -490,6 +490,11 @@ public class UserResource {
     @RequestMapping(value = "/test",
             method = RequestMethod.POST)
     public String official() {
+        getRoleService().save(new Role(RoleType.ADMIN));
+        getRoleService().save(new Role(RoleType.MODERATOR));
+        getRoleService().save(new Role(RoleType.SUPERUSER));
+        getRoleService().save(new Role(RoleType.USER));
+        getRoleService().save(new Role(RoleType.GUEST));
         return "OK";
     }
 }
