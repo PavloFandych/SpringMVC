@@ -16,10 +16,10 @@
         <c:out value="${requestScope.Error}"/><br>
     </c:if>
     <div align="center">
-        <h1>Registration</h1>
+        <h1>Authorization</h1>
     </div>
     <div align="right">
-        <%@ include file="/WEB-INF/views/registerForm.jsp" %>
+        <%@ include file="/WEB-INF/views/authForm.jsp" %>
     </div>
     <div align="right">
         <a href="/">Start page</a>

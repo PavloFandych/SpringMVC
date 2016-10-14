@@ -44,6 +44,13 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/authorization",
+            method = RequestMethod.GET)
+    public String authorization(Model model) {
+        model.addAttribute("loginBean", new LoginBean());
+        return "/authoriz";
+    }
+
+    @RequestMapping(value = "/authorization",
             method = RequestMethod.POST)
     public String authorization(@ModelAttribute("loginBean") LoginBean loginBean,
                                 HttpServletRequest request) {
