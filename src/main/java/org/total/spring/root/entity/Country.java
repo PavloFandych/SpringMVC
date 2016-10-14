@@ -1,12 +1,13 @@
 package org.total.spring.root.entity;
 
+import org.total.spring.root.entity.enums.CountryCode;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity

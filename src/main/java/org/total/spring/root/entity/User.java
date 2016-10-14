@@ -45,6 +45,13 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
+    public User(String userName, String password, City city, String userEmail) {
+        this.userName = userName;
+        this.password = password;
+        this.city = city;
+        this.userEmail = userEmail;
+    }
+
     public User(User user) {
         this.userId = user.getUserId();
         this.userName = user.getUserName();
@@ -125,7 +132,7 @@ public class User implements Serializable {
     }
 
     /*userEmail field mapping*/
-    @Column(name = "userEmail", nullable = false)
+    @Column(name = "userEmail", nullable = true)
     @XmlElement
     public String getUserEmail() {
         return userEmail;

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.root.entity.Role;
-import org.total.spring.root.entity.RoleType;
+import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.service.interfaces.RoleService;
 import org.total.spring.root.service.interfaces.UserRoleService;

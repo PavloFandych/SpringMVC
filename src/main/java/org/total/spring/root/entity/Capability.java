@@ -1,5 +1,7 @@
 package org.total.spring.root.entity;
 
+import org.total.spring.root.entity.enums.CapabilityType;
+
 import javax.persistence.*;
 import java.util.Set;
 

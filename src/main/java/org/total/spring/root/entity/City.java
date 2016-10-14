@@ -1,5 +1,6 @@
 package org.total.spring.root.entity;
 
+import org.total.spring.root.entity.enums.CityCode;
 import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ import java.util.Set;
 public class City {
     private long cityId;
     private String cityName;
-    private String cityCode;
+    private CityCode cityCode;
     private Country country;
     private Set<Team> teams;
     private Set<User> users;
@@ -26,7 +27,7 @@ public class City {
     public City() {
     }
 
-    public City(String cityName, String cityCode) {
+    public City(String cityName, CityCode cityCode) {
         this.cityName = cityName;
         this.cityCode = cityCode;
     }
@@ -55,11 +56,12 @@ public class City {
 
     @Column(name = "cityCode", nullable = false, length = Constants.CITY_CODE_SIZE)
     @XmlElement
-    public String getCityCode() {
+    @Enumerated(EnumType.STRING)
+    public CityCode getCityCode() {
         return cityCode;
     }
 
-    public void setCityCode(String cityCode) {
+    public void setCityCode(CityCode cityCode) {
         this.cityCode = cityCode;
     }
 

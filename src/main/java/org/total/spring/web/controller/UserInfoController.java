@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.total.spring.root.entity.RoleType;
+import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.service.interfaces.RoleService;
 import org.total.spring.root.service.interfaces.UserService;
@@ -54,7 +54,7 @@ public class UserInfoController {
 
             String authorizedUserName = user.getUserName();
 
-            /*need to fetch user by userName because jpa closed
+            /*need to fetch user by userName because jpa has closed
              persistence-session and roles need to be loaded again.
              RegisterController saved user into http-session without
               initialized roles.*/

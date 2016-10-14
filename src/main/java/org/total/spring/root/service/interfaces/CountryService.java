@@ -1,7 +1,7 @@
 package org.total.spring.root.service.interfaces;
 
 import org.total.spring.root.entity.Country;
-import org.total.spring.root.entity.CountryCode;
+import org.total.spring.root.entity.enums.CountryCode;
 
 import java.util.List;
 

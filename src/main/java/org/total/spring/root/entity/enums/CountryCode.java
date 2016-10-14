@@ -1,4 +1,4 @@
-package org.total.spring.root.entity;
+package org.total.spring.root.entity.enums;
 
 public enum CountryCode {
     UKR,

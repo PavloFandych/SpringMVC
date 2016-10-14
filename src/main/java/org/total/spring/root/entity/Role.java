@@ -1,5 +1,7 @@
 package org.total.spring.root.entity;
 
+import org.total.spring.root.entity.enums.RoleType;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

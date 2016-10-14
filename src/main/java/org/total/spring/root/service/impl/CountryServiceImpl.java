@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.root.entity.Country;
-import org.total.spring.root.entity.CountryCode;
+import org.total.spring.root.entity.enums.CountryCode;
 import org.total.spring.root.repository.CountryRepository;
 import org.total.spring.root.service.interfaces.CountryService;
 

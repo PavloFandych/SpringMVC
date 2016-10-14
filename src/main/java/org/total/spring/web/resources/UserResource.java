@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.total.spring.root.entity.Role;
-import org.total.spring.root.entity.RoleType;
+import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.marshall.ContentHandler;
 import org.total.spring.root.service.interfaces.RoleService;
