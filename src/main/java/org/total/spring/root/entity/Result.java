@@ -5,37 +5,35 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+import java.util.Calendar;
+import java.sql.Date;
 
 /**
  * Created by kostya on 10/15/16.
  */
 
 @Entity
-@Table(name = "Results",
+@Table(name = "Result",
         uniqueConstraints = {
                 @UniqueConstraint(name = "resultId", columnNames = "resultId"),
                 @UniqueConstraint(name = "resultCode", columnNames = "resultCode")
         })
-@XmlRootElement
-@XmlType(propOrder = {"resultId", "resultCode", "tournament", "season", "matchDay", "hostTeam", "guestTeam", "goalsByHost", "goalsByGeust"})
 public class Result {
     private long resultId;
     private String resultCode;
-    private String tournament;
+    private Tournament tournament;
     private Season season;
     private int matchDay;
     private Team hostTeam;
     private Team guestTeam;
     private int goalsByHost;
     private int goalsByGuest;
+    private Calendar date;
 
     public Result(){}
 
-    public Result(String resultCode, String tournament, Season season, int matchDay, Team hostTeam, Team guestTeam, int goalsByHost, int goalsByGuest){
-        this.resultCode=resultCode;
-        this.tournament=tournament;
-        this.season=season;
-        this.matchDay=matchDay;
+    public Result(Team hostTeam, Team guestTeam, int goalsByHost, int goalsByGuest){
+
         this.hostTeam=hostTeam;
         this.guestTeam=guestTeam;
         this.goalsByHost=goalsByHost;
@@ -44,9 +42,8 @@ public class Result {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "resultId", nullable = false)
-    @XmlElement
     public long getResultId() {
         return resultId;
     }
@@ -57,7 +54,6 @@ public class Result {
 
 
     @Column(name = "resultCode", nullable = true)
-    @XmlElement
     public String getResultCode() {
         return resultCode;
     }
@@ -66,20 +62,20 @@ public class Result {
         this.resultCode = resultCode;
     }
 
-    // this parameter has to be changed to to type 'Tournament', which currently does not exist
-    @Column(name = "tournamentId", nullable = true)
-    @XmlElement
-    public String getTournament() {
+
+    @ManyToOne
+    @JoinColumn(name = "tournamentId", nullable = false, foreignKey = @ForeignKey(name = "FK_tournamentId"))
+
+    public Tournament getTournament() {
         return tournament;
     }
 
-    public void setTournament(String tournament) {
+    public void setTournament(Tournament tournament) {
         this.tournament = tournament;
     }
 
     @ManyToOne
     @JoinColumn(name = "seasonId", nullable = false, foreignKey = @ForeignKey(name = "FK_seasonId"))
-    @XmlTransient
     public Season getSeason() {
         return season;
     }
@@ -89,7 +85,6 @@ public class Result {
     }
 
     @Column(name = "matchDay", nullable = false)
-    @XmlElement
     public int getMatchDay() {
         return matchDay;
     }
@@ -98,9 +93,10 @@ public class Result {
         this.matchDay = matchDay;
     }
 
-    @Column(name = "hostTeam", nullable = false)
-    @XmlElement
-    public Team getHostTeam() {
+
+    @ManyToOne
+    @JoinColumn(name = "hostTeamId", nullable = false, foreignKey = @ForeignKey(name = "FK_hostTeamId"))
+     public Team getHostTeam() {
         return hostTeam;
     }
 
@@ -108,8 +104,8 @@ public class Result {
         this.hostTeam = hostTeam;
     }
 
-    @Column(name = "guestTeam", nullable = false)
-    @XmlElement
+    @ManyToOne
+    @JoinColumn(name = "guestTeamId", nullable = false, foreignKey = @ForeignKey(name = "FK_guestTeamId"))
     public Team getGuestTeam() {
         return guestTeam;
     }
@@ -119,7 +115,6 @@ public class Result {
     }
 
     @Column(name = "goalsByHost", nullable = true)
-    @XmlElement
     public int getGoalsByHost() {
         return goalsByHost;
     }
@@ -129,13 +124,21 @@ public class Result {
     }
 
     @Column(name = "goalsByGuest", nullable = true)
-    @XmlElement
     public int getGoalsByGuest() {
         return goalsByGuest;
     }
 
     public void setGoalsByGuest(int goalsByGuest) {
         this.goalsByGuest = goalsByGuest;
+    }
+
+    @Column(name = "date", nullable = true)
+    public Calendar getDate() {
+        return date;
+    }
+
+    public void setDate(Calendar date) {
+        this.date = date;
     }
 
     @Override
@@ -146,14 +149,15 @@ public class Result {
         Result result = (Result) o;
 
         if ((resultId != result.resultId)
-             || (!resultCode.equals(result.resultCode))
-             || (!tournament.equals(result.tournament))
-             || (!season.equals(result.season))
-             || (matchDay != result.matchDay)
-             || (!hostTeam.equals(result.hostTeam))
-             || (!guestTeam.equals(result.guestTeam))
-             || (goalsByHost != result.goalsByHost)
-             || (goalsByGuest != result.goalsByGuest)
+                || (!resultCode.equals(result.resultCode))
+                || (!tournament.equals(result.tournament))
+                || (!season.equals(result.season))
+                || (matchDay != result.matchDay)
+                || (!hostTeam.equals(result.hostTeam))
+                || (!guestTeam.equals(result.guestTeam))
+                || (goalsByHost != result.goalsByHost)
+                || (goalsByGuest != result.goalsByGuest)
+                || (!date.equals(result.date))
                 ) return false;
 
         return true;
@@ -163,13 +167,15 @@ public class Result {
     public int hashCode() {
         int result = (int) (resultId ^ (resultId >>> 32));
         result = 31 * result + resultCode.hashCode();
-        result = 31 * result + season.hashCode();
+        result = 31 * result + hostTeam.hashCode();
+        result = 31 * result + guestTeam.hashCode();
+        result = 31 * result + date.hashCode();
         return result;
     }
 
-    public String getScore(){
-          return goalsByHost + ":" + goalsByGuest;
-        }
+    public String calcScore(){
+        return goalsByHost + ":" + goalsByGuest;
+    }
 
     @Override
     public String toString() {
@@ -182,7 +188,8 @@ public class Result {
                 ", guestTeam=" + guestTeam +
                 ", goalsByHost=" + goalsByHost +
                 ", goalsByGuest=" + goalsByGuest +
-                ", Score=" + getScore() +
+                ", Date=" + date.get(Calendar.DATE) + " " + date.get(Calendar.MONTH) + " " + date.get(Calendar.YEAR) +
+                ", Score=" + calcScore() +
                 '}';
     }
 }

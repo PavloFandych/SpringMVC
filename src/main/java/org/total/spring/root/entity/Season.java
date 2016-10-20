@@ -20,8 +20,6 @@ import java.util.Set;
                 @UniqueConstraint(name = "seasonId", columnNames = "seasonId"),
                 @UniqueConstraint(name = "seasonCode", columnNames = "seasonCode")
         })
-@XmlRootElement
-@XmlType(propOrder = {"seasonId", "seasonCode", "seasonName", "results"})
 public class Season implements Serializable {
 
     private long seasonId;
@@ -45,9 +43,8 @@ public class Season implements Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seasonId", nullable = false)
-    @XmlElement
     public long getSeasonId() {
         return seasonId;
     }
@@ -60,17 +57,15 @@ public class Season implements Serializable {
             nullable = false,
             length = 9)
     @Enumerated(EnumType.STRING)
-    @XmlElement
     public SeasonCode getSeasonCode() {
         return seasonCode;
     }
 
-    public void setCountryCode(SeasonCode seasonCode) {
+    public void setSeasonCode(SeasonCode seasonCode) {
         this.seasonCode = seasonCode;
     }
 
     @Column(name = "seasonName", nullable = false)
-    @XmlElement
     public String getSeasonName() {
         return seasonName;
     }
@@ -80,8 +75,6 @@ public class Season implements Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "season")
-    @XmlElementWrapper(name = "seasonResults")
-    @XmlElement(name = "result")
     public Set<Result> getResults() {
         return results;
     }

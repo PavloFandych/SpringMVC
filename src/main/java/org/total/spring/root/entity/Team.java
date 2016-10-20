@@ -3,11 +3,9 @@ package org.total.spring.root.entity;
 import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "Team",
@@ -22,6 +20,8 @@ public class Team implements Serializable {
     private String teamName;
     private String teamCode;
     private City city;
+    private Set<Result> resultsAsHost;
+    private Set<Result> resultsAsGuest;
 
     public Team() {
     }
@@ -76,6 +76,28 @@ public class Team implements Serializable {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    @XmlElementWrapper(name = "teamResultsAsHost")
+    @XmlElement(name = "result")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hostTeam")
+    public Set<Result> getResultsAsHost() {
+        return resultsAsHost;
+    }
+
+    public void setResultsAsHost(Set<Result> resultsAsHost) {
+        this.resultsAsHost = resultsAsHost;
+    }
+
+    @XmlElementWrapper(name = "teamResultsAsGuest")
+    @XmlElement(name = "result")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "guestTeam")
+    public Set<Result> getResultsAsGuest() {
+        return resultsAsGuest;
+    }
+
+    public void setResultsAsGuest(Set<Result> resultsAsGuest) {
+        this.resultsAsGuest = resultsAsGuest;
     }
 
     @Override
