@@ -33,7 +33,7 @@ public class City {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cityId", nullable = false)
     @XmlElement
     public long getCityId() {

@@ -36,7 +36,7 @@ public class Team implements Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "teamId", nullable = false)
     @XmlElement
     public long getTeamId() {

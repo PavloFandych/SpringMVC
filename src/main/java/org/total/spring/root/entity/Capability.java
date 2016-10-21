@@ -26,7 +26,7 @@ public class Capability {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "capabilityId", nullable = false)
     public long getCapabilityId() {
         return capabilityId;

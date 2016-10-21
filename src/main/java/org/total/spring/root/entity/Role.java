@@ -42,7 +42,7 @@ public class Role implements Serializable {
 
     /*roleId field mapping*/
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "roleId", nullable = false)
     @XmlElement
     public long getRoleId() {

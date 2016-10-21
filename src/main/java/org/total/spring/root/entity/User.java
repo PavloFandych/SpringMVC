@@ -61,7 +61,7 @@ public class User implements Serializable {
 
     /*userId field mapping*/
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userId", nullable = false)
     @XmlElement
     public long getUserId() {
