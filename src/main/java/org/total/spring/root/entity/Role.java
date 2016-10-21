@@ -12,8 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(
-        name = "Role",
+@Table(name = "Role",
         uniqueConstraints = {
                 @UniqueConstraint(name = "roleId", columnNames = "roleId"),
                 @UniqueConstraint(name = "roleType", columnNames = "roleType")
@@ -43,7 +42,9 @@ public class Role implements Serializable {
     /*roleId field mapping*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "roleId", nullable = false)
+    @Column(name = "roleId",
+            nullable = false
+    )
     @XmlElement
     public long getRoleId() {
         return roleId;
@@ -54,7 +55,9 @@ public class Role implements Serializable {
     }
 
     /*roleType field mapping*/
-    @Column(name = "roleType", nullable = false)
+    @Column(name = "roleType",
+            nullable = false
+    )
     @Enumerated(EnumType.STRING)
     @XmlElement
     public RoleType getRoleType() {
@@ -66,7 +69,10 @@ public class Role implements Serializable {
     }
 
     /*users field mapping*/
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles", cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,
+            mappedBy = "roles",
+            cascade = CascadeType.ALL
+    )
     @XmlTransient
     public Set<User> getUsers() {
         if (this.users == null) {
@@ -76,7 +82,10 @@ public class Role implements Serializable {
     }
 
     /*users field mapping*/
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles", cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,
+            mappedBy = "roles",
+            cascade = CascadeType.ALL
+    )
     @XmlTransient
     public Set<Capability> getCapabilities() {
         return capabilities;

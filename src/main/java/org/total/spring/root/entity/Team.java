@@ -12,7 +12,8 @@ import java.util.Set;
         uniqueConstraints = {
                 @UniqueConstraint(name = "teamId", columnNames = "teamId"),
                 @UniqueConstraint(name = "teamCode", columnNames = "teamCode")
-        })
+        }
+)
 @XmlRootElement
 @XmlType(propOrder = {"teamId", "teamName", "teamCode"})
 public class Team implements Serializable {
@@ -37,7 +38,9 @@ public class Team implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "teamId", nullable = false)
+    @Column(name = "teamId",
+            nullable = false
+    )
     @XmlElement
     public long getTeamId() {
         return teamId;
@@ -47,7 +50,9 @@ public class Team implements Serializable {
         this.teamId = teamId;
     }
 
-    @Column(name = "teamName", nullable = false)
+    @Column(name = "teamName",
+            nullable = false
+    )
     @XmlElement
     public String getTeamName() {
         return teamName;
@@ -57,7 +62,10 @@ public class Team implements Serializable {
         this.teamName = teamName;
     }
 
-    @Column(name = "teamCode", nullable = false, length = Constants.TEAM_CODE_SIZE)
+    @Column(name = "teamCode",
+            nullable = false,
+            length = Constants.TEAM_CODE_SIZE
+    )
     @XmlElement
     public String getTeamCode() {
         return teamCode;
@@ -68,7 +76,10 @@ public class Team implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name = "cityId", nullable = false, foreignKey = @ForeignKey(name = "FK_cityId"))
+    @JoinColumn(name = "cityId",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_cityId")
+    )
     @XmlTransient
     public City getCity() {
         return city;
@@ -80,7 +91,9 @@ public class Team implements Serializable {
 
     @XmlElementWrapper(name = "teamResultsAsHost")
     @XmlElement(name = "result")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hostTeam")
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "hostTeam"
+    )
     public Set<Result> getResultsAsHost() {
         return resultsAsHost;
     }
@@ -91,7 +104,9 @@ public class Team implements Serializable {
 
     @XmlElementWrapper(name = "teamResultsAsGuest")
     @XmlElement(name = "result")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "guestTeam")
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "guestTeam"
+    )
     public Set<Result> getResultsAsGuest() {
         return resultsAsGuest;
     }

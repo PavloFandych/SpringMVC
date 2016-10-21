@@ -1,12 +1,7 @@
 package org.total.spring.root.entity;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
 import java.util.Calendar;
-import java.sql.Date;
 
 /**
  * Created by kostya on 10/15/16.
@@ -17,33 +12,35 @@ import java.sql.Date;
         uniqueConstraints = {
                 @UniqueConstraint(name = "resultId", columnNames = "resultId"),
                 @UniqueConstraint(name = "resultCode", columnNames = "resultCode")
-        })
+        }
+)
 public class Result {
     private long resultId;
     private String resultCode;
     private Tournament tournament;
     private Season season;
-    private int matchDay;
+    private byte matchDay;
     private Team hostTeam;
     private Team guestTeam;
-    private int goalsByHost;
-    private int goalsByGuest;
+    private byte goalsByHost;
+    private byte goalsByGuest;
     private Calendar date;
 
-    public Result(){}
-
-    public Result(Team hostTeam, Team guestTeam, int goalsByHost, int goalsByGuest){
-
-        this.hostTeam=hostTeam;
-        this.guestTeam=guestTeam;
-        this.goalsByHost=goalsByHost;
-        this.goalsByGuest=goalsByGuest;
+    public Result() {
     }
 
+    public Result(Team hostTeam, Team guestTeam, byte goalsByHost, byte goalsByGuest) {
+        this.hostTeam = hostTeam;
+        this.guestTeam = guestTeam;
+        this.goalsByHost = goalsByHost;
+        this.goalsByGuest = goalsByGuest;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "resultId", nullable = false)
+    @Column(name = "resultId",
+            nullable = false
+    )
     public long getResultId() {
         return resultId;
     }
@@ -52,8 +49,9 @@ public class Result {
         this.resultId = resultId;
     }
 
-
-    @Column(name = "resultCode", nullable = true)
+    @Column(name = "resultCode",
+            nullable = true
+    )
     public String getResultCode() {
         return resultCode;
     }
@@ -62,10 +60,11 @@ public class Result {
         this.resultCode = resultCode;
     }
 
-
     @ManyToOne
-    @JoinColumn(name = "tournamentId", nullable = false, foreignKey = @ForeignKey(name = "FK_tournamentId"))
-
+    @JoinColumn(name = "tournamentId",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_tournamentId")
+    )
     public Tournament getTournament() {
         return tournament;
     }
@@ -75,7 +74,10 @@ public class Result {
     }
 
     @ManyToOne
-    @JoinColumn(name = "seasonId", nullable = false, foreignKey = @ForeignKey(name = "FK_seasonId"))
+    @JoinColumn(name = "seasonId",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_seasonId")
+    )
     public Season getSeason() {
         return season;
     }
@@ -84,19 +86,23 @@ public class Result {
         this.season = season;
     }
 
-    @Column(name = "matchDay", nullable = false)
-    public int getMatchDay() {
+    @Column(name = "matchDay",
+            nullable = false
+    )
+    public byte getMatchDay() {
         return matchDay;
     }
 
-    public void setMatchDay(int matchDay) {
+    public void setMatchDay(byte matchDay) {
         this.matchDay = matchDay;
     }
 
-
     @ManyToOne
-    @JoinColumn(name = "hostTeamId", nullable = false, foreignKey = @ForeignKey(name = "FK_hostTeamId"))
-     public Team getHostTeam() {
+    @JoinColumn(name = "hostTeamId",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_hostTeamId")
+    )
+    public Team getHostTeam() {
         return hostTeam;
     }
 
@@ -105,7 +111,10 @@ public class Result {
     }
 
     @ManyToOne
-    @JoinColumn(name = "guestTeamId", nullable = false, foreignKey = @ForeignKey(name = "FK_guestTeamId"))
+    @JoinColumn(name = "guestTeamId",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_guestTeamId")
+    )
     public Team getGuestTeam() {
         return guestTeam;
     }
@@ -114,25 +123,31 @@ public class Result {
         this.guestTeam = guestTeam;
     }
 
-    @Column(name = "goalsByHost", nullable = true)
-    public int getGoalsByHost() {
+    @Column(name = "goalsByHost",
+            nullable = true
+    )
+    public byte getGoalsByHost() {
         return goalsByHost;
     }
 
-    public void setGoalsByHost(int goalsByHost) {
+    public void setGoalsByHost(byte goalsByHost) {
         this.goalsByHost = goalsByHost;
     }
 
-    @Column(name = "goalsByGuest", nullable = true)
-    public int getGoalsByGuest() {
+    @Column(name = "goalsByGuest",
+            nullable = true
+    )
+    public byte getGoalsByGuest() {
         return goalsByGuest;
     }
 
-    public void setGoalsByGuest(int goalsByGuest) {
+    public void setGoalsByGuest(byte goalsByGuest) {
         this.goalsByGuest = goalsByGuest;
     }
 
-    @Column(name = "date", nullable = true)
+    @Column(name = "date",
+            nullable = true
+    )
     public Calendar getDate() {
         return date;
     }
@@ -173,7 +188,7 @@ public class Result {
         return result;
     }
 
-    public String calcScore(){
+    public String calcScore() {
         return goalsByHost + ":" + goalsByGuest;
     }
 

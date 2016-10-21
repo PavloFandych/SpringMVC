@@ -4,7 +4,6 @@ package org.total.spring.root.entity.enums;
  * Created by kostya on 10/15/16.
  */
 public enum SeasonCode {
-
     S20002001,
     S20012002,
     S20022003,

@@ -13,7 +13,8 @@ import java.util.Set;
         uniqueConstraints = {
                 @UniqueConstraint(name = "cityId", columnNames = "cityId"),
                 @UniqueConstraint(name = "cityCode", columnNames = "cityCode"),
-        })
+        }
+)
 @XmlRootElement
 @XmlType(propOrder = {"cityId", "cityName", "cityCode", "country", "teams"})
 public class City {
@@ -34,7 +35,9 @@ public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cityId", nullable = false)
+    @Column(name = "cityId",
+            nullable = false
+    )
     @XmlElement
     public long getCityId() {
         return cityId;
@@ -44,7 +47,9 @@ public class City {
         this.cityId = cityId;
     }
 
-    @Column(name = "cityName", nullable = false)
+    @Column(name = "cityName",
+            nullable = false
+    )
     @XmlElement
     public String getCityName() {
         return cityName;
@@ -54,7 +59,10 @@ public class City {
         this.cityName = cityName;
     }
 
-    @Column(name = "cityCode", nullable = false, length = Constants.CITY_CODE_SIZE)
+    @Column(name = "cityCode",
+            nullable = false,
+            length = Constants.CITY_CODE_SIZE
+    )
     @XmlElement
     @Enumerated(EnumType.STRING)
     public CityCode getCityCode() {
@@ -66,7 +74,10 @@ public class City {
     }
 
     @ManyToOne
-    @JoinColumn(name = "countryId", nullable = true, foreignKey = @ForeignKey(name = "FK_cityId_countryId"))
+    @JoinColumn(name = "countryId",
+            nullable = true,
+            foreignKey = @ForeignKey(name = "FK_cityId_countryId")
+    )
     @XmlTransient
     public Country getCountry() {
         return country;
@@ -76,7 +87,9 @@ public class City {
         this.country = country;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "city")
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "city"
+    )
     @XmlElementWrapper(name = "cityTeames")
     @XmlElement(name = "team")
     public Set<Team> getTeams() {
@@ -90,7 +103,9 @@ public class City {
         this.teams = teams;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "city")
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "city"
+    )
     public Set<User> getUsers() {
         return users;
     }

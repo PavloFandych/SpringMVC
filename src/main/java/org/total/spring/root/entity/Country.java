@@ -1,6 +1,7 @@
 package org.total.spring.root.entity;
 
 import org.total.spring.root.entity.enums.CountryCode;
+import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
@@ -15,7 +16,8 @@ import java.util.Set;
         uniqueConstraints = {
                 @UniqueConstraint(name = "countryId", columnNames = "countryId"),
                 @UniqueConstraint(name = "countryCode", columnNames = "countryCode")
-        })
+        }
+)
 @XmlRootElement
 @XmlType(propOrder = {"countryId", "countryName", "countryCode", "cities"})
 public class Country implements Serializable {
@@ -40,7 +42,9 @@ public class Country implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "countryId", nullable = false)
+    @Column(name = "countryId",
+            nullable = false
+    )
     @XmlElement
     public long getCountryId() {
         return countryId;
@@ -50,7 +54,9 @@ public class Country implements Serializable {
         this.countryId = countryId;
     }
 
-    @Column(name = "countryName", nullable = false)
+    @Column(name = "countryName",
+            nullable = false
+    )
     @XmlElement
     public String getCountryName() {
         return countryName;
@@ -62,7 +68,8 @@ public class Country implements Serializable {
 
     @Column(name = "countryCode",
             nullable = false,
-            length = 3)
+            length = Constants.COUNTRY_CODE_SIZE
+    )
     @Enumerated(EnumType.STRING)
     @XmlElement
     public CountryCode getCountryCode() {
@@ -73,7 +80,9 @@ public class Country implements Serializable {
         this.countryCode = countryCode;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "country"
+    )
     @XmlElementWrapper(name = "countryCities")
     @XmlElement(name = "city")
     public Set<City> getCities() {

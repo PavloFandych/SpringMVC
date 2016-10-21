@@ -27,7 +27,9 @@ public class Capability {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "capabilityId", nullable = false)
+    @Column(name = "capabilityId",
+            nullable = false
+    )
     public long getCapabilityId() {
         return capabilityId;
     }
@@ -36,7 +38,9 @@ public class Capability {
         this.capabilityId = capabilityId;
     }
 
-    @Column(name = "capabilityType", nullable = false)
+    @Column(name = "capabilityType",
+            nullable = false
+    )
     @Enumerated(EnumType.STRING)
     public CapabilityType getCapabilityType() {
         return capabilityType;
@@ -47,7 +51,9 @@ public class Capability {
     }
 
     /*roles field mapping*/
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
     @JoinTable(
             name = "Capability_Role",
             joinColumns = {

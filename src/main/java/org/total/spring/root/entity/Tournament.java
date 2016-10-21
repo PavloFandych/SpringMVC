@@ -6,6 +6,7 @@ package org.total.spring.root.entity;
 
 import org.total.spring.root.entity.enums.TournamentCode;
 import org.total.spring.root.entity.enums.TournamentType;
+import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -15,9 +16,9 @@ import java.util.Set;
         uniqueConstraints = {
                 @UniqueConstraint(name = "tournamentId", columnNames = "tournamentId"),
                 @UniqueConstraint(name = "tournamentCode", columnNames = "tournamentCode")
-        })
+        }
+)
 public class Tournament {
-
     private long tournamentId;
     private TournamentType tournamentType;
     private TournamentCode tournamentCode;
@@ -25,17 +26,20 @@ public class Tournament {
     private Country country;
     private Set<Result> results;
 
-    public Tournament(){}
+    public Tournament() {
+    }
 
-    public Tournament(long tournamentId, String tournamentName, TournamentCode tournamentCode){
-        this.tournamentId=tournamentId;
-        this.tournamentName=tournamentName;
-        this.tournamentCode=tournamentCode;
+    public Tournament(long tournamentId, String tournamentName, TournamentCode tournamentCode) {
+        this.tournamentId = tournamentId;
+        this.tournamentName = tournamentName;
+        this.tournamentCode = tournamentCode;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tournamentId", nullable = false)
+    @Column(name = "tournamentId",
+            nullable = false
+    )
     public long getTournamentId() {
         return tournamentId;
     }
@@ -46,7 +50,8 @@ public class Tournament {
 
     @Column(name = "tournamentType",
             nullable = false,
-            length = 20)
+            length = Constants.TOURNAMENT_SIZE
+    )
     @Enumerated(EnumType.STRING)
     public TournamentType getTournamentType() {
         return tournamentType;
@@ -58,7 +63,8 @@ public class Tournament {
 
     @Column(name = "tournamentCode",
             nullable = false,
-            length = 20)
+            length = Constants.TOURNAMENT_SIZE
+    )
     @Enumerated(EnumType.STRING)
     public TournamentCode getTournamentCode() {
         return tournamentCode;
@@ -68,7 +74,9 @@ public class Tournament {
         this.tournamentCode = tournamentCode;
     }
 
-    @Column(name = "tournamentName", nullable = false)
+    @Column(name = "tournamentName",
+            nullable = false
+    )
     public String getTournamentName() {
         return tournamentName;
     }
@@ -78,7 +86,10 @@ public class Tournament {
     }
 
     @ManyToOne
-    @JoinColumn(name = "countryId", nullable = true, foreignKey = @ForeignKey(name = "FK_countryId"))
+    @JoinColumn(name = "countryId",
+            nullable = true,
+            foreignKey = @ForeignKey(name = "FK_countryId")
+    )
     public Country getCountry() {
         return country;
     }
@@ -87,7 +98,9 @@ public class Tournament {
         this.country = country;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tournament")
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "tournament"
+    )
     public Set<Result> getResults() {
         return results;
     }
@@ -95,7 +108,6 @@ public class Tournament {
     public void setResults(Set<Result> results) {
         this.results = results;
     }
-
 
     @Override
     public boolean equals(Object o) {

@@ -1,50 +1,50 @@
 package org.total.spring.root.entity;
 
 import org.total.spring.root.entity.enums.SeasonCode;
+import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.Set;
-
 
 /**
  * Created by kostya on 10/15/16.
  */
+
 @Entity
 @Table(name = "Season",
         uniqueConstraints = {
                 @UniqueConstraint(name = "seasonId", columnNames = "seasonId"),
                 @UniqueConstraint(name = "seasonCode", columnNames = "seasonCode")
-        })
+        }
+)
 public class Season implements Serializable {
-
     private long seasonId;
     private String seasonName;
     private SeasonCode seasonCode;
     private Set<Result> results;
 
-    public Season(){}
-
-    public Season(long seasonId, String seasonName, SeasonCode seasonCode){
-        this.seasonId=seasonId;
-        this.seasonName=seasonName;
-        this.seasonCode=seasonCode;
+    public Season() {
     }
 
-    public Season(long seasonId, String seasonName, SeasonCode seasonCode, Set<Result> results){
-        this.seasonId=seasonId;
-        this.seasonName=seasonName;
-        this.seasonCode=seasonCode;
-        this.results=results;
+    public Season(long seasonId, String seasonName, SeasonCode seasonCode) {
+        this.seasonId = seasonId;
+        this.seasonName = seasonName;
+        this.seasonCode = seasonCode;
+    }
+
+    public Season(long seasonId, String seasonName, SeasonCode seasonCode, Set<Result> results) {
+        this.seasonId = seasonId;
+        this.seasonName = seasonName;
+        this.seasonCode = seasonCode;
+        this.results = results;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "seasonId", nullable = false)
+    @Column(name = "seasonId",
+            nullable = false
+    )
     public long getSeasonId() {
         return seasonId;
     }
@@ -55,7 +55,8 @@ public class Season implements Serializable {
 
     @Column(name = "seasonCode",
             nullable = false,
-            length = 9)
+            length = Constants.SEASON_CODE_SIZE
+    )
     @Enumerated(EnumType.STRING)
     public SeasonCode getSeasonCode() {
         return seasonCode;
@@ -65,7 +66,9 @@ public class Season implements Serializable {
         this.seasonCode = seasonCode;
     }
 
-    @Column(name = "seasonName", nullable = false)
+    @Column(name = "seasonName",
+            nullable = false
+    )
     public String getSeasonName() {
         return seasonName;
     }
@@ -74,7 +77,9 @@ public class Season implements Serializable {
         this.seasonName = seasonName;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "season")
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "season"
+    )
     public Set<Result> getResults() {
         return results;
     }
@@ -82,7 +87,6 @@ public class Season implements Serializable {
     public void setResults(Set<Result> results) {
         this.results = results;
     }
-
 
     @Override
     public boolean equals(Object o) {

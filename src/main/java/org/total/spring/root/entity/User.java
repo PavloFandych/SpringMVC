@@ -62,7 +62,9 @@ public class User implements Serializable {
     /*userId field mapping*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId", nullable = false)
+    @Column(name = "userId",
+            nullable = false
+    )
     @XmlElement
     public long getUserId() {
         return userId;
@@ -73,7 +75,9 @@ public class User implements Serializable {
     }
 
     /*userName field mapping*/
-    @Column(name = "userName", nullable = false)
+    @Column(name = "userName",
+            nullable = false
+    )
     @XmlElement
     public String getUserName() {
         return userName;
@@ -84,7 +88,9 @@ public class User implements Serializable {
     }
 
     /*password field mapping*/
-    @Column(name = "password", nullable = false)
+    @Column(name = "password",
+            nullable = false
+    )
     @XmlTransient
     public String getPassword() {
         return password;
@@ -95,7 +101,9 @@ public class User implements Serializable {
     }
 
     /*roles field mapping*/
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
     @JoinTable(
             name = "User_Role",
             joinColumns = {
@@ -121,7 +129,10 @@ public class User implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name = "cityId", nullable = true, foreignKey = @ForeignKey(name = "FK_userId_cityId"))
+    @JoinColumn(name = "cityId",
+            nullable = true,
+            foreignKey = @ForeignKey(name = "FK_userId_cityId")
+    )
     @XmlTransient
     public City getCity() {
         return city;
@@ -132,7 +143,9 @@ public class User implements Serializable {
     }
 
     /*userEmail field mapping*/
-    @Column(name = "userEmail", nullable = true)
+    @Column(name = "userEmail",
+            nullable = true
+    )
     @XmlElement
     public String getUserEmail() {
         return userEmail;
@@ -141,10 +154,6 @@ public class User implements Serializable {
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
-
-
-
-
 
     /*Overriding Object methods*/
     @Override
