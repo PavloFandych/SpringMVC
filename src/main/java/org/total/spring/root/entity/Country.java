@@ -25,6 +25,7 @@ public class Country implements Serializable {
     private String countryName;
     private CountryCode countryCode;
     private Set<City> cities;
+    private Set<Tournament> tournaments;
 
     public Country() {
     }
@@ -91,6 +92,17 @@ public class Country implements Serializable {
 
     public void setCities(Set<City> cities) {
         this.cities = cities;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "country"
+    )
+    public Set<Tournament> getTournaments() {
+        return tournaments;
+    }
+
+    public void setTournaments(Set<Tournament> tournaments) {
+        this.tournaments = tournaments;
     }
 
     @Override
