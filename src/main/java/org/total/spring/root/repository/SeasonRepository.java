@@ -11,5 +11,6 @@ import java.util.List;
  */
 public interface SeasonRepository extends JpaRepository<Season, Long> {
     List<Season> findBySeasonName(String seasonName);
+
     List<Season> findBySeasonCode(SeasonCode seasonCode);
 }

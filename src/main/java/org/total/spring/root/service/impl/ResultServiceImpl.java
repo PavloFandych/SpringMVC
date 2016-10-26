@@ -54,14 +54,9 @@ public class ResultServiceImpl implements ResultService {
         getResultRepository().delete(resultId);
     }
 
-
     @Override
-    public Result findResultByResultCode(String resultCode){
+    public Result findResultByResultCode(String resultCode) {
         List<Result> results = getResultRepository().findByResultCode(resultCode);
         return (results != null && !results.isEmpty()) ? results.get(0) : null;
     }
-
-
-
-
 }

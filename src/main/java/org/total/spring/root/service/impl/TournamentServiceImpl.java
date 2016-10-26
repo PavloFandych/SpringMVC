@@ -57,15 +57,14 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
-    public Tournament findTournamentByTournamentName(String tournamentName){
-
+    public Tournament findTournamentByTournamentName(String tournamentName) {
         List<Tournament> tournaments = getTournamentRepository().findByTournamentName(tournamentName);
         return (tournaments != null && !tournaments.isEmpty()) ? tournaments.get(0) : null;
 
     }
 
     @Override
-    public Tournament findTournamentByTournamentCode(TournamentCode tournamentCode){
+    public Tournament findTournamentByTournamentCode(TournamentCode tournamentCode) {
         List<Tournament> tournaments = getTournamentRepository().findByTournamentCode(tournamentCode);
         return (tournaments != null && !tournaments.isEmpty()) ? tournaments.get(0) : null;
     }

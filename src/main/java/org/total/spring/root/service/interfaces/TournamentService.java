@@ -9,7 +9,6 @@ import java.util.List;
  * Created by kostya on 10/21/16.
  */
 public interface TournamentService {
-
     public List<Tournament> findAll();
 
     public Tournament findById(Long tournamentId);

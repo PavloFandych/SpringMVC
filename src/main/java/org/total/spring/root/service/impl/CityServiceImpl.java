@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.root.entity.City;
-import org.total.spring.root.entity.Country;
 import org.total.spring.root.entity.enums.CityCode;
 import org.total.spring.root.repository.CityRepository;
 import org.total.spring.root.service.interfaces.CityService;

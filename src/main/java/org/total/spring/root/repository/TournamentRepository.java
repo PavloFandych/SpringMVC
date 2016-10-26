@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface TournamentRepository extends JpaRepository<Tournament, Long> {
     List<Tournament> findByTournamentName(String tournamentName);
-    List<Tournament> findByTournamentCode(TournamentCode tournamentCode);
 
+    List<Tournament> findByTournamentCode(TournamentCode tournamentCode);
 }

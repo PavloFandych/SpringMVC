@@ -56,15 +56,14 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
-    public Season findSeasonBySeasonName(String seasonName){
-
+    public Season findSeasonBySeasonName(String seasonName) {
         List<Season> seasons = getSeasonRepository().findBySeasonName(seasonName);
         return (seasons != null && !seasons.isEmpty()) ? seasons.get(0) : null;
 
     }
 
     @Override
-    public Season findSeasonBySeasonCode(SeasonCode seasonCode){
+    public Season findSeasonBySeasonCode(SeasonCode seasonCode) {
         List<Season> seasons = getSeasonRepository().findBySeasonCode(seasonCode);
         return (seasons != null && !seasons.isEmpty()) ? seasons.get(0) : null;
     }

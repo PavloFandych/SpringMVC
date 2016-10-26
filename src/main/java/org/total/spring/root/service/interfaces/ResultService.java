@@ -8,16 +8,15 @@ import java.util.List;
  * Created by kostya on 10/21/16.
  */
 public interface ResultService {
+    List<Result> findAll();
 
-     List<Result> findAll();
+    Result findById(Long resultId);
 
-     Result findById(Long resultId);
+    Result save(Result entity);
 
-     Result save(Result entity);
+    Result update(Result entity);
 
-     Result update(Result entity);
+    void deleteResultByResultId(Long resultId);
 
-     void deleteResultByResultId(Long resultId);
-
-     Result findResultByResultCode(String resultCode);
+    Result findResultByResultCode(String resultCode);
 }
