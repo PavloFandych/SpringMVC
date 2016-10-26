@@ -21,7 +21,8 @@ public class Constants {
 
     public static final int CITY_CODE_SIZE = 6;
     public static final int COUNTRY_CODE_SIZE = 3;
-    public static final int TEAM_CODE_SIZE = 5;
+    public static final int TEAM_CODE_SIZE = 6;
     public static final int TOURNAMENT_SIZE = 20;
     public static final int SEASON_CODE_SIZE = 9;
+    public static final int RESULT_CODE_SIZE = 24;
 }

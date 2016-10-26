@@ -1,5 +1,7 @@
 package org.total.spring.root.entity;
 
+import org.total.spring.root.util.Constants;
+
 import javax.persistence.*;
 import java.util.Calendar;
 
@@ -50,7 +52,8 @@ public class Result {
     }
 
     @Column(name = "resultCode",
-            nullable = true
+            nullable = false,
+            length = Constants.RESULT_CODE_SIZE
     )
     public String getResultCode() {
         return resultCode;
