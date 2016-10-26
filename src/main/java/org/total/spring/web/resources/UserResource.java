@@ -498,12 +498,4 @@ public class UserResource {
         getRoleService().save(new Role(RoleType.GUEST));
         return "OK";
     }
-
-/*    @RequestMapping(value = "/cityCodeExists",
-            method = RequestMethod.GET)
-    public String cityCodeExists(@PathVariable String userName) {
-        if ()
-        String code;
-        return code;
-    }*/
 }

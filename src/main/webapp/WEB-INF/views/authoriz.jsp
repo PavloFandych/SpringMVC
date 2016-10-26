@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Registration</title>
+    <title>Authorization</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
     <script src="<c:url value="/resources/js/jquery.js" />"></script>

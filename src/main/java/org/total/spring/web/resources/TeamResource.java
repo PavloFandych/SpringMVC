@@ -207,9 +207,7 @@ public class TeamResource {
     @RequestMapping(value = "/teams",
             method = RequestMethod.POST)
     public String official() {
-
         List<Team> teams = getTeamService().findAll();
-
         return teams.toString();
     }
 }

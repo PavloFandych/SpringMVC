@@ -86,10 +86,13 @@ public class CityRepositoryBDUnitTest {
         setUpIsDone = true;
     }
 
+    /*
+    * See datasetCity.xml.
+    * Four instances are located there
+    * */
     @Test
     @Transactional
     public void testCountCities() throws Exception {
-        /*See datasetCity.xml. Four instances are located there*/
         int cities = 4;
         Assert.assertEquals(cities, cityRepository.findAll().size());
     }
@@ -97,10 +100,14 @@ public class CityRepositoryBDUnitTest {
     @Test
     @Transactional
     public void testEveryCityCode() throws Exception {
-        Assert.assertEquals(CityCode.BERL, cityRepository.findByCityCode(CityCode.BERL).get(0).getCityCode());
-        Assert.assertEquals(CityCode.HAMB, cityRepository.findByCityCode(CityCode.HAMB).get(0).getCityCode());
-        Assert.assertEquals(CityCode.MUNI, cityRepository.findByCityCode(CityCode.MUNI).get(0).getCityCode());
-        Assert.assertEquals(CityCode.DORT, cityRepository.findByCityCode(CityCode.DORT).get(0).getCityCode());
+        Assert.assertEquals(CityCode.BERL, cityRepository
+                .findByCityCode(CityCode.BERL).get(0).getCityCode());
+        Assert.assertEquals(CityCode.HAMB, cityRepository
+                .findByCityCode(CityCode.HAMB).get(0).getCityCode());
+        Assert.assertEquals(CityCode.MUNI, cityRepository
+                .findByCityCode(CityCode.MUNI).get(0).getCityCode());
+        Assert.assertEquals(CityCode.DORT, cityRepository
+                .findByCityCode(CityCode.DORT).get(0).getCityCode());
     }
 
     private String getSchemaName() {
