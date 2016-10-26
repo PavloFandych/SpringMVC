@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.total.spring.root.bean.RegistrationBean;
-import org.total.spring.root.entity.City;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CityCode;
 import org.total.spring.root.entity.enums.RoleType;
@@ -110,7 +109,7 @@ public class RegisterController {
 
                         userToRegister = new User(registrationBean.getUserName(),
                                 getPasswordManager().encodeMD5(registrationBean.getPassword()),
-                                getCityService().findCityByCityCode(CityCode.NKNWN),
+                                getCityService().findCityByCityCode(CityCode.NKNW),
                                 registrationBean.getUserEmail());
                     } else {
 

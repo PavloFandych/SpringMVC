@@ -1,4 +1,4 @@
-package org.total.spring;
+package org.total.spring.common;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;

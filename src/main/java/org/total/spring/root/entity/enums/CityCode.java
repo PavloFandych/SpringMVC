@@ -1,7 +1,11 @@
 package org.total.spring.root.entity.enums;
 
 public enum CityCode {
-    NKNWN,
+    NKNW,
     KYIV,
-    LNDN
+    LNDN,
+    BERL,
+    HAMB,
+    MUNI,
+    DORT
 }
