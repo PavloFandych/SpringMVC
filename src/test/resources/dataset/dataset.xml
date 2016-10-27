@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <Country countryId="1" countryCode="DEU" countryName="Germany"/>
+
+    <City cityId="1" cityCode="BERL" cityName="BERLIN" countryId="1"/>
+    <City cityId="2" cityCode="HAMB" cityName="HAMBURG" countryId="1"/>
+    <City cityId="3" cityCode="MUNI" cityName="MUNICH" countryId="1"/>
+    <City cityId="4" cityCode="DORT" cityName="DORTMUND" countryId="1"/>
+
+    <Tournament tournamentId="1" tournamentCode="DEU_BUNDESLIGA_1" tournamentType="LEAGUE01" tournamentName="Bundes Liga 1"  countryId="1"/>
+    <Tournament tournamentId="2" tournamentCode="DEU_BUNDESLIGA_2" tournamentType="LEAGUE02" tournamentName="Bundes Liga 2" countryId="1"/>
+    <Tournament tournamentId="3" tournamentCode="DEU_BUNDESLIGA_3" tournamentType="LEAGUE03" tournamentName="Bundes Liga 3" countryId="1"/>
+</dataset>

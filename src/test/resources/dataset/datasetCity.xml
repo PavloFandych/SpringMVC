@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<dataset>
-    <Country countryId="1" countryCode="DEU" countryName="Germany"/>
-
-    <City cityId="1" cityCode="BERL" cityName="BERLIN" countryId="1"/>
-    <City cityId="2" cityCode="HAMB" cityName="HAMBURG" countryId="1"/>
-    <City cityId="3" cityCode="MUNI" cityName="MUNICH" countryId="1"/>
-    <City cityId="4" cityCode="DORT" cityName="DORTMUND" countryId="1"/>
-</dataset>
