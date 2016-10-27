@@ -3,7 +3,6 @@ package org.total.spring.repository;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DbUnitConfiguration;
 import org.apache.commons.io.Charsets;
-import org.apache.log4j.Logger;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
@@ -37,10 +36,8 @@ import java.util.Properties;
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
 @DbUnitConfiguration(databaseConnection = "h2DataSource")
-public class CityRepositoryBDUnitTest {
-    private static final Logger LOGGER = Logger.getLogger(CityRepositoryBDUnitTest.class);
+public class CityRepositoryDBUnitTest extends AbstractRepositoryDBUnitTEst {
     private static boolean setUpIsDone = false;
-
 
     @Autowired
     private CityRepository cityRepository;
@@ -61,9 +58,9 @@ public class CityRepositoryBDUnitTest {
         Properties databaseProperties = new Properties();
         Properties configProperties = new Properties();
 
-        databaseProperties.load(CityRepositoryBDUnitTest.class.getClassLoader()
+        databaseProperties.load(CityRepositoryDBUnitTest.class.getClassLoader()
                 .getResourceAsStream("config/db.properties"));
-        configProperties.load(CityRepositoryBDUnitTest.class.getClassLoader()
+        configProperties.load(CityRepositoryDBUnitTest.class.getClassLoader()
                 .getResourceAsStream("config/config.properties"));
 
         RunScript.execute(databaseProperties.getProperty("h2dbUrl"),
@@ -110,11 +107,13 @@ public class CityRepositoryBDUnitTest {
                 .findByCityCode(CityCode.DORT).get(0).getCityCode());
     }
 
-    private String getSchemaName() {
+    @Override
+    protected String getSchemaName() {
         return "schemaCity";
     }
 
-    private String getDataSetName() {
+    @Override
+    protected String getDataSetName() {
         return "datasetCity";
     }
 }
