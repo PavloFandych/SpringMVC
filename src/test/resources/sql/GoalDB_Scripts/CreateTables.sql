@@ -1,5 +1,3 @@
-
-
 -- create 'Country' table
 CREATE TABLE `Country` (
   `countryId` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -24,7 +22,7 @@ CREATE TABLE `City` (
 -- create 'Team' table
 CREATE TABLE `Team` (
   `teamId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `teamCode` varchar(5) NOT NULL,
+  `teamCode` varchar(6) NOT NULL,
   `teamName` varchar(255) NOT NULL,
   `cityId` bigint(20) NOT NULL,
   PRIMARY KEY (`teamId`),
@@ -59,10 +57,10 @@ CREATE TABLE `Tournament` (
 CREATE TABLE `Result` (
   `resultId` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
-  `goalsByGuest` int(11) DEFAULT NULL,
-  `goalsByHost` int(11) DEFAULT NULL,
-  `matchDay` int(11) NOT NULL,
-  `resultCode` varchar(255) DEFAULT NULL,
+  `goalsByGuest` tinyint(4) DEFAULT NULL,
+  `goalsByHost` tinyint(4) DEFAULT NULL,
+  `matchDay` tinyint(4) NOT NULL,
+  `resultCode` varchar(24) DEFAULT NULL,
   `guestTeamId` bigint(20) NOT NULL,
   `hostTeamId` bigint(20) NOT NULL,
   `seasonId` bigint(20) NOT NULL,
