@@ -197,17 +197,14 @@ public class Result {
 
     @Override
     public String toString() {
-        return "Result{resultId=" + resultId +
+        return "Result{" +
+                "goalsByHost=" + goalsByHost +
+                ", goalsByGuest=" + goalsByGuest +
+                ", resultId=" + resultId +
                 ", resultCode='" + resultCode + '\'' +
-                ", tournament=" + tournament +
-                ", season=" + season +
-                ", matchDay=" + matchDay +
+                ", date=" + date +
                 ", hostTeam=" + hostTeam +
                 ", guestTeam=" + guestTeam +
-                ", goalsByHost=" + goalsByHost +
-                ", goalsByGuest=" + goalsByGuest +
-                ", Date=" + date.get(Calendar.DATE) + " " + date.get(Calendar.MONTH) + " " + date.get(Calendar.YEAR) +
-                ", Score=" + calcScore() +
                 '}';
     }
 }

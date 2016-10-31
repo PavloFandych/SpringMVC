@@ -331,6 +331,3 @@ INSERT INTO City(cityCode, cityName, countryId) values
  ('VICE', 'Vicenza', (select countryId from Country where countryCode='ITA')),
  ('VITE', 'Viterbo', (select countryId from Country where countryCode='ITA')),
  ('VIVA', 'Vibo Valentia', (select countryId from Country where countryCode='ITA'));
-
-
-

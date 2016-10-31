@@ -39,7 +39,10 @@ public class CityResource {
     @RequestMapping(value = "/cities",
             method = RequestMethod.POST)
     public String official() {
-//        getCityService().save(new City("Kyiv", CityCode.KYIV));
-        return "OK";
+        StringBuilder stringBuilder = new StringBuilder();
+        for (City item : getCityService().findAll()) {
+            stringBuilder.append(" ").append(item.getCityName()).append("\n");
+        }
+        return stringBuilder.toString();
     }
 }

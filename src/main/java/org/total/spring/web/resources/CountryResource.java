@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.total.spring.root.entity.Country;
+import org.total.spring.root.entity.Team;
 import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.marshall.ContentHandler;
@@ -200,5 +201,15 @@ public class CountryResource {
         }
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         return Constants.ERROR;
+    }
+
+    @RequestMapping(value = "/countries/test",
+            method = RequestMethod.POST)
+    public String official() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Country item : getCountryService().findAll()) {
+            stringBuilder.append(" ").append(item.getCountryName()).append("\n");
+        }
+        return stringBuilder.toString();
     }
 }

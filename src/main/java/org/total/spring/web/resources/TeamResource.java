@@ -3,6 +3,7 @@ package org.total.spring.web.resources;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.total.spring.root.entity.City;
 import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.entity.Team;
 import org.total.spring.root.entity.User;
@@ -204,10 +205,13 @@ public class TeamResource {
         return Constants.ERROR;
     }
 
-    @RequestMapping(value = "/teams",
+    @RequestMapping(value = "/teams/test",
             method = RequestMethod.POST)
     public String official() {
-        List<Team> teams = getTeamService().findAll();
-        return teams.toString();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Team item : getTeamService().findAll()) {
+            stringBuilder.append(" ").append(item.getTeamName()).append("\n");
+        }
+        return stringBuilder.toString();
     }
 }
