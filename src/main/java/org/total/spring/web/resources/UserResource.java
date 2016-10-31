@@ -4,9 +4,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.total.spring.root.entity.Role;
-import org.total.spring.root.entity.enums.CityCode;
-import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.entity.User;
+import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.marshall.ContentHandler;
 import org.total.spring.root.service.interfaces.RoleService;
 import org.total.spring.root.service.interfaces.UserRoleService;
@@ -387,7 +386,7 @@ public class UserResource {
                                     response.setStatus(HttpServletResponse.SC_CONFLICT);
                                     return Constants.USER_ALREADY_EXISTS;
                                 } else {
-                                    getUserRoleService().assignRoleByUserNameAndRoleType(userXML.getUserName(), RoleType.USER);
+                                    getUserRoleService().assignRole(userXML.getUserName(), RoleType.USER);
                                     getUserService().save(userXML);
                                     response.setStatus(HttpServletResponse.SC_OK);
                                     return Constants.SUCCESS;
@@ -491,11 +490,17 @@ public class UserResource {
     @RequestMapping(value = "/test",
             method = RequestMethod.POST)
     public String official() {
-        getRoleService().save(new Role(RoleType.ADMIN));
-        getRoleService().save(new Role(RoleType.MODERATOR));
-        getRoleService().save(new Role(RoleType.SUPERUSER));
-        getRoleService().save(new Role(RoleType.USER));
-        getRoleService().save(new Role(RoleType.GUEST));
+//        getRoleService().save(new Role(RoleType.ADMIN));
+//        getRoleService().save(new Role(RoleType.MODERATOR));
+//        getRoleService().save(new Role(RoleType.SUPERUSER));
+//        getRoleService().save(new Role(RoleType.USER));
+//        getRoleService().save(new Role(RoleType.GUEST));
+//        User user = new User();
+//        user.setUserName("Cat");
+//        user.setPassword(getPasswordManager().encodeMD5("cat"));
+//        user.setUserEmail("cat@cat.com");
+//        getUserService().save(user);
+//        getUserRoleService().assignRole("Cat", RoleType.ADMIN);
         return "OK";
     }
 }

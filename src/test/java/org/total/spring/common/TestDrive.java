@@ -214,4 +214,9 @@ public class TestDrive {
 
         LOGGER.info("SIZE: " + users.size() + " " + users);
     }
+
+    @Test
+    public void md5Test() throws Exception {
+        LOGGER.info(getPasswordManager().encodeMD5("cat"));
+    }
 }

@@ -27,7 +27,7 @@ CREATE TABLE `Capability` (
   `capabilityType` varchar(255) NOT NULL,
   PRIMARY KEY (`capabilityId`),
   UNIQUE KEY `capabilityType` (`capabilityType`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,33 +36,8 @@ CREATE TABLE `Capability` (
 
 LOCK TABLES `Capability` WRITE;
 /*!40000 ALTER TABLE `Capability` DISABLE KEYS */;
+INSERT INTO `Capability` VALUES (1,'CREATE'),(4,'DELETE'),(2,'READ'),(3,'UPDATE');
 /*!40000 ALTER TABLE `Capability` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Capability_Role`
---
-
-DROP TABLE IF EXISTS `Capability_Role`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Capability_Role` (
-  `capabilityId` bigint(20) NOT NULL,
-  `roleId` bigint(20) NOT NULL,
-  PRIMARY KEY (`capabilityId`,`roleId`),
-  KEY `FK_capabilityIdroleId` (`roleId`),
-  CONSTRAINT `FK_capabilityId` FOREIGN KEY (`capabilityId`) REFERENCES `Capability` (`capabilityId`),
-  CONSTRAINT `FK_capabilityIdroleId` FOREIGN KEY (`roleId`) REFERENCES `Role` (`roleId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Capability_Role`
---
-
-LOCK TABLES `Capability_Role` WRITE;
-/*!40000 ALTER TABLE `Capability_Role` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Capability_Role` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -170,7 +145,7 @@ CREATE TABLE `Role` (
   `roleType` varchar(255) NOT NULL,
   PRIMARY KEY (`roleId`),
   UNIQUE KEY `roleType` (`roleType`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +154,35 @@ CREATE TABLE `Role` (
 
 LOCK TABLES `Role` WRITE;
 /*!40000 ALTER TABLE `Role` DISABLE KEYS */;
+INSERT INTO `Role` VALUES (1,'ADMIN'),(5,'GUEST'),(2,'MODERATOR'),(3,'SUPERUSER'),(4,'USER');
 /*!40000 ALTER TABLE `Role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Role_Capability`
+--
+
+DROP TABLE IF EXISTS `Role_Capability`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Role_Capability` (
+  `roleId` bigint(20) NOT NULL,
+  `capabilityId` bigint(20) NOT NULL,
+  PRIMARY KEY (`roleId`,`capabilityId`),
+  KEY `FK_roleIdCapabilityId` (`capabilityId`),
+  CONSTRAINT `FK_roleId` FOREIGN KEY (`roleId`) REFERENCES `Role` (`roleId`),
+  CONSTRAINT `FK_roleIdCapabilityId` FOREIGN KEY (`capabilityId`) REFERENCES `Capability` (`capabilityId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Role_Capability`
+--
+
+LOCK TABLES `Role_Capability` WRITE;
+/*!40000 ALTER TABLE `Role_Capability` DISABLE KEYS */;
+INSERT INTO `Role_Capability` VALUES (1,1),(2,1),(3,1),(1,2),(2,2),(3,2),(4,2),(1,3),(2,3),(1,4);
+/*!40000 ALTER TABLE `Role_Capability` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -281,7 +284,7 @@ CREATE TABLE `User` (
   UNIQUE KEY `userName` (`userName`),
   KEY `FK_userId_cityId` (`cityId`),
   CONSTRAINT `FK_userId_cityId` FOREIGN KEY (`cityId`) REFERENCES `City` (`cityId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -290,6 +293,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
+INSERT INTO `User` VALUES (1,'d077f244def8a70e5ea758bd8352fcd8','cat@cat.com','Cat',NULL);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -316,6 +320,7 @@ CREATE TABLE `User_Role` (
 
 LOCK TABLES `User_Role` WRITE;
 /*!40000 ALTER TABLE `User_Role` DISABLE KEYS */;
+INSERT INTO `User_Role` VALUES (1,1);
 /*!40000 ALTER TABLE `User_Role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -328,4 +333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-27  1:30:22
+-- Dump completed on 2016-10-31 11:16:17

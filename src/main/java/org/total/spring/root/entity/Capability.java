@@ -3,6 +3,7 @@ package org.total.spring.root.entity;
 import org.total.spring.root.entity.enums.CapabilityType;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -52,24 +53,25 @@ public class Capability {
 
     /*roles field mapping*/
     @ManyToMany(fetch = FetchType.LAZY,
+            mappedBy = "capabilities",
             cascade = CascadeType.ALL
     )
-    @JoinTable(
-            name = "Capability_Role",
-            joinColumns = {
-                    @JoinColumn(name = "capabilityId", nullable = false)
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "roleId", nullable = false)
-            },
-            foreignKey = @ForeignKey(name = "FK_capabilityId"),
-            inverseForeignKey = @ForeignKey(name = "FK_capabilityIdroleId")
-    )
     public Set<Role> getRoles() {
+        if (this.roles == null) {
+            this.roles = new HashSet<>();
+        }
         return roles;
     }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "Capability{" +
+                "capabilityId=" + capabilityId +
+                ", capabilityType=" + capabilityType +
+                '}';
     }
 }

@@ -41,13 +41,14 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public boolean assignRoleByUserNameAndRoleType(String userName, RoleType roleType) {
+    public boolean assignRole(String userName, RoleType roleType) {
         User userToUpdate = getUserService().findUserByUserName(userName);
         Role roleToAssign = getRoleService().findRoleByRoleType(roleType);
         if (userToUpdate != null && roleToAssign != null) {
             if (!userToUpdate.getRoles().contains(roleToAssign)) {
                 userToUpdate.getRoles().add(roleToAssign);
                 getUserService().save(userToUpdate);
+                return true;
             }
             return false;
         }
@@ -55,13 +56,14 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public boolean revokeRoleByUserNameAndRoleType(String userName, RoleType roleType) {
+    public boolean revokeRole(String userName, RoleType roleType) {
         User userToUpdate = getUserService().findUserByUserName(userName);
         Role roleToRevoke = getRoleService().findRoleByRoleType(roleType);
         if (userToUpdate != null && roleToRevoke != null) {
             if (userToUpdate.getRoles().contains(roleToRevoke)) {
                 userToUpdate.getRoles().remove(roleToRevoke);
                 getUserService().save(userToUpdate);
+                return true;
             }
             return false;
         }

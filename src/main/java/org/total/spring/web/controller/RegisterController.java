@@ -123,7 +123,7 @@ public class RegisterController {
 
                     try {
                         getUserService().save(userToRegister);
-                        getUserRoleService().assignRoleByUserNameAndRoleType(registrationBean.getUserName(),
+                        getUserRoleService().assignRole(registrationBean.getUserName(),
                                 RoleType.GUEST);
 
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " role \"" + RoleType.GUEST

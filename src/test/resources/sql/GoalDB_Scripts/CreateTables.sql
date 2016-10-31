@@ -104,25 +104,24 @@ CREATE TABLE `Role` (
   `roleType` varchar(255) NOT NULL,
   PRIMARY KEY (`roleId`),
   UNIQUE KEY `roleType` (`roleType`)
-) DEFAULT CHARSET=utf8; 
-
--- Create 'Capability_Role' table
-CREATE TABLE `Capability_Role` (
-  `capabilityId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `roleId` bigint(20) NOT NULL,
-  PRIMARY KEY (`capabilityId`,`roleId`),
-  KEY `FK_capabilityIdroleId` (`roleId`),
-  CONSTRAINT `FK_capabilityId` FOREIGN KEY (`capabilityId`) REFERENCES `Capability` (`capabilityId`),
-  CONSTRAINT `FK_capabilityIdroleId` FOREIGN KEY (`roleId`) REFERENCES `Role` (`roleId`)
 ) DEFAULT CHARSET=utf8;
+
+-- Create 'Role_Capability' table
+CREATE TABLE `Role_Capability` (
+  `roleId` bigint(20) NOT NULL,
+  `capabilityId` bigint(20) NOT NULL,
+  PRIMARY KEY (`roleId`,`capabilityId`),
+  KEY `FK_roleIdCapabilityId` (`capabilityId`),
+  CONSTRAINT `FK_roleId` FOREIGN KEY (`roleId`) REFERENCES `Role` (`roleId`),
+  CONSTRAINT `FK_roleIdCapabilityId` FOREIGN KEY (`capabilityId`) REFERENCES `Capability` (`capabilityId`)
+) DEFAULT CHARSET=utf-8
 
 -- create 'User_Role' table
 CREATE TABLE `User_Role` (
   `userId` bigint(20) NOT NULL,
   `roleId` bigint(20) NOT NULL,
   PRIMARY KEY (`userId`,`roleId`),
-  KEY `FK_roleId` (`roleId`),
+  KEY `FK_UserIdroleId` (`roleId`),
   CONSTRAINT `FK_userId` FOREIGN KEY (`userId`) REFERENCES `User` (`userId`),
-  CONSTRAINT `FK_roleId` FOREIGN KEY (`roleId`) REFERENCES `Role` (`roleId`)
-) DEFAULT CHARSET=utf8; 
-
+  CONSTRAINT `FK_UserIdroleId` FOREIGN KEY (`roleId`) REFERENCES `Role` (`roleId`)
+) CHARSET=utf-8

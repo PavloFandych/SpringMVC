@@ -81,13 +81,26 @@ public class Role implements Serializable {
         return users;
     }
 
-    /*users field mapping*/
+    /*capabilities field mapping*/
     @ManyToMany(fetch = FetchType.LAZY,
-            mappedBy = "roles",
             cascade = CascadeType.ALL
+    )
+    @JoinTable(
+            name = "Role_Capability",
+            joinColumns = {
+                    @JoinColumn(name = "roleId", nullable = false)
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "capabilityId", nullable = false)
+            },
+            foreignKey = @ForeignKey(name = "FK_roleId"),
+            inverseForeignKey = @ForeignKey(name = "FK_roleIdCapabilityId")
     )
     @XmlTransient
     public Set<Capability> getCapabilities() {
+        if (capabilities == null) {
+            capabilities = new HashSet<>();
+        }
         return capabilities;
     }
 
@@ -103,7 +116,7 @@ public class Role implements Serializable {
     public String toString() {
         return "Role{" +
                 "roleId=" + roleId +
-                ", roleType='" + roleType + '\'' +
+                ", roleType=" + roleType +
                 '}';
     }
 
