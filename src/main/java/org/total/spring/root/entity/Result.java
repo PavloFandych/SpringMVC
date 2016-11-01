@@ -3,6 +3,7 @@ package org.total.spring.root.entity;
 import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Calendar;
                 @UniqueConstraint(name = "resultCode", columnNames = "resultCode")
         }
 )
-public class Result {
+public class Result implements Serializable {
     private long resultId;
     private String resultCode;
     private Tournament tournament;

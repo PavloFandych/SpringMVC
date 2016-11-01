@@ -3,6 +3,7 @@ package org.total.spring.root.entity;
 import org.total.spring.root.entity.enums.CapabilityType;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ import java.util.Set;
                 @UniqueConstraint(name = "capabilityType", columnNames = "capabilityType")
         }
 )
-public class Capability {
+public class Capability implements Serializable {
     private long capabilityId;
     private CapabilityType capabilityType;
     private Set<Role> roles;

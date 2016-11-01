@@ -5,6 +5,7 @@ import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ import java.util.Set;
 )
 @XmlRootElement
 @XmlType(propOrder = {"cityId", "cityName", "cityCode", "country", "teams"})
-public class City {
+public class City implements Serializable {
     private long cityId;
     private String cityName;
     private CityCode cityCode;

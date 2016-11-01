@@ -9,6 +9,7 @@ import org.total.spring.root.entity.enums.TournamentType;
 import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
@@ -18,7 +19,7 @@ import java.util.Set;
                 @UniqueConstraint(name = "tournamentCode", columnNames = "tournamentCode")
         }
 )
-public class Tournament {
+public class Tournament implements Serializable {
     private long tournamentId;
     private TournamentType tournamentType;
     private TournamentCode tournamentCode;
