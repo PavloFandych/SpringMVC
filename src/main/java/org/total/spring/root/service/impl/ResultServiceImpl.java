@@ -35,12 +35,12 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     @Caching(evict = @CacheEvict(
-            value = "results",
+            value = "applicationCache",
             cacheManager = "springCashManager",
             allEntries = true
     ),
             cacheable = @Cacheable(
-                    value = "results",
+                    value = "applicationCache",
                     cacheManager = "springCashManager"
             )
     )
@@ -49,7 +49,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    @Cacheable(value = "results",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )
@@ -58,7 +58,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    @CachePut(value = "results",
+    @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public Result save(Result entity) {
@@ -66,7 +66,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    @CachePut(value = "results",
+    @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public Result update(Result entity) {
@@ -74,7 +74,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    @CacheEvict(value = "results",
+    @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public void deleteResultByResultId(Long resultId) {
@@ -82,7 +82,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    @Cacheable(value = "results",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )

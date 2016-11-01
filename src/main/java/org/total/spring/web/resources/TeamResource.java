@@ -214,4 +214,10 @@ public class TeamResource {
         }
         return stringBuilder.toString();
     }
+
+    @RequestMapping(value = "/teams/test/{teamId}",
+            method = RequestMethod.POST)
+    public String findById(@PathVariable Long teamId) {
+        return getTeamService().findById(teamId).toString();
+    }
 }

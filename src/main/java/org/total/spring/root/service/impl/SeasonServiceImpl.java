@@ -36,12 +36,12 @@ public class SeasonServiceImpl implements SeasonService {
 
     @Override
     @Caching(evict = @CacheEvict(
-            value = "seasons",
+            value = "applicationCache",
             cacheManager = "springCashManager",
             allEntries = true
     ),
             cacheable = @Cacheable(
-                    value = "seasons",
+                    value = "applicationCache",
                     cacheManager = "springCashManager"
             )
     )
@@ -50,7 +50,7 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
-    @Cacheable(value = "seasons",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )
@@ -59,7 +59,7 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
-    @CachePut(value = "seasons",
+    @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public Season save(Season entity) {
@@ -67,7 +67,7 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
-    @CachePut(value = "seasons",
+    @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public Season update(Season entity) {
@@ -75,7 +75,7 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
-    @CacheEvict(value = "seasons",
+    @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public void deleteSeasonBySeasonId(Long seasonId) {
@@ -83,7 +83,7 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
-    @Cacheable(value = "seasons",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )
@@ -94,7 +94,7 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
-    @Cacheable(value = "seasons",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )

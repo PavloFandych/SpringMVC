@@ -31,12 +31,12 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     @Caching(evict = @CacheEvict(
-            value = "teams",
+            value = "applicationCache",
             cacheManager = "springCashManager",
             allEntries = true
     ),
             cacheable = @Cacheable(
-                    value = "teams",
+                    value = "applicationCache",
                     cacheManager = "springCashManager"
             )
     )
@@ -45,7 +45,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    @Cacheable(value = "teams",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )
@@ -54,7 +54,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    @CachePut(value = "teams",
+    @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public Team save(Team entity) {
@@ -62,7 +62,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    @CachePut(value = "teams",
+    @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public Team update(Team entity) {
@@ -70,7 +70,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    @CacheEvict(value = "teams",
+    @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public void deleteTeamByTeamId(Long teamId) {
@@ -78,7 +78,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    @Cacheable(value = "teams",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )

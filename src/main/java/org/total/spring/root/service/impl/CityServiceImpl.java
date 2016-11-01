@@ -32,12 +32,12 @@ public class CityServiceImpl implements CityService {
 
     @Override
     @Caching(evict = @CacheEvict(
-            value = "cities",
+            value = "applicationCache",
             cacheManager = "springCashManager",
             allEntries = true
     ),
             cacheable = @Cacheable(
-                    value = "cities",
+                    value = "applicationCache",
                     cacheManager = "springCashManager"
             )
     )
@@ -46,7 +46,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    @Cacheable(value = "cities",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )
@@ -55,7 +55,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    @CachePut(value = "cities",
+    @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public City save(City entity) {
@@ -63,7 +63,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    @CachePut(value = "cities",
+    @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public City update(City entity) {
@@ -71,7 +71,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    @CacheEvict(value = "cities",
+    @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public void deleteCityByCityId(Long cityId) {
@@ -79,7 +79,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    @Cacheable(value = "cities",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )
@@ -89,7 +89,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    @Cacheable(value = "cities",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )

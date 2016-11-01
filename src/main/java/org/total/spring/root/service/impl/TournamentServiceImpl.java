@@ -37,12 +37,12 @@ public class TournamentServiceImpl implements TournamentService {
 
     @Override
     @Caching(evict = @CacheEvict(
-            value = "tournaments",
+            value = "applicationCache",
             cacheManager = "springCashManager",
             allEntries = true
     ),
             cacheable = @Cacheable(
-                    value = "tournaments",
+                    value = "applicationCache",
                     cacheManager = "springCashManager"
             )
     )
@@ -51,7 +51,7 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
-    @Cacheable(value = "tournaments",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )
@@ -60,7 +60,7 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
-    @CachePut(value = "tournaments",
+    @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public Tournament save(Tournament entity) {
@@ -68,7 +68,7 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
-    @CachePut(value = "tournaments",
+    @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public Tournament update(Tournament entity) {
@@ -76,7 +76,7 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
-    @CacheEvict(value = "tournaments",
+    @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public void deleteTournamentByTournamentId(Long tournamentId) {
@@ -84,7 +84,7 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
-    @Cacheable(value = "tournaments",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )
@@ -95,6 +95,10 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
+    @Cacheable(value = "applicationCache",
+            cacheManager = "springCashManager",
+            sync = true
+    )
     public Tournament findTournamentByTournamentCode(TournamentCode tournamentCode) {
         List<Tournament> tournaments = getTournamentRepository().findByTournamentCode(tournamentCode);
         return (tournaments != null && !tournaments.isEmpty()) ? tournaments.get(0) : null;

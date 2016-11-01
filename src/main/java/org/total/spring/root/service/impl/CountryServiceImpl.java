@@ -32,12 +32,12 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     @Caching(evict = @CacheEvict(
-            value = "countries",
+            value = "applicationCache",
             cacheManager = "springCashManager",
             allEntries = true
     ),
             cacheable = @Cacheable(
-                    value = "countries",
+                    value = "applicationCache",
                     cacheManager = "springCashManager"
             )
     )
@@ -46,7 +46,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    @Cacheable(value = "countries",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )
@@ -55,7 +55,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    @CachePut(value = "countries",
+    @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public Country save(Country entity) {
@@ -63,7 +63,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    @CachePut(value = "countries",
+    @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public Country update(Country entity) {
@@ -71,7 +71,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    @CacheEvict(value = "countries",
+    @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public void deleteCountryByCountryId(Long roleId) {
@@ -79,7 +79,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    @Cacheable(value = "countries",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )
@@ -89,7 +89,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    @Cacheable(value = "countries",
+    @Cacheable(value = "applicationCache",
             cacheManager = "springCashManager",
             sync = true
     )
