@@ -23,6 +23,7 @@ public class ResultResource {
         return resultService;
     }
 
+
     public void setResultService(ResultService resultService) {
         this.resultService = resultService;
     }
@@ -30,7 +31,18 @@ public class ResultResource {
     @RequestMapping(value = "/results",
             method = RequestMethod.GET)
     public String official() {
-        Result result = getResultService().findById(1L);
-        return result.toString();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Result item : getResultService().findAll()) {
+            stringBuilder.append(" ")
+                    .append(item.getHostTeam().getTeamName())
+                    .append(" ")
+                    .append(item.getGoalsByHost())
+                    .append(" : ")
+                    .append(item.getGoalsByGuest())
+                    .append(" ")
+                    .append(item.getGuestTeam().getTeamName())
+                    .append("\n");
+        }
+        return stringBuilder.toString();
     }
 }

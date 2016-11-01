@@ -2,6 +2,11 @@ package org.total.spring.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
+import org.springframework.cache.interceptor.CacheResolver;
+import org.springframework.cache.interceptor.SimpleCacheResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +23,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableJpaRepositories("org.total.spring.root.repository")
 @ComponentScan(value = {"org.total.spring.root"}, lazyInit = true)
+@EnableCaching
 public class AppConfig {
     @Bean
     public DataSource getDataSource() {
@@ -49,6 +55,22 @@ public class AppConfig {
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
+    }
+
+    @Bean(name = "springCashManager")
+    public CacheManager cacheManager() {
+        return new ConcurrentMapCacheManager("results",
+                "teams",
+                "tournaments",
+                "cities",
+                "seasons",
+                "countries"
+        );
+    }
+
+    @Bean
+    public CacheResolver cacheResolver() {
+        return new SimpleCacheResolver(new ConcurrentMapCacheManager("results"));
     }
 
     Properties hibernateProperties() {

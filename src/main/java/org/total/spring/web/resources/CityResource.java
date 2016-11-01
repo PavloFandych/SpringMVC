@@ -2,6 +2,7 @@ package org.total.spring.web.resources;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,5 +45,11 @@ public class CityResource {
             stringBuilder.append(" ").append(item.getCityName()).append("\n");
         }
         return stringBuilder.toString();
+    }
+
+    @RequestMapping(value = "/cities/{cityCode}",
+            method = RequestMethod.POST)
+    public String findByCityCode(@PathVariable CityCode cityCode) {
+        return getCityService().findCityByCityCode(cityCode).toString();
     }
 }

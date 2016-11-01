@@ -252,6 +252,6 @@ INSERT INTO Country(countryCode, countryName) values
 ('NIR', 'Northern Ireland'),
 ('SCT', 'Scotland'),
 ('WLS', 'Wales'),
-('INT', 'International');
+('ITR', 'International');
 
 
