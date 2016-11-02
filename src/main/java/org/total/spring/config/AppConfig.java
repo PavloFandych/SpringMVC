@@ -33,7 +33,7 @@ public class AppConfig {
         basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
         basicDataSource.setUrl("jdbc:mysql://localhost:3306/GoalDB");
         basicDataSource.setUsername("root");
-        basicDataSource.setPassword("");
+        basicDataSource.setPassword("mysqlpass");
         return basicDataSource;
     }
 
