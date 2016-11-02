@@ -25,4 +25,8 @@ public interface Constants {
     public static final int TOURNAMENT_SIZE = 20;
     public static final int SEASON_CODE_SIZE = 9;
     public static final int RESULT_CODE_SIZE = 24;
+
+    public static final int MAX_ENTRIES_LOCAL_HEAP = 10000;
+    public static final int MAX_ENTRIES_LOCAL_DISK = 1000000;
+    public static final int TIME_TO_IDLE_SECONDS = 60;
 }

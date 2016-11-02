@@ -34,7 +34,8 @@ public class AppTestConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(getH2DataSource());
         entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-        entityManagerFactoryBean.setPackagesToScan("org.total.spring.root.entity");
+        entityManagerFactoryBean.setPackagesToScan("org.total.spring.root.entity",
+                "org.total.spring.root.proc");
         entityManagerFactoryBean.setJpaProperties(hibernateProperties());
         return entityManagerFactoryBean;
     }

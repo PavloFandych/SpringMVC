@@ -1,6 +1,10 @@
 package org.total.spring.root.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,31 +35,58 @@ public class CapabilityServiceImpl implements CapabilityService {
     }
 
     @Override
+    @Caching(evict = @CacheEvict(
+            value = "applicationCache",
+            cacheManager = "springCashManager",
+            allEntries = true
+    ),
+            cacheable = @Cacheable(
+                    value = "applicationCache",
+                    cacheManager = "springCashManager"
+            )
+    )
     public List<Capability> findAll() {
         return getCapabilityRepository().findAll();
     }
 
     @Override
+    @Cacheable(value = "applicationCache",
+            cacheManager = "springCashManager",
+            sync = true
+    )
     public Capability findByCapabilityId(Long capabilityId) {
         return getCapabilityRepository().findOne(capabilityId);
     }
 
     @Override
+    @CachePut(value = "applicationCache",
+            cacheManager = "springCashManager"
+    )
     public Capability save(Capability entity) {
         return getCapabilityRepository().save(entity);
     }
 
     @Override
+    @CachePut(value = "applicationCache",
+            cacheManager = "springCashManager"
+    )
     public Capability update(Capability entity) {
         return getCapabilityRepository().save(entity);
     }
 
     @Override
+    @CacheEvict(value = "applicationCache",
+            cacheManager = "springCashManager"
+    )
     public void deleteCapabilityByCapabilityId(Long capabilityId) {
         getCapabilityRepository().delete(capabilityId);
     }
 
     @Override
+    @Cacheable(value = "applicationCache",
+            cacheManager = "springCashManager",
+            sync = true
+    )
     public Capability findCapabilityByCapabilityType(CapabilityType capabilityType) {
         List<Capability> capabilities = getCapabilityRepository().findByCapabilityType(capabilityType);
         return (capabilities != null && !capabilities.isEmpty()) ? capabilities.get(0) : null;
