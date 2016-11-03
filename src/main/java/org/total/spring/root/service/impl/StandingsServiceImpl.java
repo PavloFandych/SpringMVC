@@ -42,8 +42,12 @@ public class StandingsServiceImpl implements StandingsService {
 
         for (Object[] item : getTournamentTableRepository().getTournamentTable(seasonCode, tournamentCode, matchDay)) {
             StandingsPosition standingsPosition = new StandingsPosition();
-            standingsPosition.setPlace((BigInteger) item[0]);
+            standingsPosition.setPlace(Byte.parseByte((String)item[0]));
             standingsPosition.setTeamCode((String) item[1]);
+            standingsPosition.setTeamName((String) item[2]);
+            standingsPosition.setGoalsScored((int) item[3]);
+            standingsPosition.setGoalsDiff((int) item[4]);
+            standingsPosition.setPoints((int) item[5]);
             list.add(standingsPosition);
         }
 

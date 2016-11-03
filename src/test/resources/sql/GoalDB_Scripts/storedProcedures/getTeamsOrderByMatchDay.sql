@@ -1,41 +1,64 @@
 DELIMITER $$
 
-DROP PROCEDURE IF exists getTeamsOrderByMatchDay;$$
+DROP PROCEDURE IF EXISTS getTeamsOrderByMatchDay;
+$$
 
 CREATE PROCEDURE getTeamsOrderByMatchDay(
-IN seasonCode VARCHAR(9), 
-IN tournamentCode VARCHAR(20), 
-IN matchDay tinyint(4))
-    BEGIN
-		
-		IF (matchDay<=0) then
-		SELECT 'place', 'teamCode', 'teamName', 'goalsScored', 'goalsDiff', 'points' LIMIT 0;
-		else
-		
-		SET @row_number= 0;
+  IN seasonCode     VARCHAR(9),
+  IN tournamentCode VARCHAR(20),
+  IN matchDay       TINYINT(4))
+  BEGIN
 
-		select CAST(@row_number:=@row_number+1 AS unsigned) AS place, teamCode, teamName, goalsScored, goalsDiff, points from (
-			select  TeamList.teamCode
-					,TeamList.teamName
-				, getTeamPointsByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, matchDay) as points
-				, getTeamGoalsTotalByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, matchDay) as goalsScored
-				, getTeamGoalsDiffTotalByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, matchDay) as goalsDiff
-				from (
-					select distinct te.teamCode, te.teamName from Result r
-						join Tournament tr on r.tournamentId=tr.tournamentId
-						join Season s on r.seasonId=s.seasonId
-						join Team te on r.hostTeamId=te.teamId
-						where tr.tournamentCode=tournamentCode 
-							and s.seasonCode=seasonCode
-						union 
-						select distinct te.teamCode, te.teamName from Result r
-						join Tournament tr on r.tournamentId=tr.tournamentId
-						join Season s on r.seasonId=s.seasonId
-						join Team te on r.guestTeamId=te.teamId
-						where tr.tournamentCode=@tournamentCode
-							and s.seasonCode=seasonCode) TeamList
-		order by points desc, goalsDiff desc, goalsScored desc ) TeamsOrdered;
-		end if;
-    END$$
+    IF (matchDay <= 0)
+    THEN
+      SELECT
+        'place',
+        'teamCode',
+        'teamName',
+        'goalsScored',
+        'goalsDiff',
+        'points'
+      LIMIT 0;
+    ELSE
+
+      SET @row_number = 0;
+
+      SELECT
+        CAST(@row_number := @row_number + 1 AS CHAR) AS place,
+        teamCode,
+        teamName,
+        goalsScored,
+        goalsDiff,
+        points
+      FROM (
+             SELECT
+               TeamList.teamCode,
+               TeamList.teamName,
+               getTeamPointsByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, matchDay)         AS points,
+               getTeamGoalsTotalByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, matchDay)     AS goalsScored,
+               getTeamGoalsDiffTotalByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, matchDay) AS goalsDiff
+             FROM (
+                    SELECT DISTINCT
+                      te.teamCode,
+                      te.teamName
+                    FROM Result r
+                      JOIN Tournament tr ON r.tournamentId = tr.tournamentId
+                      JOIN Season s ON r.seasonId = s.seasonId
+                      JOIN Team te ON r.hostTeamId = te.teamId
+                    WHERE tr.tournamentCode = tournamentCode
+                          AND s.seasonCode = seasonCode
+                    UNION
+                    SELECT DISTINCT
+                      te.teamCode,
+                      te.teamName
+                    FROM Result r
+                      JOIN Tournament tr ON r.tournamentId = tr.tournamentId
+                      JOIN Season s ON r.seasonId = s.seasonId
+                      JOIN Team te ON r.guestTeamId = te.teamId
+                    WHERE tr.tournamentCode = @tournamentCode
+                          AND s.seasonCode = seasonCode) TeamList
+             ORDER BY points DESC, goalsDiff DESC, goalsScored DESC) TeamsOrdered;
+    END IF;
+  END$$
 
 DELIMITER ;
