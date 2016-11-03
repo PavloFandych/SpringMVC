@@ -7,7 +7,7 @@ import java.math.BigInteger;
  * Created by pavlo.fandych on 11/3/2016.
  */
 
-public class PositionInTournamentTable implements Serializable {
+public class StandingsPosition implements Serializable {
     private BigInteger place;
     private String teamCode;
 

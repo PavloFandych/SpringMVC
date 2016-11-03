@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.entity.enums.TournamentCode;
-import org.total.spring.root.proc.PositionInTournamentTable;
-import org.total.spring.root.repository.TournamentTableRepository;
-import org.total.spring.root.service.interfaces.TournamentTableService;
+import org.total.spring.root.proc.StandingsPosition;
+import org.total.spring.root.repository.StandingsRepository;
+import org.total.spring.root.service.interfaces.StandingsService;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -20,31 +20,31 @@ import java.util.List;
 
 @Repository
 @Transactional
-@Service("tournamentTableService")
-public class TournamentTableServiceImpl implements TournamentTableService {
+@Service("standingsService")
+public class StandingsServiceImpl implements StandingsService {
     @Autowired
-    private TournamentTableRepository tournamentTableRepository;
+    private StandingsRepository tournamentTableRepository;
 
-    public TournamentTableRepository getTournamentTableRepository() {
+    public StandingsRepository getTournamentTableRepository() {
         return tournamentTableRepository;
     }
 
-    public void setTournamentTableRepository(TournamentTableRepository tournamentTableRepository) {
+    public void setTournamentTableRepository(StandingsRepository tournamentTableRepository) {
         this.tournamentTableRepository = tournamentTableRepository;
     }
 
     @Override
-    public List<PositionInTournamentTable> getTournamentTable(SeasonCode seasonCode,
+    public List<StandingsPosition> getTournamentTable(SeasonCode seasonCode,
                                                               TournamentCode tournamentCode,
                                                               int matchDay) {
         /*list to return*/
-        List<PositionInTournamentTable> list = new ArrayList<>();
+        List<StandingsPosition> list = new ArrayList<>();
 
         for (Object[] item : getTournamentTableRepository().getTournamentTable(seasonCode, tournamentCode, matchDay)) {
-            PositionInTournamentTable positionInTournamentTable = new PositionInTournamentTable();
-            positionInTournamentTable.setPlace((BigInteger) item[0]);
-            positionInTournamentTable.setTeamCode((String) item[1]);
-            list.add(positionInTournamentTable);
+            StandingsPosition standingsPosition = new StandingsPosition();
+            standingsPosition.setPlace((BigInteger) item[0]);
+            standingsPosition.setTeamCode((String) item[1]);
+            list.add(standingsPosition);
         }
 
         return list;

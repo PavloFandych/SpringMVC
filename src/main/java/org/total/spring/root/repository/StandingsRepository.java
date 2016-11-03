@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 @Repository
-public class TournamentTableRepository {
+public class StandingsRepository {
     @Autowired
     private EntityManagerFactory entityManagerFactory;
 

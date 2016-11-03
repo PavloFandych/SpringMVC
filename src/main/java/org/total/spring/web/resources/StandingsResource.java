@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.entity.enums.TournamentCode;
-import org.total.spring.root.service.interfaces.TournamentTableService;
+import org.total.spring.root.service.interfaces.StandingsService;
 import org.total.spring.root.util.Constants;
 
 
@@ -19,21 +19,21 @@ import org.total.spring.root.util.Constants;
  */
 
 @RestController
-public class TournamentTableResource {
-    private static final Logger LOGGER = Logger.getLogger(TournamentTableResource.class);
+public class StandingsResource {
+    private static final Logger LOGGER = Logger.getLogger(StandingsResource.class);
 
     @Autowired
-    private TournamentTableService tournamentTableService;
+    private StandingsService standingsService;
 
-    public TournamentTableService getTournamentTableService() {
-        return tournamentTableService;
+    public StandingsService getStandingsService() {
+        return standingsService;
     }
 
-    public void setTournamentTableService(TournamentTableService tournamentTableService) {
-        this.tournamentTableService = tournamentTableService;
+    public void setStandingsService(StandingsService standingsService) {
+        this.standingsService = standingsService;
     }
 
-    @RequestMapping(value = "/tournamentTable",
+    @RequestMapping(value = "/standings",
             method = RequestMethod.GET)
     public String official(@RequestParam("seasonCode") SeasonCode seasonCode,
                            @RequestParam("tournamentCode") TournamentCode tournamentCode,
@@ -43,7 +43,7 @@ public class TournamentTableResource {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
         try {
-            json = ow.writeValueAsString(getTournamentTableService()
+            json = ow.writeValueAsString(getStandingsService()
                     .getTournamentTable(seasonCode, tournamentCode, matchDay));
         } catch (Exception e) {
             LOGGER.error(e, e);
