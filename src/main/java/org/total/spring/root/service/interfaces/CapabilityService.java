@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Created by total on 10/28/16.
  */
+
 public interface CapabilityService {
     public List<Capability> findAll();
 
