@@ -1,55 +1,43 @@
 package org.total.spring.root.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.total.spring.root.dao.StandingsDAO;
 import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.entity.enums.TournamentCode;
 import org.total.spring.root.proc.Standings;
-import org.total.spring.root.repository.StandingsRepository;
 import org.total.spring.root.service.interfaces.StandingsService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by pavlo.fandych on 11/3/2016.
  */
 
-@Repository
 @Transactional
 @Service("standingsService")
 public class StandingsServiceImpl implements StandingsService {
     @Autowired
-    private StandingsRepository standingsRepository;
+    private StandingsDAO standingsDAO;
 
-    public StandingsRepository getStandingsRepository() {
-        return standingsRepository;
+    public StandingsDAO getStandingsDAO() {
+        return standingsDAO;
     }
 
-    public void setStandingsRepository(StandingsRepository standingsRepository) {
-        this.standingsRepository = standingsRepository;
+    public void setStandingsDAO(StandingsDAO standingsDAO) {
+        this.standingsDAO = standingsDAO;
     }
 
     @Override
+    @Cacheable(value = "applicationCache",
+            cacheManager = "springCashManager",
+            sync = true
+    )
     public List<Standings> getStandings(SeasonCode seasonCode,
-                                                TournamentCode tournamentCode,
-                                                int matchDay) {
-        /*list to return*/
-        List<Standings> list = new ArrayList<>();
-
-        for (Object[] item : getStandingsRepository().getStandings(seasonCode, tournamentCode, matchDay)) {
-            Standings standingsPosition = new Standings();
-            standingsPosition.setPlace(Byte.parseByte((String)item[0]));
-            standingsPosition.setTeamCode((String) item[1]);
-            standingsPosition.setTeamName((String) item[2]);
-            standingsPosition.setGoalsScored((int) item[3]);
-            standingsPosition.setGoalsDiff((int) item[4]);
-            standingsPosition.setPoints((int) item[5]);
-            list.add(standingsPosition);
-        }
-
-        return list;
+                                        TournamentCode tournamentCode,
+                                        Integer matchDay) {
+        return getStandingsDAO().getStandings(seasonCode, tournamentCode, matchDay);
     }
 }

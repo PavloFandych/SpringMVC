@@ -10,5 +10,5 @@ import java.util.List;
  * Created by pavlo.fandych on 11/3/2016.
  */
 public interface StandingsService {
-    List<Standings> getStandings(SeasonCode seasonCode, TournamentCode tournamentCode, int matchDay);
+    List<Standings> getStandings(SeasonCode seasonCode, TournamentCode tournamentCode, Integer matchDay);
 }

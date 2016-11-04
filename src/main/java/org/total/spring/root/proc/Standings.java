@@ -7,18 +7,18 @@ import java.io.Serializable;
  */
 
 public class Standings implements Serializable {
-    private byte place;
+    private Byte place;
     private String teamCode;
     private String teamName;
-    private int goalsScored;
-    private int goalsDiff;
-    private int points;
+    private Integer goalsScored;
+    private Integer goalsDiff;
+    private Integer points;
 
-    public byte getPlace() {
+    public Byte getPlace() {
         return place;
     }
 
-    public void setPlace(byte place) {
+    public void setPlace(Byte place) {
         this.place = place;
     }
 
@@ -38,27 +38,27 @@ public class Standings implements Serializable {
         this.teamName = teamName;
     }
 
-    public int getGoalsScored() {
+    public Integer getGoalsScored() {
         return goalsScored;
     }
 
-    public void setGoalsScored(int goalsScored) {
+    public void setGoalsScored(Integer goalsScored) {
         this.goalsScored = goalsScored;
     }
 
-    public int getGoalsDiff() {
+    public Integer getGoalsDiff() {
         return goalsDiff;
     }
 
-    public void setGoalsDiff(int goalsDiff) {
+    public void setGoalsDiff(Integer goalsDiff) {
         this.goalsDiff = goalsDiff;
     }
 
-    public int getPoints() {
+    public Integer getPoints() {
         return points;
     }
 
-    public void setPoints(int points) {
+    public void setPoints(Integer points) {
         this.points = points;
     }
 }

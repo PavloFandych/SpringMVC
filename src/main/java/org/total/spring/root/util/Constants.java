@@ -29,4 +29,7 @@ public interface Constants {
     public static final int MAX_ENTRIES_LOCAL_HEAP = 10000;
     public static final int MAX_ENTRIES_LOCAL_DISK = 1000000;
     public static final int TIME_TO_IDLE_SECONDS = 60;
+
+    /*Stored procedures*/
+    public static final String CALL_GET_TEAMS_ORDER_BY_MATCH_DAY = "{call getTeamsOrderByMatchDay(?,?,?)}";
 }

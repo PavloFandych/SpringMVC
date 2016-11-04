@@ -1,7 +1,7 @@
 package org.total.spring.config;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import net.sf.ehcache.config.CacheConfiguration;
-import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -27,14 +27,22 @@ import java.util.Properties;
 @ComponentScan(value = {"org.total.spring.root"}, lazyInit = true)
 @EnableCaching
 public class AppConfig {
-    @Bean
+    @Bean(destroyMethod = "close")
     public DataSource getDataSource() {
-        BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        basicDataSource.setUrl("jdbc:mysql://localhost:3306/GoalDB");
-        basicDataSource.setUsername("root");
-        basicDataSource.setPassword("mysqlpass");
-        return basicDataSource;
+        ComboPooledDataSource dataSource = new ComboPooledDataSource();
+        try {
+            dataSource.setDriverClass("com.mysql.jdbc.Driver");
+            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/GoalDB");
+            dataSource.setUser("root");
+            dataSource.setPassword("");
+            dataSource.setInitialPoolSize(5);
+            dataSource.setMaxPoolSize(50);
+            dataSource.setMinPoolSize(10);
+            dataSource.setAcquireIncrement(5);
+            dataSource.setMaxStatements(100);
+        } catch (Exception e) {
+        }
+        return dataSource;
     }
 
     @Bean(name = "entityManagerFactory")

@@ -40,17 +40,16 @@ public class StandingsResource {
                            @RequestParam("matchDay") int matchDay) {
         String json = null;
 
-//        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-//
-//        try {
-//            json = ow.writeValueAsString(getStandingsService()
-//                    .getStandings(seasonCode, tournamentCode, matchDay));
-//        } catch (Exception e) {
-//            LOGGER.error(e, e);
-//            json = Constants.ERROR;
-//        }
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
-        return getStandingsService()
-                    .getStandings(seasonCode, tournamentCode, matchDay).toString();
+        try {
+            json = ow.writeValueAsString(getStandingsService()
+                    .getStandings(seasonCode, tournamentCode, matchDay));
+        } catch (Exception e) {
+            LOGGER.error(e, e);
+            json = Constants.ERROR;
+        }
+
+        return json;
     }
 }
