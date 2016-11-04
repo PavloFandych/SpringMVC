@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by pavlo.fandych on 11/3/2016.
  */
 
-public class Standings implements Serializable {
+public class Standing implements Serializable {
     private Byte place;
     private String teamCode;
     private String teamName;

@@ -10,27 +10,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.entity.enums.TournamentCode;
-import org.total.spring.root.service.interfaces.StandingsService;
+import org.total.spring.root.proc.Standing;
+import org.total.spring.root.service.interfaces.StandingService;
 import org.total.spring.root.util.Constants;
 
+import java.util.List;
 
 /**
  * Created by pavlo.fandych on 11/3/2016.
  */
 
 @RestController
-public class StandingsResource {
-    private static final Logger LOGGER = Logger.getLogger(StandingsResource.class);
+public class StandingResource {
+    private static final Logger LOGGER = Logger.getLogger(StandingResource.class);
 
     @Autowired
-    private StandingsService standingsService;
+    private StandingService standingService;
 
-    public StandingsService getStandingsService() {
-        return standingsService;
+    public StandingService getStandingService() {
+        return standingService;
     }
 
-    public void setStandingsService(StandingsService standingsService) {
-        this.standingsService = standingsService;
+    public void setStandingService(StandingService standingService) {
+        this.standingService = standingService;
     }
 
     @RequestMapping(value = "/standings",
@@ -43,8 +45,13 @@ public class StandingsResource {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
         try {
-            json = ow.writeValueAsString(getStandingsService()
-                    .getStandings(seasonCode, tournamentCode, matchDay));
+            List<Standing> list = getStandingService()
+                    .getStandings(seasonCode, tournamentCode, matchDay);
+            if (list == null) {
+                json = Constants.ERROR;
+            } else {
+                json = ow.writeValueAsString(list);
+            }
         } catch (Exception e) {
             LOGGER.error(e, e);
             json = Constants.ERROR;

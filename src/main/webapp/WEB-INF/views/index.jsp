@@ -26,7 +26,7 @@
                 <nav class="navbar-inner text-center">
                     <ul class="nav">
                         <li><a href="#"><i class="fa fa-bars"></i> Home</a></li>
-                        <li><a href="task1.jsp"><i class="fa fa-file"></i> Task1</a></li>
+                        <li><a href="standings.jsp"><i class="fa fa-file"></i> Task1</a></li>
                         <li><a href="task2.jsp"><i class="fa fa-file"></i> Task2</a></li>
                         <li><a href="task3.jsp"><i class="fa fa-file"></i> Task3</a></li>
                     </ul>
