@@ -27,9 +27,9 @@ public class StandingsRepository {
         this.entityManagerFactory = entityManagerFactory;
     }
 
-    public List<Object[]> getTournamentTable(SeasonCode seasonCode,
-                                             TournamentCode tournamentCode,
-                                             int matchDay) {
+    public List<Object[]> getStandings(SeasonCode seasonCode,
+                                       TournamentCode tournamentCode,
+                                       int matchDay) {
         StoredProcedureQuery query = getEntityManagerFactory()
                 .createEntityManager()
                 .createStoredProcedureQuery("getTeamsOrderByMatchDay");

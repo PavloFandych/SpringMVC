@@ -6,11 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.entity.enums.TournamentCode;
-import org.total.spring.root.proc.StandingsPosition;
+import org.total.spring.root.proc.Standings;
 import org.total.spring.root.repository.StandingsRepository;
 import org.total.spring.root.service.interfaces.StandingsService;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,25 +22,25 @@ import java.util.List;
 @Service("standingsService")
 public class StandingsServiceImpl implements StandingsService {
     @Autowired
-    private StandingsRepository tournamentTableRepository;
+    private StandingsRepository standingsRepository;
 
-    public StandingsRepository getTournamentTableRepository() {
-        return tournamentTableRepository;
+    public StandingsRepository getStandingsRepository() {
+        return standingsRepository;
     }
 
-    public void setTournamentTableRepository(StandingsRepository tournamentTableRepository) {
-        this.tournamentTableRepository = tournamentTableRepository;
+    public void setStandingsRepository(StandingsRepository standingsRepository) {
+        this.standingsRepository = standingsRepository;
     }
 
     @Override
-    public List<StandingsPosition> getTournamentTable(SeasonCode seasonCode,
-                                                              TournamentCode tournamentCode,
-                                                              int matchDay) {
+    public List<Standings> getStandings(SeasonCode seasonCode,
+                                                TournamentCode tournamentCode,
+                                                int matchDay) {
         /*list to return*/
-        List<StandingsPosition> list = new ArrayList<>();
+        List<Standings> list = new ArrayList<>();
 
-        for (Object[] item : getTournamentTableRepository().getTournamentTable(seasonCode, tournamentCode, matchDay)) {
-            StandingsPosition standingsPosition = new StandingsPosition();
+        for (Object[] item : getStandingsRepository().getStandings(seasonCode, tournamentCode, matchDay)) {
+            Standings standingsPosition = new Standings();
             standingsPosition.setPlace(Byte.parseByte((String)item[0]));
             standingsPosition.setTeamCode((String) item[1]);
             standingsPosition.setTeamName((String) item[2]);

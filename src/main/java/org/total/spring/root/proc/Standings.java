@@ -1,13 +1,12 @@
 package org.total.spring.root.proc;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 /**
  * Created by pavlo.fandych on 11/3/2016.
  */
 
-public class StandingsPosition implements Serializable {
+public class Standings implements Serializable {
     private byte place;
     private String teamCode;
     private String teamName;
