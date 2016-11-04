@@ -37,9 +37,9 @@ public class StandingResource {
 
     @RequestMapping(value = "/standings",
             method = RequestMethod.GET)
-    public String official(@RequestParam("seasonCode") SeasonCode seasonCode,
-                           @RequestParam("tournamentCode") TournamentCode tournamentCode,
-                           @RequestParam("matchDay") int matchDay) {
+    public String standings(@RequestParam("seasonCode") SeasonCode seasonCode,
+                            @RequestParam("tournamentCode") TournamentCode tournamentCode,
+                            @RequestParam("matchDay") int matchDay) {
         String json = null;
 
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
