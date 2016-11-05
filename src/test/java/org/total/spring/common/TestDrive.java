@@ -217,6 +217,6 @@ public class TestDrive {
 
     @Test
     public void md5Test() throws Exception {
-        LOGGER.info(getPasswordManager().encodeMD5("cat"));
+        LOGGER.info(getPasswordManager().encodeMD5("tiger"));
     }
 }

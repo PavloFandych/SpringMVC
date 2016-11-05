@@ -496,11 +496,11 @@ public class UserResource {
 //        getRoleService().save(new Role(RoleType.USER));
 //        getRoleService().save(new Role(RoleType.GUEST));
 //        User user = new User();
-//        user.setUserName("Cat");
+//        user.setUserName("Tiger");
 //        user.setPassword(getPasswordManager().encodeMD5("cat"));
-//        user.setUserEmail("cat@cat.com");
+//        user.setUserEmail("tiger@tiger.com");
 //        getUserService().save(user);
-//        getUserRoleService().assignRole("Cat", RoleType.ADMIN);
+        getUserRoleService().assignRole("Tiger", RoleType.USER);
         return "OK";
     }
 }

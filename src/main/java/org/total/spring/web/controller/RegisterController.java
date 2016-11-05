@@ -124,9 +124,9 @@ public class RegisterController {
                     try {
                         getUserService().save(userToRegister);
                         getUserRoleService().assignRole(registrationBean.getUserName(),
-                                RoleType.GUEST);
+                                RoleType.USER);
 
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " role \"" + RoleType.GUEST
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " role \"" + RoleType.USER
                                 + "\" to user " + registrationBean.getUserName() + " assigned successful\n");
 
                         request.getSession().setAttribute("User", userToRegister);
