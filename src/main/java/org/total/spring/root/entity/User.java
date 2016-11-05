@@ -14,7 +14,7 @@ import java.util.Set;
         }
 )
 @XmlRootElement
-@XmlType(propOrder = {"userId", "userName", "roles", "userEmail"})
+@XmlType(propOrder = {"userId", "userName", "password", "roles", "userEmail"})
 public class User implements Serializable {
     private long userId;
     private String userName;
@@ -91,7 +91,7 @@ public class User implements Serializable {
     @Column(name = "password",
             nullable = false
     )
-    @XmlTransient
+    @XmlElement
     public String getPassword() {
         return password;
     }
@@ -102,7 +102,7 @@ public class User implements Serializable {
 
     /*roles field mapping*/
     @ManyToMany(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
+            cascade = CascadeType.MERGE
     )
     @JoinTable(
             name = "User_Role",
@@ -155,7 +155,6 @@ public class User implements Serializable {
         this.userEmail = userEmail;
     }
 
-    /*Overriding Object methods*/
     @Override
     public String toString() {
         return "User{" +
@@ -163,6 +162,7 @@ public class User implements Serializable {
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", roles=" + roles +
+                ", userEmail='" + userEmail + '\'' +
                 '}';
     }
 

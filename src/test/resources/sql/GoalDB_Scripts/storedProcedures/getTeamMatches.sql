@@ -1,83 +1,94 @@
 DELIMITER $$
 
-DROP PROCEDURE IF exists getTeamMatches;$$
+DROP PROCEDURE IF EXISTS getTeamMatches;
+$$
 
 CREATE PROCEDURE getTeamMatches(
-IN teamCode VARCHAR(6),
-IN opponentTeamCode VARCHAR(6),
-IN seasonCode VARCHAR(9), 
-IN tournamentCode VARCHAR(20)) 
+  IN teamCode         VARCHAR(6),
+  IN opponentTeamCode VARCHAR(6),
+  IN seasonCode       VARCHAR(9),
+  IN tournamentCode   VARCHAR(20))
 
-    BEGIN
-	select  TeamMatches.matchDate,
-			TeamMatches.seasonCode,
-			TeamMatches.seasonName,
-			TeamMatches.tournamentCode,
-			TeamMatches.tournamentName,
-			TeamMatches.matchDay,
-			TeamMatches.hostTeamCode,
-			TeamMatches.hostTeamName,
-			TeamMatches.guestTeamCode,
-			TeamMatches.guestTeamName,
-			TeamMatches.goalsByHost,
-			TeamMatches.goalsByGuest,
-			TeamMatches.matchResultStatus
-	from (
-		select  r.date as matchDate,
-				s.seasonCode,
-				s.seasonName,
-				tr.tournamentCode,
-				tr.tournamentName,
-				r.matchDay,
-				te.teamCode as hostTeamCode,
-				te.teamName as hostTeamName,
-				te1.teamCode as guestTeamCode,
-				te1.teamName as guestTeamName,
-				r.goalsByHost,
-				r.goalsByGuest,
-				case 
-					when r.goalsByHost>r.goalsByGuest then 'Won' 
-					when r.goalsByHost=r.goalsByGuest then 'Draw' 
-					else 'Lost'
-				end as matchResultStatus 
-				from Result r
-						join Tournament tr on r.tournamentId=tr.tournamentId
-						join Season s on r.seasonId=s.seasonId
-						join Team te on r.hostTeamId=te.teamId
-						join Team te1 on r.guestTeamId=te1.teamId
-						where te.teamCode=teamCode
-							and (case when seasonCode is not null then s.seasonCode=seasonCode else 1=1 end)
-							and (case when tournamentCode is not null then tr.tournamentCode=tournamentCode else 1=1 end)
-							and (case when opponentTeamCode is not null then te1.teamCode=opponentTeamCode else 1=1 end)
-						union all
-		select  r.date as matchDate, 
-				s.seasonCode,
-				s.seasonName,
-				tr.tournamentCode,
-				tr.tournamentName,
-				r.matchDay,
-				te1.teamCode as hostTeamCode, 
-				te1.teamName as hostTeamName, 
-				te.teamCode as guestTeamCode,
-				te.teamName as guestTeamName, 
-				r.goalsByHost, 
-				r.goalsByGuest, 
-				case 
-					when r.goalsByHost<r.goalsByGuest then 'Won' 
-					when r.goalsByHost=r.goalsByGuest then 'Draw' 
-					else 'Lost'
-				end as matchResultStatus 
-				from Result r
-						join Tournament tr on r.tournamentId=tr.tournamentId
-						join Season s on r.seasonId=s.seasonId
-						join Team te on r.guestTeamId=te.teamId
-						join Team te1 on r.hostTeamId=te1.teamId
-						where te.teamCode=teamCode
-							and (case when seasonCode is not null then s.seasonCode=seasonCode else 1=1 end)
-							and (case when tournamentCode is not null then tr.tournamentCode=tournamentCode else 1=1 end)
-							and (case when opponentTeamCode is not null then te1.teamCode=opponentTeamCode else 1=1 end)
-				) TeamMatches order by matchDate desc;
+  BEGIN
+    SELECT
+      TeamMatches.matchDate,
+      TeamMatches.seasonCode,
+      TeamMatches.seasonName,
+      TeamMatches.tournamentCode,
+      TeamMatches.tournamentName,
+      TeamMatches.matchDay,
+      TeamMatches.hostTeamCode,
+      TeamMatches.hostTeamName,
+      TeamMatches.guestTeamCode,
+      TeamMatches.guestTeamName,
+      TeamMatches.goalsByHost,
+      TeamMatches.goalsByGuest,
+      TeamMatches.matchResultStatus
+    FROM (
+           SELECT
+             r.date       AS matchDate,
+             s.seasonCode,
+             s.seasonName,
+             tr.tournamentCode,
+             tr.tournamentName,
+             r.matchDay,
+             te.teamCode  AS hostTeamCode,
+             te.teamName  AS hostTeamName,
+             te1.teamCode AS guestTeamCode,
+             te1.teamName AS guestTeamName,
+             r.goalsByHost,
+             r.goalsByGuest,
+             CASE
+             WHEN r.goalsByHost > r.goalsByGuest THEN 'Won'
+             WHEN r.goalsByHost = r.goalsByGuest THEN 'Draw'
+             ELSE 'Lost'
+             END          AS matchResultStatus
+           FROM Result r
+             JOIN Tournament tr ON r.tournamentId = tr.tournamentId
+             JOIN Season s ON r.seasonId = s.seasonId
+             JOIN Team te ON r.hostTeamId = te.teamId
+             JOIN Team te1 ON r.guestTeamId = te1.teamId
+           WHERE te.teamCode = teamCode
+                 AND (CASE WHEN seasonCode IS NOT NULL THEN s.seasonCode = seasonCode
+                      ELSE 1 = 1 END)
+                 AND (CASE WHEN tournamentCode IS NOT NULL THEN tr.tournamentCode = tournamentCode
+                      ELSE 1 = 1 END)
+                 AND (CASE WHEN opponentTeamCode IS NOT NULL THEN te1.teamCode = opponentTeamCode
+                      ELSE 1 = 1 END)
+           UNION ALL
+           SELECT
+             r.date       AS matchDate,
+             s.seasonCode,
+             s.seasonName,
+             tr.tournamentCode,
+             tr.tournamentName,
+             r.matchDay,
+             te1.teamCode AS hostTeamCode,
+             te1.teamName AS hostTeamName,
+             te.teamCode  AS guestTeamCode,
+             te.teamName  AS guestTeamName,
+             r.goalsByHost,
+             r.goalsByGuest,
+             CASE
+             WHEN r.goalsByHost < r.goalsByGuest THEN 'Won'
+             WHEN r.goalsByHost = r.goalsByGuest THEN 'Draw'
+             ELSE 'Lost'
+             END          AS matchResultStatus
+           FROM Result r
+             JOIN Tournament tr ON r.tournamentId = tr.tournamentId
+             JOIN Season s ON r.seasonId = s.seasonId
+             JOIN Team te ON r.guestTeamId = te.teamId
+             JOIN Team te1 ON r.hostTeamId = te1.teamId
+           WHERE te.teamCode = teamCode
+                 AND (CASE WHEN seasonCode IS NOT NULL THEN s.seasonCode = seasonCode
+                      ELSE 1 = 1 END)
+                 AND (CASE WHEN tournamentCode IS NOT NULL THEN tr.tournamentCode = tournamentCode
+                      ELSE 1 = 1 END)
+                 AND (CASE WHEN opponentTeamCode IS NOT NULL THEN te1.teamCode = opponentTeamCode
+                      ELSE 1 = 1 END)
+         ) TeamMatches
+    ORDER BY matchDate DESC;
 
-    END$$
+  END$$
 
 DELIMITER ;

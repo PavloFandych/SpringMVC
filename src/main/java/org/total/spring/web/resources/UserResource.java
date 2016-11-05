@@ -265,9 +265,9 @@ public class UserResource {
         return Constants.ERROR;
     }
 
-    @RequestMapping(value = "/users/{id}",
+    @RequestMapping(value = "/users/{userName}",
             method = RequestMethod.DELETE)
-    public String deleteUserById(@PathVariable Long id,
+    public String deleteUserById(@PathVariable String userName,
                                  @RequestHeader("Authorization") String authorization,
                                  @RequestHeader("Content-Type") String contentType,
                                  @RequestHeader("Version") String version,
@@ -301,7 +301,7 @@ public class UserResource {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + deleter.getUserName()
                                     + " has permitions to delete the user by id\n");
 
-                            User userToDelete = getUserService().findById(id);
+                            User userToDelete = getUserService().findUserByUserName(userName);
 
                             if (userToDelete != null) {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS + "User with id " + userToDelete.getUserId()
@@ -310,6 +310,9 @@ public class UserResource {
                                 getUserService().deleteUserByUserId(userToDelete.getUserId());
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + userToDelete.getUserName() +
                                         " is deleted\n");
+
+                                response.setStatus(HttpServletResponse.SC_OK);
+                                return Constants.SUCCESS;
                             } else {
                                 response.setStatus(HttpServletResponse.SC_CONFLICT);
                                 return Constants.NO_USER_FOUND;
@@ -386,8 +389,11 @@ public class UserResource {
                                     response.setStatus(HttpServletResponse.SC_CONFLICT);
                                     return Constants.USER_ALREADY_EXISTS;
                                 } else {
-                                    getUserRoleService().assignRole(userXML.getUserName(), RoleType.USER);
-                                    getUserService().save(userXML);
+                                    users.get(0).setPassword(getPasswordManager()
+                                            .encodeMD5(users.get(0).getPassword()));
+                                    users.get(0).getRoles().add(getRoleService()
+                                            .findRoleByRoleType(RoleType.USER));
+                                    getUserService().save(users.get(0));
                                     response.setStatus(HttpServletResponse.SC_OK);
                                     return Constants.SUCCESS;
                                 }
@@ -490,17 +496,17 @@ public class UserResource {
     @RequestMapping(value = "/test",
             method = RequestMethod.POST)
     public String official() {
-//        getRoleService().save(new Role(RoleType.ADMIN));
-//        getRoleService().save(new Role(RoleType.MODERATOR));
-//        getRoleService().save(new Role(RoleType.SUPERUSER));
-//        getRoleService().save(new Role(RoleType.USER));
-//        getRoleService().save(new Role(RoleType.GUEST));
-//        User user = new User();
-//        user.setUserName("Tiger");
-//        user.setPassword(getPasswordManager().encodeMD5("cat"));
-//        user.setUserEmail("tiger@tiger.com");
-//        getUserService().save(user);
-        getUserRoleService().assignRole("Tiger", RoleType.USER);
+        getRoleService().save(new Role(RoleType.ADMIN));
+        getRoleService().save(new Role(RoleType.MODERATOR));
+        getRoleService().save(new Role(RoleType.SUPERUSER));
+        getRoleService().save(new Role(RoleType.USER));
+        getRoleService().save(new Role(RoleType.GUEST));
+        User user = new User();
+        user.setUserName("Tiger");
+        user.setPassword(getPasswordManager().encodeMD5("tiger"));
+        user.setUserEmail("tiger@tiger.com");
+        getUserService().save(user);
+        getUserRoleService().assignRole("Tiger", RoleType.ADMIN);
         return "OK";
     }
 }
