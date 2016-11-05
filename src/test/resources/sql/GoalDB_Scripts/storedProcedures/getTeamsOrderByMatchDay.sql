@@ -55,7 +55,7 @@ CREATE PROCEDURE getTeamsOrderByMatchDay(
                       JOIN Tournament tr ON r.tournamentId = tr.tournamentId
                       JOIN Season s ON r.seasonId = s.seasonId
                       JOIN Team te ON r.guestTeamId = te.teamId
-                    WHERE tr.tournamentCode = @tournamentCode
+                    WHERE tr.tournamentCode = tournamentCode
                           AND s.seasonCode = seasonCode) TeamList
              ORDER BY points DESC, goalsDiff DESC, goalsScored DESC) TeamsOrdered;
     END IF;
