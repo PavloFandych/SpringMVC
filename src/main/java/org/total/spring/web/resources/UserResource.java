@@ -490,17 +490,17 @@ public class UserResource {
     @RequestMapping(value = "/test",
             method = RequestMethod.POST)
     public String official() {
-//        getRoleService().save(new Role(RoleType.ADMIN));
-//        getRoleService().save(new Role(RoleType.MODERATOR));
-//        getRoleService().save(new Role(RoleType.SUPERUSER));
-//        getRoleService().save(new Role(RoleType.USER));
-//        getRoleService().save(new Role(RoleType.GUEST));
-//        User user = new User();
-//        user.setUserName("Cat");
-//        user.setPassword(getPasswordManager().encodeMD5("cat"));
-//        user.setUserEmail("cat@cat.com");
-//        getUserService().save(user);
-//        getUserRoleService().assignRole("Cat", RoleType.ADMIN);
+        getRoleService().save(new Role(RoleType.ADMIN));
+        getRoleService().save(new Role(RoleType.MODERATOR));
+        getRoleService().save(new Role(RoleType.SUPERUSER));
+        getRoleService().save(new Role(RoleType.USER));
+        getRoleService().save(new Role(RoleType.GUEST));
+        User user = new User();
+        user.setUserName("Cat");
+        user.setPassword(getPasswordManager().encodeMD5("cat"));
+        user.setUserEmail("cat@cat.com");
+        getUserService().save(user);
+        getUserRoleService().assignRole("Cat", RoleType.ADMIN);
         return "OK";
     }
 }
