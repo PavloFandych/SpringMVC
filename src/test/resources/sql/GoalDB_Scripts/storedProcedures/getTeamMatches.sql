@@ -9,19 +9,19 @@ IN seasonCode VARCHAR(9),
 IN tournamentCode VARCHAR(20)) 
 
     BEGIN
-	select  matchDate,
-			seasonCode,
-			seasonName,
-			tournamentCode,
-			tournamentName,
-			matchDay,
-			hostTeamCode,
-			hostTeamName,
-			guestTeamCode,
-			guestTeamName,
-			goalsByHost,
-			goalsByGuest,
-			matchResultStatus 
+	select  TeamMatches.matchDate,
+			TeamMatches.seasonCode,
+			TeamMatches.seasonName,
+			TeamMatches.tournamentCode,
+			TeamMatches.tournamentName,
+			TeamMatches.matchDay,
+			TeamMatches.hostTeamCode,
+			TeamMatches.hostTeamName,
+			TeamMatches.guestTeamCode,
+			TeamMatches.guestTeamName,
+			TeamMatches.goalsByHost,
+			TeamMatches.goalsByGuest,
+			TeamMatches.matchResultStatus
 	from (
 		select  r.date as matchDate,
 				s.seasonCode,
