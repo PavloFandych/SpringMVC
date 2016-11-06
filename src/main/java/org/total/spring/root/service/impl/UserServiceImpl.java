@@ -5,10 +5,13 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.root.entity.User;
+import org.total.spring.root.entity.specification.SearchCriteria;
+import org.total.spring.root.entity.specification.UserSpecification;
 import org.total.spring.root.repository.UserRepository;
 import org.total.spring.root.service.interfaces.UserService;
 
@@ -94,6 +97,53 @@ public class UserServiceImpl implements UserService {
     )
     public User findUserByUserNameAndPassword(String userName, String password) {
         List<User> users = getUserRepository().findByUserNameAndPassword(userName, password);
+        return (users != null && !users.isEmpty()) ? users.get(0) : null;
+    }
+
+    @Override
+    @Cacheable(value = "applicationCache",
+            cacheManager = "springCashManager",
+            sync = true
+    )
+    public User fetchUserByPassword(String password) {
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setKey("password");
+        searchCriteria.setOperation(":");
+        searchCriteria.setValue(password);
+
+        UserSpecification spec = new UserSpecification();
+        spec.setCriteria(searchCriteria);
+
+        List<User> users = getUserRepository().findAll(spec);
+
+        return (users != null && !users.isEmpty()) ? users.get(0) : null;
+    }
+
+    @Override
+    @Cacheable(value = "applicationCache",
+            cacheManager = "springCashManager",
+            sync = true
+    )
+    public User fetchUserByUserIdAndUserName(Long userId, String userName) {
+        SearchCriteria searchCriteriaUserId = new SearchCriteria();
+        searchCriteriaUserId.setKey("userId");
+        searchCriteriaUserId.setOperation(":");
+        searchCriteriaUserId.setValue(userId);
+
+        UserSpecification specUserId = new UserSpecification();
+        specUserId.setCriteria(searchCriteriaUserId);
+
+        SearchCriteria searchCriteriaUserName = new SearchCriteria();
+        searchCriteriaUserName.setKey("userName");
+        searchCriteriaUserName.setOperation(":");
+        searchCriteriaUserName.setValue(userName);
+
+        UserSpecification specUserName = new UserSpecification();
+        specUserName.setCriteria(searchCriteriaUserName);
+
+        List<User> users = getUserRepository()
+                .findAll(Specifications.where(specUserId).and(specUserName));
+
         return (users != null && !users.isEmpty()) ? users.get(0) : null;
     }
 }

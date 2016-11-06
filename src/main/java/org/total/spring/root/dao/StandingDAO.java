@@ -16,7 +16,7 @@ import java.util.List;
  * Created by pavlo.fandych on 11/3/2016.
  */
 
-@Repository
+@Repository("standingDAO")
 public class StandingDAO extends GenericDAO<Standing> {
     @Override
     public List<Standing> getEntities(Object... param) {

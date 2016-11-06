@@ -18,5 +18,9 @@ public interface UserService {
     public User findUserByUserName(String userName);
 
     public User findUserByUserNameAndPassword(String userName, String password);
+
+    public User fetchUserByPassword(String password);
+
+    public User fetchUserByUserIdAndUserName(Long userId, String userName);
 }
 
