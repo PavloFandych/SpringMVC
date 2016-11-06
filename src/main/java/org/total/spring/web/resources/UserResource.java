@@ -496,17 +496,55 @@ public class UserResource {
     @RequestMapping(value = "/test",
             method = RequestMethod.POST)
     public String official() {
-        getRoleService().save(new Role(RoleType.ADMIN));
-        getRoleService().save(new Role(RoleType.MODERATOR));
-        getRoleService().save(new Role(RoleType.SUPERUSER));
-        getRoleService().save(new Role(RoleType.USER));
-        getRoleService().save(new Role(RoleType.GUEST));
-        User user = new User();
-        user.setUserName("Tiger");
-        user.setPassword(getPasswordManager().encodeMD5("tiger"));
-        user.setUserEmail("tiger@tiger.com");
-        getUserService().save(user);
-        getUserRoleService().assignRole("Tiger", RoleType.ADMIN);
+//        getRoleService().save(new Role(RoleType.ADMIN));
+//        getRoleService().save(new Role(RoleType.MODERATOR));
+//        getRoleService().save(new Role(RoleType.SUPERUSER));
+//        getRoleService().save(new Role(RoleType.USER));
+//        getRoleService().save(new Role(RoleType.GUEST));
+//        User admin = new User();
+//        admin.setUserName("Admin");
+//        admin.setPassword(getPasswordManager().encodeMD5("admin"));
+//        admin.setUserEmail("admin@admin.com");
+//        getUserService().save(admin);
+//        getUserRoleService().assignRole("Admin", RoleType.ADMIN);
+//        getUserRoleService().assignRole("Admin", RoleType.MODERATOR);
+//        getUserRoleService().assignRole("Admin", RoleType.SUPERUSER);
+//        getUserRoleService().assignRole("Admin", RoleType.USER);
+//        getUserRoleService().assignRole("Admin", RoleType.GUEST);
+//
+//        User moderator = new User();
+//        moderator.setUserName("Moderator");
+//        moderator.setPassword(getPasswordManager().encodeMD5("moderator"));
+//        moderator.setUserEmail("moderator@moderator.com");
+//        getUserService().save(moderator);
+//        getUserRoleService().assignRole("Moderator", RoleType.MODERATOR);
+//        getUserRoleService().assignRole("Moderator", RoleType.SUPERUSER);
+//        getUserRoleService().assignRole("Moderator", RoleType.USER);
+//        getUserRoleService().assignRole("Moderator", RoleType.GUEST);
+//
+//        User superuser = new User();
+//        superuser.setUserName("Superuser");
+//        superuser.setPassword(getPasswordManager().encodeMD5("superuser"));
+//        superuser.setUserEmail("superuser@superuser.com");
+//        getUserService().save(superuser);
+//        getUserRoleService().assignRole("Superuser", RoleType.SUPERUSER);
+//        getUserRoleService().assignRole("Superuser", RoleType.USER);
+//        getUserRoleService().assignRole("Superuser", RoleType.GUEST);
+//
+//        User user = new User();
+//        user.setUserName("User");
+//        user.setPassword(getPasswordManager().encodeMD5("user"));
+//        user.setUserEmail("user@user.com");
+//        getUserService().save(user);
+//        getUserRoleService().assignRole("User", RoleType.USER);
+//        getUserRoleService().assignRole("User", RoleType.GUEST);
+//
+//        User guest = new User();
+//        guest.setUserName("Guest");
+//        guest.setPassword(getPasswordManager().encodeMD5("guest"));
+//        guest.setUserEmail("guest@guest.com");
+//        getUserService().save(guest);
+//        getUserRoleService().assignRole("Guest", RoleType.GUEST);
         return "OK";
     }
 }

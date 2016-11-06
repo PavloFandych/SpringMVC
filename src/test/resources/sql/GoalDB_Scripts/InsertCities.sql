@@ -1,333 +1,983 @@
 -- England, Wales
- INSERT INTO City(cityCode, cityName, countryId) values
- ('LOND', 'London', (select countryId from Country where countryCode='ENG')),
- ('BOUR', 'Bournemouth', (select countryId from Country where countryCode='ENG')),
- ('BURN', 'Burnley', (select countryId from Country where countryCode='ENG')),
- ('HULL', 'Hull', (select countryId from Country where countryCode='ENG')),
- ('LEIC', 'Leicester', (select countryId from Country where countryCode='ENG')),
- ('LIVE', 'Liverpool', (select countryId from Country where countryCode='ENG')),
- ('MANC', 'Manchester', (select countryId from Country where countryCode='ENG')),
- ('STOK', 'Stoke-on-Trent', (select countryId from Country where countryCode='ENG')),
- ('MIDD', 'Middlesbrough', (select countryId from Country where countryCode='ENG')),
- ('SOUT', 'Southampton', (select countryId from Country where countryCode='ENG')),
- ('SUND', 'Sunderland', (select countryId from Country where countryCode='ENG')),
- ('SWAN', 'Swansea', (select countryId from Country where countryCode='WLS')),
- ('WATF', 'Watford', (select countryId from Country where countryCode='ENG')),
- ('WEBR', 'West Bromwich', (select countryId from Country where countryCode='ENG')),
- ('BIRM', 'Birmingham', (select countryId from Country where countryCode='ENG')),
- ('BARN', 'Barnsley', (select countryId from Country where countryCode='ENG')),
- ('BLAC', 'Blackburn', (select countryId from Country where countryCode='ENG')),
- ('BRIG', 'Brighton and Hove', (select countryId from Country where countryCode='ENG')),
- ('BRIS', 'Bristol', (select countryId from Country where countryCode='ENG')),
- ('BURT', 'Burton-on-Trent', (select countryId from Country where countryCode='ENG')),
- ('CARD', 'Cardiff', (select countryId from Country where countryCode='WLS')),
- ('DERB', 'Derby', (select countryId from Country where countryCode='ENG')),
- ('HUDD', 'Huddersfield', (select countryId from Country where countryCode='ENG')),
- ('IPSW', 'Ipswich', (select countryId from Country where countryCode='ENG')),
- ('LEED', 'Leeds', (select countryId from Country where countryCode='ENG')),
- ('NEWC', 'Newcastle', (select countryId from Country where countryCode='ENG')),
- ('NORW', 'Norwich', (select countryId from Country where countryCode='ENG')),
- ('NOTT', 'Nottingham', (select countryId from Country where countryCode='ENG')),
- ('PRES', 'Preston', (select countryId from Country where countryCode='ENG')),
- ('READ', 'Reading', (select countryId from Country where countryCode='ENG')),
- ('ROTH', 'Rotherham', (select countryId from Country where countryCode='ENG')),
- ('SHEF', 'Sheffield', (select countryId from Country where countryCode='ENG')),
- ('WIGA', 'Wigan', (select countryId from Country where countryCode='ENG')),
- ('WOLV', 'Wolverhampton', (select countryId from Country where countryCode='ENG'));
+INSERT INTO City (cityCode, cityName, countryId) VALUES
+  ('LOND', 'London', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ENG')),
+  ('BOUR', 'Bournemouth', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'ENG')),
+  ('BURN', 'Burnley', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ENG')),
+  ('HULL', 'Hull', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'ENG')),
+  ('LEIC', 'Leicester', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ENG')),
+  ('LIVE', 'Liverpool', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ENG')),
+  ('MANC', 'Manchester', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'ENG')),
+  ('STOK', 'Stoke-on-Trent', (SELECT countryId
+                              FROM Country
+                              WHERE countryCode = 'ENG')),
+  ('MIDD', 'Middlesbrough', (SELECT countryId
+                             FROM Country
+                             WHERE countryCode = 'ENG')),
+  ('SOUT', 'Southampton', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'ENG')),
+  ('SUND', 'Sunderland', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'ENG')),
+  ('SWAN', 'Swansea', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'WLS')),
+  ('WATF', 'Watford', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ENG')),
+  ('WEBR', 'West Bromwich', (SELECT countryId
+                             FROM Country
+                             WHERE countryCode = 'ENG')),
+  ('BIRM', 'Birmingham', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'ENG')),
+  ('BARN', 'Barnsley', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ENG')),
+  ('BLAC', 'Blackburn', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ENG')),
+  ('BRIG', 'Brighton and Hove', (SELECT countryId
+                                 FROM Country
+                                 WHERE countryCode = 'ENG')),
+  ('BRIS', 'Bristol', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ENG')),
+  ('BURT', 'Burton-on-Trent', (SELECT countryId
+                               FROM Country
+                               WHERE countryCode = 'ENG')),
+  ('CARD', 'Cardiff', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'WLS')),
+  ('DERB', 'Derby', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ENG')),
+  ('HUDD', 'Huddersfield', (SELECT countryId
+                            FROM Country
+                            WHERE countryCode = 'ENG')),
+  ('IPSW', 'Ipswich', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ENG')),
+  ('LEED', 'Leeds', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ENG')),
+  ('NEWC', 'Newcastle', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ENG')),
+  ('NORW', 'Norwich', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ENG')),
+  ('NOTT', 'Nottingham', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'ENG')),
+  ('PRES', 'Preston', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ENG')),
+  ('READ', 'Reading', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ENG')),
+  ('ROTH', 'Rotherham', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ENG')),
+  ('SHEF', 'Sheffield', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ENG')),
+  ('WIGA', 'Wigan', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ENG')),
+  ('WOLV', 'Wolverhampton', (SELECT countryId
+                             FROM Country
+                             WHERE countryCode = 'ENG'));
 
 -- GERMANY
-INSERT INTO City(cityCode, cityName, countryId) values
- ('AACH', 'Aachen', (select countryId from Country where countryCode='DEU')),
- ('AALE', 'Aalen', (select countryId from Country where countryCode='DEU')),
- ('AHLE', 'Ahlen', (select countryId from Country where countryCode='DEU')),
- ('ALTE', 'Altenburg', (select countryId from Country where countryCode='DEU')),
- ('ALTO', 'Altomünster', (select countryId from Country where countryCode='DEU')),
- ('ALZE', 'Alzenau', (select countryId from Country where countryCode='DEU')),
- ('AMBE', 'Amberg', (select countryId from Country where countryCode='DEU')),
- ('AMME', 'Ammerthal', (select countryId from Country where countryCode='DEU')),
- ('ANSB', 'Ansbach', (select countryId from Country where countryCode='DEU')),
- ('ASCH', 'Aschaffenburg', (select countryId from Country where countryCode='DEU')),
- ('ASPA', 'Aspach', (select countryId from Country where countryCode='DEU')),
- ('AUBS', 'Aubstadt', (select countryId from Country where countryCode='DEU')),
- ('AUER', 'Auerbach', (select countryId from Country where countryCode='DEU')),
- ('AUEX', 'Aue', (select countryId from Country where countryCode='DEU')),
- ('AUGS', 'Augsburg', (select countryId from Country where countryCode='DEU')),
- ('BAKR', 'Bad Kreuznach', (select countryId from Country where countryCode='DEU')),
- ('BAMB', 'Bamberg', (select countryId from Country where countryCode='DEU')),
- ('BARS', 'Barsinghausen', (select countryId from Country where countryCode='DEU')),
- ('BAUN', 'Baunatal', (select countryId from Country where countryCode='DEU')),
- ('BAUT', 'Bautzen', (select countryId from Country where countryCode='DEU')),
- ('BAYR', 'Bayreuth', (select countryId from Country where countryCode='DEU')),
- ('BCHL', 'Bocholt', (select countryId from Country where countryCode='DEU')),
- ('BERL', 'Berlin', (select countryId from Country where countryCode='DEU')),
- ('BIEL', 'Bielefeld', (select countryId from Country where countryCode='DEU')),
- ('BISC', 'Bischofswerda', (select countryId from Country where countryCode='DEU')),
- ('BOCH', 'Bochum', (select countryId from Country where countryCode='DEU')),
- ('BOEH', 'Böhlen', (select countryId from Country where countryCode='DEU')),
- ('BOGE', 'Bogen', (select countryId from Country where countryCode='DEU')),
- ('BONN', 'Bonn', (select countryId from Country where countryCode='DEU')),
- ('BRAN', 'Brandenburg an der Havel', (select countryId from Country where countryCode='DEU')),
- ('BRAU', 'Braunschweig', (select countryId from Country where countryCode='DEU')),
- ('BREM', 'Bremen', (select countryId from Country where countryCode='DEU')),
- ('BRMR', 'Bremerhaven', (select countryId from Country where countryCode='DEU')),
- ('BUCH', 'Buchbach', (select countryId from Country where countryCode='DEU')),
- ('BUER', 'Bürstadt', (select countryId from Country where countryCode='DEU')),
- ('BURG', 'Burghausen', (select countryId from Country where countryCode='DEU')),
- ('CHEM', 'Chemnitz', (select countryId from Country where countryCode='DEU')),
- ('CLOP', 'Cloppenburg', (select countryId from Country where countryCode='DEU')),
- ('COTT', 'Cottbus', (select countryId from Country where countryCode='DEU')),
- ('DACH', 'Dachau', (select countryId from Country where countryCode='DEU')),
- ('DARM', 'Darmstadt', (select countryId from Country where countryCode='DEU')),
- ('DESS', 'Dessau', (select countryId from Country where countryCode='DEU')),
- ('DORT', 'Dortmund', (select countryId from Country where countryCode='DEU')),
- ('DRES', 'Dresden', (select countryId from Country where countryCode='DEU')),
- ('DROC', 'Drochtersen', (select countryId from Country where countryCode='DEU')),
- ('DUIS', 'Duisburg', (select countryId from Country where countryCode='DEU')),
- ('DUSS', 'Düsseldorf', (select countryId from Country where countryCode='DEU')),
- ('EICH', 'Eichstätt', (select countryId from Country where countryCode='DEU')),
- ('EISE', 'Eisenhüttenstadt', (select countryId from Country where countryCode='DEU')),
- ('EMDE', 'Emden', (select countryId from Country where countryCode='DEU')),
- ('EPPI', 'Eppingen', (select countryId from Country where countryCode='DEU')),
- ('ERFU', 'Erfurt', (select countryId from Country where countryCode='DEU')),
- ('ERLA', 'Erlangen', (select countryId from Country where countryCode='DEU')),
- ('ERMA', 'Erlenbach am Main', (select countryId from Country where countryCode='DEU')),
- ('ESSE', 'Essen', (select countryId from Country where countryCode='DEU')),
- ('FEUC', 'Feucht', (select countryId from Country where countryCode='DEU')),
- ('FLEN', 'Flensburg', (select countryId from Country where countryCode='DEU')),
- ('FRAN', 'Frankfurt', (select countryId from Country where countryCode='DEU')),
- ('FREI', 'Freiburg', (select countryId from Country where countryCode='DEU')),
- ('FROD', 'Frankfurt (Oder)', (select countryId from Country where countryCode='DEU')),
- ('FROH', 'Frohnlach', (select countryId from Country where countryCode='DEU')),
- ('FURS', 'Fürstenwalde', (select countryId from Country where countryCode='DEU')),
- ('FUER', 'Fürth', (select countryId from Country where countryCode='DEU')),
- ('GARB', 'Garbsen', (select countryId from Country where countryCode='DEU')),
- ('GARC', 'Garching', (select countryId from Country where countryCode='DEU')),
- ('GELS', 'Gelsenkirchen', (select countryId from Country where countryCode='DEU')),
- ('GERA', 'Gera', (select countryId from Country where countryCode='DEU')),
- ('GOET', 'Göttingen', (select countryId from Country where countryCode='DEU')),
- ('GOSL', 'Goslar', (select countryId from Country where countryCode='DEU')),
- ('GROS', 'Großbardorf', (select countryId from Country where countryCode='DEU')),
- ('GUDO', 'Gundelfingen an der Donau', (select countryId from Country where countryCode='DEU')),
- ('GUET', 'Gütersloh', (select countryId from Country where countryCode='DEU')),
- ('HAIB', 'Haibach', (select countryId from Country where countryCode='DEU')),
- ('HALL', 'Halle', (select countryId from Country where countryCode='DEU')),
- ('HAMB', 'Hamburg', (select countryId from Country where countryCode='DEU')),
- ('HANA', 'Hanau', (select countryId from Country where countryCode='DEU')),
- ('HANN', 'Hannover', (select countryId from Country where countryCode='DEU')),
- ('HEID', 'Heidenheim', (select countryId from Country where countryCode='DEU')),
- ('HEIL', 'Heilbronn', (select countryId from Country where countryCode='DEU')),
- ('HERF', 'Herford', (select countryId from Country where countryCode='DEU')),
- ('HERN', 'Herne', (select countryId from Country where countryCode='DEU')),
- ('HILD', 'Hildesheim', (select countryId from Country where countryCode='DEU')),
- ('HOFX', 'Hof', (select countryId from Country where countryCode='DEU')),
- ('HOMB', 'Homburg', (select countryId from Country where countryCode='DEU')),
- ('ILLE', 'Illertissen', (select countryId from Country where countryCode='DEU')),
- ('INGO', 'Ingolstadt', (select countryId from Country where countryCode='DEU')),
- ('ISMA', 'Ismaning', (select countryId from Country where countryCode='DEU')),
- ('JENA', 'Jena', (select countryId from Country where countryCode='DEU')),
- ('KAIS', 'Kaiserslautern', (select countryId from Country where countryCode='DEU')),
- ('KARL', 'Karlsruhe', (select countryId from Country where countryCode='DEU')),
- ('KASS', 'Kassel', (select countryId from Country where countryCode='DEU')),
- ('KEMP', 'Kempten', (select countryId from Country where countryCode='DEU')),
- ('KIEL', 'Kiel', (select countryId from Country where countryCode='DEU')),
- ('KIRC', 'Kirchanschöring', (select countryId from Country where countryCode='DEU')),
- ('KLEV', 'Kleve', (select countryId from Country where countryCode='DEU')),
- ('KOBL', 'Koblenz', (select countryId from Country where countryCode='DEU')),
- ('KOLN', 'Köln', (select countryId from Country where countryCode='DEU')),
- ('KREF', 'Krefeld', (select countryId from Country where countryCode='DEU')),
- ('LALE', 'Landsberg am Lech', (select countryId from Country where countryCode='DEU')),
- ('LEIB', 'Leiblfing', (select countryId from Country where countryCode='DEU')),
- ('LEIP', 'Leipzig', (select countryId from Country where countryCode='DEU')),
- ('LEVE', 'Leverkusen', (select countryId from Country where countryCode='DEU')),
- ('LOTT', 'Lotte', (select countryId from Country where countryCode='DEU')),
- ('LUCK', 'Luckenwalde', (select countryId from Country where countryCode='DEU')),
- ('LUDW', 'Ludwigshafen', (select countryId from Country where countryCode='DEU')),
- ('LUEB', 'Lübeck', (select countryId from Country where countryCode='DEU')),
- ('LUEN', 'Lüneburg', (select countryId from Country where countryCode='DEU')),
- ('MAGD', 'Magdeburg', (select countryId from Country where countryCode='DEU')),
- ('MAIN', 'Mainz', (select countryId from Country where countryCode='DEU')),
- ('MANN', 'Mannheim', (select countryId from Country where countryCode='DEU')),
- ('MEER', 'Meerane', (select countryId from Country where countryCode='DEU')),
- ('MEMM', 'Memmingen', (select countryId from Country where countryCode='DEU')),
- ('MEPP', 'Meppen', (select countryId from Country where countryCode='DEU')),
- ('MERS', 'Merseburg', (select countryId from Country where countryCode='DEU')),
- ('MEUS', 'Meuselwitz', (select countryId from Country where countryCode='DEU')),
- ('MOEN', 'Mönchengladbach', (select countryId from Country where countryCode='DEU')),
- ('MUEL', 'Mülheim an der Ruhr', (select countryId from Country where countryCode='DEU')),
- ('MUEN', 'Münster', (select countryId from Country where countryCode='DEU')),
- ('MUNI', 'Munich', (select countryId from Country where countryCode='DEU')),
- ('NEOB', 'Neumarkt in der Oberpfalz', (select countryId from Country where countryCode='DEU')),
- ('NEUB', 'Neubrandenburg', (select countryId from Country where countryCode='DEU')),
- ('NEUG', 'Neugersdorf', (select countryId from Country where countryCode='DEU')),
- ('NEUN', 'Neunkirchen', (select countryId from Country where countryCode='DEU')),
- ('NEUS', 'Neustrelitz', (select countryId from Country where countryCode='DEU')),
- ('NRDH', 'Nordhausen', (select countryId from Country where countryCode='DEU')),
- ('NRDR', 'Norderstedt', (select countryId from Country where countryCode='DEU')),
- ('NURE', 'Nuremberg', (select countryId from Country where countryCode='DEU')),
- ('OBER', 'Oberhausen', (select countryId from Country where countryCode='DEU')),
- ('OEER', 'Oer-Erkenschwick', (select countryId from Country where countryCode='DEU')),
- ('OFFE', 'Offenbach', (select countryId from Country where countryCode='DEU')),
- ('OLDE', 'Oldenburg', (select countryId from Country where countryCode='DEU')),
- ('OSNA', 'Osnabrück', (select countryId from Country where countryCode='DEU')),
- ('PADE', 'Paderborn', (select countryId from Country where countryCode='DEU')),
- ('PASS', 'Passau', (select countryId from Country where countryCode='DEU')),
- ('PFOR', 'Pforzheim', (select countryId from Country where countryCode='DEU')),
- ('PFUL', 'Pfullendorf', (select countryId from Country where countryCode='DEU')),
- ('PIRM', 'Pirmasens', (select countryId from Country where countryCode='DEU')),
- ('PLAU', 'Plauen', (select countryId from Country where countryCode='DEU')),
- ('POHL', 'Pohlheim', (select countryId from Country where countryCode='DEU')),
- ('POTS', 'Potsdam', (select countryId from Country where countryCode='DEU')),
- ('PULL', 'Pullach', (select countryId from Country where countryCode='DEU')),
- ('PYRB', 'Pyrbaum', (select countryId from Country where countryCode='DEU')),
- ('REGE', 'Regensburg', (select countryId from Country where countryCode='DEU')),
- ('REHD', 'Rehden', (select countryId from Country where countryCode='DEU')),
- ('REMC', 'Remchingen', (select countryId from Country where countryCode='DEU')),
- ('REMS', 'Remscheid', (select countryId from Country where countryCode='DEU')),
- ('REUT', 'Reutlingen', (select countryId from Country where countryCode='DEU')),
- ('RHWI', 'Rheda-Wiedenbrück', (select countryId from Country where countryCode='DEU')),
- ('RIES', 'Riesa', (select countryId from Country where countryCode='DEU')),
- ('ROED', 'Rödinghausen', (select countryId from Country where countryCode='DEU')),
- ('ROSE', 'Rosenheim', (select countryId from Country where countryCode='DEU')),
- ('ROST', 'Rostock', (select countryId from Country where countryCode='DEU')),
- ('SAAR', 'Saarbrücken', (select countryId from Country where countryCode='DEU')),
- ('SALM', 'Salmrohr', (select countryId from Country where countryCode='DEU')),
- ('SAMA', 'Sand am Main', (select countryId from Country where countryCode='DEU')),
- ('SAND', 'Sandhausen', (select countryId from Country where countryCode='DEU')),
- ('SWAB', 'Schwabmünchen', (select countryId from Country where countryCode='DEU')),
- ('SCHW', 'Schwerin', (select countryId from Country where countryCode='DEU')),
- ('SENF', 'Senftenberg', (select countryId from Country where countryCode='DEU')),
- ('SIEG', 'Siegen', (select countryId from Country where countryCode='DEU')),
- ('SINS', 'Sinsheim', (select countryId from Country where countryCode='DEU')),
- ('SNBR', 'Schönberg', (select countryId from Country where countryCode='DEU')),
- ('SOLI', 'Solingen', (select countryId from Country where countryCode='DEU')),
- ('SONT', 'Sonthofen', (select countryId from Country where countryCode='DEU')),
- ('SPEL', 'Spiesen-Elversberg', (select countryId from Country where countryCode='DEU')),
- ('SPRO', 'Sprockhövel', (select countryId from Country where countryCode='DEU')),
- ('STEI', 'Steinburg', (select countryId from Country where countryCode='DEU')),
- ('STEN', 'Stendal', (select countryId from Country where countryCode='DEU')),
- ('STNB', 'Steinbach', (select countryId from Country where countryCode='DEU')),
- ('STRA', 'Stralsund', (select countryId from Country where countryCode='DEU')),
- ('STUT', 'Stuttgart', (select countryId from Country where countryCode='DEU')),
- ('SUHL', 'Suhl', (select countryId from Country where countryCode='DEU')),
- ('SWFR', 'Schweinfurt', (select countryId from Country where countryCode='DEU')),
- ('SWNN', 'Schwenningen', (select countryId from Country where countryCode='DEU')),
- ('TAUN', 'Taunusstein ', (select countryId from Country where countryCode='DEU')),
- ('THAL', 'Thale', (select countryId from Country where countryCode='DEU')),
- ('TRIE', 'Trier', (select countryId from Country where countryCode='DEU')),
- ('ULMX', 'Ulm', (select countryId from Country where countryCode='DEU')),
- ('UNTE', 'Unterföhring', (select countryId from Country where countryCode='DEU')),
- ('VERL', 'Verl', (select countryId from Country where countryCode='DEU')),
- ('VILZ', 'Vilzing', (select countryId from Country where countryCode='DEU')),
- ('VOEL', 'Völklingen', (select countryId from Country where countryCode='DEU')),
- ('WAEI', 'Wanne-Eickel', (select countryId from Country where countryCode='DEU')),
- ('WALL', 'Walldorf', (select countryId from Country where countryCode='DEU')),
- ('WATT', 'Wattenscheid', (select countryId from Country where countryCode='DEU')),
- ('WEID', 'Weiden', (select countryId from Country where countryCode='DEU')),
- ('WEIM', 'Weimar', (select countryId from Country where countryCode='DEU')),
- ('WEIS', 'Weißenfels', (select countryId from Country where countryCode='DEU')),
- ('WILH', 'Wilhelmshaven', (select countryId from Country where countryCode='DEU')),
- ('WISM', 'Wismar', (select countryId from Country where countryCode='DEU')),
- ('WLFR', 'Wolfratshausen', (select countryId from Country where countryCode='DEU')),
- ('WOLF', 'Wolfsburg', (select countryId from Country where countryCode='DEU')),
- ('WORM', 'Worms', (select countryId from Country where countryCode='DEU')),
- ('WUER', 'Würzburg', (select countryId from Country where countryCode='DEU')),
- ('WUPP', 'Wuppertal', (select countryId from Country where countryCode='DEU')),
- ('ZWIC', 'Zwickau', (select countryId from Country where countryCode='DEU'));
+INSERT INTO City (cityCode, cityName, countryId) VALUES
+  ('AACH', 'Aachen', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('AALE', 'Aalen', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('AHLE', 'Ahlen', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('ALTE', 'Altenburg', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('ALTO', 'Altomünster', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('ALZE', 'Alzenau', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('AMBE', 'Amberg', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('AMME', 'Ammerthal', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('ANSB', 'Ansbach', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('ASCH', 'Aschaffenburg', (SELECT countryId
+                             FROM Country
+                             WHERE countryCode = 'DEU')),
+  ('ASPA', 'Aspach', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('AUBS', 'Aubstadt', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('AUER', 'Auerbach', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('AUEX', 'Aue', (SELECT countryId
+                   FROM Country
+                   WHERE countryCode = 'DEU')),
+  ('AUGS', 'Augsburg', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('BAKR', 'Bad Kreuznach', (SELECT countryId
+                             FROM Country
+                             WHERE countryCode = 'DEU')),
+  ('BAMB', 'Bamberg', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('BARS', 'Barsinghausen', (SELECT countryId
+                             FROM Country
+                             WHERE countryCode = 'DEU')),
+  ('BAUN', 'Baunatal', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('BAUT', 'Bautzen', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('BAYR', 'Bayreuth', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('BCHL', 'Bocholt', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('BERL', 'Berlin', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('BIEL', 'Bielefeld', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('BISC', 'Bischofswerda', (SELECT countryId
+                             FROM Country
+                             WHERE countryCode = 'DEU')),
+  ('BOCH', 'Bochum', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('BOEH', 'Böhlen', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('BOGE', 'Bogen', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('BONN', 'Bonn', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'DEU')),
+  ('BRAN', 'Brandenburg an der Havel', (SELECT countryId
+                                        FROM Country
+                                        WHERE countryCode = 'DEU')),
+  ('BRAU', 'Braunschweig', (SELECT countryId
+                            FROM Country
+                            WHERE countryCode = 'DEU')),
+  ('BREM', 'Bremen', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('BRMR', 'Bremerhaven', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('BUCH', 'Buchbach', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('BUER', 'Bürstadt', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('BURG', 'Burghausen', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('CHEM', 'Chemnitz', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('CLOP', 'Cloppenburg', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('COTT', 'Cottbus', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('DACH', 'Dachau', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('DARM', 'Darmstadt', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('DESS', 'Dessau', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('DORT', 'Dortmund', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('DRES', 'Dresden', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('DROC', 'Drochtersen', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('DUIS', 'Duisburg', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('DUSS', 'Düsseldorf', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('EICH', 'Eichstätt', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('EISE', 'Eisenhüttenstadt', (SELECT countryId
+                                FROM Country
+                                WHERE countryCode = 'DEU')),
+  ('EMDE', 'Emden', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('EPPI', 'Eppingen', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('ERFU', 'Erfurt', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('ERLA', 'Erlangen', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('ERMA', 'Erlenbach am Main', (SELECT countryId
+                                 FROM Country
+                                 WHERE countryCode = 'DEU')),
+  ('ESSE', 'Essen', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('FEUC', 'Feucht', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('FLEN', 'Flensburg', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('FRAN', 'Frankfurt', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('FREI', 'Freiburg', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('FROD', 'Frankfurt (Oder)', (SELECT countryId
+                                FROM Country
+                                WHERE countryCode = 'DEU')),
+  ('FROH', 'Frohnlach', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('FURS', 'Fürstenwalde', (SELECT countryId
+                            FROM Country
+                            WHERE countryCode = 'DEU')),
+  ('FUER', 'Fürth', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('GARB', 'Garbsen', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('GARC', 'Garching', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('GELS', 'Gelsenkirchen', (SELECT countryId
+                             FROM Country
+                             WHERE countryCode = 'DEU')),
+  ('GERA', 'Gera', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'DEU')),
+  ('GOET', 'Göttingen', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('GOSL', 'Goslar', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('GROS', 'Großbardorf', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('GUDO', 'Gundelfingen an der Donau', (SELECT countryId
+                                         FROM Country
+                                         WHERE countryCode = 'DEU')),
+  ('GUET', 'Gütersloh', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('HAIB', 'Haibach', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('HALL', 'Halle', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('HAMB', 'Hamburg', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('HANA', 'Hanau', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('HANN', 'Hannover', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('HEID', 'Heidenheim', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('HEIL', 'Heilbronn', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('HERF', 'Herford', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('HERN', 'Herne', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('HILD', 'Hildesheim', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('HOFX', 'Hof', (SELECT countryId
+                   FROM Country
+                   WHERE countryCode = 'DEU')),
+  ('HOMB', 'Homburg', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('ILLE', 'Illertissen', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('INGO', 'Ingolstadt', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('ISMA', 'Ismaning', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('JENA', 'Jena', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'DEU')),
+  ('KAIS', 'Kaiserslautern', (SELECT countryId
+                              FROM Country
+                              WHERE countryCode = 'DEU')),
+  ('KARL', 'Karlsruhe', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('KASS', 'Kassel', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('KEMP', 'Kempten', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('KIEL', 'Kiel', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'DEU')),
+  ('KIRC', 'Kirchanschöring', (SELECT countryId
+                               FROM Country
+                               WHERE countryCode = 'DEU')),
+  ('KLEV', 'Kleve', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('KOBL', 'Koblenz', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('KOLN', 'Köln', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'DEU')),
+  ('KREF', 'Krefeld', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('LALE', 'Landsberg am Lech', (SELECT countryId
+                                 FROM Country
+                                 WHERE countryCode = 'DEU')),
+  ('LEIB', 'Leiblfing', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('LEIP', 'Leipzig', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('LEVE', 'Leverkusen', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('LOTT', 'Lotte', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('LUCK', 'Luckenwalde', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('LUDW', 'Ludwigshafen', (SELECT countryId
+                            FROM Country
+                            WHERE countryCode = 'DEU')),
+  ('LUEB', 'Lübeck', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('LUEN', 'Lüneburg', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('MAGD', 'Magdeburg', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('MAIN', 'Mainz', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('MANN', 'Mannheim', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('MEER', 'Meerane', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('MEMM', 'Memmingen', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('MEPP', 'Meppen', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('MERS', 'Merseburg', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('MEUS', 'Meuselwitz', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('MOEN', 'Mönchengladbach', (SELECT countryId
+                               FROM Country
+                               WHERE countryCode = 'DEU')),
+  ('MUEL', 'Mülheim an der Ruhr', (SELECT countryId
+                                   FROM Country
+                                   WHERE countryCode = 'DEU')),
+  ('MUEN', 'Münster', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('MUNI', 'Munich', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('NEOB', 'Neumarkt in der Oberpfalz', (SELECT countryId
+                                         FROM Country
+                                         WHERE countryCode = 'DEU')),
+  ('NEUB', 'Neubrandenburg', (SELECT countryId
+                              FROM Country
+                              WHERE countryCode = 'DEU')),
+  ('NEUG', 'Neugersdorf', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('NEUN', 'Neunkirchen', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('NEUS', 'Neustrelitz', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('NRDH', 'Nordhausen', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('NRDR', 'Norderstedt', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('NURE', 'Nuremberg', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('OBER', 'Oberhausen', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('OEER', 'Oer-Erkenschwick', (SELECT countryId
+                                FROM Country
+                                WHERE countryCode = 'DEU')),
+  ('OFFE', 'Offenbach', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('OLDE', 'Oldenburg', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('OSNA', 'Osnabrück', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('PADE', 'Paderborn', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('PASS', 'Passau', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('PFOR', 'Pforzheim', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('PFUL', 'Pfullendorf', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('PIRM', 'Pirmasens', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('PLAU', 'Plauen', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('POHL', 'Pohlheim', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('POTS', 'Potsdam', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('PULL', 'Pullach', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('PYRB', 'Pyrbaum', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('REGE', 'Regensburg', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('REHD', 'Rehden', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('REMC', 'Remchingen', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('REMS', 'Remscheid', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('REUT', 'Reutlingen', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('RHWI', 'Rheda-Wiedenbrück', (SELECT countryId
+                                 FROM Country
+                                 WHERE countryCode = 'DEU')),
+  ('RIES', 'Riesa', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('ROED', 'Rödinghausen', (SELECT countryId
+                            FROM Country
+                            WHERE countryCode = 'DEU')),
+  ('ROSE', 'Rosenheim', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('ROST', 'Rostock', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('SAAR', 'Saarbrücken', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('SALM', 'Salmrohr', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('SAMA', 'Sand am Main', (SELECT countryId
+                            FROM Country
+                            WHERE countryCode = 'DEU')),
+  ('SAND', 'Sandhausen', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('SWAB', 'Schwabmünchen', (SELECT countryId
+                             FROM Country
+                             WHERE countryCode = 'DEU')),
+  ('SCHW', 'Schwerin', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('SENF', 'Senftenberg', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('SIEG', 'Siegen', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('SINS', 'Sinsheim', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('SNBR', 'Schönberg', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('SOLI', 'Solingen', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('SONT', 'Sonthofen', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('SPEL', 'Spiesen-Elversberg', (SELECT countryId
+                                  FROM Country
+                                  WHERE countryCode = 'DEU')),
+  ('SPRO', 'Sprockhövel', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('STEI', 'Steinburg', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('STEN', 'Stendal', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('STNB', 'Steinbach', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('STRA', 'Stralsund', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('STUT', 'Stuttgart', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('SUHL', 'Suhl', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'DEU')),
+  ('SWFR', 'Schweinfurt', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'DEU')),
+  ('SWNN', 'Schwenningen', (SELECT countryId
+                            FROM Country
+                            WHERE countryCode = 'DEU')),
+  ('TAUN', 'Taunusstein ', (SELECT countryId
+                            FROM Country
+                            WHERE countryCode = 'DEU')),
+  ('THAL', 'Thale', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('TRIE', 'Trier', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('ULMX', 'Ulm', (SELECT countryId
+                   FROM Country
+                   WHERE countryCode = 'DEU')),
+  ('UNTE', 'Unterföhring', (SELECT countryId
+                            FROM Country
+                            WHERE countryCode = 'DEU')),
+  ('VERL', 'Verl', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'DEU')),
+  ('VILZ', 'Vilzing', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU')),
+  ('VOEL', 'Völklingen', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('WAEI', 'Wanne-Eickel', (SELECT countryId
+                            FROM Country
+                            WHERE countryCode = 'DEU')),
+  ('WALL', 'Walldorf', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('WATT', 'Wattenscheid', (SELECT countryId
+                            FROM Country
+                            WHERE countryCode = 'DEU')),
+  ('WEID', 'Weiden', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('WEIM', 'Weimar', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('WEIS', 'Weißenfels', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'DEU')),
+  ('WILH', 'Wilhelmshaven', (SELECT countryId
+                             FROM Country
+                             WHERE countryCode = 'DEU')),
+  ('WISM', 'Wismar', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'DEU')),
+  ('WLFR', 'Wolfratshausen', (SELECT countryId
+                              FROM Country
+                              WHERE countryCode = 'DEU')),
+  ('WOLF', 'Wolfsburg', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('WORM', 'Worms', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'DEU')),
+  ('WUER', 'Würzburg', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'DEU')),
+  ('WUPP', 'Wuppertal', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'DEU')),
+  ('ZWIC', 'Zwickau', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'DEU'));
 
 -- ITALY
-INSERT INTO City(cityCode, cityName, countryId) values
- ('BERG', 'Bergamo', (select countryId from Country where countryCode='ITA')),
- ('AGRI', 'Agrigento', (select countryId from Country where countryCode='ITA')),
- ('ALBI', 'Albino and Leffe', (select countryId from Country where countryCode='ITA')),
- ('ALES', 'Alessandria', (select countryId from Country where countryCode='ITA')),
- ('ANCO', 'Ancona', (select countryId from Country where countryCode='ITA')),
- ('ANDR', 'Andria', (select countryId from Country where countryCode='ITA')),
- ('ARDE', 'Ardea', (select countryId from Country where countryCode='ITA')),
- ('AREZ', 'Arezzo', (select countryId from Country where countryCode='ITA')),
- ('ASCO', 'Ascoli', (select countryId from Country where countryCode='ITA')),
- ('AVEL', 'Avellino', (select countryId from Country where countryCode='ITA')),
- ('BARI', 'Bari', (select countryId from Country where countryCode='ITA')),
- ('BASS', 'Bassano del Grappa', (select countryId from Country where countryCode='ITA')),
- ('BENE', 'Benevento', (select countryId from Country where countryCode='ITA')),
- ('BOLO', 'Bologna', (select countryId from Country where countryCode='ITA')),
- ('BOLZ', 'Bolzano', (select countryId from Country where countryCode='ITA')),
- ('BRES', 'Brescia', (select countryId from Country where countryCode='ITA')),
- ('CAGL', 'Cagliari', (select countryId from Country where countryCode='ITA')),
- ('CARP', 'Carpi', (select countryId from Country where countryCode='ITA')),
- ('CARR', 'Carrara', (select countryId from Country where countryCode='ITA')),
- ('CASE', 'Caserta', (select countryId from Country where countryCode='ITA')),
- ('CATA', 'Catania', (select countryId from Country where countryCode='ITA')),
- ('CESE', 'Cesena', (select countryId from Country where countryCode='ITA')),
- ('CHIA', 'Chiavari', (select countryId from Country where countryCode='ITA')),
- ('CITT', 'Cittadella', (select countryId from Country where countryCode='ITA')),
- ('CORG', 'Gorgonzola', (select countryId from Country where countryCode='ITA')),
- ('CORN', 'Como', (select countryId from Country where countryCode='ITA')),
- ('COSE', 'Cosenza', (select countryId from Country where countryCode='ITA')),
- ('CREM', 'Cremona', (select countryId from Country where countryCode='ITA')),
- ('CROT', 'Crotone', (select countryId from Country where countryCode='ITA')),
- ('CSTL', 'Castellammare di Stabia', (select countryId from Country where countryCode='ITA')),
- ('CTNZ', 'Catanzaro', (select countryId from Country where countryCode='ITA')),
- ('EMPO', 'Empoli', (select countryId from Country where countryCode='ITA')),
- ('FANO', 'Fano', (select countryId from Country where countryCode='ITA')),
- ('FERR', 'Ferrara', (select countryId from Country where countryCode='ITA')),
- ('FLOR', 'Florence', (select countryId from Country where countryCode='ITA')),
- ('FOGG', 'Foggia', (select countryId from Country where countryCode='ITA')),
- ('FOND', 'Fondi', (select countryId from Country where countryCode='ITA')),
- ('FORL', 'Forlì', (select countryId from Country where countryCode='ITA')),
- ('FRFO', 'Francavilla Fontana', (select countryId from Country where countryCode='ITA')),
- ('FROS', 'Frosinone', (select countryId from Country where countryCode='ITA')),
- ('GENO', 'Genoa', (select countryId from Country where countryCode='ITA')),
- ('GUBB', 'Gubbio', (select countryId from Country where countryCode='ITA')),
- ('LASP', 'La Spezia', (select countryId from Country where countryCode='ITA')),
- ('LATI', 'Latina', (select countryId from Country where countryCode='ITA')),
- ('LECC', 'Lecce', (select countryId from Country where countryCode='ITA')),
- ('LIVO', 'Livorno', (select countryId from Country where countryCode='ITA')),
- ('LUCC', 'Lucca', (select countryId from Country where countryCode='ITA')),
- ('LUME', 'Lumezzane', (select countryId from Country where countryCode='ITA')),
- ('MACE', 'Macerata', (select countryId from Country where countryCode='ITA')),
- ('MANT', 'Mantua', (select countryId from Country where countryCode='ITA')),
- ('MATE', 'Matera', (select countryId from Country where countryCode='ITA')),
- ('MELF', 'Melfi', (select countryId from Country where countryCode='ITA')),
- ('MESS', 'Messina', (select countryId from Country where countryCode='ITA')),
- ('MILA', 'Milan', (select countryId from Country where countryCode='ITA')),
- ('MODE', 'Modena', (select countryId from Country where countryCode='ITA')),
- ('MONO', 'Monopoli', (select countryId from Country where countryCode='ITA')),
- ('NAPL', 'Naples', (select countryId from Country where countryCode='ITA')),
- ('NOVA', 'Novara', (select countryId from Country where countryCode='ITA')),
- ('OLBI', 'Olbia', (select countryId from Country where countryCode='ITA')),
- ('PADU', 'Padua', (select countryId from Country where countryCode='ITA')),
- ('PAGA', 'Pagani', (select countryId from Country where countryCode='ITA')),
- ('PALE', 'Palermo', (select countryId from Country where countryCode='ITA')),
- ('PARM', 'Parma', (select countryId from Country where countryCode='ITA')),
- ('PERU', 'Perugia', (select countryId from Country where countryCode='ITA')),
- ('PESC', 'Pescara', (select countryId from Country where countryCode='ITA')),
- ('PIAC', 'Piacenza', (select countryId from Country where countryCode='ITA')),
- ('PISA', 'Pisa', (select countryId from Country where countryCode='ITA')),
- ('PIST', 'Pistoia', (select countryId from Country where countryCode='ITA')),
- ('PONT', 'Pontedera', (select countryId from Country where countryCode='ITA')),
- ('PORD', 'Pordenone', (select countryId from Country where countryCode='ITA')),
- ('PRAT', 'Prato', (select countryId from Country where countryCode='ITA')),
- ('RECA', 'Reggio Calabria', (select countryId from Country where countryCode='ITA')),
- ('REGG', 'Reggio Emilia', (select countryId from Country where countryCode='ITA')),
- ('RENA', 'Renate', (select countryId from Country where countryCode='ITA')),
- ('ROME', 'Rome', (select countryId from Country where countryCode='ITA')),
- ('SABE', 'San Benedetto del Tronto', (select countryId from Country where countryCode='ITA')),
- ('SALE', 'Salerno', (select countryId from Country where countryCode='ITA')),
- ('SALO', 'Salò', (select countryId from Country where countryCode='ITA')),
- ('SAMI', 'San Miniato', (select countryId from Country where countryCode='ITA')),
- ('SARO', 'Santarcangelo di Romagna', (select countryId from Country where countryCode='ITA')),
- ('SASS', 'Sassuolo', (select countryId from Country where countryCode='ITA')),
- ('SIEN', 'Siena', (select countryId from Country where countryCode='ITA')),
- ('SIRA', 'Siracusa', (select countryId from Country where countryCode='ITA')),
- ('TARA', 'Taranto', (select countryId from Country where countryCode='ITA')),
- ('TERA', 'Teramo', (select countryId from Country where countryCode='ITA')),
- ('TERN', 'Terni', (select countryId from Country where countryCode='ITA')),
- ('TRAP', 'Trapani', (select countryId from Country where countryCode='ITA')),
- ('TURI', 'Turin', (select countryId from Country where countryCode='ITA')),
- ('UDIN', 'Udine', (select countryId from Country where countryCode='ITA')),
- ('VENE', 'Venezia', (select countryId from Country where countryCode='ITA')),
- ('VERC', 'Vercelli', (select countryId from Country where countryCode='ITA')),
- ('VERO', 'Verona', (select countryId from Country where countryCode='ITA')),
- ('VICE', 'Vicenza', (select countryId from Country where countryCode='ITA')),
- ('VITE', 'Viterbo', (select countryId from Country where countryCode='ITA')),
- ('VIVA', 'Vibo Valentia', (select countryId from Country where countryCode='ITA'));
+INSERT INTO City (cityCode, cityName, countryId) VALUES
+  ('BERG', 'Bergamo', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('AGRI', 'Agrigento', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ITA')),
+  ('ALBI', 'Albino and Leffe', (SELECT countryId
+                                FROM Country
+                                WHERE countryCode = 'ITA')),
+  ('ALES', 'Alessandria', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'ITA')),
+  ('ANCO', 'Ancona', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('ANDR', 'Andria', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('ARDE', 'Ardea', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('AREZ', 'Arezzo', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('ASCO', 'Ascoli', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('AVEL', 'Avellino', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ITA')),
+  ('BARI', 'Bari', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'ITA')),
+  ('BASS', 'Bassano del Grappa', (SELECT countryId
+                                  FROM Country
+                                  WHERE countryCode = 'ITA')),
+  ('BENE', 'Benevento', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ITA')),
+  ('BOLO', 'Bologna', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('BOLZ', 'Bolzano', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('BRES', 'Brescia', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('CAGL', 'Cagliari', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ITA')),
+  ('CARP', 'Carpi', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('CARR', 'Carrara', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('CASE', 'Caserta', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('CATA', 'Catania', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('CESE', 'Cesena', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('CHIA', 'Chiavari', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ITA')),
+  ('CITT', 'Cittadella', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'ITA')),
+  ('CORG', 'Gorgonzola', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'ITA')),
+  ('CORN', 'Como', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'ITA')),
+  ('COSE', 'Cosenza', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('CREM', 'Cremona', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('CROT', 'Crotone', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('CSTL', 'Castellammare di Stabia', (SELECT countryId
+                                       FROM Country
+                                       WHERE countryCode = 'ITA')),
+  ('CTNZ', 'Catanzaro', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ITA')),
+  ('EMPO', 'Empoli', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('FANO', 'Fano', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'ITA')),
+  ('FERR', 'Ferrara', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('FLOR', 'Florence', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ITA')),
+  ('FOGG', 'Foggia', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('FOND', 'Fondi', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('FORL', 'Forlì', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('FRFO', 'Francavilla Fontana', (SELECT countryId
+                                   FROM Country
+                                   WHERE countryCode = 'ITA')),
+  ('FROS', 'Frosinone', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ITA')),
+  ('GENO', 'Genoa', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('GUBB', 'Gubbio', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('LASP', 'La Spezia', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ITA')),
+  ('LATI', 'Latina', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('LECC', 'Lecce', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('LIVO', 'Livorno', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('LUCC', 'Lucca', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('LUME', 'Lumezzane', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ITA')),
+  ('MACE', 'Macerata', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ITA')),
+  ('MANT', 'Mantua', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('MATE', 'Matera', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('MELF', 'Melfi', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('MESS', 'Messina', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('MILA', 'Milan', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('MODE', 'Modena', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('MONO', 'Monopoli', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ITA')),
+  ('NAPL', 'Naples', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('NOVA', 'Novara', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('OLBI', 'Olbia', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('PADU', 'Padua', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('PAGA', 'Pagani', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('PALE', 'Palermo', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('PARM', 'Parma', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('PERU', 'Perugia', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('PESC', 'Pescara', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('PIAC', 'Piacenza', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ITA')),
+  ('PISA', 'Pisa', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'ITA')),
+  ('PIST', 'Pistoia', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('PONT', 'Pontedera', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ITA')),
+  ('PORD', 'Pordenone', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ITA')),
+  ('PRAT', 'Prato', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('RECA', 'Reggio Calabria', (SELECT countryId
+                               FROM Country
+                               WHERE countryCode = 'ITA')),
+  ('REGG', 'Reggio Emilia', (SELECT countryId
+                             FROM Country
+                             WHERE countryCode = 'ITA')),
+  ('RENA', 'Renate', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('ROME', 'Rome', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'ITA')),
+  ('SABE', 'San Benedetto del Tronto', (SELECT countryId
+                                        FROM Country
+                                        WHERE countryCode = 'ITA')),
+  ('SALE', 'Salerno', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('SALO', 'Salò', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'ITA')),
+  ('SAMI', 'San Miniato', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'ITA')),
+  ('SARO', 'Santarcangelo di Romagna', (SELECT countryId
+                                        FROM Country
+                                        WHERE countryCode = 'ITA')),
+  ('SASS', 'Sassuolo', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ITA')),
+  ('SIEN', 'Siena', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('SIRA', 'Siracusa', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ITA')),
+  ('TARA', 'Taranto', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('TERA', 'Teramo', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('TERN', 'Terni', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('TRAP', 'Trapani', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('TURI', 'Turin', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('UDIN', 'Udine', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ITA')),
+  ('VENE', 'Venezia', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('VERC', 'Vercelli', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ITA')),
+  ('VERO', 'Verona', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ITA')),
+  ('VICE', 'Vicenza', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('VITE', 'Viterbo', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ITA')),
+  ('VIVA', 'Vibo Valentia', (SELECT countryId
+                             FROM Country
+                             WHERE countryCode = 'ITA'));

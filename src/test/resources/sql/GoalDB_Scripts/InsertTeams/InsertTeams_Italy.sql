@@ -1,103 +1,307 @@
-INSERT INTO Team(teamCode, teamName, cityId) values
-('ITA001', 'Pisa', (select cityId from City where cityCode='PISA')),
-('ITA002', 'Modena', (select cityId from City where cityCode='MODE')),
-('ITA003', 'Pistoiese', (select cityId from City where cityCode='PIST')),
-('ITA004', 'Como', (select cityId from City where cityCode='CORN')),
-('ITA005', 'Padova', (select cityId from City where cityCode='PADU')),
-('ITA006', 'Novara', (select cityId from City where cityCode='NOVA')),
-('ITA007', 'Genoa', (select cityId from City where cityCode='GENO')),
-('ITA008', 'Arezzo', (select cityId from City where cityCode='AREZ')),
-('ITA009', 'Melfi', (select cityId from City where cityCode='MELF')),
-('ITA010', 'Cesena', (select cityId from City where cityCode='CESE')),
-('ITA011', 'Virtus Francavilla', (select cityId from City where cityCode='FRFO')),
-('ITA012', 'Reggiana', (select cityId from City where cityCode='REGG')),
-('ITA013', 'Crotone', (select cityId from City where cityCode='CROT')),
-('ITA014', 'Salernitana', (select cityId from City where cityCode='SALE')),
-('ITA015', 'Benevento', (select cityId from City where cityCode='BENE')),
-('ITA016', 'Milan', (select cityId from City where cityCode='MILA')),
-('ITA017', 'Lazio', (select cityId from City where cityCode='ROME')),
-('ITA018', 'Vibonese', (select cityId from City where cityCode='VIVA')),
-('ITA019', 'Teramo', (select cityId from City where cityCode='TERA')),
-('ITA020', 'Viterbese', (select cityId from City where cityCode='VITE')),
-('ITA021', 'Atalanta', (select cityId from City where cityCode='BERG')),
-('ITA022', 'Akragas', (select cityId from City where cityCode='AGRI')),
-('ITA023', 'Parma', (select cityId from City where cityCode='PARM')),
-('ITA024', 'Bologna', (select cityId from City where cityCode='BOLO')),
-('ITA025', 'Südtirol', (select cityId from City where cityCode='BOLZ')),
-('ITA026', 'Fidelis Andria', (select cityId from City where cityCode='ANDR')),
-('ITA027', 'Juventus', (select cityId from City where cityCode='TURI')),
-('ITA028', 'Ascoli', (select cityId from City where cityCode='ASCO')),
-('ITA029', 'Olbia', (select cityId from City where cityCode='OLBI')),
-('ITA030', 'Cosenza', (select cityId from City where cityCode='COSE')),
-('ITA031', 'Frosinone', (select cityId from City where cityCode='FROS')),
-('ITA032', 'Siena', (select cityId from City where cityCode='SIEN')),
-('ITA033', 'Venezia', (select cityId from City where cityCode='VENE')),
-('ITA034', 'Forlì', (select cityId from City where cityCode='FORL')),
-('ITA035', 'AlbinoLeffe', (select cityId from City where cityCode='ALBI')),
-('ITA036', 'Perugia', (select cityId from City where cityCode='PERU')),
-('ITA037', 'SPAL', (select cityId from City where cityCode='FERR')),
-('ITA038', 'Carpi', (select cityId from City where cityCode='CARP')),
-('ITA039', 'Avellino', (select cityId from City where cityCode='AVEL')),
-('ITA040', 'Santarcangelo', (select cityId from City where cityCode='SARO')),
-('ITA041', 'Brescia', (select cityId from City where cityCode='BRES')),
-('ITA042', 'Cremonese', (select cityId from City where cityCode='CREM')),
-('ITA043', 'Empoli', (select cityId from City where cityCode='EMPO')),
-('ITA044', 'Spezia', (select cityId from City where cityCode='LASP')),
-('ITA045', 'Ternana', (select cityId from City where cityCode='TERN')),
-('ITA046', 'Fiorentina', (select cityId from City where cityCode='FLOR')),
-('ITA047', 'Verona', (select cityId from City where cityCode='VERO')),
-('ITA048', 'Reggina', (select cityId from City where cityCode='RECA')),
-('ITA049', 'Casertana', (select cityId from City where cityCode='CASE')),
-('ITA050', 'Renate', (select cityId from City where cityCode='RENA')),
-('ITA051', 'Pro Piacenza', (select cityId from City where cityCode='PIAC')),
-('ITA052', 'Juve Stabia', (select cityId from City where cityCode='CSTL')),
-('ITA053', 'Palermo', (select cityId from City where cityCode='PALE')),
-('ITA054', 'Lecce', (select cityId from City where cityCode='LECC')),
-('ITA055', 'Roma', (select cityId from City where cityCode='ROME')),
-('ITA056', 'Siracusa', (select cityId from City where cityCode='SIRA')),
-('ITA057', 'Paganese', (select cityId from City where cityCode='PAGA')),
-('ITA058', 'Racing Roma', (select cityId from City where cityCode='ARDE')),
-('ITA059', 'Cagliari', (select cityId from City where cityCode='CAGL')),
-('ITA060', 'Prato', (select cityId from City where cityCode='PRAT')),
-('ITA061', 'Vicenza', (select cityId from City where cityCode='VICE')),
-('ITA062', 'Napoli', (select cityId from City where cityCode='NAPL')),
-('ITA063', 'Mantova', (select cityId from City where cityCode='MANT')),
-('ITA064', 'Sambenedettese', (select cityId from City where cityCode='SABE')),
-('ITA065', 'Monopoli', (select cityId from City where cityCode='MONO')),
-('ITA066', 'Bassano Virtus', (select cityId from City where cityCode='BASS')),
-('ITA067', 'Pro Vercelli', (select cityId from City where cityCode='VERC')),
-('ITA068', 'Gubbio', (select cityId from City where cityCode='GUBB')),
-('ITA069', 'FeralpiSalò', (select cityId from City where cityCode='SALO')),
-('ITA070', 'Lumezzane', (select cityId from City where cityCode='LUME')),
-('ITA071', 'Latina', (select cityId from City where cityCode='LATI')),
-('ITA072', 'Pescara', (select cityId from City where cityCode='PESC')),
-('ITA073', 'Bari', (select cityId from City where cityCode='BARI')),
-('ITA074', 'Alessandria', (select cityId from City where cityCode='ALES')),
-('ITA075', 'Ancona', (select cityId from City where cityCode='ANCO')),
-('ITA076', 'Maceratese', (select cityId from City where cityCode='MACE')),
-('ITA077', 'Lupa Roma', (select cityId from City where cityCode='ROME')),
-('ITA078', 'Cittadella', (select cityId from City where cityCode='CITT')),
-('ITA079', 'Internazionale', (select cityId from City where cityCode='MILA')),
-('ITA080', 'Catanzaro', (select cityId from City where cityCode='CTNZ')),
-('ITA081', 'Foggia', (select cityId from City where cityCode='FOGG')),
-('ITA082', 'Pordenone', (select cityId from City where cityCode='PORD')),
-('ITA083', 'Livorno', (select cityId from City where cityCode='LIVO')),
-('ITA084', 'Fondi', (select cityId from City where cityCode='FOND')),
-('ITA085', 'Chievo', (select cityId from City where cityCode='VERO')),
-('ITA086', 'Matera', (select cityId from City where cityCode='MATE')),
-('ITA087', 'Messina', (select cityId from City where cityCode='MESS')),
-('ITA088', 'Taranto', (select cityId from City where cityCode='TARA')),
-('ITA089', 'Catania', (select cityId from City where cityCode='CATA')),
-('ITA090', 'Sassuolo', (select cityId from City where cityCode='SASS')),
-('ITA091', 'Trapani', (select cityId from City where cityCode='TRAP')),
-('ITA092', 'Udinese', (select cityId from City where cityCode='UDIN')),
-('ITA093', 'Sampdoria', (select cityId from City where cityCode='GENO')),
-('ITA094', 'Pontedera', (select cityId from City where cityCode='PONT')),
-('ITA095', 'Giana Erminio', (select cityId from City where cityCode='CORG')),
-('ITA096', 'Torino', (select cityId from City where cityCode='TURI')),
-('ITA097', 'Tuttocuoio', (select cityId from City where cityCode='SAMI')),
-('ITA098', 'Fano', (select cityId from City where cityCode='FANO')),
-('ITA099', 'Carrarese', (select cityId from City where cityCode='CARR')),
-('ITA100', 'Lucchese', (select cityId from City where cityCode='LUCC')),
-('ITA101', 'Piacenza', (select cityId from City where cityCode='PIAC')),
-('ITA102', 'Virtus Entella', (select cityId from City where cityCode='CHIA'));
+INSERT INTO Team (teamCode, teamName, cityId) VALUES
+  ('ITA001', 'Pisa', (SELECT cityId
+                      FROM City
+                      WHERE cityCode = 'PISA')),
+  ('ITA002', 'Modena', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'MODE')),
+  ('ITA003', 'Pistoiese', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'PIST')),
+  ('ITA004', 'Como', (SELECT cityId
+                      FROM City
+                      WHERE cityCode = 'CORN')),
+  ('ITA005', 'Padova', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'PADU')),
+  ('ITA006', 'Novara', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'NOVA')),
+  ('ITA007', 'Genoa', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'GENO')),
+  ('ITA008', 'Arezzo', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'AREZ')),
+  ('ITA009', 'Melfi', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'MELF')),
+  ('ITA010', 'Cesena', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'CESE')),
+  ('ITA011', 'Virtus Francavilla', (SELECT cityId
+                                    FROM City
+                                    WHERE cityCode = 'FRFO')),
+  ('ITA012', 'Reggiana', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'REGG')),
+  ('ITA013', 'Crotone', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'CROT')),
+  ('ITA014', 'Salernitana', (SELECT cityId
+                             FROM City
+                             WHERE cityCode = 'SALE')),
+  ('ITA015', 'Benevento', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'BENE')),
+  ('ITA016', 'Milan', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'MILA')),
+  ('ITA017', 'Lazio', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'ROME')),
+  ('ITA018', 'Vibonese', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'VIVA')),
+  ('ITA019', 'Teramo', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'TERA')),
+  ('ITA020', 'Viterbese', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'VITE')),
+  ('ITA021', 'Atalanta', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'BERG')),
+  ('ITA022', 'Akragas', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'AGRI')),
+  ('ITA023', 'Parma', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'PARM')),
+  ('ITA024', 'Bologna', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'BOLO')),
+  ('ITA025', 'Südtirol', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'BOLZ')),
+  ('ITA026', 'Fidelis Andria', (SELECT cityId
+                                FROM City
+                                WHERE cityCode = 'ANDR')),
+  ('ITA027', 'Juventus', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'TURI')),
+  ('ITA028', 'Ascoli', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'ASCO')),
+  ('ITA029', 'Olbia', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'OLBI')),
+  ('ITA030', 'Cosenza', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'COSE')),
+  ('ITA031', 'Frosinone', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'FROS')),
+  ('ITA032', 'Siena', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'SIEN')),
+  ('ITA033', 'Venezia', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'VENE')),
+  ('ITA034', 'Forlì', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'FORL')),
+  ('ITA035', 'AlbinoLeffe', (SELECT cityId
+                             FROM City
+                             WHERE cityCode = 'ALBI')),
+  ('ITA036', 'Perugia', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'PERU')),
+  ('ITA037', 'SPAL', (SELECT cityId
+                      FROM City
+                      WHERE cityCode = 'FERR')),
+  ('ITA038', 'Carpi', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'CARP')),
+  ('ITA039', 'Avellino', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'AVEL')),
+  ('ITA040', 'Santarcangelo', (SELECT cityId
+                               FROM City
+                               WHERE cityCode = 'SARO')),
+  ('ITA041', 'Brescia', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'BRES')),
+  ('ITA042', 'Cremonese', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'CREM')),
+  ('ITA043', 'Empoli', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'EMPO')),
+  ('ITA044', 'Spezia', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'LASP')),
+  ('ITA045', 'Ternana', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'TERN')),
+  ('ITA046', 'Fiorentina', (SELECT cityId
+                            FROM City
+                            WHERE cityCode = 'FLOR')),
+  ('ITA047', 'Verona', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'VERO')),
+  ('ITA048', 'Reggina', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'RECA')),
+  ('ITA049', 'Casertana', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'CASE')),
+  ('ITA050', 'Renate', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'RENA')),
+  ('ITA051', 'Pro Piacenza', (SELECT cityId
+                              FROM City
+                              WHERE cityCode = 'PIAC')),
+  ('ITA052', 'Juve Stabia', (SELECT cityId
+                             FROM City
+                             WHERE cityCode = 'CSTL')),
+  ('ITA053', 'Palermo', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'PALE')),
+  ('ITA054', 'Lecce', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'LECC')),
+  ('ITA055', 'Roma', (SELECT cityId
+                      FROM City
+                      WHERE cityCode = 'ROME')),
+  ('ITA056', 'Siracusa', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'SIRA')),
+  ('ITA057', 'Paganese', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'PAGA')),
+  ('ITA058', 'Racing Roma', (SELECT cityId
+                             FROM City
+                             WHERE cityCode = 'ARDE')),
+  ('ITA059', 'Cagliari', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'CAGL')),
+  ('ITA060', 'Prato', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'PRAT')),
+  ('ITA061', 'Vicenza', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'VICE')),
+  ('ITA062', 'Napoli', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'NAPL')),
+  ('ITA063', 'Mantova', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'MANT')),
+  ('ITA064', 'Sambenedettese', (SELECT cityId
+                                FROM City
+                                WHERE cityCode = 'SABE')),
+  ('ITA065', 'Monopoli', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'MONO')),
+  ('ITA066', 'Bassano Virtus', (SELECT cityId
+                                FROM City
+                                WHERE cityCode = 'BASS')),
+  ('ITA067', 'Pro Vercelli', (SELECT cityId
+                              FROM City
+                              WHERE cityCode = 'VERC')),
+  ('ITA068', 'Gubbio', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'GUBB')),
+  ('ITA069', 'FeralpiSalò', (SELECT cityId
+                             FROM City
+                             WHERE cityCode = 'SALO')),
+  ('ITA070', 'Lumezzane', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'LUME')),
+  ('ITA071', 'Latina', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'LATI')),
+  ('ITA072', 'Pescara', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'PESC')),
+  ('ITA073', 'Bari', (SELECT cityId
+                      FROM City
+                      WHERE cityCode = 'BARI')),
+  ('ITA074', 'Alessandria', (SELECT cityId
+                             FROM City
+                             WHERE cityCode = 'ALES')),
+  ('ITA075', 'Ancona', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'ANCO')),
+  ('ITA076', 'Maceratese', (SELECT cityId
+                            FROM City
+                            WHERE cityCode = 'MACE')),
+  ('ITA077', 'Lupa Roma', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'ROME')),
+  ('ITA078', 'Cittadella', (SELECT cityId
+                            FROM City
+                            WHERE cityCode = 'CITT')),
+  ('ITA079', 'Internazionale', (SELECT cityId
+                                FROM City
+                                WHERE cityCode = 'MILA')),
+  ('ITA080', 'Catanzaro', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'CTNZ')),
+  ('ITA081', 'Foggia', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'FOGG')),
+  ('ITA082', 'Pordenone', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'PORD')),
+  ('ITA083', 'Livorno', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'LIVO')),
+  ('ITA084', 'Fondi', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'FOND')),
+  ('ITA085', 'Chievo', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'VERO')),
+  ('ITA086', 'Matera', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'MATE')),
+  ('ITA087', 'Messina', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'MESS')),
+  ('ITA088', 'Taranto', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'TARA')),
+  ('ITA089', 'Catania', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'CATA')),
+  ('ITA090', 'Sassuolo', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'SASS')),
+  ('ITA091', 'Trapani', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'TRAP')),
+  ('ITA092', 'Udinese', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'UDIN')),
+  ('ITA093', 'Sampdoria', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'GENO')),
+  ('ITA094', 'Pontedera', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'PONT')),
+  ('ITA095', 'Giana Erminio', (SELECT cityId
+                               FROM City
+                               WHERE cityCode = 'CORG')),
+  ('ITA096', 'Torino', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'TURI')),
+  ('ITA097', 'Tuttocuoio', (SELECT cityId
+                            FROM City
+                            WHERE cityCode = 'SAMI')),
+  ('ITA098', 'Fano', (SELECT cityId
+                      FROM City
+                      WHERE cityCode = 'FANO')),
+  ('ITA099', 'Carrarese', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'CARR')),
+  ('ITA100', 'Lucchese', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'LUCC')),
+  ('ITA101', 'Piacenza', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'PIAC')),
+  ('ITA102', 'Virtus Entella', (SELECT cityId
+                                FROM City
+                                WHERE cityCode = 'CHIA'));

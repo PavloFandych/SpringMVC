@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.total.spring.root.entity.Capability;
 import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.service.interfaces.CapabilityService;
@@ -61,17 +62,26 @@ public class CapabilityResource {
 //        getCapabilityService().save(new Capability(CapabilityType.DELETE));
 
 //        getRoleCapabilityService()
+//                .assignCapability(RoleType.ADMIN, CapabilityType.READ);
+//        getRoleCapabilityService()
+//                .assignCapability(RoleType.ADMIN, CapabilityType.CREATE);
+//        getRoleCapabilityService()
+//                .assignCapability(RoleType.ADMIN, CapabilityType.UPDATE);
+//        getRoleCapabilityService()
+//                .assignCapability(RoleType.ADMIN, CapabilityType.DELETE);
+//
+//        getRoleCapabilityService()
 //                .assignCapability(RoleType.MODERATOR, CapabilityType.READ);
 //        getRoleCapabilityService()
 //                .assignCapability(RoleType.MODERATOR, CapabilityType.CREATE);
 //        getRoleCapabilityService()
 //                .assignCapability(RoleType.MODERATOR, CapabilityType.UPDATE);
-
+//
 //        getRoleCapabilityService()
 //                .assignCapability(RoleType.SUPERUSER, CapabilityType.CREATE);
 //        getRoleCapabilityService()
 //                .assignCapability(RoleType.SUPERUSER, CapabilityType.READ);
-
+//
 //        getRoleCapabilityService()
 //                .assignCapability(RoleType.USER, CapabilityType.READ);
         return "OK";
