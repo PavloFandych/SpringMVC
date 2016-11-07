@@ -55,9 +55,10 @@ public class UserInfoController {
             String authorizedUserName = user.getUserName();
 
             /*need to fetch user by userName because jpa has closed
-             persistence-session and roles need to be loaded again.
-             RegisterController saved user into http-session without
-              initialized roles.*/
+             * persistence-session and roles need to be loaded again.
+             * RegisterController saved user into http-session without
+             * initialized roles.
+             */
             User authorizedUser = getUserService().findUserByUserName(authorizedUserName);
 
             if (authorizedUser.getRoles().contains(getRoleService()

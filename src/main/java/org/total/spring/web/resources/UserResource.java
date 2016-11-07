@@ -2,15 +2,22 @@ package org.total.spring.web.resources;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.total.spring.root.entity.Role;
 import org.total.spring.root.entity.User;
+import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.marshall.ContentHandler;
+import org.total.spring.root.service.interfaces.CapabilityService;
 import org.total.spring.root.service.interfaces.RoleService;
 import org.total.spring.root.service.interfaces.UserRoleService;
 import org.total.spring.root.service.interfaces.UserService;
 import org.total.spring.root.util.Constants;
 import org.total.spring.root.util.PasswordManager;
+import org.total.spring.root.util.PermitionManager;
 import org.total.spring.root.version.Version;
 
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +43,9 @@ public class UserResource {
 
     @Autowired
     private ContentHandler contentHandler;
+
+    @Autowired
+    private PermitionManager permitionManager;
 
     public ContentHandler getContentHandler() {
         return contentHandler;
@@ -77,14 +87,23 @@ public class UserResource {
         this.userRoleService = userRoleService;
     }
 
-    @RequestMapping(value = "/users",
-            method = RequestMethod.GET)
-    public String fetchAllUsers(@RequestHeader("Authorization") String authorization,
-                                @RequestHeader("Content-Type") String contentType,
-                                @RequestHeader("Version") String version,
-                                HttpServletResponse response) {
-        response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
+    @Qualifier("permitionManagerCapability")
+    public PermitionManager getPermitionManager() {
+        return permitionManager;
+    }
 
+    public void setPermitionManager(PermitionManager permitionManager) {
+        this.permitionManager = permitionManager;
+    }
+
+    @RequestMapping(value = "/users",
+            method = RequestMethod.GET,
+            produces = Constants.CONTENT_TYPE_APPLICATION_XML)
+    public ResponseEntity<?> fetchAllUsers(@RequestHeader("Authorization") String authorization,
+                                           @RequestHeader("Content-Type") String contentType,
+                                           @RequestHeader("Version") String version,
+                                           @RequestParam("pageIndex") Integer pageIndex,
+                                           @RequestParam("numRecPerPage") Integer numRecPerPage) {
         if (authorization != null
                 && contentType != null
                 && version != null
@@ -105,37 +124,35 @@ public class UserResource {
                             getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
                     if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
                                 + " found\n");
 
-                        if (getter.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
+                        if (getPermitionManager().hasEntity(getter, CapabilityType.READ)) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
                                     + " has permitions to get list of users\n");
 
-                            response.setContentType(Constants.CONTENT_TYPE_APPLICATION_XML);
-                            response.setStatus(HttpServletResponse.SC_OK);
-                            return getContentHandler().marshal(getUserService().findAll(), "users");
+                            List<User> list = getUserService().findAll(pageIndex, numRecPerPage);
+
+                            return (list == null)
+                                    ? new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.OK)
+                                    : new ResponseEntity<>(getContentHandler().marshal(list, "users"), HttpStatus.OK);
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
+                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
                                     + getter.getUserName() + "\n");
 
-                            response.setStatus(HttpServletResponse.SC_CONFLICT);
-                            return Constants.PERMITION_DENIED;
+                            return new ResponseEntity<>(Constants.PERMITION_DENIED, HttpStatus.CONFLICT);
                         }
                     } else {
-                        response.setStatus(HttpServletResponse.SC_CONFLICT);
-                        return Constants.NO_USER_FOUND;
+                        return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
                     }
                 } else {
-                    response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-                    return Constants.VERSION_NOT_SUPPORTED;
+                    return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED, HttpStatus.NOT_ACCEPTABLE);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
             }
         }
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        return Constants.ERROR;
+        return new ResponseEntity<>(Constants.ERROR, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/users/{id}",
@@ -544,6 +561,7 @@ public class UserResource {
 //        guest.setUserEmail("guest@guest.com");
 //        getUserService().save(guest);
 //        getUserRoleService().assignRole("Guest", RoleType.GUEST);
+
         return "OK";
     }
 }

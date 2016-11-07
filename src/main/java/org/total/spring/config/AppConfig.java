@@ -13,6 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -34,7 +35,7 @@ public class AppConfig {
             dataSource.setDriverClass("com.mysql.jdbc.Driver");
             dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/GoalDB");
             dataSource.setUser("root");
-            dataSource.setPassword("mysqlpass");
+            dataSource.setPassword("");
             dataSource.setInitialPoolSize(5);
             dataSource.setMaxPoolSize(50);
             dataSource.setMinPoolSize(10);
@@ -106,6 +107,13 @@ public class AppConfig {
 //    public CacheManager cacheManager() {
 //        return new ConcurrentMapCacheManager("applicationCache");
 //    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        jdbcTemplate.setDataSource(getDataSource());
+        return jdbcTemplate;
+    }
 
     Properties hibernateProperties() {
         return new Properties() {

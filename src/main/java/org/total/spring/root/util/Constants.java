@@ -32,5 +32,5 @@ public interface Constants {
     public static final int TIME_TO_IDLE_SECONDS = 60;
 
     /*Stored procedures*/
-    public static final String CALL_GET_TEAMS_ORDER_BY_MATCH_DAY = "{call getTeamsOrderByMatchDay(?,?,?)}";
+    public static final String CALL_GET_TEAMS_ORDER_BY_MATCH_DAY = "getTeamsOrderByMatchDay";
 }
