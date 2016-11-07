@@ -50,9 +50,8 @@ public class CapabilityServiceImpl implements CapabilityService {
     }
 
     @Override
-    @Cacheable(value = "applicationCache",
-            cacheManager = "springCashManager",
-            sync = true
+    @CachePut(value = "applicationCache",
+            cacheManager = "springCashManager"
     )
     public Capability findByCapabilityId(Long capabilityId) {
         return getCapabilityRepository().findOne(capabilityId);

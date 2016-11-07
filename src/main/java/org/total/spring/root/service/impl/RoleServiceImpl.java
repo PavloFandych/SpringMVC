@@ -46,9 +46,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    @Cacheable(value = "applicationCache",
-            cacheManager = "springCashManager",
-            sync = true
+    @CachePut(value = "applicationCache",
+            cacheManager = "springCashManager"
     )
     public Role findById(Long roleId) {
         return getRoleRepository().findOne(roleId);

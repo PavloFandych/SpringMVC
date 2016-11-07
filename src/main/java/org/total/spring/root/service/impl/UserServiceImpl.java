@@ -80,9 +80,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable(value = "applicationCache",
-            cacheManager = "springCashManager",
-            sync = true
+    @CachePut(value = "applicationCache",
+            cacheManager = "springCashManager"
     )
     public User findById(Long userId) {
         return getUserRepository().findOne(userId);
@@ -113,9 +112,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable(value = "applicationCache",
-            cacheManager = "springCashManager",
-            sync = true
+    @CachePut(value = "applicationCache",
+            cacheManager = "springCashManager"
     )
     public User findUserByUserName(String userName) {
         List<User> users = getUserRepository().findByUserName(userName);
@@ -132,9 +130,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable(value = "applicationCache",
-            cacheManager = "springCashManager",
-            sync = true
+    @CachePut(value = "applicationCache",
+            cacheManager = "springCashManager"
     )
     public User fetchUserByPassword(String password) {
         SearchCriteria searchCriteria = new SearchCriteria();
@@ -151,9 +148,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable(value = "applicationCache",
-            cacheManager = "springCashManager",
-            sync = true
+    @CachePut(value = "applicationCache",
+            cacheManager = "springCashManager"
     )
     public User fetchUserByUserIdAndUserName(Long userId, String userName) {
         SearchCriteria searchCriteriaUserId = new SearchCriteria();
