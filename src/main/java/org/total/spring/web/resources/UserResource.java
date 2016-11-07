@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.total.spring.root.entity.Role;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.marshall.ContentHandler;
-import org.total.spring.root.service.interfaces.CapabilityService;
 import org.total.spring.root.service.interfaces.RoleService;
 import org.total.spring.root.service.interfaces.UserRoleService;
 import org.total.spring.root.service.interfaces.UserService;
@@ -20,7 +18,6 @@ import org.total.spring.root.util.PasswordManager;
 import org.total.spring.root.util.PermitionManager;
 import org.total.spring.root.version.Version;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -111,59 +108,59 @@ public class UserResource {
                 && !contentType.isEmpty()
                 && !version.isEmpty()
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+            //TODO: INPUT PARAMETERS VALIDATION HERE
+            if (true) {
+                LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+                try {
+                    if (Version.valueOf(version).equals(Version.V1)) {
+                        String credentials = getPasswordManager().decodeBase64(authorization);
 
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager().decodeBase64(authorization);
+                        List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+                        User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
+                                getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
-                    User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
-                            getPasswordManager().encodeMD5(loginAndPassword.get(1)));
-
-                    if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
-                                + " found\n");
-
-                        if (getPermitionManager().hasEntity(getter, CapabilityType.READ)) {
+                        if (getter != null) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
-                                    + " has permitions to get list of users\n");
+                                    + " found\n");
 
-                            List<User> list = getUserService().findAll(pageIndex, numRecPerPage);
+                            if (getPermitionManager().hasEntity(getter, CapabilityType.READ)) {
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
+                                        + " has permitions to get list of users\n");
 
-                            return (list == null)
-                                    ? new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.OK)
-                                    : new ResponseEntity<>(getContentHandler().marshal(list, "users"), HttpStatus.OK);
+                                List<User> list = getUserService().findAll(pageIndex, numRecPerPage);
+
+                                return (list == null)
+                                        ? new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.OK)
+                                        : new ResponseEntity<>(getContentHandler().marshal(list, "users"), HttpStatus.OK);
+                            } else {
+                                LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
+                                        + getter.getUserName() + "\n");
+
+                                return new ResponseEntity<>(Constants.PERMITION_DENIED, HttpStatus.CONFLICT);
+                            }
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
-                                    + getter.getUserName() + "\n");
-
-                            return new ResponseEntity<>(Constants.PERMITION_DENIED, HttpStatus.CONFLICT);
+                            return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
                         }
                     } else {
-                        return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
+                        return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED, HttpStatus.NOT_ACCEPTABLE);
                     }
-                } else {
-                    return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED, HttpStatus.NOT_ACCEPTABLE);
+                } catch (Exception e) {
+                    LOGGER.error(e, e);
                 }
-            } catch (Exception e) {
-                LOGGER.error(e, e);
             }
         }
         return new ResponseEntity<>(Constants.ERROR, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/users/{id}",
-            method = RequestMethod.GET)
-    public String fetchUserById(@PathVariable Long id,
-                                @RequestHeader("Authorization") String authorization,
-                                @RequestHeader("Content-Type") String contentType,
-                                @RequestHeader("Version") String version,
-                                HttpServletResponse response) {
-        response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-
+            method = RequestMethod.GET,
+            produces = Constants.CONTENT_TYPE_APPLICATION_XML)
+    public ResponseEntity<?> fetchUserById(@PathVariable Long id,
+                                           @RequestHeader("Authorization") String authorization,
+                                           @RequestHeader("Content-Type") String contentType,
+                                           @RequestHeader("Version") String version) {
         if (authorization != null
                 && contentType != null
                 && version != null
@@ -171,62 +168,60 @@ public class UserResource {
                 && !contentType.isEmpty()
                 && !version.isEmpty()
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+            //TODO: INPUT PARAMETERS VALIDATION HERE
+            if (true) {
+                LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+                try {
+                    if (Version.valueOf(version).equals(Version.V1)) {
+                        String credentials = getPasswordManager().decodeBase64(authorization);
 
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager().decodeBase64(authorization);
+                        List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+                        User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
+                                getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
-                    User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
-                            getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+                        if (getter != null) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
+                                    + " found\n");
 
-                    if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName() + " found\n");
+                            if (getPermitionManager().hasEntity(getter, CapabilityType.READ)) {
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
+                                        + " has permitions to get user information\n");
 
-                        if (getter.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
-                                    + " has permitions to get user information\n");
+                                List<User> list = new ArrayList<>();
+                                list.add(getUserService().findById(id));
 
-                            List<User> users = new ArrayList<User>();
-                            users.add(getUserService().findById(id));
-                            response.setContentType(Constants.CONTENT_TYPE_APPLICATION_XML);
-                            response.setStatus(HttpServletResponse.SC_OK);
-                            return getContentHandler().marshal(users, "users");
+                                return (list == null)
+                                        ? new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.OK)
+                                        : new ResponseEntity<>(getContentHandler().marshal(list, "users"), HttpStatus.OK);
+                            } else {
+                                LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
+                                        + getter.getUserName() + "\n");
+
+                                return new ResponseEntity<>(Constants.PERMITION_DENIED, HttpStatus.CONFLICT);
+                            }
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
-                                    + getter.getUserName() + "\n");
-
-                            response.setStatus(HttpServletResponse.SC_CONFLICT);
-                            return Constants.PERMITION_DENIED;
+                            return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
                         }
                     } else {
-                        response.setStatus(HttpServletResponse.SC_CONFLICT);
-                        return Constants.NO_USER_FOUND;
+                        return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED, HttpStatus.NOT_ACCEPTABLE);
                     }
-                } else {
-                    response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-                    return Constants.VERSION_NOT_SUPPORTED;
+                } catch (Exception e) {
+                    LOGGER.error(e, e);
                 }
-            } catch (Exception e) {
-                LOGGER.error(e, e);
             }
         }
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        return Constants.ERROR;
+        return new ResponseEntity<>(Constants.ERROR, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/userName/{userName}",
-            method = RequestMethod.GET)
-    public String fetchUserByName(@PathVariable String userName,
-                                  @RequestHeader("Authorization") String authorization,
-                                  @RequestHeader("Content-Type") String contentType,
-                                  @RequestHeader("Version") String version,
-                                  HttpServletResponse response) {
-        response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-
+            method = RequestMethod.GET,
+            produces = Constants.CONTENT_TYPE_APPLICATION_XML)
+    public ResponseEntity<?> fetchUserByName(@PathVariable String userName,
+                                             @RequestHeader("Authorization") String authorization,
+                                             @RequestHeader("Content-Type") String contentType,
+                                             @RequestHeader("Version") String version) {
         if (authorization != null
                 && contentType != null
                 && version != null
@@ -234,60 +229,60 @@ public class UserResource {
                 && !contentType.isEmpty()
                 && !version.isEmpty()
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+            //TODO: INPUT PARAMETERS VALIDATION HERE
+            if (true) {
+                LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+                try {
+                    if (Version.valueOf(version).equals(Version.V1)) {
+                        String credentials = getPasswordManager().decodeBase64(authorization);
 
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager().decodeBase64(authorization);
+                        List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+                        User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
+                                getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
-                    User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
-                            getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+                        if (getter != null) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
+                                    + " found\n");
 
-                    if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName() + " found\n");
+                            if (getPermitionManager().hasEntity(getter, CapabilityType.READ)) {
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
+                                        + " has permitions to get user information\n");
 
-                        if (getter.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
-                                    + " has permitions to get user information\n");
+                                List<User> list = new ArrayList<>();
+                                list.add(getUserService().findUserByUserName(userName));
 
-                            List<User> users = new ArrayList<User>();
-                            users.add(getUserService().findUserByUserName(userName));
-                            response.setContentType(Constants.CONTENT_TYPE_APPLICATION_XML);
-                            response.setStatus(HttpServletResponse.SC_OK);
-                            return getContentHandler().marshal(users, "users");
+                                return (list == null)
+                                        ? new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.OK)
+                                        : new ResponseEntity<>(getContentHandler().marshal(list, "users"), HttpStatus.OK);
+                            } else {
+                                LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
+                                        + getter.getUserName() + "\n");
+
+                                return new ResponseEntity<>(Constants.PERMITION_DENIED, HttpStatus.CONFLICT);
+                            }
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
-                                    + getter.getUserName() + "\n");
-
-                            response.setStatus(HttpServletResponse.SC_CONFLICT);
-                            return Constants.PERMITION_DENIED;
+                            return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
                         }
                     } else {
-                        response.setStatus(HttpServletResponse.SC_CONFLICT);
-                        return Constants.NO_USER_FOUND;
+                        return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED, HttpStatus.NOT_ACCEPTABLE);
                     }
-                } else {
-                    response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-                    return Constants.VERSION_NOT_SUPPORTED;
+                } catch (Exception e) {
+                    LOGGER.error(e, e);
                 }
-            } catch (Exception e) {
-                LOGGER.error(e, e);
             }
         }
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        return Constants.ERROR;
+        return new ResponseEntity<>(Constants.ERROR, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/users/{userName}",
-            method = RequestMethod.DELETE)
-    public String deleteUserById(@PathVariable String userName,
-                                 @RequestHeader("Authorization") String authorization,
-                                 @RequestHeader("Content-Type") String contentType,
-                                 @RequestHeader("Version") String version,
-                                 HttpServletResponse response) {
+            method = RequestMethod.DELETE,
+            produces = Constants.CONTENT_TYPE_TEXT_PLAIN)
+    public ResponseEntity<?> deleteUserById(@PathVariable String userName,
+                                            @RequestHeader("Authorization") String authorization,
+                                            @RequestHeader("Content-Type") String contentType,
+                                            @RequestHeader("Version") String version) {
         if (authorization != null
                 && contentType != null
                 && version != null
@@ -295,74 +290,71 @@ public class UserResource {
                 && !contentType.isEmpty()
                 && !version.isEmpty()
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+            //TODO: INPUT PARAMETERS VALIDATION HERE
+            if (true) {
+                LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+                try {
+                    if (Version.valueOf(version).equals(Version.V1)) {
+                        String credentials = getPasswordManager().decodeBase64(authorization);
 
-            response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
+                        List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager().decodeBase64(authorization);
+                        User deleter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
+                                getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
-                    List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+                        if (deleter != null) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Deleter " + deleter.getUserName()
+                                    + " found\n");
 
-                    User deleter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
-                            getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+                            if (getPermitionManager().hasEntity(deleter, CapabilityType.DELETE)) {
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Deleter " + deleter.getUserName()
+                                        + " has permitions to delete the user\n");
 
-                    if (deleter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + deleter.getUserName()
-                                + " found\n");
+                                User userToDelete = getUserService().findUserByUserName(userName);
 
-                        if (deleter.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + deleter.getUserName()
-                                    + " has permitions to delete the user by id\n");
+                                if (userToDelete != null) {
+                                    LOGGER.debug(Constants.STATUS_REQ_SUCCESS + "User with id "
+                                            + userToDelete.getUserId() + " found\n");
 
-                            User userToDelete = getUserService().findUserByUserName(userName);
+                                    getUserService().deleteUserByUserId(userToDelete.getUserId());
 
-                            if (userToDelete != null) {
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + "User with id " + userToDelete.getUserId()
-                                        + " found\n");
+                                    LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + userToDelete.getUserName() +
+                                            " was deleted successful\n");
 
-                                getUserService().deleteUserByUserId(userToDelete.getUserId());
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + userToDelete.getUserName() +
-                                        " is deleted\n");
+                                    return new ResponseEntity<>(Constants.SUCCESS, HttpStatus.OK);
+                                } else {
+                                    LOGGER.debug(Constants.STATUS_REQ_FAIL + "User not found\n");
 
-                                response.setStatus(HttpServletResponse.SC_OK);
-                                return Constants.SUCCESS;
+                                    return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
+                                }
                             } else {
-                                response.setStatus(HttpServletResponse.SC_CONFLICT);
-                                return Constants.NO_USER_FOUND;
+                                LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for deleter "
+                                        + deleter.getUserName() + "\n");
+
+                                return new ResponseEntity<>(Constants.PERMITION_DENIED, HttpStatus.CONFLICT);
                             }
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
-                                    + deleter.getUserName() + "\n");
-
-                            response.setStatus(HttpServletResponse.SC_CONFLICT);
-                            return Constants.PERMITION_DENIED;
+                            return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
                         }
                     } else {
-                        response.setStatus(HttpServletResponse.SC_CONFLICT);
-                        return Constants.NO_USER_FOUND;
+                        return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED, HttpStatus.NOT_ACCEPTABLE);
                     }
-                } else {
-                    response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-                    return Constants.VERSION_NOT_SUPPORTED;
+                } catch (Exception e) {
+                    LOGGER.error(e, e);
                 }
-            } catch (Exception e) {
-                LOGGER.error(e, e);
             }
         }
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        return Constants.ERROR;
+        return new ResponseEntity<>(Constants.ERROR, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/users",
-            method = RequestMethod.POST)
-    public String createUser(@RequestBody String body,
-                             @RequestHeader("Authorization") String authorization,
-                             @RequestHeader("Content-Type") String contentType,
-                             @RequestHeader("Version") String version,
-                             HttpServletResponse response) {
+            method = RequestMethod.POST,
+            produces = Constants.CONTENT_TYPE_TEXT_PLAIN)
+    public ResponseEntity<?> createUser(@RequestBody String body,
+                                        @RequestHeader("Authorization") String authorization,
+                                        @RequestHeader("Content-Type") String contentType,
+                                        @RequestHeader("Version") String version) {
         if (body != null
                 && authorization != null
                 && contentType != null
@@ -372,82 +364,79 @@ public class UserResource {
                 && !contentType.isEmpty()
                 && !version.isEmpty()
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+            //TODO: INPUT PARAMETERS VALIDATION HERE
+            if (true) {
+                LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+                try {
+                    if (Version.valueOf(version).equals(Version.V1)) {
+                        String credentials = getPasswordManager().decodeBase64(authorization);
 
-            response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
+                        List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager().decodeBase64(authorization);
+                        User creator = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
+                                getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
-                    List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+                        if (creator != null) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Creator " + creator.getUserName()
+                                    + " found\n");
 
-                    User creator = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
-                            getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+                            if (getPermitionManager().hasEntity(creator, CapabilityType.CREATE)) {
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Creator " + creator.getUserName()
+                                        + " has permitions to create user\n");
 
-                    if (creator != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + creator.getUserName() + " found\n");
+                                try {
+                                    List<User> users = contentHandler.unmarshal(User.class, body);
 
-                        if (creator.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + creator.getUserName()
-                                    + " has permitions to create user\n");
+                                    User userXML = getUserService().findUserByUserName(users.get(0).getUserName());
 
-                            try {
-                                List<User> users = contentHandler.unmarshal(User.class, body);
+                                    if (userXML != null) {
+                                        LOGGER.debug(Constants.STATUS_REQ_FAIL + " User " + users.get(0).getUserName()
+                                                + " already exists\n");
 
-                                User userXML = getUserService().findUserByUserName(users.get(0).getUserName());
+                                        return new ResponseEntity<>(Constants.USER_ALREADY_EXISTS, HttpStatus.CONFLICT);
+                                    } else {
+                                        users.get(0).setPassword(getPasswordManager()
+                                                .encodeMD5(users.get(0).getPassword()));
+                                        //TODO: WHAT ABOUT ROLES
+                                        users.get(0).getRoles().add(getRoleService()
+                                                .findRoleByRoleType(RoleType.USER));
 
-                                if (userXML != null) {
-                                    LOGGER.debug(Constants.STATUS_REQ_FAIL + " User " + users.get(0).getUserName()
-                                            + " already exists\n");
-
-                                    response.setStatus(HttpServletResponse.SC_CONFLICT);
-                                    return Constants.USER_ALREADY_EXISTS;
-                                } else {
-                                    users.get(0).setPassword(getPasswordManager()
-                                            .encodeMD5(users.get(0).getPassword()));
-                                    users.get(0).getRoles().add(getRoleService()
-                                            .findRoleByRoleType(RoleType.USER));
-                                    getUserService().save(users.get(0));
-                                    response.setStatus(HttpServletResponse.SC_OK);
-                                    return Constants.SUCCESS;
+                                        return (getUserService().save(users.get(0)) == null)
+                                                ? new ResponseEntity<>(Constants.ERROR, HttpStatus.CONFLICT)
+                                                : new ResponseEntity<>(Constants.SUCCESS, HttpStatus.OK);
+                                    }
+                                } catch (Exception ex) {
+                                    LOGGER.error(ex, ex);
                                 }
-                            } catch (Exception ex) {
-                                LOGGER.error(ex, ex);
-                            }
-                            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                            return Constants.ERROR;
-                        } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
-                                    + creator.getUserName() + "\n");
+                                return new ResponseEntity<>(Constants.ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+                            } else {
+                                LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for creator "
+                                        + creator.getUserName() + "\n");
 
-                            response.setStatus(HttpServletResponse.SC_CONFLICT);
-                            return Constants.PERMITION_DENIED;
+                                return new ResponseEntity<>(Constants.PERMITION_DENIED, HttpStatus.CONFLICT);
+                            }
+                        } else {
+                            return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
                         }
                     } else {
-                        response.setStatus(HttpServletResponse.SC_CONFLICT);
-                        return Constants.NO_USER_FOUND;
+                        return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED, HttpStatus.NOT_ACCEPTABLE);
                     }
-                } else {
-                    response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-                    return Constants.VERSION_NOT_SUPPORTED;
+                } catch (Exception e) {
+                    LOGGER.error(e, e);
                 }
-            } catch (Exception e) {
-                LOGGER.error(e, e);
             }
         }
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        return Constants.ERROR;
+        return new ResponseEntity<>(Constants.ERROR, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/users",
-            method = RequestMethod.PUT)
-    public String updateUser(@RequestBody String body,
-                             @RequestHeader("Authorization") String authorization,
-                             @RequestHeader("Content-Type") String contentType,
-                             @RequestHeader("Version") String version,
-                             HttpServletResponse response) {
+            method = RequestMethod.PUT,
+            produces = Constants.CONTENT_TYPE_TEXT_PLAIN)
+    public ResponseEntity<?> updateUser(@RequestBody String body,
+                                        @RequestHeader("Authorization") String authorization,
+                                        @RequestHeader("Content-Type") String contentType,
+                                        @RequestHeader("Version") String version) {
         if (authorization != null
                 && contentType != null
                 && version != null
@@ -455,58 +444,68 @@ public class UserResource {
                 && !contentType.isEmpty()
                 && !version.isEmpty()
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+            //TODO: INPUT PARAMETERS VALIDATION HERE
+            if (true) {
+                LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+                try {
+                    if (Version.valueOf(version).equals(Version.V1)) {
+                        String credentials = getPasswordManager().decodeBase64(authorization);
 
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager().decodeBase64(authorization);
+                        List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+                        User updater = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
+                                getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
-                    User user = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
-                            getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+                        if (updater != null) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Updater " + updater.getUserName()
+                                    + " found\n");
 
-                    if (user != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName() + " found\n");
+                            if (getPermitionManager().hasEntity(updater, CapabilityType.UPDATE)) {
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Updater " + updater.getUserName()
+                                        + " has permitions to update user\n");
 
-                        if (user.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + user.getUserName()
-                                    + " has permitions to update user\n");
+                                try {
+                                    User userXML = getContentHandler().unMarshal(User.class, body);
 
-                            try {
-                                User userFromRequest = getContentHandler().unMarshal(User.class, body);
-                                User userToUpdate = getUserService().findUserByUserName(userFromRequest.getUserName());
+                                    if (userXML != null) {
+                                        User userToUpdate = getUserService().findUserByUserName(userXML.getUserName());
+                                        userToUpdate.setUserName(getPasswordManager().encodeMD5(userXML.getUserName()));
+                                        userToUpdate.setPassword(userXML.getPassword());
+                                        userToUpdate.setUserEmail(userXML.getUserEmail());
+                                        userToUpdate.setCity(userXML.getCity());
 
-                                userToUpdate.setUserName(userFromRequest.getUserName());
-                                userToUpdate.setPassword(userFromRequest.getPassword());
+                                        //TODO: WHAT ABOUT ROLES
+                                        return (getUserService().update(userToUpdate) == null)
+                                                ? new ResponseEntity<>(Constants.ERROR, HttpStatus.CONFLICT)
+                                                : new ResponseEntity<>(Constants.SUCCESS, HttpStatus.OK);
+                                    } else {
+                                        LOGGER.debug(Constants.STATUS_REQ_FAIL + "User for updating not found\n");
 
-                                getUserService().update(userToUpdate);
-                                response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-                                response.setStatus(HttpServletResponse.SC_OK);
-                                return Constants.SUCCESS;
-                            } catch (Exception ex) {
-                                LOGGER.error(ex, ex);
+                                        return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
+                                    }
+                                } catch (Exception ex) {
+                                    LOGGER.error(ex, ex);
+                                }
+                                return new ResponseEntity<>(Constants.ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+                            } else {
+                                LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for updater "
+                                        + updater.getUserName() + "\n");
+
+                                return new ResponseEntity<>(Constants.PERMITION_DENIED, HttpStatus.CONFLICT);
                             }
-                            response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-                            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                            return Constants.ERROR;
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
-                                    + user.getUserName() + "\n");
+                            return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
                         }
+                    } else {
+                        return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED, HttpStatus.NOT_ACCEPTABLE);
                     }
+                } catch (Exception e) {
+                    LOGGER.error(e, e);
                 }
-                response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return Constants.ERROR;
-            } catch (Exception e) {
-                LOGGER.error(e, e);
             }
         }
-        response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        return Constants.ERROR;
+        return new ResponseEntity<>(Constants.ERROR, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/test",
@@ -523,29 +522,20 @@ public class UserResource {
 //        admin.setUserEmail("admin@admin.com");
 //        getUserService().save(admin);
 //        getUserRoleService().assignRole("Admin", RoleType.ADMIN);
-//        getUserRoleService().assignRole("Admin", RoleType.MODERATOR);
-//        getUserRoleService().assignRole("Admin", RoleType.SUPERUSER);
-//        getUserRoleService().assignRole("Admin", RoleType.USER);
-//        getUserRoleService().assignRole("Admin", RoleType.GUEST);
-//
+
 //        User moderator = new User();
 //        moderator.setUserName("Moderator");
 //        moderator.setPassword(getPasswordManager().encodeMD5("moderator"));
 //        moderator.setUserEmail("moderator@moderator.com");
 //        getUserService().save(moderator);
 //        getUserRoleService().assignRole("Moderator", RoleType.MODERATOR);
-//        getUserRoleService().assignRole("Moderator", RoleType.SUPERUSER);
-//        getUserRoleService().assignRole("Moderator", RoleType.USER);
-//        getUserRoleService().assignRole("Moderator", RoleType.GUEST);
-//
+
 //        User superuser = new User();
 //        superuser.setUserName("Superuser");
 //        superuser.setPassword(getPasswordManager().encodeMD5("superuser"));
 //        superuser.setUserEmail("superuser@superuser.com");
 //        getUserService().save(superuser);
 //        getUserRoleService().assignRole("Superuser", RoleType.SUPERUSER);
-//        getUserRoleService().assignRole("Superuser", RoleType.USER);
-//        getUserRoleService().assignRole("Superuser", RoleType.GUEST);
 //
 //        User user = new User();
 //        user.setUserName("User");
@@ -553,7 +543,6 @@ public class UserResource {
 //        user.setUserEmail("user@user.com");
 //        getUserService().save(user);
 //        getUserRoleService().assignRole("User", RoleType.USER);
-//        getUserRoleService().assignRole("User", RoleType.GUEST);
 //
 //        User guest = new User();
 //        guest.setUserName("Guest");
@@ -561,7 +550,6 @@ public class UserResource {
 //        guest.setUserEmail("guest@guest.com");
 //        getUserService().save(guest);
 //        getUserRoleService().assignRole("Guest", RoleType.GUEST);
-
         return "OK";
     }
 }
