@@ -7,6 +7,8 @@ import java.util.List;
 public interface UserService {
     public List<User> findAll();
 
+    public List<User> findAll(Integer pageIndex, Integer numRecPerPage);
+
     public User findById(Long userId);
 
     public User save(User entity);

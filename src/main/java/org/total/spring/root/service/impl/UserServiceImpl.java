@@ -1,10 +1,13 @@
 package org.total.spring.root.service.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -15,12 +18,15 @@ import org.total.spring.root.entity.specification.UserSpecification;
 import org.total.spring.root.repository.UserRepository;
 import org.total.spring.root.service.interfaces.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 @Transactional
 @Service("userService")
 public class UserServiceImpl implements UserService {
+    private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
+
     @Autowired
     private UserRepository userRepository;
 
@@ -44,7 +50,33 @@ public class UserServiceImpl implements UserService {
             )
     )
     public List<User> findAll() {
-        return getUserRepository().findAll();
+        List<User> list = new ArrayList<>();
+        for (User item : getUserRepository().findAll()) {
+            list.add(item);
+        }
+        return list;
+    }
+
+    @Override
+    @Caching(evict = @CacheEvict(
+            value = "applicationCache",
+            cacheManager = "springCashManager",
+            allEntries = true
+    ),
+            cacheable = @Cacheable(
+                    value = "applicationCache",
+                    cacheManager = "springCashManager"
+            )
+    )
+    public List<User> findAll(Integer pageIndex, Integer numRecPerPage) {
+        Sort sort = new Sort(Sort.Direction.ASC, "userName");
+        /*
+        * @param page zero-based page index.
+        * @param size the size of the page to be returned.
+        * @param sort can be {@literal null}.
+        */
+        return getUserRepository()
+                .findAll(new PageRequest(pageIndex, numRecPerPage, sort)).getContent();
     }
 
     @Override
@@ -91,9 +123,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable(value = "applicationCache",
-            cacheManager = "springCashManager",
-            sync = true
+    @CachePut(value = "applicationCache",
+            cacheManager = "springCashManager"
     )
     public User findUserByUserNameAndPassword(String userName, String password) {
         List<User> users = getUserRepository().findByUserNameAndPassword(userName, password);

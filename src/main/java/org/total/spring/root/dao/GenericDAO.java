@@ -2,10 +2,8 @@ package org.total.spring.root.dao;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.sql.DataSource;
-import java.sql.CallableStatement;
-import java.sql.ResultSet;
 import java.util.List;
 
 /**
@@ -16,32 +14,15 @@ public abstract class GenericDAO<T> {
     protected static final Logger LOGGER = Logger.getLogger(GenericDAO.class);
 
     @Autowired
-    protected DataSource dataSource;
-    protected CallableStatement callableStatement;
-    protected ResultSet resultSet;
+    protected JdbcTemplate jdbcTemplate;
 
-    public DataSource getDataSource() {
-        return dataSource;
+
+    public JdbcTemplate getJdbcTemplate() {
+        return jdbcTemplate;
     }
 
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    public CallableStatement getCallableStatement() {
-        return callableStatement;
-    }
-
-    public void setCallableStatement(CallableStatement callableStatement) {
-        this.callableStatement = callableStatement;
-    }
-
-    public ResultSet getResultSet() {
-        return resultSet;
-    }
-
-    public void setResultSet(ResultSet resultSet) {
-        this.resultSet = resultSet;
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public abstract List<T> getEntities(Object... param);

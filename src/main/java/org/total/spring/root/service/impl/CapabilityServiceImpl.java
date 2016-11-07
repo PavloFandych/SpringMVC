@@ -83,9 +83,8 @@ public class CapabilityServiceImpl implements CapabilityService {
     }
 
     @Override
-    @Cacheable(value = "applicationCache",
-            cacheManager = "springCashManager",
-            sync = true
+    @CachePut(value = "applicationCache",
+            cacheManager = "springCashManager"
     )
     public Capability findCapabilityByCapabilityType(CapabilityType capabilityType) {
         List<Capability> capabilities = getCapabilityRepository().findByCapabilityType(capabilityType);
