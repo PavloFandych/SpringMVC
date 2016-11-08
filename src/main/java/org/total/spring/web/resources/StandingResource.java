@@ -2,18 +2,19 @@ package org.total.spring.web.resources;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.total.spring.root.entity.User;
-import org.total.spring.root.entity.enums.RoleType;
+import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.entity.enums.TournamentCode;
-import org.total.spring.root.service.interfaces.RoleService;
 import org.total.spring.root.service.interfaces.StandingService;
 import org.total.spring.root.service.interfaces.UserService;
 import org.total.spring.root.util.Constants;
 import org.total.spring.root.util.PasswordManager;
+import org.total.spring.root.util.PermitionManager;
 import org.total.spring.root.version.Version;
 
 import java.util.Arrays;
@@ -37,7 +38,7 @@ public class StandingResource {
     private UserService userService;
 
     @Autowired
-    private RoleService roleService;
+    private PermitionManager permitionManager;
 
     public StandingService getStandingService() {
         return standingService;
@@ -63,12 +64,13 @@ public class StandingResource {
         this.userService = userService;
     }
 
-    public RoleService getRoleService() {
-        return roleService;
+    @Qualifier("permitionManagerCapability")
+    public PermitionManager getPermitionManager() {
+        return permitionManager;
     }
 
-    public void setRoleService(RoleService roleService) {
-        this.roleService = roleService;
+    public void setPermitionManager(PermitionManager permitionManager) {
+        this.permitionManager = permitionManager;
     }
 
     @RequestMapping(value = "/standings",
@@ -90,43 +92,46 @@ public class StandingResource {
                 && !contentType.isEmpty()
                 && !version.isEmpty()
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
+            //TODO: INPUT PARAMETERS VALIDATION HERE
+            if (true) {
+                LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+                try {
+                    if (Version.valueOf(version).equals(Version.V1)) {
+                        String credentials = getPasswordManager().decodeBase64(authorization);
 
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager().decodeBase64(authorization);
+                        List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
 
-                    List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+                        User getter = getUserService()
+                                .findUserByUserNameAndPassword(loginAndPassword.get(0),
+                                        getPasswordManager()
+                                                .encodeMD5(loginAndPassword.get(1)));
 
-                    User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
-                            getPasswordManager().encodeMD5(loginAndPassword.get(1)));
-
-                    if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
-                                + " found\n");
-
-                        if (getter.getRoles().contains(getRoleService()
-                                .findRoleByRoleType(RoleType.USER))) {
+                        if (getter != null) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
-                                    + " has permitions to get standings\n");
+                                    + " found\n");
 
-                            return new ResponseEntity<>(getStandingService()
-                                    .getStandings(seasonCode, tournamentCode, matchDay), HttpStatus.OK);
+                            if (getPermitionManager().hasEntity(getter, CapabilityType.READ)) {
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
+                                        + " has permitions to get standings\n");
+
+                                return new ResponseEntity<>(getStandingService()
+                                        .getStandings(seasonCode, tournamentCode, matchDay), HttpStatus.OK);
+                            } else {
+                                LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
+                                        + getter.getUserName() + "\n");
+
+                                return new ResponseEntity<>(Constants.PERMITION_DENIED, HttpStatus.CONFLICT);
+                            }
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
-                                    + getter.getUserName() + "\n");
-
-                            return new ResponseEntity<>(Constants.PERMITION_DENIED, HttpStatus.CONFLICT);
+                            return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
                         }
                     } else {
-                        return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
+                        return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED, HttpStatus.NOT_ACCEPTABLE);
                     }
-                } else {
-                    return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED, HttpStatus.NOT_ACCEPTABLE);
+                } catch (Exception e) {
+                    LOGGER.error(e, e);
                 }
-            } catch (Exception e) {
-                LOGGER.error(e, e);
             }
         }
         return new ResponseEntity<>(Constants.ERROR, HttpStatus.BAD_REQUEST);

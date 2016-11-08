@@ -17,7 +17,7 @@ import java.util.Set;
         }
 )
 @XmlRootElement
-@XmlType(propOrder = {"cityId", "cityName", "cityCode", "country", "teams"})
+@XmlType(propOrder = {"cityId", "cityName", "cityCode"})
 public class City implements Serializable {
     private long cityId;
     private String cityName;
@@ -91,8 +91,7 @@ public class City implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "city"
     )
-    @XmlElementWrapper(name = "cityTeames")
-    @XmlElement(name = "team")
+    @XmlTransient
     public Set<Team> getTeams() {
         if (this.teams == null) {
             this.teams = new HashSet<>();
@@ -107,6 +106,7 @@ public class City implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "city"
     )
+    @XmlTransient
     public Set<User> getUsers() {
         return users;
     }

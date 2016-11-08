@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.total.spring.root.entity.Role;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.marshall.ContentHandler;
+import org.total.spring.root.service.interfaces.CityService;
 import org.total.spring.root.service.interfaces.RoleService;
 import org.total.spring.root.service.interfaces.UserRoleService;
 import org.total.spring.root.service.interfaces.UserService;
@@ -21,6 +23,7 @@ import org.total.spring.root.version.Version;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class UserResource {
@@ -43,6 +46,9 @@ public class UserResource {
 
     @Autowired
     private PermitionManager permitionManager;
+
+    @Autowired
+    private CityService cityService;
 
     public ContentHandler getContentHandler() {
         return contentHandler;
@@ -91,6 +97,14 @@ public class UserResource {
 
     public void setPermitionManager(PermitionManager permitionManager) {
         this.permitionManager = permitionManager;
+    }
+
+    public CityService getCityService() {
+        return cityService;
+    }
+
+    public void setCityService(CityService cityService) {
+        this.cityService = cityService;
     }
 
     @RequestMapping(value = "/users",
@@ -386,7 +400,7 @@ public class UserResource {
                                         + " has permitions to create user\n");
 
                                 try {
-                                    List<User> users = contentHandler.unmarshal(User.class, body);
+                                    List<User> users = getContentHandler().unmarshal(User.class, body);
 
                                     User userXML = getUserService().findUserByUserName(users.get(0).getUserName());
 
@@ -398,6 +412,7 @@ public class UserResource {
                                     } else {
                                         users.get(0).setPassword(getPasswordManager()
                                                 .encodeMD5(users.get(0).getPassword()));
+
                                         //TODO: WHAT ABOUT ROLES
                                         users.get(0).getRoles().add(getRoleService()
                                                 .findRoleByRoleType(RoleType.USER));
@@ -437,9 +452,11 @@ public class UserResource {
                                         @RequestHeader("Authorization") String authorization,
                                         @RequestHeader("Content-Type") String contentType,
                                         @RequestHeader("Version") String version) {
-        if (authorization != null
+        if (body != null
+                && authorization != null
                 && contentType != null
                 && version != null
+                && !body.isEmpty()
                 && !authorization.isEmpty()
                 && !contentType.isEmpty()
                 && !version.isEmpty()
@@ -466,21 +483,35 @@ public class UserResource {
                                         + " has permitions to update user\n");
 
                                 try {
-                                    User userXML = getContentHandler().unMarshal(User.class, body);
-
+                                    User userXML = (getContentHandler().unmarshal(User.class, body)).get(0);
                                     if (userXML != null) {
                                         User userToUpdate = getUserService().findUserByUserName(userXML.getUserName());
-                                        userToUpdate.setUserName(getPasswordManager().encodeMD5(userXML.getUserName()));
-                                        userToUpdate.setPassword(userXML.getPassword());
-                                        userToUpdate.setUserEmail(userXML.getUserEmail());
-                                        userToUpdate.setCity(userXML.getCity());
 
-                                        //TODO: WHAT ABOUT ROLES
-                                        return (getUserService().update(userToUpdate) == null)
-                                                ? new ResponseEntity<>(Constants.ERROR, HttpStatus.CONFLICT)
-                                                : new ResponseEntity<>(Constants.SUCCESS, HttpStatus.OK);
+                                        if (userToUpdate != null) {
+                                            userToUpdate.setUserName(userXML.getUserName());
+                                            userToUpdate.setPassword(getPasswordManager()
+                                                    .encodeMD5(userXML.getPassword()));
+                                            userToUpdate.setUserEmail(userXML.getUserEmail());
+
+                                            Set<Role> roleSet = userToUpdate.getRoles();
+                                            for(Role item : roleSet) {
+                                                getUserRoleService().revokeRole(userToUpdate.getUserName(), item.getRoleType());
+                                            }
+
+                                            for (Role item : userXML.getRoles()) {
+                                                getUserRoleService().assignRole(userToUpdate.getUserName(), item.getRoleType());
+                                            }
+
+                                            return (getUserService().update(userToUpdate) != null)
+                                                    ? new ResponseEntity<>(Constants.SUCCESS, HttpStatus.OK)
+                                                    : new ResponseEntity<>(Constants.ERROR, HttpStatus.CONFLICT);
+                                        } else {
+                                            LOGGER.debug(Constants.STATUS_REQ_FAIL + "User for updating not found\n");
+
+                                            return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
+                                        }
                                     } else {
-                                        LOGGER.debug(Constants.STATUS_REQ_FAIL + "User for updating not found\n");
+                                        LOGGER.debug(Constants.STATUS_REQ_FAIL + " Unmarshaling failed\n");
 
                                         return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
                                     }
@@ -495,6 +526,8 @@ public class UserResource {
                                 return new ResponseEntity<>(Constants.PERMITION_DENIED, HttpStatus.CONFLICT);
                             }
                         } else {
+                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Updater not found\n");
+
                             return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
                         }
                     } else {
@@ -509,38 +542,43 @@ public class UserResource {
     }
 
     @RequestMapping(value = "/test",
-            method = RequestMethod.POST)
+            method = RequestMethod.GET)
     public String official() {
 //        getRoleService().save(new Role(RoleType.ADMIN));
-//        getRoleService().save(new Role(RoleType.MODERATOR));
 //        getRoleService().save(new Role(RoleType.SUPERUSER));
+//        getRoleService().save(new Role(RoleType.MODERATOR));
 //        getRoleService().save(new Role(RoleType.USER));
 //        getRoleService().save(new Role(RoleType.GUEST));
+
 //        User admin = new User();
 //        admin.setUserName("Admin");
 //        admin.setPassword(getPasswordManager().encodeMD5("admin"));
 //        admin.setUserEmail("admin@admin.com");
+//        admin.setCity(getCityService().findCityByCityCode(CityCode.LOND));
 //        getUserService().save(admin);
 //        getUserRoleService().assignRole("Admin", RoleType.ADMIN);
-
-//        User moderator = new User();
-//        moderator.setUserName("Moderator");
-//        moderator.setPassword(getPasswordManager().encodeMD5("moderator"));
-//        moderator.setUserEmail("moderator@moderator.com");
-//        getUserService().save(moderator);
-//        getUserRoleService().assignRole("Moderator", RoleType.MODERATOR);
-
+//
 //        User superuser = new User();
 //        superuser.setUserName("Superuser");
 //        superuser.setPassword(getPasswordManager().encodeMD5("superuser"));
 //        superuser.setUserEmail("superuser@superuser.com");
+//        superuser.setCity(getCityService().findCityByCityCode(CityCode.BERL));
 //        getUserService().save(superuser);
 //        getUserRoleService().assignRole("Superuser", RoleType.SUPERUSER);
+//
+//        User moderator = new User();
+//        moderator.setUserName("Moderator");
+//        moderator.setPassword(getPasswordManager().encodeMD5("moderator"));
+//        moderator.setUserEmail("moderator@moderator.com");
+//        moderator.setCity(getCityService().findCityByCityCode(CityCode.ROME));
+//        getUserService().save(moderator);
+//        getUserRoleService().assignRole("Moderator", RoleType.MODERATOR);
 //
 //        User user = new User();
 //        user.setUserName("User");
 //        user.setPassword(getPasswordManager().encodeMD5("user"));
 //        user.setUserEmail("user@user.com");
+//        user.setCity(getCityService().findCityByCityCode(CityCode.TERA));
 //        getUserService().save(user);
 //        getUserRoleService().assignRole("User", RoleType.USER);
 //
@@ -548,6 +586,7 @@ public class UserResource {
 //        guest.setUserName("Guest");
 //        guest.setPassword(getPasswordManager().encodeMD5("guest"));
 //        guest.setUserEmail("guest@guest.com");
+//        guest.setCity(getCityService().findCityByCityCode(CityCode.BOGE));
 //        getUserService().save(guest);
 //        getUserRoleService().assignRole("Guest", RoleType.GUEST);
         return "OK";

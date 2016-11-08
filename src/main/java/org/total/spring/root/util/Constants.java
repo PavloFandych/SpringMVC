@@ -17,6 +17,9 @@ public interface Constants {
     public static final String NO_USER_FOUND = "No user found";
     public static final String USER_IS_NOT_DELETED = "User is not deleted";
 
+    public static final String NO_CITY_FOUND = "No city found";
+    public static final String NO_ROLE_FOUND = "No role found";
+
     public static final String PERMITION_DENIED = "Permition denied";
     public static final String VERSION_NOT_SUPPORTED = "Version not supported";
 
