@@ -109,7 +109,7 @@ public class RegisterController {
 
                         userToRegister = new User(registrationBean.getUserName(),
                                 getPasswordManager().encodeMD5(registrationBean.getPassword()),
-                                getCityService().findCityByCityCode(CityCode.NKNW),
+                                getCityService().findCityByCityCode(CityCode.NKWN),
                                 registrationBean.getUserEmail());
                     } else {
 

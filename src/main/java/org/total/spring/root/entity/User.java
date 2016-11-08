@@ -1,7 +1,10 @@
 package org.total.spring.root.entity;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +17,7 @@ import java.util.Set;
         }
 )
 @XmlRootElement
-@XmlType(propOrder = {"userId", "userName", "password", "roles", "userEmail"})
+@XmlType(propOrder = {"userId", "userName", "password", "roles", "userEmail", "city"})
 public class User implements Serializable {
     private long userId;
     private String userName;
@@ -133,7 +136,7 @@ public class User implements Serializable {
             nullable = true,
             foreignKey = @ForeignKey(name = "FK_userId_cityId")
     )
-    @XmlTransient
+    @XmlElement(name = "city")
     public City getCity() {
         return city;
     }

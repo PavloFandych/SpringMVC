@@ -980,4 +980,5 @@ INSERT INTO City (cityCode, cityName, countryId) VALUES
                        WHERE countryCode = 'ITA')),
   ('VIVA', 'Vibo Valentia', (SELECT countryId
                              FROM Country
-                             WHERE countryCode = 'ITA'));
+                             WHERE countryCode = 'ITA')),
+  ('NKWN', 'Unknown', NULL);

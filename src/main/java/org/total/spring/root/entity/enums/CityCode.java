@@ -1,7 +1,7 @@
 package org.total.spring.root.entity.enums;
 
 public enum CityCode {
-    NKNW,
+    NKWN,
     KYIV,
 
     LOND,
