@@ -111,7 +111,7 @@ public class StandingResource {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
                                     + " found\n");
 
-                            if (getPermitionManager().hasEntity(getter, CapabilityType.READ)) {
+                            if (getPermitionManager().containEntity(getter, CapabilityType.READ)) {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
                                         + " has permitions to get standings\n");
 
@@ -127,7 +127,7 @@ public class StandingResource {
                             return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
                         }
                     } else {
-                        return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED, HttpStatus.NOT_ACCEPTABLE);
+                        return new ResponseEntity<>(Constants.CANNOT_DELETE_ADMIN_USER, HttpStatus.NOT_ACCEPTABLE);
                     }
                 } catch (Exception e) {
                     LOGGER.error(e, e);

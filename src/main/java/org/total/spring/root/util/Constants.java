@@ -22,6 +22,7 @@ public interface Constants {
 
     public static final String PERMITION_DENIED = "Permition denied";
     public static final String VERSION_NOT_SUPPORTED = "Version not supported";
+    public static final String CANNOT_DELETE_ADMIN_USER = "Cannot delete ADMIN user";
 
     public static final int CITY_CODE_SIZE = 4;
     public static final int COUNTRY_CODE_SIZE = 3;

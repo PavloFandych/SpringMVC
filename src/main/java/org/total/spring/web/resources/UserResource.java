@@ -1,6 +1,5 @@
 package org.total.spring.web.resources;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +14,7 @@ import org.total.spring.root.entity.enums.CityCode;
 import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.exceptions.ApplicationException;
 import org.total.spring.root.marshall.ContentHandler;
+import org.total.spring.root.response.Response;
 import org.total.spring.root.service.interfaces.CityService;
 import org.total.spring.root.service.interfaces.RoleService;
 import org.total.spring.root.service.interfaces.UserRoleService;
@@ -22,12 +22,12 @@ import org.total.spring.root.service.interfaces.UserService;
 import org.total.spring.root.util.Constants;
 import org.total.spring.root.util.PasswordManager;
 import org.total.spring.root.util.PermitionManager;
+import org.total.spring.root.util.Validator;
 import org.total.spring.root.version.Version;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 public class UserResource {
@@ -53,6 +53,9 @@ public class UserResource {
 
     @Autowired
     private CityService cityService;
+
+    @Autowired
+    private Validator validator;
 
     public ContentHandler getContentHandler() {
         return contentHandler;
@@ -111,6 +114,14 @@ public class UserResource {
         this.cityService = cityService;
     }
 
+    @Qualifier("webInputParamsValidator")
+    public Validator getValidator() {
+        return validator;
+    }
+
+    public void setValidator(Validator validator) {
+        this.validator = validator;
+    }
 
     @RequestMapping(value = "/users",
             method = RequestMethod.GET,
@@ -120,13 +131,12 @@ public class UserResource {
                                                    required = false) String contentType,
                                            @RequestHeader(name = "Version",
                                                    required = false) String version) throws ApplicationException {
-        if (authorization != null
-                && contentType != null
-                && version != null
-                && !authorization.isEmpty()
-                && !contentType.isEmpty()
-                && !version.isEmpty()
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+        if (getValidator().validate(
+                new String[]{
+                        authorization,
+                        contentType,
+                        version}
+        ) && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
             try {
@@ -146,7 +156,7 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                 + getter.getUserName() + " found\n");
 
-                        if (getPermitionManager().hasEntity(getter, CapabilityType.READ)) {
+                        if (getPermitionManager().containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                     + getter.getUserName() + " has permitions to get list of users\n");
 
@@ -171,11 +181,11 @@ public class UserResource {
                                 Constants.NO_USER_FOUND);
                     }
                 } else {
-                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
+                    LOGGER.warn(Constants.CANNOT_DELETE_ADMIN_USER + " http status = "
                             + HttpStatus.NOT_ACCEPTABLE + "\n");
 
                     throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.VERSION_NOT_SUPPORTED);
+                            Constants.CANNOT_DELETE_ADMIN_USER);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -183,7 +193,8 @@ public class UserResource {
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
                 + HttpStatus.BAD_REQUEST + "\n");
-        throw new ApplicationException(HttpStatus.BAD_REQUEST, Constants.ERROR);
+        throw new ApplicationException(HttpStatus.BAD_REQUEST,
+                Constants.ERROR);
     }
 
 
@@ -199,16 +210,14 @@ public class UserResource {
                                                    required = false) String pageIndex,
                                            @RequestParam(name = "numRecPerPage",
                                                    required = false) String numRecPerPage) throws ApplicationException {
-        if (authorization != null
-                && contentType != null
-                && version != null
-                && !authorization.isEmpty()
-                && !contentType.isEmpty()
-                && !version.isEmpty()
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)
-                && StringUtils.isNumeric(pageIndex)
-                && StringUtils.isNumeric(numRecPerPage)) {
-
+        if (getValidator().validate(
+                new String[]{
+                        authorization,
+                        contentType,
+                        version,
+                        pageIndex,
+                        numRecPerPage}
+        ) && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
             try {
@@ -228,7 +237,7 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                 + getter.getUserName() + " found\n");
 
-                        if (getPermitionManager().hasEntity(getter, CapabilityType.READ)) {
+                        if (getPermitionManager().containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                     + getter.getUserName()
                                     + " has permitions to get list of users\n");
@@ -256,10 +265,10 @@ public class UserResource {
                                 Constants.NO_USER_FOUND);
                     }
                 } else {
-                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
+                    LOGGER.warn(Constants.CANNOT_DELETE_ADMIN_USER + "\n");
 
                     throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.VERSION_NOT_SUPPORTED);
+                            Constants.CANNOT_DELETE_ADMIN_USER);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -267,27 +276,27 @@ public class UserResource {
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
                 + HttpStatus.BAD_REQUEST + "\n");
-        throw new ApplicationException(HttpStatus.BAD_REQUEST, Constants.ERROR);
+        throw new ApplicationException(HttpStatus.BAD_REQUEST,
+                Constants.ERROR);
     }
 
     @RequestMapping(value = "/users/{id}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_XML)
     public ResponseEntity<?> fetchUserById(@PathVariable String id,
-                                           @RequestHeader(name = "Authorization", required = false) String authorization,
+                                           @RequestHeader(name = "Authorization",
+                                                   required = false) String authorization,
                                            @RequestHeader(name = "Content-Type",
                                                    required = false) String contentType,
                                            @RequestHeader(name = "Version",
                                                    required = false) String version) throws ApplicationException {
-        if (authorization != null
-                && contentType != null
-                && version != null
-                && !authorization.isEmpty()
-                && !contentType.isEmpty()
-                && !version.isEmpty()
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)
-                && StringUtils.isNumeric(id)) {
-
+        if (getValidator().validate(
+                new String[]{
+                        id,
+                        authorization,
+                        contentType,
+                        version}
+        ) && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
             try {
@@ -307,7 +316,7 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                 + getter.getUserName() + " found\n");
 
-                        if (getPermitionManager().hasEntity(getter, CapabilityType.READ)) {
+                        if (getPermitionManager().containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                     + getter.getUserName()
                                     + " has permitions to get user information\n");
@@ -334,10 +343,10 @@ public class UserResource {
                                 Constants.NO_USER_FOUND);
                     }
                 } else {
-                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
+                    LOGGER.warn(Constants.CANNOT_DELETE_ADMIN_USER + "\n");
 
                     throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.VERSION_NOT_SUPPORTED);
+                            Constants.CANNOT_DELETE_ADMIN_USER);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -345,7 +354,8 @@ public class UserResource {
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
                 + HttpStatus.BAD_REQUEST + "\n");
-        throw new ApplicationException(HttpStatus.BAD_REQUEST, Constants.ERROR);
+        throw new ApplicationException(HttpStatus.BAD_REQUEST,
+                Constants.ERROR);
     }
 
     @RequestMapping(value = "/userName/{userName}",
@@ -357,16 +367,14 @@ public class UserResource {
                                              @RequestHeader(name = "Content-Type",
                                                      required = false) String contentType,
                                              @RequestHeader(name = "Version",
-                                                     required = false) String version) {
-        if (userName != null
-                && authorization != null
-                && contentType != null
-                && version != null
-                && !userName.isEmpty()
-                && !authorization.isEmpty()
-                && !contentType.isEmpty()
-                && !version.isEmpty()
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+                                                     required = false) String version) throws ApplicationException {
+        if (getValidator().validate(
+                new String[]{
+                        userName,
+                        authorization,
+                        contentType,
+                        version}
+        ) && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
             try {
@@ -386,7 +394,7 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
                                 + " found\n");
 
-                        if (getPermitionManager().hasEntity(getter, CapabilityType.READ)) {
+                        if (getPermitionManager().containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                     + getter.getUserName()
                                     + " has permitions to get user information\n");
@@ -402,47 +410,48 @@ public class UserResource {
                             LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
                                     + getter.getUserName() + "\n");
 
-                            return new ResponseEntity<>(Constants.PERMITION_DENIED,
-                                    HttpStatus.CONFLICT);
+                            throw new ApplicationException(HttpStatus.CONFLICT,
+                                    Constants.PERMITION_DENIED);
                         }
                     } else {
                         LOGGER.warn(Constants.NO_USER_FOUND + "\n");
 
-                        return new ResponseEntity<>(Constants.NO_USER_FOUND,
-                                HttpStatus.CONFLICT);
+                        throw new ApplicationException(HttpStatus.CONFLICT,
+                                Constants.NO_USER_FOUND);
                     }
                 } else {
-                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
+                    LOGGER.warn(Constants.CANNOT_DELETE_ADMIN_USER + "\n");
 
-                    return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED,
-                            HttpStatus.NOT_ACCEPTABLE);
+                    throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
+                            Constants.CANNOT_DELETE_ADMIN_USER);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
             }
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL + "\n");
-
-        return new ResponseEntity<>(Constants.ERROR,
-                HttpStatus.BAD_REQUEST);
+        LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
+                + HttpStatus.BAD_REQUEST + "\n");
+        throw new ApplicationException(HttpStatus.BAD_REQUEST,
+                Constants.ERROR);
     }
 
     @RequestMapping(value = "/users/{userName}",
             method = RequestMethod.DELETE,
             produces = Constants.CONTENT_TYPE_TEXT_PLAIN)
     public ResponseEntity<?> deleteUserById(@PathVariable String userName,
-                                            @RequestHeader("Authorization") String authorization,
-                                            @RequestHeader("Content-Type") String contentType,
-                                            @RequestHeader("Version") String version) {
-        if (userName != null
-                && authorization != null
-                && contentType != null
-                && version != null
-                && !userName.isEmpty()
-                && !authorization.isEmpty()
-                && !contentType.isEmpty()
-                && !version.isEmpty()
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+                                            @RequestHeader(name = "Authorization",
+                                                    required = false) String authorization,
+                                            @RequestHeader(name = "Content-Type",
+                                                    required = false) String contentType,
+                                            @RequestHeader(name = "Version",
+                                                    required = false) String version) throws ApplicationException {
+        if (getValidator().validate(
+                new String[]{
+                        userName,
+                        authorization,
+                        contentType,
+                        version}
+        ) && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
             try {
@@ -460,7 +469,7 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Deleter "
                                 + deleter.getUserName() + " found\n");
 
-                        if (getPermitionManager().hasEntity(deleter, CapabilityType.DELETE)) {
+                        if (getPermitionManager().containEntity(deleter, CapabilityType.DELETE)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Deleter " +
                                     deleter.getUserName() + " has permitions to delete the user\n");
 
@@ -470,65 +479,79 @@ public class UserResource {
                             if (userToDelete != null) {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS + "User with id "
                                         + userToDelete.getUserId() + " found\n");
+                                
+                                if (userToDelete.getRoles()
+                                        .contains(getRoleService()
+                                                .findRoleByRoleType(RoleType.ADMIN))) {
+                                    LOGGER.warn(Constants.STATUS_REQ_FAIL + "Cannot delete" +
+                                            " user with ADMIN role\n");
 
-                                getUserService().deleteUserByUserId(userToDelete.getUserId());
+                                    throw new ApplicationException(HttpStatus.CONFLICT,
+                                            Constants.CANNOT_DELETE_ADMIN_USER);
+                                } else {
+                                    getUserService().deleteUserByUserId(userToDelete.getUserId());
 
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User "
-                                        + userToDelete.getUserName() + " was deleted successful\n");
+                                    LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User "
+                                            + userToDelete.getUserName() + " was deleted successful\n");
 
-                                return new ResponseEntity<>(Constants.SUCCESS,
-                                        HttpStatus.OK);
+                                    Response success = new Response(HttpStatus.OK,
+                                            Constants.SUCCESS);
+
+                                    return new ResponseEntity<>(getContentHandler()
+                                            .marshal(success), HttpStatus.OK);
+                                }
                             } else {
-                                LOGGER.debug(Constants.STATUS_REQ_FAIL + "User not found\n");
+                                LOGGER.warn(Constants.STATUS_REQ_FAIL + "User not found\n");
 
-                                return new ResponseEntity<>(Constants.NO_USER_FOUND,
-                                        HttpStatus.CONFLICT);
+                                throw new ApplicationException(HttpStatus.CONFLICT,
+                                        Constants.NO_USER_FOUND);
                             }
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for deleter "
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " Permition denied for deleter "
                                     + deleter.getUserName() + "\n");
 
-                            return new ResponseEntity<>(Constants.PERMITION_DENIED,
-                                    HttpStatus.CONFLICT);
+                            throw new ApplicationException(HttpStatus.CONFLICT,
+                                    Constants.PERMITION_DENIED);
                         }
                     } else {
                         LOGGER.warn(Constants.NO_USER_FOUND + "\n");
 
-                        return new ResponseEntity<>(Constants.NO_USER_FOUND,
-                                HttpStatus.CONFLICT);
+                        throw new ApplicationException(HttpStatus.CONFLICT,
+                                Constants.NO_USER_FOUND);
                     }
                 } else {
-                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
+                    LOGGER.warn(Constants.CANNOT_DELETE_ADMIN_USER + "\n");
 
-                    return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED,
-                            HttpStatus.NOT_ACCEPTABLE);
+                    throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
+                            Constants.CANNOT_DELETE_ADMIN_USER);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
             }
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL + "\n");
-
-        return new ResponseEntity<>(Constants.ERROR,
-                HttpStatus.BAD_REQUEST);
+        LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
+                + HttpStatus.BAD_REQUEST + "\n");
+        throw new ApplicationException(HttpStatus.BAD_REQUEST,
+                Constants.ERROR);
     }
 
     @RequestMapping(value = "/users",
             method = RequestMethod.POST,
             produces = Constants.CONTENT_TYPE_TEXT_PLAIN)
     public ResponseEntity<?> createUser(@RequestBody String body,
-                                        @RequestHeader("Authorization") String authorization,
-                                        @RequestHeader("Content-Type") String contentType,
-                                        @RequestHeader("Version") String version) {
-        if (body != null
-                && authorization != null
-                && contentType != null
-                && version != null
-                && !body.isEmpty()
-                && !authorization.isEmpty()
-                && !contentType.isEmpty()
-                && !version.isEmpty()
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+                                        @RequestHeader(name = "Authorization",
+                                                required = false) String authorization,
+                                        @RequestHeader(name = "Content-Type",
+                                                required = false) String contentType,
+                                        @RequestHeader(name = "Version",
+                                                required = false) String version) throws ApplicationException {
+        if (getValidator().validate(
+                new String[]{
+                        body,
+                        authorization,
+                        contentType,
+                        version}
+        ) && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
             try {
@@ -548,7 +571,7 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Creator "
                                 + creator.getUserName() + " found\n");
 
-                        if (getPermitionManager().hasEntity(creator, CapabilityType.CREATE)) {
+                        if (getPermitionManager().containEntity(creator, CapabilityType.CREATE)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Creator "
                                     + creator.getUserName() + " has permitions to create user\n");
 
@@ -563,8 +586,8 @@ public class UserResource {
                                         LOGGER.debug(Constants.STATUS_REQ_FAIL + " User "
                                                 + userXML.getUserName() + " already exists\n");
 
-                                        return new ResponseEntity<>(Constants.USER_ALREADY_EXISTS,
-                                                HttpStatus.CONFLICT);
+                                        throw new ApplicationException(HttpStatus.CONFLICT,
+                                                Constants.USER_ALREADY_EXISTS);
                                     } else {
                                         userToCreate = new User();
                                         userToCreate.setUserName(userXML.getUserName());
@@ -577,66 +600,73 @@ public class UserResource {
                                         userToCreate.setCity(getCityService()
                                                 .findCityByCityName(userXML.getCity().getCityName()));
 
-                                        return (getUserService().save(userToCreate) == null)
-                                                ? new ResponseEntity<>(Constants.ERROR, HttpStatus.CONFLICT)
-                                                : new ResponseEntity<>(Constants.SUCCESS, HttpStatus.OK);
+                                        if (getUserService().save(userToCreate) != null) {
+                                            Response success = new Response(HttpStatus.OK,
+                                                    Constants.SUCCESS);
+                                            return new ResponseEntity<>(getContentHandler()
+                                                    .marshal(success), HttpStatus.OK);
+                                        } else {
+                                            throw new ApplicationException(HttpStatus.CONFLICT,
+                                                    Constants.ERROR);
+                                        }
                                     }
                                 } else {
                                     LOGGER.debug(Constants.STATUS_REQ_FAIL + " Unmarshaling failed\n");
 
-                                    return new ResponseEntity<>(Constants.NO_USER_FOUND,
-                                            HttpStatus.CONFLICT);
+                                    throw new ApplicationException(HttpStatus.CONFLICT,
+                                            Constants.NO_USER_FOUND);
                                 }
                             } catch (Exception ex) {
                                 LOGGER.error(ex, ex);
                             }
-                            return new ResponseEntity<>(Constants.ERROR,
-                                    HttpStatus.INTERNAL_SERVER_ERROR);
+                            throw new ApplicationException(HttpStatus.CONFLICT,
+                                    Constants.ERROR);
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for creator "
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " Permition denied for creator "
                                     + creator.getUserName() + "\n");
 
-                            return new ResponseEntity<>(Constants.PERMITION_DENIED,
-                                    HttpStatus.CONFLICT);
+                            throw new ApplicationException(HttpStatus.CONFLICT,
+                                    Constants.PERMITION_DENIED);
                         }
                     } else {
                         LOGGER.warn(Constants.NO_USER_FOUND + "\n");
 
-                        return new ResponseEntity<>(Constants.NO_USER_FOUND,
-                                HttpStatus.CONFLICT);
+                        throw new ApplicationException(HttpStatus.CONFLICT,
+                                Constants.NO_USER_FOUND);
                     }
                 } else {
-                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
+                    LOGGER.warn(Constants.CANNOT_DELETE_ADMIN_USER + "\n");
 
-                    return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED,
-                            HttpStatus.NOT_ACCEPTABLE);
+                    throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
+                            Constants.CANNOT_DELETE_ADMIN_USER);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
             }
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL + "\n");
-
-        return new ResponseEntity<>(Constants.ERROR,
-                HttpStatus.BAD_REQUEST);
+        LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
+                + HttpStatus.BAD_REQUEST + "\n");
+        throw new ApplicationException(HttpStatus.BAD_REQUEST,
+                Constants.ERROR);
     }
 
     @RequestMapping(value = "/users",
             method = RequestMethod.PUT,
-            produces = Constants.CONTENT_TYPE_TEXT_PLAIN)
+            produces = Constants.CONTENT_TYPE_APPLICATION_XML)
     public ResponseEntity<?> updateUser(@RequestBody String body,
-                                        @RequestHeader("Authorization") String authorization,
-                                        @RequestHeader("Content-Type") String contentType,
-                                        @RequestHeader("Version") String version) {
-        if (body != null
-                && authorization != null
-                && contentType != null
-                && version != null
-                && !body.isEmpty()
-                && !authorization.isEmpty()
-                && !contentType.isEmpty()
-                && !version.isEmpty()
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+                                        @RequestHeader(name = "Authorization",
+                                                required = false) String authorization,
+                                        @RequestHeader(name = "Content-Type",
+                                                required = false) String contentType,
+                                        @RequestHeader(name = "Version",
+                                                required = false) String version) throws ApplicationException {
+        if (getValidator().validate(
+                new String[]{
+                        body,
+                        authorization,
+                        contentType,
+                        version}
+        ) && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
             try {
@@ -657,7 +687,7 @@ public class UserResource {
                                 + updater.getUserName() + " found\n");
 
                         if (getPermitionManager()
-                                .hasEntity(updater, CapabilityType.UPDATE)) {
+                                .containEntity(updater, CapabilityType.UPDATE)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Updater "
                                     + updater.getUserName() + " has permitions to update user\n");
 
@@ -675,118 +705,74 @@ public class UserResource {
                                         userToUpdate.setUserEmail(userXML.getUserEmail());
                                         userToUpdate.getRoles().clear();
 
-                                        Set<Role> roles = userXML.getRoles();
-                                        for (Role item : roles) {
+                                        for (Role item : userXML.getRoles()) {
                                             getUserRoleService().assignRole(userToUpdate.getUserName(),
                                                     item.getRoleType());
                                         }
 
                                         City city = getCityService()
-                                                .findCityByCityName(userXML.getCity().getCityName());
+                                                .findCityByCityName(userXML.
+                                                        getCity().getCityName());
 
                                         if (city != null) {
                                             userToUpdate.setCity(city);
                                         } else {
-                                            userToUpdate.setCity(getCityService().findCityByCityCode(CityCode.NKWN));
+                                            userToUpdate.setCity(getCityService()
+                                                    .findCityByCityCode(CityCode.NKWN));
                                         }
 
-                                        return (getUserService().update(userToUpdate) != null)
-                                                ? new ResponseEntity<>(Constants.SUCCESS, HttpStatus.OK)
-                                                : new ResponseEntity<>(Constants.ERROR, HttpStatus.CONFLICT);
+                                        if (getUserService().update(userToUpdate) != null) {
+                                            Response success = new Response(HttpStatus.OK,
+                                                    Constants.SUCCESS);
+                                            return new ResponseEntity<>(getContentHandler()
+                                                    .marshal(success), HttpStatus.OK);
+                                        } else {
+                                            throw new ApplicationException(HttpStatus.CONFLICT,
+                                                    Constants.ERROR);
+                                        }
                                     } else {
                                         LOGGER.debug(Constants.STATUS_REQ_FAIL + "User for updating not found\n");
 
-                                        return new ResponseEntity<>(Constants.NO_USER_FOUND,
-                                                HttpStatus.CONFLICT);
+                                        throw new ApplicationException(HttpStatus.CONFLICT,
+                                                Constants.NO_USER_FOUND);
                                     }
                                 } else {
                                     LOGGER.debug(Constants.STATUS_REQ_FAIL + " Unmarshaling failed\n");
 
-                                    return new ResponseEntity<>(Constants.NO_USER_FOUND,
-                                            HttpStatus.CONFLICT);
+                                    throw new ApplicationException(HttpStatus.CONFLICT,
+                                            Constants.NO_USER_FOUND);
                                 }
                             } catch (Exception ex) {
                                 LOGGER.error(ex, ex);
                             }
-                            return new ResponseEntity<>(Constants.ERROR,
-                                    HttpStatus.INTERNAL_SERVER_ERROR);
+                            throw new ApplicationException(HttpStatus.CONFLICT,
+                                    Constants.ERROR);
                         } else {
                             LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for updater "
                                     + updater.getUserName() + "\n");
 
-                            return new ResponseEntity<>(Constants.PERMITION_DENIED,
-                                    HttpStatus.CONFLICT);
+                            throw new ApplicationException(HttpStatus.CONFLICT,
+                                    Constants.PERMITION_DENIED);
                         }
                     } else {
                         LOGGER.debug(Constants.STATUS_REQ_FAIL + " Updater not found\n");
 
-                        return new ResponseEntity<>(Constants.NO_USER_FOUND,
-                                HttpStatus.CONFLICT);
+                        throw new ApplicationException(HttpStatus.CONFLICT,
+                                Constants.NO_USER_FOUND);
                     }
                 } else {
-                    return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED,
-                            HttpStatus.NOT_ACCEPTABLE);
+                    LOGGER.warn(Constants.CANNOT_DELETE_ADMIN_USER + "\n");
+
+                    throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
+                            Constants.CANNOT_DELETE_ADMIN_USER);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
             }
         }
-        return new ResponseEntity<>(Constants.ERROR,
-                HttpStatus.BAD_REQUEST);
-    }
-
-    @RequestMapping(value = "/test",
-            method = RequestMethod.GET)
-    public String official() {
-//        getRoleService().save(new Role(RoleType.ADMIN));
-//        getRoleService().save(new Role(RoleType.SUPERUSER));
-//        getRoleService().save(new Role(RoleType.MODERATOR));
-//        getRoleService().save(new Role(RoleType.USER));
-//        getRoleService().save(new Role(RoleType.GUEST));
-
-//        User admin = new User();
-//        admin.setUserName("Admin");
-//        admin.setPassword(getPasswordManager().encodeMD5("admin"));
-//        admin.setUserEmail("admin@admin.com");
-//        admin.setCity(getCityService().findCityByCityCode(CityCode.LOND));
-//        getUserService().save(admin);
-
-//        getUserRoleService().assignRole("Admin", RoleType.ADMIN);
-//
-//        User superuser = new User();
-//        superuser.setUserName("Superuser");
-//        superuser.setPassword(getPasswordManager().encodeMD5("superuser"));
-//        superuser.setUserEmail("superuser@superuser.com");
-//        superuser.setCity(getCityService().findCityByCityCode(CityCode.BERL));
-//        getUserService().save(superuser);
-//        getUserRoleService().assignRole("Superuser", RoleType.SUPERUSER);
-//
-//        User moderator = new User();
-//        moderator.setUserName("Moderator");
-//        moderator.setPassword(getPasswordManager().encodeMD5("moderator"));
-//        moderator.setUserEmail("moderator@moderator.com");
-//        moderator.setCity(getCityService().findCityByCityCode(CityCode.ROME));
-//        getUserService().save(moderator);
-//        getUserRoleService().assignRole("Moderator", RoleType.MODERATOR);
-//
-//        User user = new User();
-//        user.setUserName("User");
-//        user.setPassword(getPasswordManager().encodeMD5("user"));
-//        user.setUserEmail("user@user.com");
-//        user.setCity(getCityService().findCityByCityCode(CityCode.TERA));
-//        getUserService().save(user);
-//        getUserRoleService().assignRole("User", RoleType.USER);
-//
-//        User guest = new User();
-//        guest.setUserName("Guest");
-//        guest.setPassword(getPasswordManager().encodeMD5("guest"));
-//        guest.setUserEmail("guest@guest.com");
-//        guest.setCity(getCityService().findCityByCityCode(CityCode.BOGE));
-//        getUserService().save(guest);
-//        getUserRoleService().assignRole("Guest", RoleType.GUEST);
-//        User user = getUserService().findUserByUserName("Admin");
-//        user.setCity(getCityService().findCityByCityCode(CityCode.LOND));
-//        getUserService().save(user);
-        return "OK";
+        LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
+                + HttpStatus.BAD_REQUEST + "\n");
+        throw new ApplicationException(HttpStatus.BAD_REQUEST,
+                Constants.ERROR);
     }
 }

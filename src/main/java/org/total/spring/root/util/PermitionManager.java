@@ -5,5 +5,5 @@ package org.total.spring.root.util;
  */
 
 public interface PermitionManager<K, V> {
-    boolean hasEntity(K owner, V target);
+    public boolean containEntity(K owner, V target);
 }

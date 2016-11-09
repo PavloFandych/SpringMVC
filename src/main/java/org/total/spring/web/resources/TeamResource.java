@@ -3,7 +3,6 @@ package org.total.spring.web.resources;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.total.spring.root.entity.City;
 import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.entity.Team;
 import org.total.spring.root.entity.User;
@@ -131,7 +130,7 @@ public class TeamResource {
                     }
                 } else {
                     response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-                    return Constants.VERSION_NOT_SUPPORTED;
+                    return Constants.CANNOT_DELETE_ADMIN_USER;
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -195,7 +194,7 @@ public class TeamResource {
                     }
                 } else {
                     response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-                    return Constants.VERSION_NOT_SUPPORTED;
+                    return Constants.CANNOT_DELETE_ADMIN_USER;
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);

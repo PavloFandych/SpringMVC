@@ -13,14 +13,14 @@ import java.io.Serializable;
 
 @XmlRootElement
 @XmlType(propOrder = {"httpStatus", "message"})
-public class ErrorResponse implements Serializable {
+public class Response implements Serializable {
     private HttpStatus httpStatus;
     private String message;
 
-    public ErrorResponse() {
+    public Response() {
     }
 
-    public ErrorResponse(HttpStatus httpStatus, String message) {
+    public Response(HttpStatus httpStatus, String message) {
         this.httpStatus = httpStatus;
         this.message = message;
     }
