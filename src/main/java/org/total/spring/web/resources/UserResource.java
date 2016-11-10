@@ -1,11 +1,13 @@
 package org.total.spring.web.resources;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.ContextLoader;
 import org.total.spring.root.entity.City;
 import org.total.spring.root.entity.Role;
 import org.total.spring.root.entity.User;
@@ -19,10 +21,7 @@ import org.total.spring.root.service.interfaces.CityService;
 import org.total.spring.root.service.interfaces.RoleService;
 import org.total.spring.root.service.interfaces.UserRoleService;
 import org.total.spring.root.service.interfaces.UserService;
-import org.total.spring.root.util.Constants;
-import org.total.spring.root.util.PasswordManager;
-import org.total.spring.root.util.PermitionManager;
-import org.total.spring.root.util.Validator;
+import org.total.spring.root.util.*;
 import org.total.spring.root.version.Version;
 
 import java.util.ArrayList;
@@ -47,9 +46,6 @@ public class UserResource {
 
     @Autowired
     private ContentHandler contentHandler;
-
-    @Autowired
-    private PermitionManager permitionManager;
 
     @Autowired
     private CityService cityService;
@@ -97,15 +93,6 @@ public class UserResource {
         this.userRoleService = userRoleService;
     }
 
-    @Qualifier("permitionManagerCapability")
-    public PermitionManager getPermitionManager() {
-        return permitionManager;
-    }
-
-    public void setPermitionManager(PermitionManager permitionManager) {
-        this.permitionManager = permitionManager;
-    }
-
     public CityService getCityService() {
         return cityService;
     }
@@ -135,8 +122,8 @@ public class UserResource {
                 new String[]{
                         authorization,
                         contentType,
-                        version}
-        ) && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+                        version})
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
             try {
@@ -156,16 +143,24 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                 + getter.getUserName() + " found\n");
 
-                        if (getPermitionManager().containEntity(getter, CapabilityType.READ)) {
+                        if (ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(PermitionManagerCapability.class)
+                                .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                     + getter.getUserName() + " has permitions to get list of users\n");
 
                             List<User> list = getUserService().findAll();
 
-                            return (list == null || list.isEmpty())
-                                    ? new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.OK)
-                                    : new ResponseEntity<>(getContentHandler()
-                                    .marshal(list, "users"), HttpStatus.OK);
+                            if (list == null || list.isEmpty()) {
+                                LOGGER.warn(" http status = " + HttpStatus.CONFLICT
+                                        + " users not found\n");
+
+                                throw new ApplicationException(HttpStatus.CONFLICT,
+                                        Constants.NO_USER_FOUND);
+                            } else {
+                                return new ResponseEntity<>(getContentHandler()
+                                        .marshal(list, "users"), HttpStatus.OK);
+                            }
                         } else {
                             LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
                                     + getter.getUserName() + "\n");
@@ -174,18 +169,23 @@ public class UserResource {
                                     Constants.PERMITION_DENIED);
                         }
                     } else {
-                        LOGGER.warn(Constants.NO_USER_FOUND +
-                                " Getter not found\n");
+                        LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
+                                + HttpStatus.CONFLICT + " Getter not found\n");
 
                         throw new ApplicationException(HttpStatus.CONFLICT,
                                 Constants.NO_USER_FOUND);
                     }
                 } else {
-                    LOGGER.warn(Constants.CANNOT_DELETE_ADMIN_USER + " http status = "
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
                             + HttpStatus.NOT_ACCEPTABLE + "\n");
 
-                    throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.CANNOT_DELETE_ADMIN_USER);
+                    Response fail = ContextLoader.getCurrentWebApplicationContext()
+                            .getBean(Response.class);
+                    fail.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    fail.setMessage(Constants.VERSION_NOT_SUPPORTED);
+
+                    return new ResponseEntity<>(getContentHandler().marshal(fail),
+                            fail.getHttpStatus());
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -193,8 +193,14 @@ public class UserResource {
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
                 + HttpStatus.BAD_REQUEST + "\n");
-        throw new ApplicationException(HttpStatus.BAD_REQUEST,
-                Constants.ERROR);
+
+        Response fail = ContextLoader.getCurrentWebApplicationContext()
+                .getBean(Response.class);
+        fail.setHttpStatus(HttpStatus.BAD_REQUEST);
+        fail.setMessage(Constants.ERROR);
+
+        return new ResponseEntity<>(getContentHandler().marshal(fail),
+                fail.getHttpStatus());
     }
 
 
@@ -216,8 +222,10 @@ public class UserResource {
                         contentType,
                         version,
                         pageIndex,
-                        numRecPerPage}
-        ) && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+                        numRecPerPage})
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)
+                && StringUtils.isNumeric(pageIndex)
+                && StringUtils.isNumeric(numRecPerPage)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
             try {
@@ -237,7 +245,9 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                 + getter.getUserName() + " found\n");
 
-                        if (getPermitionManager().containEntity(getter, CapabilityType.READ)) {
+                        if (ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(PermitionManagerCapability.class)
+                                .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                     + getter.getUserName()
                                     + " has permitions to get list of users\n");
@@ -246,10 +256,16 @@ public class UserResource {
                                     .findAll(Integer.parseInt(pageIndex),
                                             Integer.parseInt(numRecPerPage));
 
-                            return (list == null)
-                                    ? new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.OK)
-                                    : new ResponseEntity<>(getContentHandler()
-                                    .marshal(list, "users"), HttpStatus.OK);
+                            if (list == null || list.isEmpty()) {
+                                LOGGER.warn(" http status = " + HttpStatus.CONFLICT
+                                        + " users not found\n");
+
+                                throw new ApplicationException(HttpStatus.CONFLICT,
+                                        Constants.NO_USER_FOUND);
+                            } else {
+                                return new ResponseEntity<>(getContentHandler()
+                                        .marshal(list, "users"), HttpStatus.OK);
+                            }
                         } else {
                             LOGGER.debug(Constants.STATUS_REQ_FAIL +
                                     " Permition denied for getter "
@@ -265,10 +281,10 @@ public class UserResource {
                                 Constants.NO_USER_FOUND);
                     }
                 } else {
-                    LOGGER.warn(Constants.CANNOT_DELETE_ADMIN_USER + "\n");
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
 
                     throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.CANNOT_DELETE_ADMIN_USER);
+                            Constants.VERSION_NOT_SUPPORTED);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -295,8 +311,9 @@ public class UserResource {
                         id,
                         authorization,
                         contentType,
-                        version}
-        ) && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+                        version})
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)
+                && StringUtils.isNumeric(id)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
             try {
@@ -316,7 +333,9 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                 + getter.getUserName() + " found\n");
 
-                        if (getPermitionManager().containEntity(getter, CapabilityType.READ)) {
+                        if (ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(PermitionManagerCapability.class)
+                                .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                     + getter.getUserName()
                                     + " has permitions to get user information\n");
@@ -343,10 +362,10 @@ public class UserResource {
                                 Constants.NO_USER_FOUND);
                     }
                 } else {
-                    LOGGER.warn(Constants.CANNOT_DELETE_ADMIN_USER + "\n");
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
 
                     throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.CANNOT_DELETE_ADMIN_USER);
+                            Constants.VERSION_NOT_SUPPORTED);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -373,8 +392,8 @@ public class UserResource {
                         userName,
                         authorization,
                         contentType,
-                        version}
-        ) && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+                        version})
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
             try {
@@ -394,7 +413,9 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
                                 + " found\n");
 
-                        if (getPermitionManager().containEntity(getter, CapabilityType.READ)) {
+                        if (ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(PermitionManagerCapability.class)
+                                .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                     + getter.getUserName()
                                     + " has permitions to get user information\n");
@@ -420,10 +441,10 @@ public class UserResource {
                                 Constants.NO_USER_FOUND);
                     }
                 } else {
-                    LOGGER.warn(Constants.CANNOT_DELETE_ADMIN_USER + "\n");
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
 
                     throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.CANNOT_DELETE_ADMIN_USER);
+                            Constants.VERSION_NOT_SUPPORTED);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -450,8 +471,8 @@ public class UserResource {
                         userName,
                         authorization,
                         contentType,
-                        version}
-        ) && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+                        version})
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
             try {
@@ -469,7 +490,9 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Deleter "
                                 + deleter.getUserName() + " found\n");
 
-                        if (getPermitionManager().containEntity(deleter, CapabilityType.DELETE)) {
+                        if (ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(PermitionManagerCapability.class)
+                                .containEntity(deleter, CapabilityType.DELETE)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Deleter " +
                                     deleter.getUserName() + " has permitions to delete the user\n");
 
@@ -479,15 +502,14 @@ public class UserResource {
                             if (userToDelete != null) {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS + "User with id "
                                         + userToDelete.getUserId() + " found\n");
-                                
-                                if (userToDelete.getRoles()
-                                        .contains(getRoleService()
-                                                .findRoleByRoleType(RoleType.ADMIN))) {
+
+                                if (userToDelete.getUserName()
+                                        .equals(deleter.getUserName())) {
                                     LOGGER.warn(Constants.STATUS_REQ_FAIL + "Cannot delete" +
-                                            " user with ADMIN role\n");
+                                            " user\n");
 
                                     throw new ApplicationException(HttpStatus.CONFLICT,
-                                            Constants.CANNOT_DELETE_ADMIN_USER);
+                                            Constants.CANNOT_DELETE_USER);
                                 } else {
                                     getUserService().deleteUserByUserId(userToDelete.getUserId());
 
@@ -520,10 +542,10 @@ public class UserResource {
                                 Constants.NO_USER_FOUND);
                     }
                 } else {
-                    LOGGER.warn(Constants.CANNOT_DELETE_ADMIN_USER + "\n");
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
 
                     throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.CANNOT_DELETE_ADMIN_USER);
+                            Constants.VERSION_NOT_SUPPORTED);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -550,8 +572,8 @@ public class UserResource {
                         body,
                         authorization,
                         contentType,
-                        version}
-        ) && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+                        version})
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
             try {
@@ -571,7 +593,9 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Creator "
                                 + creator.getUserName() + " found\n");
 
-                        if (getPermitionManager().containEntity(creator, CapabilityType.CREATE)) {
+                        if (ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(PermitionManagerCapability.class)
+                                .containEntity(creator, CapabilityType.CREATE)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Creator "
                                     + creator.getUserName() + " has permitions to create user\n");
 
@@ -635,10 +659,10 @@ public class UserResource {
                                 Constants.NO_USER_FOUND);
                     }
                 } else {
-                    LOGGER.warn(Constants.CANNOT_DELETE_ADMIN_USER + "\n");
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
 
                     throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.CANNOT_DELETE_ADMIN_USER);
+                            Constants.VERSION_NOT_SUPPORTED);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -665,8 +689,8 @@ public class UserResource {
                         body,
                         authorization,
                         contentType,
-                        version}
-        ) && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+                        version})
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
             try {
@@ -686,7 +710,8 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Updater "
                                 + updater.getUserName() + " found\n");
 
-                        if (getPermitionManager()
+                        if (ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(PermitionManagerCapability.class)
                                 .containEntity(updater, CapabilityType.UPDATE)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Updater "
                                     + updater.getUserName() + " has permitions to update user\n");
@@ -706,8 +731,9 @@ public class UserResource {
                                         userToUpdate.getRoles().clear();
 
                                         for (Role item : userXML.getRoles()) {
-                                            getUserRoleService().assignRole(userToUpdate.getUserName(),
-                                                    item.getRoleType());
+                                            getUserRoleService()
+                                                    .assignRole(userToUpdate.getUserName(),
+                                                            item.getRoleType());
                                         }
 
                                         City city = getCityService()
@@ -761,10 +787,10 @@ public class UserResource {
                                 Constants.NO_USER_FOUND);
                     }
                 } else {
-                    LOGGER.warn(Constants.CANNOT_DELETE_ADMIN_USER + "\n");
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
 
                     throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.CANNOT_DELETE_ADMIN_USER);
+                            Constants.VERSION_NOT_SUPPORTED);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);

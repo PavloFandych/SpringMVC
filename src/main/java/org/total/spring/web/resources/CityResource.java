@@ -10,12 +10,14 @@ import org.total.spring.root.entity.City;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.entity.enums.CityCode;
+import org.total.spring.root.exceptions.ApplicationException;
 import org.total.spring.root.marshall.ContentHandler;
 import org.total.spring.root.service.interfaces.CityService;
 import org.total.spring.root.service.interfaces.UserService;
 import org.total.spring.root.util.Constants;
 import org.total.spring.root.util.PasswordManager;
 import org.total.spring.root.util.PermitionManager;
+import org.total.spring.root.util.Validator;
 import org.total.spring.root.version.Version;
 
 import java.util.ArrayList;
@@ -40,6 +42,9 @@ public class CityResource {
 
     @Autowired
     private ContentHandler contentHandler;
+
+    @Autowired
+    private Validator validator;
 
     public CityService getCityService() {
         return cityService;
@@ -82,128 +87,178 @@ public class CityResource {
         this.contentHandler = contentHandler;
     }
 
-    @RequestMapping(value = "/cities",
-            method = RequestMethod.GET,
-            produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllCities(@RequestHeader("Authorization") String authorization,
-                                            @RequestHeader("Content-Type") String contentType,
-                                            @RequestHeader("Version") String version) {
-        if (authorization != null
-                && contentType != null
-                && version != null
-                && !authorization.isEmpty()
-                && !contentType.isEmpty()
-                && !version.isEmpty()
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
-            //TODO: INPUT PARAMETERS VALIDATION HERE
-            if (true) {
-                LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
-
-                try {
-                    if (Version.valueOf(version).equals(Version.V1)) {
-                        String credentials = getPasswordManager().decodeBase64(authorization);
-
-                        List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
-
-                        User getter = getUserService()
-                                .findUserByUserNameAndPassword(loginAndPassword.get(0),
-                                        getPasswordManager()
-                                                .encodeMD5(loginAndPassword.get(1)));
-
-                        if (getter != null) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
-                                    + " found\n");
-
-                            if (getPermitionManager().containEntity(getter, CapabilityType.READ)) {
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
-                                        + " has permitions to get the list of cities\n");
-
-                                List<City> list = getCityService().findAll();
-
-                                return (list == null)
-                                        ? new ResponseEntity<>(Constants.NO_CITY_FOUND, HttpStatus.OK)
-                                        : new ResponseEntity<>(getContentHandler().marshal(list, "cities"), HttpStatus.OK);
-                            } else {
-                                LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
-                                        + getter.getUserName() + "\n");
-
-                                return new ResponseEntity<>(Constants.PERMITION_DENIED, HttpStatus.CONFLICT);
-                            }
-                        } else {
-                            return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
-                        }
-                    } else {
-                        return new ResponseEntity<>(Constants.CANNOT_DELETE_ADMIN_USER, HttpStatus.NOT_ACCEPTABLE);
-                    }
-                } catch (Exception e) {
-                    LOGGER.error(e, e);
-                }
-            }
-        }
-        return new ResponseEntity<>(Constants.ERROR, HttpStatus.BAD_REQUEST);
+    @Qualifier("webInputParamsValidator")
+    public Validator getValidator() {
+        return validator;
     }
 
+    public void setValidator(Validator validator) {
+        this.validator = validator;
+    }
+
+    @RequestMapping(value = "/cities",
+            method = RequestMethod.GET,
+            produces = Constants.CONTENT_TYPE_APPLICATION_XML)
+    public ResponseEntity<?> fetchAllCities(@RequestHeader(name = "Authorization", required = false) String authorization,
+                                            @RequestHeader(name = "Content-Type",
+                                                    required = false) String contentType,
+                                            @RequestHeader(name = "Version",
+                                                    required = false) String version) throws ApplicationException {
+        if (getValidator().validate(
+                new String[]{
+                        authorization,
+                        contentType,
+                        version})
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+
+            try {
+                if (Version.valueOf(version).equals(Version.V1)) {
+                    String credentials = getPasswordManager()
+                            .decodeBase64(authorization);
+
+                    List<String> loginAndPassword = Arrays
+                            .asList(credentials.split(":"));
+
+                    User getter = getUserService()
+                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
+                                    getPasswordManager()
+                                            .encodeMD5(loginAndPassword.get(1)));
+
+                    if (getter != null) {
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
+                                + " found\n");
+
+                        if (getPermitionManager()
+                                .containEntity(getter, CapabilityType.READ)) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
+                                    + " has permitions to get the list of cities\n");
+
+                            List<City> list = getCityService().findAll();
+
+                            if (list == null) {
+                                throw new ApplicationException(HttpStatus.CONFLICT,
+                                        Constants.NO_CITY_FOUND);
+                            } else {
+                                return new ResponseEntity<>(getContentHandler()
+                                        .marshal(list, "cities"), HttpStatus.OK);
+                            }
+                        } else {
+                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
+                                    + getter.getUserName() + "\n");
+
+                            throw new ApplicationException(HttpStatus.CONFLICT,
+                                    Constants.PERMITION_DENIED);
+                        }
+                    } else {
+                        LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
+                                + HttpStatus.CONFLICT + " Getter not found\n");
+
+                        throw new ApplicationException(HttpStatus.CONFLICT,
+                                Constants.NO_USER_FOUND);
+                    }
+                } else {
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
+                            + HttpStatus.NOT_ACCEPTABLE + "\n");
+
+                    throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
+                            Constants.VERSION_NOT_SUPPORTED);
+                }
+            } catch (Exception e) {
+                LOGGER.error(e, e);
+            }
+        }
+        LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
+                + HttpStatus.BAD_REQUEST + "\n");
+
+        throw new ApplicationException(HttpStatus.BAD_REQUEST,
+                Constants.ERROR);
+    }
 
     @RequestMapping(value = "/cities/{cityCode}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_XML)
-    public ResponseEntity<?> findByCityCode(@RequestHeader("Authorization") String authorization,
-                                            @RequestHeader("Content-Type") String contentType,
-                                            @RequestHeader("Version") String version,
-                                            @PathVariable CityCode cityCode) {
-        if (authorization != null
-                && contentType != null
-                && version != null
-                && !authorization.isEmpty()
-                && !contentType.isEmpty()
-                && !version.isEmpty()
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
-            //TODO: INPUT PARAMETERS VALIDATION HERE
-            if (true) {
-                LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+    public ResponseEntity<?> findByCityCode(@PathVariable String cityCode,
+                                            @RequestHeader(name = "Authorization",
+                                                    required = false) String authorization,
+                                            @RequestHeader(name = "Content-Type",
+                                                    required = false) String contentType,
+                                            @RequestHeader(name = "Version",
+                                                    required = false) String version) throws ApplicationException {
+        if (getValidator().validate(
+                new String[]{
+                        cityCode,
+                        authorization,
+                        contentType,
+                        version})
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
 
-                try {
-                    if (Version.valueOf(version).equals(Version.V1)) {
-                        String credentials = getPasswordManager().decodeBase64(authorization);
+            try {
+                if (Version.valueOf(version).equals(Version.V1)) {
+                    String credentials = getPasswordManager()
+                            .decodeBase64(authorization);
 
-                        List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+                    List<String> loginAndPassword = Arrays
+                            .asList(credentials.split(":"));
 
-                        User getter = getUserService()
-                                .findUserByUserNameAndPassword(loginAndPassword.get(0),
-                                        getPasswordManager()
-                                                .encodeMD5(loginAndPassword.get(1)));
+                    User getter = getUserService()
+                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
+                                    getPasswordManager()
+                                            .encodeMD5(loginAndPassword.get(1)));
 
-                        if (getter != null) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
-                                    + " found\n");
+                    if (getter != null) {
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
+                                + getter.getUserName() + " found\n");
 
-                            if (getPermitionManager().containEntity(getter, CapabilityType.READ)) {
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
-                                        + " has permitions to get the city\n");
+                        if (getPermitionManager().containEntity(getter,
+                                CapabilityType.READ)) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
+                                    + getter.getUserName() + " has permitions to get the city\n");
 
-                                List<City> list = new ArrayList<>();
-                                list.add(getCityService().findCityByCityCode(cityCode));
+                            List<City> list = new ArrayList<>();
+                            list.add(getCityService()
+                                    .findCityByCityCode(CityCode
+                                            .valueOf(cityCode)));
 
-                                return (list == null)
-                                        ? new ResponseEntity<>(Constants.NO_CITY_FOUND, HttpStatus.OK)
-                                        : new ResponseEntity<>(getContentHandler().marshal(list, "cities"), HttpStatus.OK);
+                            if (list.get(0) == null) {
+                                throw new ApplicationException(HttpStatus.CONFLICT,
+                                        Constants.NO_CITY_FOUND);
                             } else {
-                                LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
-                                        + getter.getUserName() + "\n");
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + "\n");
 
-                                return new ResponseEntity<>(Constants.PERMITION_DENIED, HttpStatus.CONFLICT);
+                                return new ResponseEntity<>(getContentHandler()
+                                        .marshal(list, "cities"), HttpStatus.OK);
                             }
                         } else {
-                            return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
+                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
+                                    + getter.getUserName() + "\n");
+
+                            throw new ApplicationException(HttpStatus.CONFLICT,
+                                    Constants.PERMITION_DENIED);
                         }
                     } else {
-                        return new ResponseEntity<>(Constants.CANNOT_DELETE_ADMIN_USER, HttpStatus.NOT_ACCEPTABLE);
+                        LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
+                                + HttpStatus.CONFLICT + " Getter not found\n");
+
+                        throw new ApplicationException(HttpStatus.CONFLICT,
+                                Constants.NO_USER_FOUND);
                     }
-                } catch (Exception e) {
-                    LOGGER.error(e, e);
+                } else {
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
+                            + HttpStatus.NOT_ACCEPTABLE + "\n");
+
+                    throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
+                            Constants.VERSION_NOT_SUPPORTED);
                 }
+            } catch (Exception e) {
+                LOGGER.error(e, e);
             }
         }
-        return new ResponseEntity<>(Constants.ERROR, HttpStatus.BAD_REQUEST);
+        LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
+                + HttpStatus.BAD_REQUEST + "\n");
+
+        throw new ApplicationException(HttpStatus.BAD_REQUEST,
+                Constants.ERROR);
     }
 }

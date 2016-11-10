@@ -4,10 +4,7 @@ import org.total.spring.root.entity.enums.CountryCode;
 import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -19,7 +16,7 @@ import java.util.Set;
         }
 )
 @XmlRootElement
-@XmlType(propOrder = {"countryId", "countryName", "countryCode", "cities"})
+@XmlType(propOrder = {"countryId", "countryName", "countryCode"})
 public class Country implements Serializable {
     private long countryId;
     private String countryName;
@@ -84,8 +81,7 @@ public class Country implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "country"
     )
-    @XmlElementWrapper(name = "countryCities")
-    @XmlElement(name = "city")
+    @XmlTransient
     public Set<City> getCities() {
         return cities;
     }
@@ -97,6 +93,7 @@ public class Country implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "country"
     )
+    @XmlTransient
     public Set<Tournament> getTournaments() {
         return tournaments;
     }

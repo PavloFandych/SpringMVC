@@ -39,7 +39,7 @@ public class GlobalExceptionController {
     }
 
     @ExceptionHandler(Throwable.class)
-    public ResponseEntity<?> hrowableHandler(Throwable e) {
+    public ResponseEntity<?> throwableHandler(Throwable e) {
         Response error = new Response();
         error.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         error.setMessage(e.getMessage());

@@ -127,7 +127,7 @@ public class StandingResource {
                             return new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.CONFLICT);
                         }
                     } else {
-                        return new ResponseEntity<>(Constants.CANNOT_DELETE_ADMIN_USER, HttpStatus.NOT_ACCEPTABLE);
+                        return new ResponseEntity<>(Constants.VERSION_NOT_SUPPORTED, HttpStatus.NOT_ACCEPTABLE);
                     }
                 } catch (Exception e) {
                     LOGGER.error(e, e);

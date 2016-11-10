@@ -18,11 +18,12 @@ public interface Constants {
     public static final String USER_IS_NOT_DELETED = "User is not deleted";
 
     public static final String NO_CITY_FOUND = "No city found";
+    public static final String NO_COUNTRY_FOUND = "No country found";
     public static final String NO_ROLE_FOUND = "No role found";
 
     public static final String PERMITION_DENIED = "Permition denied";
     public static final String VERSION_NOT_SUPPORTED = "Version not supported";
-    public static final String CANNOT_DELETE_ADMIN_USER = "Cannot delete ADMIN user";
+    public static final String CANNOT_DELETE_USER = "Cannot delete user";
 
     public static final int CITY_CODE_SIZE = 4;
     public static final int COUNTRY_CODE_SIZE = 3;

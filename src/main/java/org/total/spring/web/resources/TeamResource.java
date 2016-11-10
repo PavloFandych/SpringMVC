@@ -130,7 +130,7 @@ public class TeamResource {
                     }
                 } else {
                     response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-                    return Constants.CANNOT_DELETE_ADMIN_USER;
+                    return Constants.VERSION_NOT_SUPPORTED;
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -194,7 +194,7 @@ public class TeamResource {
                     }
                 } else {
                     response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-                    return Constants.CANNOT_DELETE_ADMIN_USER;
+                    return Constants.VERSION_NOT_SUPPORTED;
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);

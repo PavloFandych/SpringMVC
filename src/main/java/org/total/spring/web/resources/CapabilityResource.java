@@ -55,34 +55,6 @@ public class CapabilityResource {
     @RequestMapping(value = "/capabilities",
             method = RequestMethod.GET)
     public String official() {
-//        getCapabilityService().save(new Capability(CapabilityType.READ));
-//        getCapabilityService().save(new Capability(CapabilityType.UPDATE));
-//        getCapabilityService().save(new Capability(CapabilityType.CREATE));
-//        getCapabilityService().save(new Capability(CapabilityType.DELETE));
-
-//        getRoleCapabilityService()
-//                .assignCapability(RoleType.ADMIN, CapabilityType.READ);
-//        getRoleCapabilityService()
-//                .assignCapability(RoleType.ADMIN, CapabilityType.UPDATE);
-//        getRoleCapabilityService()
-//                .assignCapability(RoleType.ADMIN, CapabilityType.CREATE);
-//        getRoleCapabilityService()
-//                .assignCapability(RoleType.ADMIN, CapabilityType.DELETE);
-//
-//        getRoleCapabilityService()
-//                .assignCapability(RoleType.SUPERUSER, CapabilityType.READ);
-//        getRoleCapabilityService()
-//                .assignCapability(RoleType.SUPERUSER, CapabilityType.UPDATE);
-//        getRoleCapabilityService()
-//                .assignCapability(RoleType.SUPERUSER, CapabilityType.CREATE);
-//
-//        getRoleCapabilityService()
-//                .assignCapability(RoleType.MODERATOR, CapabilityType.READ);
-//        getRoleCapabilityService()
-//                .assignCapability(RoleType.MODERATOR, CapabilityType.UPDATE);
-//
-//        getRoleCapabilityService()
-//                .assignCapability(RoleType.USER, CapabilityType.READ);
         return "OK";
     }
 }
