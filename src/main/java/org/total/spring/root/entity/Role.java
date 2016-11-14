@@ -1,5 +1,7 @@
 package org.total.spring.root.entity;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.total.spring.root.entity.enums.RoleType;
 
 import javax.persistence.*;
@@ -14,12 +16,15 @@ import java.util.Set;
 @Entity
 @Table(name = "Role",
         uniqueConstraints = {
-                @UniqueConstraint(name = "roleId", columnNames = "roleId"),
-                @UniqueConstraint(name = "roleType", columnNames = "roleType")
+                @UniqueConstraint(name = "roleId",
+                        columnNames = "roleId"),
+                @UniqueConstraint(name = "roleType",
+                        columnNames = "roleType")
         }
 )
 @XmlRootElement
 @XmlType(propOrder = {"roleId", "roleType"})
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Role implements Serializable {
     private long roleId;
     private RoleType roleType;

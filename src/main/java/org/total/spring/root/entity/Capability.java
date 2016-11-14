@@ -1,5 +1,7 @@
 package org.total.spring.root.entity;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.total.spring.root.entity.enums.CapabilityType;
 
 import javax.persistence.*;
@@ -11,10 +13,13 @@ import java.util.Set;
 @Table(
         name = "Capability",
         uniqueConstraints = {
-                @UniqueConstraint(name = "capabilityId", columnNames = "capabilityId"),
-                @UniqueConstraint(name = "capabilityType", columnNames = "capabilityType")
+                @UniqueConstraint(name = "capabilityId",
+                        columnNames = "capabilityId"),
+                @UniqueConstraint(name = "capabilityType",
+                        columnNames = "capabilityType")
         }
 )
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Capability implements Serializable {
     private long capabilityId;
     private CapabilityType capabilityType;

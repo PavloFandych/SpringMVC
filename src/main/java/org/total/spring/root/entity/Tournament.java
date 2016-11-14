@@ -4,6 +4,8 @@ package org.total.spring.root.entity;
  * Created by kostya on 10/20/16.
  */
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.total.spring.root.entity.enums.TournamentCode;
 import org.total.spring.root.entity.enums.TournamentType;
 import org.total.spring.root.util.Constants;
@@ -15,10 +17,13 @@ import java.util.Set;
 @Entity
 @Table(name = "Tournament",
         uniqueConstraints = {
-                @UniqueConstraint(name = "tournamentId", columnNames = "tournamentId"),
-                @UniqueConstraint(name = "tournamentCode", columnNames = "tournamentCode")
+                @UniqueConstraint(name = "tournamentId",
+                        columnNames = "tournamentId"),
+                @UniqueConstraint(name = "tournamentCode",
+                        columnNames = "tournamentCode")
         }
 )
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Tournament implements Serializable {
     private long tournamentId;
     private TournamentType tournamentType;

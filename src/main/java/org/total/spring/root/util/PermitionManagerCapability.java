@@ -14,7 +14,6 @@ import org.total.spring.root.service.interfaces.CapabilityService;
  */
 
 @Component("permitionManagerCapability")
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class PermitionManagerCapability implements PermitionManager<User, CapabilityType> {
     @Autowired
     private CapabilityService capabilityService;

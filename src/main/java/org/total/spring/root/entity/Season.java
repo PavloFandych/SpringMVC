@@ -1,5 +1,7 @@
 package org.total.spring.root.entity;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.util.Constants;
 
@@ -14,10 +16,13 @@ import java.util.Set;
 @Entity
 @Table(name = "Season",
         uniqueConstraints = {
-                @UniqueConstraint(name = "seasonId", columnNames = "seasonId"),
-                @UniqueConstraint(name = "seasonCode", columnNames = "seasonCode")
+                @UniqueConstraint(name = "seasonId",
+                        columnNames = "seasonId"),
+                @UniqueConstraint(name = "seasonCode",
+                        columnNames = "seasonCode")
         }
 )
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Season implements Serializable {
     private long seasonId;
     private String seasonName;

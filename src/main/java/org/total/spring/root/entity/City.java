@@ -1,5 +1,7 @@
 package org.total.spring.root.entity;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.total.spring.root.entity.enums.CityCode;
 import org.total.spring.root.util.Constants;
 
@@ -12,12 +14,15 @@ import java.util.Set;
 @Entity
 @Table(name = "City",
         uniqueConstraints = {
-                @UniqueConstraint(name = "cityId", columnNames = "cityId"),
-                @UniqueConstraint(name = "cityCode", columnNames = "cityCode"),
+                @UniqueConstraint(name = "cityId",
+                        columnNames = "cityId"),
+                @UniqueConstraint(name = "cityCode",
+                        columnNames = "cityCode"),
         }
 )
 @XmlRootElement
 @XmlType(propOrder = {"cityId", "cityName", "cityCode"})
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class City implements Serializable {
     private long cityId;
     private String cityName;

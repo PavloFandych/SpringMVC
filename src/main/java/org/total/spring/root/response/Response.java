@@ -15,9 +15,9 @@ import java.io.Serializable;
  */
 
 @Component("response")
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @XmlRootElement
 @XmlType(propOrder = {"httpStatus", "message"})
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Response implements Serializable {
     private HttpStatus httpStatus;
     private String message;

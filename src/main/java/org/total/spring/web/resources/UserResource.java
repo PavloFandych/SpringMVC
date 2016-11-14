@@ -51,7 +51,12 @@ public class UserResource {
     private CityService cityService;
 
     @Autowired
-    private Validator validator;
+    private Validator<String> validator;
+
+    @Autowired
+    private PermitionManager<User, CapabilityType> permitionManager;
+
+    private Response response;
 
     public ContentHandler getContentHandler() {
         return contentHandler;
@@ -102,12 +107,21 @@ public class UserResource {
     }
 
     @Qualifier("webInputParamsValidator")
-    public Validator getValidator() {
+    public Validator<String> getValidator() {
         return validator;
     }
 
-    public void setValidator(Validator validator) {
+    public void setValidator(Validator<String> validator) {
         this.validator = validator;
+    }
+
+    @Qualifier("permitionManagerCapability")
+    public PermitionManager<User, CapabilityType> getPermitionManager() {
+        return permitionManager;
+    }
+
+    public void setPermitionManager(PermitionManager<User, CapabilityType> permitionManager) {
+        this.permitionManager = permitionManager;
     }
 
     @RequestMapping(value = "/users",
@@ -117,7 +131,7 @@ public class UserResource {
                                            @RequestHeader(name = "Content-Type",
                                                    required = false) String contentType,
                                            @RequestHeader(name = "Version",
-                                                   required = false) String version) throws ApplicationException {
+                                                   required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -125,7 +139,6 @@ public class UserResource {
                         version})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
-
             try {
                 if (Version.valueOf(version).equals(Version.V1)) {
                     String credentials = getPasswordManager()
@@ -143,8 +156,7 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                 + getter.getUserName() + " found\n");
 
-                        if (ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(PermitionManagerCapability.class)
+                        if (getPermitionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                     + getter.getUserName() + " has permitions to get list of users\n");
@@ -155,8 +167,13 @@ public class UserResource {
                                 LOGGER.warn(" http status = " + HttpStatus.CONFLICT
                                         + " users not found\n");
 
-                                throw new ApplicationException(HttpStatus.CONFLICT,
-                                        Constants.NO_USER_FOUND);
+                                response = ContextLoader.getCurrentWebApplicationContext()
+                                        .getBean(Response.class);
+                                response.setHttpStatus(HttpStatus.CONFLICT);
+                                response.setMessage(Constants.NO_USER_FOUND);
+
+                                return new ResponseEntity<>(getContentHandler().marshal(response),
+                                        response.getHttpStatus());
                             } else {
                                 return new ResponseEntity<>(getContentHandler()
                                         .marshal(list, "users"), HttpStatus.OK);
@@ -165,27 +182,37 @@ public class UserResource {
                             LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
                                     + getter.getUserName() + "\n");
 
-                            throw new ApplicationException(HttpStatus.CONFLICT,
-                                    Constants.PERMITION_DENIED);
+                            response = ContextLoader.getCurrentWebApplicationContext()
+                                    .getBean(Response.class);
+                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            response.setMessage(Constants.PERMITION_DENIED);
+
+                            return new ResponseEntity<>(getContentHandler().marshal(response),
+                                    response.getHttpStatus());
                         }
                     } else {
                         LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
                                 + HttpStatus.CONFLICT + " Getter not found\n");
 
-                        throw new ApplicationException(HttpStatus.CONFLICT,
-                                Constants.NO_USER_FOUND);
+                        response = ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(Response.class);
+                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        response.setMessage(Constants.NO_USER_FOUND);
+
+                        return new ResponseEntity<>(getContentHandler().marshal(response),
+                                response.getHttpStatus());
                     }
                 } else {
                     LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
                             + HttpStatus.NOT_ACCEPTABLE + "\n");
 
-                    Response fail = ContextLoader.getCurrentWebApplicationContext()
+                    response = ContextLoader.getCurrentWebApplicationContext()
                             .getBean(Response.class);
-                    fail.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
-                    fail.setMessage(Constants.VERSION_NOT_SUPPORTED);
+                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
 
-                    return new ResponseEntity<>(getContentHandler().marshal(fail),
-                            fail.getHttpStatus());
+                    return new ResponseEntity<>(getContentHandler().marshal(response),
+                            response.getHttpStatus());
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -194,13 +221,13 @@ public class UserResource {
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
                 + HttpStatus.BAD_REQUEST + "\n");
 
-        Response fail = ContextLoader.getCurrentWebApplicationContext()
+        response = ContextLoader.getCurrentWebApplicationContext()
                 .getBean(Response.class);
-        fail.setHttpStatus(HttpStatus.BAD_REQUEST);
-        fail.setMessage(Constants.ERROR);
+        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        response.setMessage(Constants.ERROR);
 
-        return new ResponseEntity<>(getContentHandler().marshal(fail),
-                fail.getHttpStatus());
+        return new ResponseEntity<>(getContentHandler().marshal(response),
+                response.getHttpStatus());
     }
 
 
@@ -215,7 +242,7 @@ public class UserResource {
                                            @RequestParam(name = "pageIndex",
                                                    required = false) String pageIndex,
                                            @RequestParam(name = "numRecPerPage",
-                                                   required = false) String numRecPerPage) throws ApplicationException {
+                                                   required = false) String numRecPerPage) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -245,8 +272,7 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                 + getter.getUserName() + " found\n");
 
-                        if (ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(PermitionManagerCapability.class)
+                        if (getPermitionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                     + getter.getUserName()
@@ -260,31 +286,49 @@ public class UserResource {
                                 LOGGER.warn(" http status = " + HttpStatus.CONFLICT
                                         + " users not found\n");
 
-                                throw new ApplicationException(HttpStatus.CONFLICT,
-                                        Constants.NO_USER_FOUND);
+                                response = ContextLoader.getCurrentWebApplicationContext()
+                                        .getBean(Response.class);
+                                response.setHttpStatus(HttpStatus.CONFLICT);
+                                response.setMessage(Constants.NO_USER_FOUND);
                             } else {
                                 return new ResponseEntity<>(getContentHandler()
                                         .marshal(list, "users"), HttpStatus.OK);
                             }
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL +
-                                    " Permition denied for getter "
+                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
                                     + getter.getUserName() + "\n");
 
-                            throw new ApplicationException(HttpStatus.CONFLICT,
-                                    Constants.PERMITION_DENIED);
+                            response = ContextLoader.getCurrentWebApplicationContext()
+                                    .getBean(Response.class);
+                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            response.setMessage(Constants.PERMITION_DENIED);
+
+                            return new ResponseEntity<>(getContentHandler().marshal(response),
+                                    response.getHttpStatus());
                         }
                     } else {
-                        LOGGER.warn(Constants.NO_USER_FOUND + "\n");
+                        LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
+                                + HttpStatus.CONFLICT + " Getter not found\n");
 
-                        throw new ApplicationException(HttpStatus.CONFLICT,
-                                Constants.NO_USER_FOUND);
+                        response = ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(Response.class);
+                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        response.setMessage(Constants.NO_USER_FOUND);
+
+                        return new ResponseEntity<>(getContentHandler().marshal(response),
+                                response.getHttpStatus());
                     }
                 } else {
-                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
+                            + HttpStatus.NOT_ACCEPTABLE + "\n");
 
-                    throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.VERSION_NOT_SUPPORTED);
+                    response = ContextLoader.getCurrentWebApplicationContext()
+                            .getBean(Response.class);
+                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
+
+                    return new ResponseEntity<>(getContentHandler().marshal(response),
+                            response.getHttpStatus());
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -292,8 +336,14 @@ public class UserResource {
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
                 + HttpStatus.BAD_REQUEST + "\n");
-        throw new ApplicationException(HttpStatus.BAD_REQUEST,
-                Constants.ERROR);
+
+        response = ContextLoader.getCurrentWebApplicationContext()
+                .getBean(Response.class);
+        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        response.setMessage(Constants.ERROR);
+
+        return new ResponseEntity<>(getContentHandler().marshal(response),
+                response.getHttpStatus());
     }
 
     @RequestMapping(value = "/users/{id}",
@@ -305,7 +355,7 @@ public class UserResource {
                                            @RequestHeader(name = "Content-Type",
                                                    required = false) String contentType,
                                            @RequestHeader(name = "Version",
-                                                   required = false) String version) throws ApplicationException {
+                                                   required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         id,
@@ -333,8 +383,7 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                 + getter.getUserName() + " found\n");
 
-                        if (ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(PermitionManagerCapability.class)
+                        if (getPermitionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                     + getter.getUserName()
@@ -343,29 +392,53 @@ public class UserResource {
                             List<User> list = new ArrayList<>();
                             list.add(getUserService().findById(Long.parseLong(id)));
 
-                            return (list == null)
-                                    ? new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.OK)
-                                    : new ResponseEntity<>(getContentHandler()
-                                    .marshal(list, "users"), HttpStatus.OK);
+                            if (list.isEmpty()) {
+                                response = ContextLoader.getCurrentWebApplicationContext()
+                                        .getBean(Response.class);
+                                response.setHttpStatus(HttpStatus.OK);
+                                response.setMessage(Constants.NO_USER_FOUND);
+
+                                return new ResponseEntity<>(getContentHandler().marshal(response),
+                                        response.getHttpStatus());
+                            } else {
+                                return new ResponseEntity<>(getContentHandler()
+                                        .marshal(list, "users"), HttpStatus.OK);
+                            }
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL +
-                                    " Permition denied for getter "
+                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
                                     + getter.getUserName() + "\n");
 
-                            throw new ApplicationException(HttpStatus.CONFLICT,
-                                    Constants.PERMITION_DENIED);
+                            response = ContextLoader.getCurrentWebApplicationContext()
+                                    .getBean(Response.class);
+                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            response.setMessage(Constants.PERMITION_DENIED);
+
+                            return new ResponseEntity<>(getContentHandler().marshal(response),
+                                    response.getHttpStatus());
                         }
                     } else {
-                        LOGGER.warn(Constants.NO_USER_FOUND + "\n");
+                        LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
+                                + HttpStatus.CONFLICT + " Getter not found\n");
 
-                        throw new ApplicationException(HttpStatus.CONFLICT,
-                                Constants.NO_USER_FOUND);
+                        response = ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(Response.class);
+                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        response.setMessage(Constants.NO_USER_FOUND);
+
+                        return new ResponseEntity<>(getContentHandler().marshal(response),
+                                response.getHttpStatus());
                     }
                 } else {
-                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
+                            + HttpStatus.NOT_ACCEPTABLE + "\n");
 
-                    throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.VERSION_NOT_SUPPORTED);
+                    response = ContextLoader.getCurrentWebApplicationContext()
+                            .getBean(Response.class);
+                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
+
+                    return new ResponseEntity<>(getContentHandler().marshal(response),
+                            response.getHttpStatus());
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -373,8 +446,14 @@ public class UserResource {
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
                 + HttpStatus.BAD_REQUEST + "\n");
-        throw new ApplicationException(HttpStatus.BAD_REQUEST,
-                Constants.ERROR);
+
+        response = ContextLoader.getCurrentWebApplicationContext()
+                .getBean(Response.class);
+        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        response.setMessage(Constants.ERROR);
+
+        return new ResponseEntity<>(getContentHandler().marshal(response),
+                response.getHttpStatus());
     }
 
     @RequestMapping(value = "/userName/{userName}",
@@ -386,7 +465,7 @@ public class UserResource {
                                              @RequestHeader(name = "Content-Type",
                                                      required = false) String contentType,
                                              @RequestHeader(name = "Version",
-                                                     required = false) String version) throws ApplicationException {
+                                                     required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         userName,
@@ -413,8 +492,7 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter " + getter.getUserName()
                                 + " found\n");
 
-                        if (ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(PermitionManagerCapability.class)
+                        if (getPermitionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
                                     + getter.getUserName()
@@ -423,28 +501,53 @@ public class UserResource {
                             List<User> list = new ArrayList<>();
                             list.add(getUserService().findUserByUserName(userName));
 
-                            return (list == null)
-                                    ? new ResponseEntity<>(Constants.NO_USER_FOUND, HttpStatus.OK)
-                                    : new ResponseEntity<>(getContentHandler()
-                                    .marshal(list, "users"), HttpStatus.OK);
+                            if (list.isEmpty()) {
+                                response = ContextLoader.getCurrentWebApplicationContext()
+                                        .getBean(Response.class);
+                                response.setHttpStatus(HttpStatus.OK);
+                                response.setMessage(Constants.NO_USER_FOUND);
+
+                                return new ResponseEntity<>(getContentHandler().marshal(response),
+                                        response.getHttpStatus());
+                            } else {
+                                return new ResponseEntity<>(getContentHandler()
+                                        .marshal(list, "users"), HttpStatus.OK);
+                            }
                         } else {
                             LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
                                     + getter.getUserName() + "\n");
 
-                            throw new ApplicationException(HttpStatus.CONFLICT,
-                                    Constants.PERMITION_DENIED);
+                            response = ContextLoader.getCurrentWebApplicationContext()
+                                    .getBean(Response.class);
+                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            response.setMessage(Constants.PERMITION_DENIED);
+
+                            return new ResponseEntity<>(getContentHandler().marshal(response),
+                                    response.getHttpStatus());
                         }
                     } else {
-                        LOGGER.warn(Constants.NO_USER_FOUND + "\n");
+                        LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
+                                + HttpStatus.CONFLICT + " Getter not found\n");
 
-                        throw new ApplicationException(HttpStatus.CONFLICT,
-                                Constants.NO_USER_FOUND);
+                        response = ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(Response.class);
+                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        response.setMessage(Constants.NO_USER_FOUND);
+
+                        return new ResponseEntity<>(getContentHandler().marshal(response),
+                                response.getHttpStatus());
                     }
                 } else {
-                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
+                            + HttpStatus.NOT_ACCEPTABLE + "\n");
 
-                    throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.VERSION_NOT_SUPPORTED);
+                    response = ContextLoader.getCurrentWebApplicationContext()
+                            .getBean(Response.class);
+                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
+
+                    return new ResponseEntity<>(getContentHandler().marshal(response),
+                            response.getHttpStatus());
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -452,20 +555,26 @@ public class UserResource {
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
                 + HttpStatus.BAD_REQUEST + "\n");
-        throw new ApplicationException(HttpStatus.BAD_REQUEST,
-                Constants.ERROR);
+
+        response = ContextLoader.getCurrentWebApplicationContext()
+                .getBean(Response.class);
+        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        response.setMessage(Constants.ERROR);
+
+        return new ResponseEntity<>(getContentHandler().marshal(response),
+                response.getHttpStatus());
     }
 
     @RequestMapping(value = "/users/{userName}",
             method = RequestMethod.DELETE,
-            produces = Constants.CONTENT_TYPE_TEXT_PLAIN)
+            produces = Constants.CONTENT_TYPE_APPLICATION_XML)
     public ResponseEntity<?> deleteUserById(@PathVariable String userName,
                                             @RequestHeader(name = "Authorization",
                                                     required = false) String authorization,
                                             @RequestHeader(name = "Content-Type",
                                                     required = false) String contentType,
                                             @RequestHeader(name = "Version",
-                                                    required = false) String version) throws ApplicationException {
+                                                    required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         userName,
@@ -474,7 +583,6 @@ public class UserResource {
                         version})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
-
             try {
                 if (Version.valueOf(version).equals(Version.V1)) {
                     String credentials = getPasswordManager().decodeBase64(authorization);
@@ -490,8 +598,7 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Deleter "
                                 + deleter.getUserName() + " found\n");
 
-                        if (ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(PermitionManagerCapability.class)
+                        if (getPermitionManager()
                                 .containEntity(deleter, CapabilityType.DELETE)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Deleter " +
                                     deleter.getUserName() + " has permitions to delete the user\n");
@@ -508,44 +615,74 @@ public class UserResource {
                                     LOGGER.warn(Constants.STATUS_REQ_FAIL + "Cannot delete" +
                                             " user\n");
 
-                                    throw new ApplicationException(HttpStatus.CONFLICT,
-                                            Constants.CANNOT_DELETE_USER);
+                                    response = ContextLoader.getCurrentWebApplicationContext()
+                                            .getBean(Response.class);
+                                    response.setHttpStatus(HttpStatus.CONFLICT);
+                                    response.setMessage(Constants.CANNOT_DELETE_USER);
+
+                                    return new ResponseEntity<>(getContentHandler().marshal(response),
+                                            response.getHttpStatus());
                                 } else {
                                     getUserService().deleteUserByUserId(userToDelete.getUserId());
 
                                     LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User "
                                             + userToDelete.getUserName() + " was deleted successful\n");
 
-                                    Response success = new Response(HttpStatus.OK,
-                                            Constants.SUCCESS);
+                                    response = ContextLoader.getCurrentWebApplicationContext()
+                                            .getBean(Response.class);
+                                    response.setHttpStatus(HttpStatus.OK);
+                                    response.setMessage(Constants.SUCCESS);
 
-                                    return new ResponseEntity<>(getContentHandler()
-                                            .marshal(success), HttpStatus.OK);
+                                    return new ResponseEntity<>(getContentHandler().marshal(response),
+                                            response.getHttpStatus());
                                 }
                             } else {
-                                LOGGER.warn(Constants.STATUS_REQ_FAIL + "User not found\n");
+                                LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
+                                        + HttpStatus.CONFLICT + " User to delete not found\n");
 
-                                throw new ApplicationException(HttpStatus.CONFLICT,
-                                        Constants.NO_USER_FOUND);
+                                response = ContextLoader.getCurrentWebApplicationContext()
+                                        .getBean(Response.class);
+                                response.setHttpStatus(HttpStatus.CONFLICT);
+                                response.setMessage(Constants.NO_USER_FOUND);
+
+                                return new ResponseEntity<>(getContentHandler().marshal(response),
+                                        response.getHttpStatus());
                             }
                         } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " Permition denied for deleter "
+                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for deleter "
                                     + deleter.getUserName() + "\n");
 
-                            throw new ApplicationException(HttpStatus.CONFLICT,
-                                    Constants.PERMITION_DENIED);
+                            response = ContextLoader.getCurrentWebApplicationContext()
+                                    .getBean(Response.class);
+                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            response.setMessage(Constants.PERMITION_DENIED);
+
+                            return new ResponseEntity<>(getContentHandler().marshal(response),
+                                    response.getHttpStatus());
                         }
                     } else {
-                        LOGGER.warn(Constants.NO_USER_FOUND + "\n");
+                        LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
+                                + HttpStatus.CONFLICT + " Deleter not found\n");
 
-                        throw new ApplicationException(HttpStatus.CONFLICT,
-                                Constants.NO_USER_FOUND);
+                        response = ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(Response.class);
+                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        response.setMessage(Constants.NO_USER_FOUND);
+
+                        return new ResponseEntity<>(getContentHandler().marshal(response),
+                                response.getHttpStatus());
                     }
                 } else {
-                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
+                            + HttpStatus.NOT_ACCEPTABLE + "\n");
 
-                    throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.VERSION_NOT_SUPPORTED);
+                    response = ContextLoader.getCurrentWebApplicationContext()
+                            .getBean(Response.class);
+                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
+
+                    return new ResponseEntity<>(getContentHandler().marshal(response),
+                            response.getHttpStatus());
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -553,20 +690,26 @@ public class UserResource {
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
                 + HttpStatus.BAD_REQUEST + "\n");
-        throw new ApplicationException(HttpStatus.BAD_REQUEST,
-                Constants.ERROR);
+
+        response = ContextLoader.getCurrentWebApplicationContext()
+                .getBean(Response.class);
+        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        response.setMessage(Constants.ERROR);
+
+        return new ResponseEntity<>(getContentHandler().marshal(response),
+                response.getHttpStatus());
     }
 
     @RequestMapping(value = "/users",
             method = RequestMethod.POST,
-            produces = Constants.CONTENT_TYPE_TEXT_PLAIN)
+            produces = Constants.CONTENT_TYPE_APPLICATION_XML)
     public ResponseEntity<?> createUser(@RequestBody String body,
                                         @RequestHeader(name = "Authorization",
                                                 required = false) String authorization,
                                         @RequestHeader(name = "Content-Type",
                                                 required = false) String contentType,
                                         @RequestHeader(name = "Version",
-                                                required = false) String version) throws ApplicationException {
+                                                required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         body,
@@ -593,9 +736,9 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Creator "
                                 + creator.getUserName() + " found\n");
 
-                        if (ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(PermitionManagerCapability.class)
+                        if (getPermitionManager()
                                 .containEntity(creator, CapabilityType.CREATE)) {
+
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Creator "
                                     + creator.getUserName() + " has permitions to create user\n");
 
@@ -610,59 +753,94 @@ public class UserResource {
                                         LOGGER.debug(Constants.STATUS_REQ_FAIL + " User "
                                                 + userXML.getUserName() + " already exists\n");
 
-                                        throw new ApplicationException(HttpStatus.CONFLICT,
-                                                Constants.USER_ALREADY_EXISTS);
+                                        response = ContextLoader.getCurrentWebApplicationContext()
+                                                .getBean(Response.class);
+                                        response.setHttpStatus(HttpStatus.CONFLICT);
+                                        response.setMessage(Constants.USER_ALREADY_EXISTS);
+
+                                        return new ResponseEntity<>(getContentHandler().marshal(response),
+                                                response.getHttpStatus());
                                     } else {
-                                        userToCreate = new User();
+                                        userToCreate = ContextLoader.getCurrentWebApplicationContext()
+                                                .getBean(User.class);
                                         userToCreate.setUserName(userXML.getUserName());
                                         userToCreate.setPassword(getPasswordManager()
                                                 .encodeMD5(userXML.getPassword()));
                                         userToCreate.setUserEmail(userXML.getUserEmail());
                                         userToCreate.getRoles().add(
-                                                getRoleService().findRoleByRoleType(RoleType.USER)
-                                        );
+                                                getRoleService().findRoleByRoleType(RoleType.USER));
                                         userToCreate.setCity(getCityService()
                                                 .findCityByCityName(userXML.getCity().getCityName()));
 
                                         if (getUserService().save(userToCreate) != null) {
-                                            Response success = new Response(HttpStatus.OK,
-                                                    Constants.SUCCESS);
-                                            return new ResponseEntity<>(getContentHandler()
-                                                    .marshal(success), HttpStatus.OK);
-                                        } else {
-                                            throw new ApplicationException(HttpStatus.CONFLICT,
-                                                    Constants.ERROR);
+                                            response = ContextLoader.getCurrentWebApplicationContext()
+                                                    .getBean(Response.class);
+                                            response.setHttpStatus(HttpStatus.OK);
+                                            response.setMessage(Constants.SUCCESS);
+
+                                            return new ResponseEntity<>(getContentHandler().marshal(response),
+                                                    response.getHttpStatus());
                                         }
                                     }
                                 } else {
                                     LOGGER.debug(Constants.STATUS_REQ_FAIL + " Unmarshaling failed\n");
 
-                                    throw new ApplicationException(HttpStatus.CONFLICT,
-                                            Constants.NO_USER_FOUND);
+                                    response = ContextLoader.getCurrentWebApplicationContext()
+                                            .getBean(Response.class);
+                                    response.setHttpStatus(HttpStatus.CONFLICT);
+                                    response.setMessage(Constants.NO_USER_FOUND);
+
+                                    return new ResponseEntity<>(getContentHandler().marshal(response),
+                                            response.getHttpStatus());
                                 }
                             } catch (Exception ex) {
                                 LOGGER.error(ex, ex);
                             }
-                            throw new ApplicationException(HttpStatus.CONFLICT,
-                                    Constants.ERROR);
+
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " Unmarshaling failed\n");
+
+                            response = ContextLoader.getCurrentWebApplicationContext()
+                                    .getBean(Response.class);
+                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            response.setMessage(Constants.ERROR);
+
+                            return new ResponseEntity<>(getContentHandler().marshal(response),
+                                    response.getHttpStatus());
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " Permition denied for creator "
                                     + creator.getUserName() + "\n");
 
-                            throw new ApplicationException(HttpStatus.CONFLICT,
-                                    Constants.PERMITION_DENIED);
+                            response = ContextLoader.getCurrentWebApplicationContext()
+                                    .getBean(Response.class);
+                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            response.setMessage(Constants.PERMITION_DENIED);
+
+                            return new ResponseEntity<>(getContentHandler().marshal(response),
+                                    response.getHttpStatus());
                         }
                     } else {
-                        LOGGER.warn(Constants.NO_USER_FOUND + "\n");
+                        LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
+                                + HttpStatus.CONFLICT + " Creator not found\n");
 
-                        throw new ApplicationException(HttpStatus.CONFLICT,
-                                Constants.NO_USER_FOUND);
+                        response = ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(Response.class);
+                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        response.setMessage(Constants.NO_USER_FOUND);
+
+                        return new ResponseEntity<>(getContentHandler().marshal(response),
+                                response.getHttpStatus());
                     }
                 } else {
-                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
+                            + HttpStatus.NOT_ACCEPTABLE + "\n");
 
-                    throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.VERSION_NOT_SUPPORTED);
+                    response = ContextLoader.getCurrentWebApplicationContext()
+                            .getBean(Response.class);
+                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
+
+                    return new ResponseEntity<>(getContentHandler().marshal(response),
+                            response.getHttpStatus());
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -670,8 +848,14 @@ public class UserResource {
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
                 + HttpStatus.BAD_REQUEST + "\n");
-        throw new ApplicationException(HttpStatus.BAD_REQUEST,
-                Constants.ERROR);
+
+        response = ContextLoader.getCurrentWebApplicationContext()
+                .getBean(Response.class);
+        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        response.setMessage(Constants.ERROR);
+
+        return new ResponseEntity<>(getContentHandler().marshal(response),
+                response.getHttpStatus());
     }
 
     @RequestMapping(value = "/users",
@@ -683,7 +867,7 @@ public class UserResource {
                                         @RequestHeader(name = "Content-Type",
                                                 required = false) String contentType,
                                         @RequestHeader(name = "Version",
-                                                required = false) String version) throws ApplicationException {
+                                                required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         body,
@@ -710,8 +894,7 @@ public class UserResource {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Updater "
                                 + updater.getUserName() + " found\n");
 
-                        if (ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(PermitionManagerCapability.class)
+                        if (getPermitionManager()
                                 .containEntity(updater, CapabilityType.UPDATE)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Updater "
                                     + updater.getUserName() + " has permitions to update user\n");
@@ -748,49 +931,91 @@ public class UserResource {
                                         }
 
                                         if (getUserService().update(userToUpdate) != null) {
-                                            Response success = new Response(HttpStatus.OK,
-                                                    Constants.SUCCESS);
-                                            return new ResponseEntity<>(getContentHandler()
-                                                    .marshal(success), HttpStatus.OK);
+                                            response = ContextLoader.getCurrentWebApplicationContext()
+                                                    .getBean(Response.class);
+                                            response.setHttpStatus(HttpStatus.OK);
+                                            response.setMessage(Constants.SUCCESS);
+
+                                            return new ResponseEntity<>(getContentHandler().marshal(response),
+                                                    response.getHttpStatus());
                                         } else {
-                                            throw new ApplicationException(HttpStatus.CONFLICT,
-                                                    Constants.ERROR);
+                                            response = ContextLoader.getCurrentWebApplicationContext()
+                                                    .getBean(Response.class);
+                                            response.setHttpStatus(HttpStatus.CONFLICT);
+                                            response.setMessage(Constants.ERROR);
+
+                                            return new ResponseEntity<>(getContentHandler().marshal(response),
+                                                    response.getHttpStatus());
                                         }
                                     } else {
                                         LOGGER.debug(Constants.STATUS_REQ_FAIL + "User for updating not found\n");
 
-                                        throw new ApplicationException(HttpStatus.CONFLICT,
-                                                Constants.NO_USER_FOUND);
+                                        response = ContextLoader.getCurrentWebApplicationContext()
+                                                .getBean(Response.class);
+                                        response.setHttpStatus(HttpStatus.CONFLICT);
+                                        response.setMessage(Constants.NO_USER_FOUND);
+
+                                        return new ResponseEntity<>(getContentHandler().marshal(response),
+                                                response.getHttpStatus());
                                     }
                                 } else {
                                     LOGGER.debug(Constants.STATUS_REQ_FAIL + " Unmarshaling failed\n");
 
-                                    throw new ApplicationException(HttpStatus.CONFLICT,
-                                            Constants.NO_USER_FOUND);
+                                    response = ContextLoader.getCurrentWebApplicationContext()
+                                            .getBean(Response.class);
+                                    response.setHttpStatus(HttpStatus.CONFLICT);
+                                    response.setMessage(Constants.NO_USER_FOUND);
+
+                                    return new ResponseEntity<>(getContentHandler().marshal(response),
+                                            response.getHttpStatus());
                                 }
                             } catch (Exception ex) {
                                 LOGGER.error(ex, ex);
                             }
-                            throw new ApplicationException(HttpStatus.CONFLICT,
-                                    Constants.ERROR);
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " Unmarshaling failed\n");
+
+                            response = ContextLoader.getCurrentWebApplicationContext()
+                                    .getBean(Response.class);
+                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            response.setMessage(Constants.ERROR);
+
+                            return new ResponseEntity<>(getContentHandler().marshal(response),
+                                    response.getHttpStatus());
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for updater "
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " Permition denied for updater "
                                     + updater.getUserName() + "\n");
 
-                            throw new ApplicationException(HttpStatus.CONFLICT,
-                                    Constants.PERMITION_DENIED);
+                            response = ContextLoader.getCurrentWebApplicationContext()
+                                    .getBean(Response.class);
+                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            response.setMessage(Constants.PERMITION_DENIED);
+
+                            return new ResponseEntity<>(getContentHandler().marshal(response),
+                                    response.getHttpStatus());
                         }
                     } else {
-                        LOGGER.debug(Constants.STATUS_REQ_FAIL + " Updater not found\n");
+                        LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
+                                + HttpStatus.CONFLICT + " Updater not found\n");
 
-                        throw new ApplicationException(HttpStatus.CONFLICT,
-                                Constants.NO_USER_FOUND);
+                        response = ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(Response.class);
+                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        response.setMessage(Constants.NO_USER_FOUND);
+
+                        return new ResponseEntity<>(getContentHandler().marshal(response),
+                                response.getHttpStatus());
                     }
                 } else {
-                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + "\n");
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
+                            + HttpStatus.NOT_ACCEPTABLE + "\n");
 
-                    throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.VERSION_NOT_SUPPORTED);
+                    response = ContextLoader.getCurrentWebApplicationContext()
+                            .getBean(Response.class);
+                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
+
+                    return new ResponseEntity<>(getContentHandler().marshal(response),
+                            response.getHttpStatus());
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -798,7 +1023,13 @@ public class UserResource {
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
                 + HttpStatus.BAD_REQUEST + "\n");
-        throw new ApplicationException(HttpStatus.BAD_REQUEST,
-                Constants.ERROR);
+
+        response = ContextLoader.getCurrentWebApplicationContext()
+                .getBean(Response.class);
+        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        response.setMessage(Constants.ERROR);
+
+        return new ResponseEntity<>(getContentHandler().marshal(response),
+                response.getHttpStatus());
     }
 }

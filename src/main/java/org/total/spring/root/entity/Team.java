@@ -1,5 +1,7 @@
 package org.total.spring.root.entity;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
@@ -10,12 +12,15 @@ import java.util.Set;
 @Entity
 @Table(name = "Team",
         uniqueConstraints = {
-                @UniqueConstraint(name = "teamId", columnNames = "teamId"),
-                @UniqueConstraint(name = "teamCode", columnNames = "teamCode")
+                @UniqueConstraint(name = "teamId",
+                        columnNames = "teamId"),
+                @UniqueConstraint(name = "teamCode",
+                        columnNames = "teamCode")
         }
 )
 @XmlRootElement
 @XmlType(propOrder = {"teamId", "teamName", "teamCode"})
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Team implements Serializable {
     private long teamId;
     private String teamName;

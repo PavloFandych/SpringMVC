@@ -6,7 +6,9 @@ import org.total.spring.root.entity.User;
 
 import java.util.List;
 
-public interface UserRepository extends PagingAndSortingRepository<User, Long>, JpaSpecificationExecutor<User> {
+public interface UserRepository extends PagingAndSortingRepository<User, Long>,
+        JpaSpecificationExecutor<User> {
+    //    @Lock(LockModeType.READ)
     List<User> findByUserName(String userName);
 
     List<User> findByUserNameAndPassword(String userName, String password);

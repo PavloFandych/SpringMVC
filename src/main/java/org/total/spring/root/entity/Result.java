@@ -1,5 +1,7 @@
 package org.total.spring.root.entity;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
@@ -13,10 +15,13 @@ import java.util.Calendar;
 @Entity
 @Table(name = "Result",
         uniqueConstraints = {
-                @UniqueConstraint(name = "resultId", columnNames = "resultId"),
-                @UniqueConstraint(name = "resultCode", columnNames = "resultCode")
+                @UniqueConstraint(name = "resultId",
+                        columnNames = "resultId"),
+                @UniqueConstraint(name = "resultCode",
+                        columnNames = "resultCode")
         }
 )
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Result implements Serializable {
     private long resultId;
     private String resultCode;
