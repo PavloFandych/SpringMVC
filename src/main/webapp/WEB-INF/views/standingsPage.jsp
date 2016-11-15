@@ -11,9 +11,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <script src="<c:url value="/resources/js/jquery.js" />"></script>
     <script src="<c:url value="/resources/js/Function.js" />"></script>
+    <script src="<c:url value="/resources/js/Standings.js" />"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 </head>
 <body>
+<div align="center">
+    <button id="getStandingsButton">Get Standings</button>
+</div>
+<div id="standingsInfo" align="center">
 
+</div>
 </body>
 </html>
