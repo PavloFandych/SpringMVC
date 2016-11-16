@@ -1,0 +1,12 @@
+.standings-ttable {
+    border: 1px solid #ccc;
+
+
+}
+
+.standings-tcell {
+    border: 1px solid #ccc;
+	width: 24px;
+	height: 24px;
+
+}
