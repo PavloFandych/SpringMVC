@@ -14,6 +14,8 @@ public class StandingsController {
     @RequestMapping(value = "/standingsPage",
             method = RequestMethod.GET)
     public String authorization(Model model) {
+
+        model.addAttribute("name");
         return "/standingsPage";
     }
 }

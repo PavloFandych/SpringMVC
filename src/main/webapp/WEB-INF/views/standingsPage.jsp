@@ -30,6 +30,7 @@
 </div>
 <div id="standingsInfo" align="center">
 
+
 </br>
 <%--<table>
 <tr>
@@ -745,5 +746,8 @@
 		</tr>
 	</table>
 </div>
+
+<div id="testMatchDay" align="center"></div>
+<div id="testPath" align="center"></div>
 </body>
 </html>
