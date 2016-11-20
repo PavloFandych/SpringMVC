@@ -12,7 +12,8 @@ public class JmsBrokerManager {
 
     public static void main(String[] args) {
         try {
-            BrokerService broker = BrokerFactory.createBroker(new URI(BROKER_URL));
+            BrokerService broker = BrokerFactory
+                    .createBroker(new URI(BROKER_URL));
             broker.start();
         } catch (Exception e) {
             LOGGER.error(e, e);

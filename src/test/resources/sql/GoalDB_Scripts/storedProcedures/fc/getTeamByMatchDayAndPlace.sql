@@ -25,11 +25,11 @@ DETERMINISTIC
                   SELECT
                     TeamList.teamCode,
                     TeamList.teamName,
-                    getTeamPointsByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, matchDay)         AS points,
+                    getTeamPointsByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, matchDay) AS points,
                     getTeamGoalsTotalByMatchDay(TeamList.teamCode, seasonCode, tournamentCode,
-                                                matchDay)                                                    AS goalsScored,
+                                                matchDay)                                            AS goalsScored,
                     getTeamGoalsDiffTotalByMatchDay(TeamList.teamCode, seasonCode, tournamentCode,
-                                                    matchDay)                                                AS goalsDiff
+                                                    matchDay)                                        AS goalsDiff
                   FROM (
                          SELECT DISTINCT
                            te.teamCode,

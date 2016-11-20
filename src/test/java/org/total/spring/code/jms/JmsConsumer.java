@@ -35,7 +35,8 @@ public class JmsConsumer {
     }
 
     public String receiveMessage() throws JMSException {
-        TextMessage textMessage = (TextMessage) jmsTemplate.receive(destination);
+        TextMessage textMessage = (TextMessage) jmsTemplate
+                .receive(destination);
         return textMessage.getText();
     }
 }
