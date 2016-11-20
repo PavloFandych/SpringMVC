@@ -9,7 +9,7 @@ $(document).ready(function () {
 
         $.ajax({
 
-            data: {"seasonCode": "S20152016", "tournamentCode": "DEU_BUNDESLIGA_1", "matchDay": matchDay},
+            data: {"seasonCode": "S20152016", "tournamentCode": "DEU_BUNDESLIGA_1"},
             url: '/standings',
             type: 'GET',
             //url: '/standings?seasonCode=S20152016&tournamentCode=DEU_BUNDESLIGA_1&matchDay='+ matchDay,
@@ -30,21 +30,24 @@ $(document).ready(function () {
                     + data[i].goalsDiff + " "
                     + data[i].points + "</p>"); */
 
-                $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr["+(data[i].place+1)+"]/td["+(matchDay+1)+"]")).append("<img src=/resources/images/"+imgPath[data[i].teamCode]+" width='24px' height='24px' alt='"+data[i].teamName+"' />");
+                    for (var j = 1; j <= data[i].length; j++) {
+                          $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr["+(i+2)+"]/td["+(j+1)+"]")).append("<img src=/resources/images/"+imgPath[data[i][j]]+" width='22px' height='22px' />");
+
+                    }
 
                 //$('#standingsInfo').append("<div> <img src=/resources/images/"+imgPath[data[i].teamCode]+"/> </div>");
 
                 //$('#testPath').append("<p>//table[@id='tbl01']/tbody/tr["+(data[i].place+1)+"]/td["+(matchDay+1)+"] </p>");
 
                 }
-                j++;
+
 
             },
             error: function (xhr, str) {
                 alert('Error: ' + xhr.responseCode);
             }
         });
-   $('#testMatchDay').append("<p>"+matchDay+"</p>");
+   //$('#testMatchDay').append("<p>"+matchDay+"</p>");
 
     });
 
