@@ -1,11 +1,11 @@
 package org.total.spring.code.jms;
 
+import org.apache.log4j.Logger;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 /**
  * Created by pavlo.fandych on 11/3/2016.
  */
-
-import org.apache.log4j.Logger;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class JmsConsumerManager {
     private final static Logger LOGGER = Logger.getLogger(JmsConsumerManager.class);

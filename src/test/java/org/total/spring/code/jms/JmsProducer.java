@@ -1,9 +1,5 @@
 package org.total.spring.code.jms;
 
-/**
- * Created by pavlo.fandych on 11/3/2016.
- */
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
@@ -12,6 +8,10 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
+
+/**
+ * Created by pavlo.fandych on 11/3/2016.
+ */
 
 public class JmsProducer {
     @Autowired
