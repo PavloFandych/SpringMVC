@@ -80,14 +80,12 @@ public class StandingResource {
                                        @RequestHeader("Content-Type") String contentType,
                                        @RequestHeader("Version") String version,
                                        @RequestParam("seasonCode") SeasonCode seasonCode,
-                                       @RequestParam("tournamentCode") TournamentCode tournamentCode,
-                                       @RequestParam("matchDay") Integer matchDay) {
+                                       @RequestParam("tournamentCode") TournamentCode tournamentCode) {
         if (authorization != null
                 && contentType != null
                 && version != null
                 && seasonCode != null
                 && tournamentCode != null
-                && matchDay != null
                 && !authorization.isEmpty()
                 && !contentType.isEmpty()
                 && !version.isEmpty()
@@ -116,7 +114,7 @@ public class StandingResource {
                                         + " has permitions to get standings\n");
 
                                 return new ResponseEntity<>(getStandingService()
-                                        .getStandings(seasonCode, tournamentCode, matchDay), HttpStatus.OK);
+                                        .getStandings(seasonCode, tournamentCode), HttpStatus.OK);
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
                                         + getter.getUserName() + "\n");

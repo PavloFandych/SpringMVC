@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.root.dao.StandingDAO;
 import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.entity.enums.TournamentCode;
-import org.total.spring.root.proc.Standing;
 import org.total.spring.root.service.interfaces.StandingService;
 
 import java.util.List;
@@ -35,10 +34,9 @@ public class StandingServiceImpl implements StandingService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public List<Standing> getStandings(SeasonCode seasonCode,
-                                       TournamentCode tournamentCode,
-                                       Integer matchDay) {
-        List<Standing> standings = getStandingDAO().getEntities(seasonCode, tournamentCode, matchDay);
+    public List<List<String>> getStandings(SeasonCode seasonCode,
+                                           TournamentCode tournamentCode) {
+        List<List<String>> standings = getStandingDAO().getEntities(seasonCode, tournamentCode);
         return (standings != null && !standings.isEmpty()) ? standings : null;
     }
 }
