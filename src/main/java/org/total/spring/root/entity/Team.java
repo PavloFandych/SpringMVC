@@ -1,5 +1,6 @@
 package org.total.spring.root.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.total.spring.root.util.Constants;
@@ -86,6 +87,7 @@ public class Team implements Serializable {
             foreignKey = @ForeignKey(name = "FK_cityId")
     )
     @XmlTransient
+    @JsonIgnore
     public City getCity() {
         return city;
     }
@@ -99,6 +101,7 @@ public class Team implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "hostTeam"
     )
+    @JsonIgnore
     public Set<Result> getResultsAsHost() {
         return resultsAsHost;
     }
@@ -112,6 +115,7 @@ public class Team implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "guestTeam"
     )
+    @JsonIgnore
     public Set<Result> getResultsAsGuest() {
         return resultsAsGuest;
     }

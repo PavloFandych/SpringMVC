@@ -226,73 +226,109 @@ public class TeamResource {
     }
 
     @RequestMapping(value = "/teams/{id}",
-            method = RequestMethod.GET)
-    public String fetchTeamById(@PathVariable Long id,
-                                @RequestHeader("Authorization") String authorization,
-                                @RequestHeader("Content-Type") String contentType,
-                                @RequestHeader("Version") String version,
-                                HttpServletResponse response) {
-        response.setContentType(Constants.CONTENT_TYPE_TEXT_PLAIN);
-
-        if (authorization != null
-                && contentType != null
-                && version != null
-                && !authorization.isEmpty()
-                && !contentType.isEmpty()
-                && !version.isEmpty()
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
-
+            method = RequestMethod.GET,
+            produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
+    public ResponseEntity<?> fetchTeamById(@PathVariable Long id,
+                                @RequestHeader(name = "Authorization", required = false) String authorization,
+                                @RequestHeader(name = "Content-Type",
+                                        required = false) String contentType,
+                                @RequestHeader(name = "Version",
+                                        required = false) String version) {
+        if (getValidator().validate(
+                new String[]{
+                        authorization,
+                        contentType,
+                        version})
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
-
             try {
                 if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager().decodeBase64(authorization);
+                    String credentials = getPasswordManager()
+                            .decodeBase64(authorization);
 
-                    List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+                    List<String> loginAndPassword = Arrays
+                            .asList(credentials.split(":"));
 
-                    User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
-                            getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+                    User getter = getUserService()
+                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
+                                    getPasswordManager()
+                                            .encodeMD5(loginAndPassword.get(1)));
 
                     if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName() + " found\n");
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
+                                + getter.getUserName() + " found\n");
 
-                        if (getter.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
-                                    + " has permitions to get country information\n");
+                        if (getPermitionManager()
+                                .containEntity(getter, CapabilityType.READ)) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
+                                    + getter.getUserName() + " has permitions to get list of teams\n");
 
-                            List<Team> teams = new ArrayList<Team>();
-                            teams.add(getTeamService().findById(id));
-                            response.setContentType(Constants.CONTENT_TYPE_APPLICATION_XML);
-                            response.setStatus(HttpServletResponse.SC_OK);
-                            return getContentHandler().marshal(teams, "teams");
+                            List<Team> list = new ArrayList<>();
+                            list.add(getTeamService().findById(id));
+
+                            if (list == null || list.isEmpty()) {
+                                LOGGER.warn(" http status = " + HttpStatus.CONFLICT
+                                        + " teams not found\n");
+
+                                response = ContextLoader.getCurrentWebApplicationContext()
+                                        .getBean(Response.class);
+                                response.setHttpStatus(HttpStatus.CONFLICT);
+                                response.setMessage(Constants.NO_USER_FOUND);
+
+                                return new ResponseEntity<>(response,
+                                        response.getHttpStatus());
+                            } else {
+                                return new ResponseEntity<>(list, HttpStatus.OK);
+                            }
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
+                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
                                     + getter.getUserName() + "\n");
 
-                            response.setStatus(HttpServletResponse.SC_CONFLICT);
-                            return Constants.PERMITION_DENIED;
+                            response = ContextLoader.getCurrentWebApplicationContext()
+                                    .getBean(Response.class);
+                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            response.setMessage(Constants.PERMITION_DENIED);
+
+                            return new ResponseEntity<>(response,
+                                    response.getHttpStatus());
                         }
                     } else {
-                        response.setStatus(HttpServletResponse.SC_CONFLICT);
-                        return Constants.NO_USER_FOUND;
+                        LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
+                                + HttpStatus.CONFLICT + " Getter not found\n");
+
+                        response = ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(Response.class);
+                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        response.setMessage(Constants.NO_USER_FOUND);
+
+                        return new ResponseEntity<>(response,
+                                response.getHttpStatus());
                     }
                 } else {
-                    response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-                    return Constants.VERSION_NOT_SUPPORTED;
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
+                            + HttpStatus.NOT_ACCEPTABLE + "\n");
+
+                    response = ContextLoader.getCurrentWebApplicationContext()
+                            .getBean(Response.class);
+                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
+
+                    return new ResponseEntity<>(response,
+                            response.getHttpStatus());
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
             }
         }
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        return Constants.ERROR;
+        LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
+                + HttpStatus.BAD_REQUEST + "\n");
+
+        response = ContextLoader.getCurrentWebApplicationContext()
+                .getBean(Response.class);
+        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        response.setMessage(Constants.ERROR);
+
+        return new ResponseEntity<>(response,
+                response.getHttpStatus());
     }
-
-    @RequestMapping(value = "/teams/test/{teamId}",
-            method = RequestMethod.POST)
-    public String findById(@PathVariable Long teamId) {
-        return getTeamService().findById(teamId).toString();
-    }
-
-
 }
