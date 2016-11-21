@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.total.spring.root.dao.SeasonDAO;
 import org.total.spring.root.entity.Season;
 import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.repository.SeasonRepository;
@@ -26,12 +27,23 @@ public class SeasonServiceImpl implements SeasonService {
     @Autowired
     private SeasonRepository seasonRepository;
 
+    @Autowired
+    private SeasonDAO seasonDAO;
+
     public SeasonRepository getSeasonRepository() {
         return seasonRepository;
     }
 
     public void setSeasonRepository(SeasonRepository seasonRepository) {
         this.seasonRepository = seasonRepository;
+    }
+
+    public SeasonDAO getSeasonDAO() {
+        return seasonDAO;
+    }
+
+    public void setSeasonDAO(SeasonDAO seasonDAO) {
+        this.seasonDAO = seasonDAO;
     }
 
     @Override
@@ -47,6 +59,21 @@ public class SeasonServiceImpl implements SeasonService {
     )
     public List<Season> findAll() {
         return getSeasonRepository().findAll();
+    }
+
+    @Override
+    @Caching(evict = @CacheEvict(
+            value = "applicationCache",
+            cacheManager = "springCashManager",
+            allEntries = true
+    ),
+            cacheable = @Cacheable(
+                    value = "applicationCache",
+                    cacheManager = "springCashManager"
+            )
+    )
+    public List<List<String>> findAllStoredProc() {
+        return getSeasonDAO().getEntities();
     }
 
     @Override

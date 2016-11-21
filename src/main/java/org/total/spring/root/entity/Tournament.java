@@ -4,6 +4,7 @@ package org.total.spring.root.entity;
  * Created by kostya on 10/20/16.
  */
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.total.spring.root.entity.enums.TournamentCode;
@@ -46,6 +47,7 @@ public class Tournament implements Serializable {
     @Column(name = "tournamentId",
             nullable = false
     )
+    @JsonIgnore
     public long getTournamentId() {
         return tournamentId;
     }
@@ -59,6 +61,7 @@ public class Tournament implements Serializable {
             length = Constants.TOURNAMENT_SIZE
     )
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     public TournamentType getTournamentType() {
         return tournamentType;
     }
@@ -96,6 +99,7 @@ public class Tournament implements Serializable {
             nullable = true,
             foreignKey = @ForeignKey(name = "FK_countryId")
     )
+    @JsonIgnore
     public Country getCountry() {
         return country;
     }
@@ -107,6 +111,7 @@ public class Tournament implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "tournament"
     )
+    @JsonIgnore
     public Set<Result> getResults() {
         return results;
     }

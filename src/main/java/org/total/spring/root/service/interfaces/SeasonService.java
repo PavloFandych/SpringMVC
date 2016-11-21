@@ -11,6 +11,8 @@ import java.util.List;
 public interface SeasonService {
     public List<Season> findAll();
 
+    public List<List<String>> findAllStoredProc();
+
     public Season findById(Long seasonId);
 
     public Season save(Season entity);

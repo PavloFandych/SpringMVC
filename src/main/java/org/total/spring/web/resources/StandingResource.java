@@ -76,11 +76,15 @@ public class StandingResource {
     @RequestMapping(value = "/standings",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> standings(@RequestHeader("Authorization") String authorization,
-                                       @RequestHeader("Content-Type") String contentType,
-                                       @RequestHeader("Version") String version,
-                                       @RequestParam("seasonCode") SeasonCode seasonCode,
-                                       @RequestParam("tournamentCode") TournamentCode tournamentCode) {
+    public ResponseEntity<?> fetchStandings(@RequestHeader(name = "Authorization", required = false) String authorization,
+                                       @RequestHeader(name = "Content-Type",
+                                               required = false) String contentType,
+                                       @RequestHeader(name = "Version",
+                                               required = false) String version,
+                                       @RequestParam(name = "seasonCode",
+                                               required = false) SeasonCode seasonCode,
+                                       @RequestParam(name = "tournamentCode",
+                                               required = false) TournamentCode tournamentCode) {
         if (authorization != null
                 && contentType != null
                 && version != null

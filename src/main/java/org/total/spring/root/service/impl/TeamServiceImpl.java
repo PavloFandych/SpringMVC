@@ -8,7 +8,10 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.total.spring.root.dao.TeamDAO;
 import org.total.spring.root.entity.Team;
+import org.total.spring.root.entity.enums.SeasonCode;
+import org.total.spring.root.entity.enums.TournamentCode;
 import org.total.spring.root.repository.TeamRepository;
 import org.total.spring.root.service.interfaces.TeamService;
 
@@ -21,12 +24,23 @@ public class TeamServiceImpl implements TeamService {
     @Autowired
     private TeamRepository teamRepository;
 
+    @Autowired
+    private TeamDAO teamDAO;
+
     public TeamRepository getTeamRepository() {
         return teamRepository;
     }
 
     public void setTeamRepository(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
+    }
+
+    public TeamDAO getTeamDAO() {
+        return teamDAO;
+    }
+
+    public void setTeamDAO(TeamDAO teamDAO) {
+        this.teamDAO = teamDAO;
     }
 
     @Override
@@ -43,6 +57,23 @@ public class TeamServiceImpl implements TeamService {
     public List<Team> findAll() {
         return getTeamRepository().findAll();
     }
+
+
+    @Override
+    @Caching(evict = @CacheEvict(
+            value = "applicationCache",
+            cacheManager = "springCashManager",
+            allEntries = true
+    ),
+            cacheable = @Cacheable(
+                    value = "applicationCache",
+                    cacheManager = "springCashManager"
+            )
+    )
+    public List<List<String>> findAllStoredProc(SeasonCode seasonCode, TournamentCode tournamentCode) {
+        return getTeamDAO().getEntities(seasonCode, tournamentCode);
+    }
+
 
     @Override
     @Cacheable(value = "applicationCache",

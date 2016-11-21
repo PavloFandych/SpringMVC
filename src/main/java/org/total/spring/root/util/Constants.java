@@ -39,4 +39,6 @@ public interface Constants {
     /*Stored procedures*/
     public static final String CALL_GET_TEAMS_ORDER_BY_MATCH_DAY = "getTeamsOrderByMatchDay";
     public static final String CALL_GET_STANDINGS = "getStandings";
+    public static final String CALL_GET_SEASON_LIST = "getSeasonsList";
+    public static final String CALL_GET_TEAM_LIST = "getTeamsList";
 }
