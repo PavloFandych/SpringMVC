@@ -14,5 +14,5 @@ public abstract class DataFinder {
 
     protected abstract String getUrl();
 
-    protected abstract Set<Result> findResults();
+    public abstract Set<Result> findResults();
 }
