@@ -32,14 +32,24 @@ public class DataFinderBundesLiga1 extends DataFinder {
 
             JSONObject jsonObject = (JSONObject) new JSONParser().parse(response);
 
-            JSONArray fixtues = (JSONArray)jsonObject.get("fixtures");
+            JSONArray fixtues = (JSONArray) jsonObject.get("fixtures");
 
             Iterator<JSONObject> iterator = fixtues.iterator();
-            while (iterator.hasNext()) {
-                JSONObject object = iterator.next();
-                System.out.println("AWAY " + object.get("awayTeamName") + " HOME " + object.get("homeTeamName"));
-            }
 
+            while (iterator.hasNext()) {
+                JSONObject item = iterator.next();
+                JSONObject result = (JSONObject) item.get("result");
+
+                if (result.get("goalsHomeTeam") != null
+                        && result.get("goalsAwayTeam") != null) {
+                    System.out.println(item.get("matchday")
+                            + " " + item.get("homeTeamName")
+                            + " vs " + item.get("awayTeamName")
+                            + " - " + result.get("goalsHomeTeam")
+                            + ":" + result.get("goalsAwayTeam")
+                            + " " + item.get("date"));
+                }
+            }
         } catch (Exception e) {
             LOGGER.error(e, e);
         }

@@ -1,7 +1,9 @@
 package org.total.spring.code.finder;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.total.spring.root.entity.Result;
+import org.total.spring.root.service.interfaces.ResultService;
 
 import java.util.Set;
 

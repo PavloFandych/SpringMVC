@@ -1,27 +1,34 @@
 DELIMITER $$
 
-DROP PROCEDURE IF exists getTeamsList;$$
+DROP PROCEDURE IF EXISTS getTeamsList;
+$$
 
 CREATE PROCEDURE getTeamsList(
-IN seasonCode VARCHAR(9), 
-IN tournamentCode VARCHAR(20) 
+  IN seasonCode     VARCHAR(9),
+  IN tournamentCode VARCHAR(20)
 )
-    BEGIN
-		select distinct te.teamCode, te.teamName from Result r
-						join Tournament tr on r.tournamentId=tr.tournamentId
-						join Season s on r.seasonId=s.seasonId
-						join Team te on r.hostTeamId=te.teamId
-						where tr.tournamentCode=tournamentCode 
-							and s.seasonCode=seasonCode
-							
-						union 
-						select distinct te.teamCode, te.teamName from Result r
-						join Tournament tr on r.tournamentId=tr.tournamentId
-						join Season s on r.seasonId=s.seasonId
-						join Team te on r.guestTeamId=te.teamId
-						where tr.tournamentCode=tournamentCode
-							and s.seasonCode=seasonCode;
-    END$$
+  BEGIN
+    SELECT DISTINCT
+      te.teamCode,
+      te.teamName
+    FROM Result r
+      JOIN Tournament tr ON r.tournamentId = tr.tournamentId
+      JOIN Season s ON r.seasonId = s.seasonId
+      JOIN Team te ON r.hostTeamId = te.teamId
+    WHERE tr.tournamentCode = tournamentCode
+          AND s.seasonCode = seasonCode
+
+    UNION
+    SELECT DISTINCT
+      te.teamCode,
+      te.teamName
+    FROM Result r
+      JOIN Tournament tr ON r.tournamentId = tr.tournamentId
+      JOIN Season s ON r.seasonId = s.seasonId
+      JOIN Team te ON r.guestTeamId = te.teamId
+    WHERE tr.tournamentCode = tournamentCode
+          AND s.seasonCode = seasonCode;
+  END$$
 
 DELIMITER ;
 

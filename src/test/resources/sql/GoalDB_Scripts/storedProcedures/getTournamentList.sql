@@ -1,10 +1,14 @@
 DELIMITER $$
 
-DROP PROCEDURE IF exists getTournamentList;$$
+DROP PROCEDURE IF EXISTS getTournamentList;
+$$
 
 CREATE PROCEDURE getTournamentList()
-    BEGIN
-		select tournamentCode, tournamentName from Tournament; 
-    END$$
+  BEGIN
+    SELECT
+      tournamentCode,
+      tournamentName
+    FROM Tournament;
+  END$$
 
 DELIMITER ;

@@ -1,11 +1,15 @@
 DELIMITER $$
 
-DROP PROCEDURE IF exists getSeasonsList;$$
+DROP PROCEDURE IF EXISTS getSeasonsList;
+$$
 
 CREATE PROCEDURE getSeasonsList()
-    BEGIN
-		select seasonCode, seasonName from Season; 
-    END$$
+  BEGIN
+    SELECT
+      seasonCode,
+      seasonName
+    FROM Season;
+  END$$
 
 DELIMITER ;
 
