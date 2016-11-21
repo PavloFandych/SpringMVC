@@ -19,104 +19,106 @@
 <body>
 
 
+
+
+<div class="top-menu">
+    <table id="tbl00"  class="menu-table" cellspacing="1" cellpadding="2" align="center">
+        <tbody>
+        		<tr>
+        		 <td class="menu-tcell">
+                     <select id="SeasonsList" name="SeasonsList">
+                         <option selected value="S20152016">Season 2015-2016</option>
+                         <option value="S20142015">Season 2014-2015</option>
+                         <option value="S20132014">Season 2013-2014</option>
+                     </select>
+        		 </td>
+        		 <td class="menu-tcell">
+        		      <select id="TournamentList" name="TournamentList">
+                          <option selected value="DEU_BUNDESLIGA_1">Bundesliga (Germany)</option>
+                          <option value="ITA_SERIA_A">Serie A (Italy)</option>
+                          <option value="ENG_PREM_LEAGUE">Premier League (England)</option>
+                      </select>
+        		 </td>
+        		 <td class="menu-tcell">
+        		    <button id="getStandingsButton">Get Standings</button>
+        		 </td>
+
+        </tbody>
+    </table>
 </div>
 
-<div id="test01" align="center">
-
+<div class="teams-list">
+    <table id="tbl01"  class="teams-table" cellspacing="1" cellpadding="2" align="center">
+        <tbody>
+        		<tr>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		 <td class="teams-tcell"></td>
+        		</tr>
+        </tbody>
+    </table>
 </div>
 
-<div align="center">
-    <button id="getStandingsButton">Get Standings</button>
-</div>
-<div id="standingsInfo" align="center">
+<br/>
 
+<div class="main-table">
 
-</br>
-<%--<table>
-<tr>
-<td width="20" height="20"> <img src="/resources/images/1_FC_Koln.png" width="100%" height="100%"></img></td>
-</tr>
-</table>
-<img src="/resources/images/1_FC_Koln.png"></img>--%>
-<div>
-<table id="tbl01"  class="standings-ttable" cellspacing="1" cellpadding="2" align="center">
-
+<table id="tbl02"  class="standings-table" cellspacing="1" cellpadding="2" align="center">
+    <tbody>
 		<tr>
 		 <th class="firstCell"></th>
-		 <th class="standings-tcell">1</th>
-		 <th class="standings-tcell">2</th>
-		 <th class="standings-tcell">3</th>
-		 <th class="standings-tcell">4</th>
-		 <th class="standings-tcell">5</th>
-		 <th class="standings-tcell">6</th>
-		 <th class="standings-tcell">7</th>
-		 <th class="standings-tcell">8</th>
-		 <th class="standings-tcell">9</th>
-		 <th class="standings-tcell">10</th>
-		 <th class="standings-tcell">11</th>
-		 <th class="standings-tcell">12</th>
-		 <th class="standings-tcell">13</th>
-		 <th class="standings-tcell">14</th>
-		 <th class="standings-tcell">15</th>
-		 <th class="standings-tcell">16</th>
-		 <th class="standings-tcell">17</th>
-		 <th class="standings-tcell">18</th>
-		 <th class="standings-tcell">19</th>
-		 <th class="standings-tcell">20</th>
-		 <th class="standings-tcell">21</th>
-		 <th class="standings-tcell">22</th>
-		 <th class="standings-tcell">23</th>
-		 <th class="standings-tcell">24</th>
-		 <th class="standings-tcell">25</th>
-		 <th class="standings-tcell">26</th>
-		 <th class="standings-tcell">27</th>
-		 <th class="standings-tcell">28</th>
-		 <th class="standings-tcell">29</th>
-		 <th class="standings-tcell">30</th>
-		 <th class="standings-tcell">31</th>
-		 <th class="standings-tcell">32</th>
-		 <th class="standings-tcell">33</th>
-		 <th class="standings-tcell">34</th>
+		 <th class="standings-tcell-header">1</th>
+		 <th class="standings-tcell-header">2</th>
+		 <th class="standings-tcell-header">3</th>
+		 <th class="standings-tcell-header">4</th>
+		 <th class="standings-tcell-header">5</th>
+		 <th class="standings-tcell-header">6</th>
+		 <th class="standings-tcell-header">7</th>
+		 <th class="standings-tcell-header">8</th>
+		 <th class="standings-tcell-header">9</th>
+		 <th class="standings-tcell-header">10</th>
+		 <th class="standings-tcell-header">11</th>
+		 <th class="standings-tcell-header">12</th>
+		 <th class="standings-tcell-header">13</th>
+		 <th class="standings-tcell-header">14</th>
+		 <th class="standings-tcell-header">15</th>
+		 <th class="standings-tcell-header">16</th>
+		 <th class="standings-tcell-header">17</th>
+		 <th class="standings-tcell-header">18</th>
+		 <th class="standings-tcell-header">19</th>
+		 <th class="standings-tcell-header">20</th>
+		 <th class="standings-tcell-header">21</th>
+		 <th class="standings-tcell-header">22</th>
+		 <th class="standings-tcell-header">23</th>
+		 <th class="standings-tcell-header">24</th>
+		 <th class="standings-tcell-header">25</th>
+		 <th class="standings-tcell-header">26</th>
+		 <th class="standings-tcell-header">27</th>
+		 <th class="standings-tcell-header">28</th>
+		 <th class="standings-tcell-header">29</th>
+		 <th class="standings-tcell-header">30</th>
+		 <th class="standings-tcell-header">31</th>
+		 <th class="standings-tcell-header">32</th>
+		 <th class="standings-tcell-header">33</th>
+		 <th class="standings-tcell-header">34</th>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">1</td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		 <td class="standings-tcell"></td>
-		</tr>
-		<tr>
-		 <td class="standings-tcell">2</td>
+		 <td class="standings-tcell-place">1</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -153,7 +155,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">3</td>
+		 <td class="standings-tcell-place">2</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -190,7 +192,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">4</td>
+		 <td class="standings-tcell-place">3</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -227,7 +229,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">5</td>
+		 <td class="standings-tcell-place">4</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -264,7 +266,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">6</td>
+		 <td class="standings-tcell-place">5</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -301,7 +303,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">7</td>
+		 <td class="standings-tcell-place">6</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -338,7 +340,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">8</td>
+		 <td class="standings-tcell-place">7</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -375,7 +377,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">9</td>
+		 <td class="standings-tcell-place">8</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -412,7 +414,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">10</td>
+		 <td class="standings-tcell-place">9</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -449,7 +451,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">11</td>
+		 <td class="standings-tcell-place">10</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -486,7 +488,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">12</td>
+		 <td class="standings-tcell-place">11</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -523,7 +525,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">13</td>
+		 <td class="standings-tcell-place">12</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -560,7 +562,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">14</td>
+		 <td class="standings-tcell-place">13</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -597,7 +599,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">15</td>
+		 <td class="standings-tcell-place">14</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -634,7 +636,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">16</td>
+		 <td class="standings-tcell-place">15</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -671,7 +673,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">17</td>
+		 <td class="standings-tcell-place">16</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -708,7 +710,7 @@
 		 <td class="standings-tcell"></td>
 		</tr>
 		<tr>
-		 <td class="standings-tcell">18</td>
+		 <td class="standings-tcell-place">17</td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
@@ -744,10 +746,47 @@
 		 <td class="standings-tcell"></td>
 		 <td class="standings-tcell"></td>
 		</tr>
+		<tr>
+		 <td class="standings-tcell-place">18</td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		 <td class="standings-tcell"></td>
+		</tr>
+	  </tbody>
 	</table>
 </div>
 
-<div id="testMatchDay" align="center"></div>
-<div id="testPath" align="center"></div>
+
 </body>
 </html>

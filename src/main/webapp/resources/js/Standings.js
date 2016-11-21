@@ -2,17 +2,22 @@ var teamsImgMap= '{"DEU137":"FC_Bayern_Munich.png","DEU228":"Borussia_Dortmund.p
 var imgPath = JSON.parse(teamsImgMap);
 
 $(document).ready(function () {
+    $(".teams-tcell").empty();
 
+    var k = 1;
+    for (var property in imgPath) {
+        if (imgPath.hasOwnProperty(property)) {
+            $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td["+k+"]")).append("<button  class='teams-buttons'><img class='"+property+"' src=/resources/images/"+imgPath[property]+"  width='30px' height='30px' /></button>");
+        k++;
+        }
+    }
 
     $("#getStandingsButton").click(function () {
-    var matchDay = 1;
 
         $.ajax({
-
             data: {"seasonCode": "S20152016", "tournamentCode": "DEU_BUNDESLIGA_1"},
             url: '/standings',
             type: 'GET',
-            //url: '/standings?seasonCode=S20152016&tournamentCode=DEU_BUNDESLIGA_1&matchDay='+ matchDay,
             datatype: 'json',
             headers: {
                 'Content-Type': 'application/json',
@@ -20,35 +25,19 @@ $(document).ready(function () {
                 'Authorization': 'Basic QWRtaW46YWRtaW4='
             },
             success: function (data, status) {
-                //$('#testMatchDay').append("<p>"+matchDay+" : "+data[i].place+"</p>");
-
+                $(".standings-tcell").empty();
                 for (var i = 0; i < data.length; i++) {
-                    /*$('#standingsInfo').append("<p>" + data[i].place + " "
-                    + data[i].teamCode + " "
-                    + data[i].teamName + " "
-                    + data[i].goalsScored + " "
-                    + data[i].goalsDiff + " "
-                    + data[i].points + "</p>"); */
-
                     for (var j = 1; j <= data[i].length; j++) {
-                          $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr["+(i+2)+"]/td["+(j+1)+"]")).append("<img src=/resources/images/"+imgPath[data[i][j]]+" width='22px' height='22px' />");
 
+                          $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr["+(i+2)+"]/td["+(j+1)+"]")).append("<img class='"+data[i][j]+"' src=/resources/images/"+imgPath[data[i][j]]+" width='22px' height='22px' />");
                     }
 
-                //$('#standingsInfo').append("<div> <img src=/resources/images/"+imgPath[data[i].teamCode]+"/> </div>");
-
-                //$('#testPath').append("<p>//table[@id='tbl01']/tbody/tr["+(data[i].place+1)+"]/td["+(matchDay+1)+"] </p>");
-
                 }
-
 
             },
             error: function (xhr, str) {
                 alert('Error: ' + xhr.responseCode);
             }
         });
-   //$('#testMatchDay').append("<p>"+matchDay+"</p>");
-
     });
-
 });

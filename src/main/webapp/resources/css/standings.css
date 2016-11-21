@@ -1,12 +1,34 @@
-.standings-ttable {
+.standings-table {
     border: 1px solid #ccc;
-
-
 }
 
-.standings-tcell {
+.standings-tcell-place, .standings-tcell-header, .firstCell{
+    background-color: #F4F4F4;
+}
+
+.standings-tcell{
+     background-color: #FFFFFF;
+}
+
+.standings-tcell, .standings-tcell-place, .standings-tcell-header{
     border: 1px solid #ccc;
 	width: 24px;
 	height: 24px;
 
 }
+
+
+.teams-table {
+
+}
+
+.teams-tcell {
+
+}
+
+.teams-buttons {
+    height:40px;
+    width:40px;
+    padding:0;
+}
+
