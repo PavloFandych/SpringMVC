@@ -3,19 +3,39 @@ var imgPath = JSON.parse(teamsImgMap);
 
 $(document).ready(function () {
     $(".teams-tcell").empty();
+    $("#teams-list").hide();
 
     var k = 1;
     for (var property in imgPath) {
         if (imgPath.hasOwnProperty(property)) {
-            $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td["+k+"]")).append("<button  class='teams-buttons'><img class='"+property+"' src=/resources/images/"+imgPath[property]+"  width='30px' height='30px' /></button>");
+            $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td["+k+"]")).append("<button id='"+property+"-btn' class='teams-buttons'><img class='team-img' src=/resources/images/"+imgPath[property]+"  width='30px' height='30px' /></button>");
+
         k++;
         }
     }
 
+    $(".teams-buttons").click(function () {
+            $(this).toggleClass("team-selected");
+            var className = '.'+$(this).attr('id').split(' ')[0].substring(0,6);
+            //alert(className);
+            $(className).toggle();
+
+        }
+     );
+
+
+
     $("#getStandingsButton").click(function () {
 
+        $(".standings-tcell").empty();
+        $(".teams-buttons").removeClass("team-selected");
+        $("#teams-list").hide();
+
+        var season = $( "#SeasonsList" ).val();
+        var tournament = $("#TournamentList").val();
+
         $.ajax({
-            data: {"seasonCode": "S20152016", "tournamentCode": "DEU_BUNDESLIGA_1"},
+            data: {"seasonCode": season, "tournamentCode": tournament},
             url: '/standings',
             type: 'GET',
             datatype: 'json',
@@ -25,17 +45,23 @@ $(document).ready(function () {
                 'Authorization': 'Basic QWRtaW46YWRtaW4='
             },
             success: function (data, status) {
-                $(".standings-tcell").empty();
+                if (data.length === 0){
+                    alert("No results. Sorry. :(");
+                } else{
+                $("#teams-list").show();
                 for (var i = 0; i < data.length; i++) {
                     for (var j = 1; j <= data[i].length; j++) {
 
-                          $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr["+(i+2)+"]/td["+(j+1)+"]")).append("<img class='"+data[i][j]+"' src=/resources/images/"+imgPath[data[i][j]]+" width='22px' height='22px' />");
+                          $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr["+(i+2)+"]/td["+(j+1)+"]")).append("<img class='"+data[i][j]+" cell-img' src=/resources/images/"+imgPath[data[i][j]]+" width='22px' height='22px' />");
                     }
 
                 }
+                }
 
+                $(".teams-buttons").removeClass("team-selected");
             },
             error: function (xhr, str) {
+                $(".teams-buttons").removeClass("team-selected");
                 alert('Error: ' + xhr.responseCode);
             }
         });
