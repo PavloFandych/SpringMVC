@@ -1,11 +1,15 @@
 package org.total.spring.root.proc;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+
 import java.io.Serializable;
 
 /**
  * Created by pavlo.fandych on 11/3/2016.
  */
 
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Standing implements Serializable {
     private Byte place;
     private String teamCode;

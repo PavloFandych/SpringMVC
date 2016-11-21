@@ -39,9 +39,9 @@ CREATE PROCEDURE getTeamMatches(
              r.goalsByHost,
              r.goalsByGuest,
              CASE
-             WHEN r.goalsByHost > r.goalsByGuest THEN 'Won'
-             WHEN r.goalsByHost = r.goalsByGuest THEN 'Draw'
-             ELSE 'Lost'
+             WHEN r.goalsByHost > r.goalsByGuest THEN 'WON'
+             WHEN r.goalsByHost = r.goalsByGuest THEN 'DRAW'
+             ELSE 'LOST'
              END          AS matchResultStatus
            FROM Result r
              JOIN Tournament tr ON r.tournamentId = tr.tournamentId
@@ -70,9 +70,9 @@ CREATE PROCEDURE getTeamMatches(
              r.goalsByHost,
              r.goalsByGuest,
              CASE
-             WHEN r.goalsByHost < r.goalsByGuest THEN 'Won'
-             WHEN r.goalsByHost = r.goalsByGuest THEN 'Draw'
-             ELSE 'Lost'
+             WHEN r.goalsByHost < r.goalsByGuest THEN 'WON'
+             WHEN r.goalsByHost = r.goalsByGuest THEN 'DRAW'
+             ELSE 'LOST'
              END          AS matchResultStatus
            FROM Result r
              JOIN Tournament tr ON r.tournamentId = tr.tournamentId

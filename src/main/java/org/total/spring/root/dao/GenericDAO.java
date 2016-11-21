@@ -16,7 +16,6 @@ public abstract class GenericDAO<T> {
     @Autowired
     protected JdbcTemplate jdbcTemplate;
 
-
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
     }
