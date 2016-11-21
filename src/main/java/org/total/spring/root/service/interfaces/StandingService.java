@@ -10,5 +10,5 @@ import java.util.List;
  */
 
 public interface StandingService {
-    List<List<String>> getStandings(SeasonCode seasonCode, TournamentCode tournamentCode);
+    public List<List<String>> getStandings(SeasonCode seasonCode, TournamentCode tournamentCode);
 }

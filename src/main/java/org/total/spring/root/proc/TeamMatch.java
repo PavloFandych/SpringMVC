@@ -2,6 +2,7 @@ package org.total.spring.root.proc;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.total.spring.root.entity.enums.MatchStatus;
 import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.entity.enums.TournamentCode;
@@ -13,6 +14,7 @@ import java.util.Calendar;
  * Created by total on 11/21/16.
  */
 
+@Component("teamMatch")
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class TeamMatch implements Serializable {
     private Calendar matchDate;
