@@ -1,3 +1,17 @@
+button:hover
+{
+    background:radial-gradient(#FF0000,#880000);
+   color:white;
+   border-color:#660000;
+}
+
+
+.team-selected{
+        background:radial-gradient(#FF0000,#880000);
+       color:white;
+       border-color:#660000;
+}
+
 .standings-table {
     border: 1px solid #ccc;
 }
