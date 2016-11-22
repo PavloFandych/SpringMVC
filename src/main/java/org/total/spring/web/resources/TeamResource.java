@@ -8,10 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.ContextLoader;
 import org.total.spring.root.entity.Team;
-import org.total.spring.root.entity.Tournament;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
-import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.entity.enums.TournamentCode;
 import org.total.spring.root.marshall.ContentHandler;
@@ -25,7 +23,6 @@ import org.total.spring.root.util.PermitionManager;
 import org.total.spring.root.util.Validator;
 import org.total.spring.root.version.Version;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -166,7 +163,7 @@ public class TeamResource {
                                 response = ContextLoader.getCurrentWebApplicationContext()
                                         .getBean(Response.class);
                                 response.setHttpStatus(HttpStatus.CONFLICT);
-                                response.setMessage(Constants.NO_USER_FOUND);
+                                response.setMessage(Constants.NO_TEAM_FOUND);
 
                                 return new ResponseEntity<>(response,
                                         response.getHttpStatus());
@@ -229,11 +226,11 @@ public class TeamResource {
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
     public ResponseEntity<?> fetchTeamById(@PathVariable Long id,
-                                @RequestHeader(name = "Authorization", required = false) String authorization,
-                                @RequestHeader(name = "Content-Type",
-                                        required = false) String contentType,
-                                @RequestHeader(name = "Version",
-                                        required = false) String version) {
+                                           @RequestHeader(name = "Authorization", required = false) String authorization,
+                                           @RequestHeader(name = "Content-Type",
+                                                   required = false) String contentType,
+                                           @RequestHeader(name = "Version",
+                                                   required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -261,19 +258,19 @@ public class TeamResource {
                         if (getPermitionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
-                                    + getter.getUserName() + " has permitions to get list of teams\n");
+                                    + getter.getUserName() + " has permitions to get the team\n");
 
                             List<Team> list = new ArrayList<>();
                             list.add(getTeamService().findById(id));
 
                             if (list == null || list.isEmpty()) {
                                 LOGGER.warn(" http status = " + HttpStatus.CONFLICT
-                                        + " teams not found\n");
+                                        + " team not found\n");
 
                                 response = ContextLoader.getCurrentWebApplicationContext()
                                         .getBean(Response.class);
                                 response.setHttpStatus(HttpStatus.CONFLICT);
-                                response.setMessage(Constants.NO_USER_FOUND);
+                                response.setMessage(Constants.NO_TEAM_FOUND);
 
                                 return new ResponseEntity<>(response,
                                         response.getHttpStatus());

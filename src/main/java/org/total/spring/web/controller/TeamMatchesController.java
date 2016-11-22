@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Created by total on 11/15/16.
+ * Created by pavlo.fandych on 11/22/2016.
  */
 
 @Controller
-public class StandingsController {
-    @RequestMapping(value = "/standingsPage",
+public class TeamMatchesController {
+    @RequestMapping(value = "/teamMatchesPage",
             method = RequestMethod.GET)
-    public String standings(Model model) {
-        return "/standingsPage";
+    public String teamMatches(Model model) {
+        return "/teamMatchesPage";
     }
 }

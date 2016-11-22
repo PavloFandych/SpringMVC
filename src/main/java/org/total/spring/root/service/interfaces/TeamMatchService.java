@@ -13,6 +13,6 @@ import java.util.List;
 public interface TeamMatchService {
     public List<TeamMatch> getTeamMatches(String teamCode,
                                           String opponentTeamCode,
-                                          SeasonCode seasonCode,
-                                          TournamentCode tournamentCode);
+                                          String seasonCode,
+                                          String tournamentCode);
 }

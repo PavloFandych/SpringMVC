@@ -1,7 +1,6 @@
 package org.total.spring.root.service.interfaces;
 
-import org.total.spring.root.entity.enums.SeasonCode;
-import org.total.spring.root.entity.enums.TournamentCode;
+import org.total.spring.root.proc.Standing;
 
 import java.util.List;
 
@@ -10,5 +9,7 @@ import java.util.List;
  */
 
 public interface StandingService {
-    public List<List<String>> getStandings(SeasonCode seasonCode, TournamentCode tournamentCode);
+    public List<List<String>> getStandings(String seasonCode, String tournamentCode);
+
+    public List<Standing> getMatchDayStandings(String seasonCode, String tournamentCode, Byte matchDay);
 }

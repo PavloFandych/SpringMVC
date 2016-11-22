@@ -54,10 +54,10 @@ public class TeamMatchDAO extends GenericDAO<TeamMatch> {
 
         Map<String, Object> out = simpleJdbcCall
                 .execute(new MapSqlParameterSource()
-                        .addValue("teamCode", ((String) param[0]))
-                        .addValue("opponentTeamCode", ((String) param[1]))
-                        .addValue("seasonCode", ((SeasonCode) param[2]).name())
-                        .addValue("tournamentCode", ((TournamentCode) param[3]).name()));
+                        .addValue("teamCode", (String) param[0])
+                        .addValue("opponentTeamCode", (String) param[1])
+                        .addValue("seasonCode", (String) param[2])
+                        .addValue("tournamentCode", (String) param[3]));
 
         return (List<TeamMatch>) out.get("teamMatches");
     }

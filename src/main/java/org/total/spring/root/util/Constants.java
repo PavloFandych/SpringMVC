@@ -20,6 +20,11 @@ public interface Constants {
     public static final String NO_CITY_FOUND = "No city found";
     public static final String NO_COUNTRY_FOUND = "No country found";
     public static final String NO_ROLE_FOUND = "No role found";
+    public static final String NO_TEAM_MATCHES_FOUND = "No team matches found";
+    public static final String NO_STANDINGS_FOUND = "No standings found";
+    public static final String NO_TOURNAMENT_FOUND = "No tournament found";
+    public static final String NO_TEAM_FOUND = "No team found";
+    public static final String NO_SEASON_FOUND = "No season found";
 
     public static final String PERMITION_DENIED = "Permition denied";
     public static final String VERSION_NOT_SUPPORTED = "Version not supported";

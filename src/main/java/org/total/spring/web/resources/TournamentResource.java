@@ -138,7 +138,7 @@ public class TournamentResource {
                                 response = ContextLoader.getCurrentWebApplicationContext()
                                         .getBean(Response.class);
                                 response.setHttpStatus(HttpStatus.CONFLICT);
-                                response.setMessage(Constants.NO_USER_FOUND);
+                                response.setMessage(Constants.NO_TOURNAMENT_FOUND);
 
                                 return new ResponseEntity<>(response,
                                         response.getHttpStatus());

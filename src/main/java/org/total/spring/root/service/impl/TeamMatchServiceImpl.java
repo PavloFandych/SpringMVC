@@ -37,8 +37,8 @@ public class TeamMatchServiceImpl implements TeamMatchService {
     )
     public List<TeamMatch> getTeamMatches(String teamCode,
                                           String opponentTeamCode,
-                                          SeasonCode seasonCode,
-                                          TournamentCode tournamentCode) {
+                                          String seasonCode,
+                                          String tournamentCode) {
         List<TeamMatch> list = getTeamMatchDAO().getEntities(teamCode,
                 opponentTeamCode,
                 seasonCode,

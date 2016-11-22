@@ -137,7 +137,7 @@ public class SeasonResource {
                                 response = ContextLoader.getCurrentWebApplicationContext()
                                         .getBean(Response.class);
                                 response.setHttpStatus(HttpStatus.CONFLICT);
-                                response.setMessage(Constants.NO_USER_FOUND);
+                                response.setMessage(Constants.NO_SEASON_FOUND);
 
                                 return new ResponseEntity<>(response,
                                         response.getHttpStatus());
