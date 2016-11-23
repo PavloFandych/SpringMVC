@@ -12,4 +12,3 @@ CREATE PROCEDURE getSeasonsList()
   END$$
 
 DELIMITER ;
-

@@ -1,0 +1,13 @@
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS getResults;
+$$
+
+CREATE PROCEDURE getResults()
+  BEGIN
+    SELECT
+      *
+    FROM Result;
+  END$$
+
+DELIMITER ;

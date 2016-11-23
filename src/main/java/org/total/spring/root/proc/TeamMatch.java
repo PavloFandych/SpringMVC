@@ -1,5 +1,6 @@
 package org.total.spring.root.proc;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -8,7 +9,7 @@ import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.entity.enums.TournamentCode;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by total on 11/21/16.
@@ -17,7 +18,8 @@ import java.util.Calendar;
 @Component("teamMatch")
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class TeamMatch implements Serializable {
-    private Calendar matchDate;
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+    private Date matchDate;
     private SeasonCode seasonCode;
     private String seasonName;
     private TournamentCode tournamentCode;
@@ -31,11 +33,11 @@ public class TeamMatch implements Serializable {
     private byte goalsByGuest;
     private MatchStatus matchResultStatus;
 
-    public Calendar getMatchDate() {
+    public Date getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(Calendar matchDate) {
+    public void setMatchDate(Date matchDate) {
         this.matchDate = matchDate;
     }
 
