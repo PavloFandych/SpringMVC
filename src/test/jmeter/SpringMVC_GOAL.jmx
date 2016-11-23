@@ -1194,7 +1194,7 @@
           </HTTPSamplerProxy>
           <hashTree/>
         </hashTree>
-        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="tournaments" enabled="true">
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="tournaments" enabled="false">
           <boolProp name="LoopController.continue_forever">true</boolProp>
           <stringProp name="LoopController.loops">5</stringProp>
         </LoopController>
@@ -1432,7 +1432,7 @@
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="goals" enabled="true">
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="goals" enabled="false">
           <boolProp name="LoopController.continue_forever">true</boolProp>
           <stringProp name="LoopController.loops">100</stringProp>
         </LoopController>
@@ -1644,7 +1644,7 @@
             <hashTree/>
           </hashTree>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="teamMatches" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="teamMatches" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -1661,7 +1661,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/teamMatches?teamCode=DEU230&amp;opponentTeamCode=&amp;seasonCode=&amp;tournamentCode=</stringProp>
+          <stringProp name="HTTPSampler.path">/teamMatches?teamCode=DEU230&amp;opponentTeamCode=DEU228&amp;seasonCode=S20152016&amp;tournamentCode=DEU_BUNDESLIGA_1</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
