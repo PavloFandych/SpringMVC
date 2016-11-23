@@ -28,6 +28,7 @@ public class SeasonDAO extends GenericDAO<List<String>> {
 
                         list.add(resultSet.getString(1));
                         list.add(resultSet.getString(2));
+                        list.add(resultSet.getString(3));
 
                         return list;
                     }

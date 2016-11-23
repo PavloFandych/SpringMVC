@@ -6,6 +6,7 @@ $$
 CREATE PROCEDURE getSeasonsList()
   BEGIN
     SELECT
+      seasonId,
       seasonCode,
       seasonName
     FROM Season;

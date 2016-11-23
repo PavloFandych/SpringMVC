@@ -5,8 +5,7 @@ $$
 
 CREATE PROCEDURE getResults()
   BEGIN
-    SELECT
-      *
+    SELECT *
     FROM Result;
   END$$
 

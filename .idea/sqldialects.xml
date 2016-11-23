@@ -15,8 +15,10 @@
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/fc/getTeamGoalsDiffTotalByMatchDay.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/fc/getTeamGoalsTotalByMatchDay.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/fc/getTeamPointsByMatchDay.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getResults.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getSeasonsList.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getStandings.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getTeamByTeamId.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getTeamMatches.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getTeamsList.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getTeamsOrderByMatchDay.sql" dialect="MySQL" />
