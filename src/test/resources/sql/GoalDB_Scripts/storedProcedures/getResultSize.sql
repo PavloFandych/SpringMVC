@@ -1,0 +1,12 @@
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS getResultSize;
+$$
+
+CREATE PROCEDURE getResultSize()
+  BEGIN
+    SELECT COUNT(DISTINCT resultCode)
+    FROM Result;
+  END$$
+
+DELIMITER ;
