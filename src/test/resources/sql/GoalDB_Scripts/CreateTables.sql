@@ -135,4 +135,16 @@ CREATE TABLE `User_Role` (
   CONSTRAINT `FK_userId` FOREIGN KEY (`userId`) REFERENCES `User` (`userId`),
   CONSTRAINT `FK_UserIdroleId` FOREIGN KEY (`roleId`) REFERENCES `Role` (`roleId`)
 )
-  CHARSET = utf8
+  DEFAULT CHARSET = utf8
+
+  -- create 'Standings' table
+  CREATE TABLE `Standings` (
+    `standingId` bigint(20) NOT NULL AUTO_INCREMENT,
+    `seasonId` bigint(20) NOT NULL,
+    `tournamentId` bigint(20) NOT NULL,
+    `standing` text,
+    PRIMARY KEY (`standingId`)
+    ,CONSTRAINT `FK_Standings_seasonId` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`)
+    ,CONSTRAINT `FK_Standings_tournamentId` FOREIGN KEY (`tournamentId`) REFERENCES `Tournament` (`tournamentId`)
+
+  ) DEFAULT CHARSET=utf8;
