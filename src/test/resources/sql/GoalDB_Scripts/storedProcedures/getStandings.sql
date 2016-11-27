@@ -24,7 +24,6 @@ CREATE PROCEDURE getStandings(
              JOIN Team te ON r.hostTeamId = te.teamId
            WHERE tr.tournamentCode = tournamentCode
                  AND s.seasonCode = seasonCode
-                 AND r.matchDay = matchDay
            UNION
            SELECT DISTINCT
              te.teamCode,
@@ -34,8 +33,7 @@ CREATE PROCEDURE getStandings(
              JOIN Season s ON r.seasonId = s.seasonId
              JOIN Team te ON r.guestTeamId = te.teamId
            WHERE tr.tournamentCode = tournamentCode
-                 AND s.seasonCode = seasonCode
-                 AND r.matchDay = matchDay) TeamList;
+                 AND s.seasonCode = seasonCode) TeamList;
 
     CREATE TEMPORARY TABLE IF NOT EXISTS Standings_temp (
       `place` INT,
