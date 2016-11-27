@@ -124,7 +124,7 @@ CREATE TABLE `Role_Capability` (
   CONSTRAINT `FK_roleId` FOREIGN KEY (`roleId`) REFERENCES `Role` (`roleId`),
   CONSTRAINT `FK_roleIdCapabilityId` FOREIGN KEY (`capabilityId`) REFERENCES `Capability` (`capabilityId`)
 )
-  DEFAULT CHARSET = utf8
+  DEFAULT CHARSET = utf8;
 
 -- create 'User_Role' table
 CREATE TABLE `User_Role` (
@@ -135,15 +135,16 @@ CREATE TABLE `User_Role` (
   CONSTRAINT `FK_userId` FOREIGN KEY (`userId`) REFERENCES `User` (`userId`),
   CONSTRAINT `FK_UserIdroleId` FOREIGN KEY (`roleId`) REFERENCES `Role` (`roleId`)
 )
-  DEFAULT CHARSET = utf8
+  DEFAULT CHARSET = utf8;
 
 -- create 'Standings' table
 CREATE TABLE `Standings` (
-  `seasonId` bigint(20) NOT NULL,
-  `tournamentId` bigint(20) NOT NULL,
-  `standing` text,
-  PRIMARY KEY (`seasonId`, `tournamentId`)
-  ,CONSTRAINT `FK_Standings_seasonId` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`)
-  ,CONSTRAINT `FK_Standings_tournamentId` FOREIGN KEY (`tournamentId`) REFERENCES `Tournament` (`tournamentId`)
+  `seasonId`     BIGINT(20) NOT NULL,
+  `tournamentId` BIGINT(20) NOT NULL,
+  `standing`     TEXT,
+  PRIMARY KEY (`seasonId`, `tournamentId`),
+  CONSTRAINT `FK_Standings_seasonId` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`),
+  CONSTRAINT `FK_Standings_tournamentId` FOREIGN KEY (`tournamentId`) REFERENCES `Tournament` (`tournamentId`)
 
-) DEFAULT CHARSET=utf8;
+)
+  DEFAULT CHARSET = utf8;

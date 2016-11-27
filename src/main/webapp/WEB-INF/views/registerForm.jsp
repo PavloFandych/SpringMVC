@@ -21,5 +21,5 @@
             <td><form:input path="userEmail" class="input-large"/></td>
         </tr>
     </table>
-    <input type="submit" value="Submit" />
+    <input type="submit" value="Submit"/>
 </form:form>

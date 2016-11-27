@@ -5,8 +5,10 @@
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/CreateTables.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertCities.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertCountries.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertResults/Germany/InsertResults_20142015_Germany.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertResults/Germany/InsertResults_20152016_Germany.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertSeasons.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertStandings/Germany/InsertStandings_Germany.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertTeams/InsertTeams_England.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertTeams/InsertTeams_Germany.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertTeams/InsertTeams_Italy.sql" dialect="MySQL" />
@@ -15,9 +17,12 @@
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/fc/getTeamGoalsDiffTotalByMatchDay.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/fc/getTeamGoalsTotalByMatchDay.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/fc/getTeamPointsByMatchDay.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getResultByCode.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getResultSize.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getResults.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getSeasonsList.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getStandings.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getStoredStandings.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getTeamByTeamId.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getTeamMatches.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/storedProcedures/getTeamsList.sql" dialect="MySQL" />
