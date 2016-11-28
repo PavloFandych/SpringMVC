@@ -1,21 +1,24 @@
 DELIMITER $$
 
-DROP PROCEDURE IF exists getStoredStandings;$$
+DROP PROCEDURE IF EXISTS getStoredStandings;
+$$
 
 CREATE PROCEDURE getStoredStandings(
-IN seasonCode VARCHAR(9), 
-IN tournamentCode VARCHAR(20) 
+  IN seasonCode     VARCHAR(9),
+  IN tournamentCode VARCHAR(20)
 )
-    BEGIN
+  BEGIN
 
-		SELECT s.seasonCode, s.tournamentCode, st.standing 
-		FROM Standings st
-			join Tournament tr on st.tournamentId=tr.tournamentId
-			join Season s on st.seasonId=s.seasonId
-		WHERE s.seasonCode=seasonCode 
-			AND tr.tournamentCode=tournamentCode;
+    SELECT
+      s.seasonCode,
+      tr.tournamentCode,
+      st.standing
+    FROM Standings st
+      JOIN Tournament tr ON st.tournamentId = tr.tournamentId
+      JOIN Season s ON st.seasonId = s.seasonId
+    WHERE s.seasonCode = seasonCode
+          AND tr.tournamentCode = tournamentCode;
 
-    END$$
+  END$$
 
 DELIMITER ;
-

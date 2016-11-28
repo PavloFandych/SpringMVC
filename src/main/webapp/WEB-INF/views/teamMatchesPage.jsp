@@ -16,17 +16,17 @@
 </head>
 
 <body>
-    <div class="container">
-        <div id="menu" class="navbar text-center">
-            <nav class="navbar-inner text-center">
-                <ul class="nav">
-                    <li><a href="#"><i class="fa fa-bars"></i> Home</a></li>
-                    <li><a href="/standingsPage"><i class="fa fa-file"></i> Standings</a></li>
-                    <li><a href="/teamMatchesPage"><i class="fa fa-file"></i> Team Matches</a></li>
-                    <li><a href="task3.jsp"><i class="fa fa-file"></i> Task3</a></li>
-                </ul>
-            </nav>
-        </div>
+<div class="container">
+    <div id="menu" class="navbar text-center">
+        <nav class="navbar-inner text-center">
+            <ul class="nav">
+                <li><a href="#"><i class="fa fa-bars"></i> Home</a></li>
+                <li><a href="/standingsPage"><i class="fa fa-file"></i> Standings</a></li>
+                <li><a href="/teamMatchesPage"><i class="fa fa-file"></i> Team Matches</a></li>
+                <li><a href="task3.jsp"><i class="fa fa-file"></i> Task3</a></li>
+            </ul>
+        </nav>
     </div>
+</div>
 </body>
 </html>
