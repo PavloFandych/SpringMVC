@@ -7,7 +7,6 @@ CREATE PROCEDURE getResultByCode(
   IN resultCode VARCHAR(24)
 )
   BEGIN
-
     SELECT
       r.resultCode,
       date,

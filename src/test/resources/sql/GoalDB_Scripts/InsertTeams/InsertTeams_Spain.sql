@@ -78,8 +78,8 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
                             FROM City
                             WHERE cityCode = 'PAMP')),
   ('ESP027', 'FC Barcelona', (SELECT cityId
-                           FROM City
-                           WHERE cityCode = 'BARC')),
+                              FROM City
+                              WHERE cityCode = 'BARC')),
   ('ESP028', 'Rayo Vallecano', (SELECT cityId
                                 FROM City
                                 WHERE cityCode = 'MADR')),
