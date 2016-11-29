@@ -197,9 +197,6 @@ INSERT INTO City (cityCode, cityName, countryId) VALUES
   ('HUES', 'Huesca', (SELECT countryId
                       FROM Country
                       WHERE countryCode = 'ESP')),
-  ('VALE', 'Valencia', (SELECT countryId
-                        FROM Country
-                        WHERE countryCode = 'ESP')),
   ('LUGO', 'Lugo', (SELECT countryId
                     FROM Country
                     WHERE countryCode = 'ESP')),
