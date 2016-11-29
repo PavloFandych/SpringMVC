@@ -20,6 +20,7 @@ import java.util.Map;
 
 @Repository("standingDAO")
 public class StandingDAO extends GenericDAO<List<String>> {
+    private static final int MAX_RESULT_IN_RESULT_SET = 39;
     @Override
     public List<List<String>> getEntities(Object... param) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -31,7 +32,7 @@ public class StandingDAO extends GenericDAO<List<String>> {
                         list.add(resultSet.getString(1));
 
                         int index = 2;
-                        while (resultSet.getString(index) != null) {
+                        while (index <= MAX_RESULT_IN_RESULT_SET && resultSet.getString(index) != null) {
                             list.add(resultSet.getString(index));
                             index++;
                         }

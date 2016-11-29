@@ -16,4 +16,16 @@ INSERT INTO Tournament (tournamentCode, tournamentName, tournamentType, countryI
                                                      WHERE countryCode = 'ENG')),
   ('ENG_CHAMPIONSHIP', 'Championship', 'LEAGUE02', (SELECT countryId
                                                     FROM Country
-                                                    WHERE countryCode = 'ENG'));
+                                                    WHERE countryCode = 'ENG')),
+  ('ESP_PRIMERA', 'La Liga', 'LEAGUE01', (SELECT countryId
+                                          FROM Country
+                                          WHERE countryCode = 'ESP')),
+  ('ESP_SEGUNDA', 'Segunda Division', 'LEAGUE02', (SELECT countryId
+                                                   FROM Country
+                                                   WHERE countryCode = 'ESP')),
+  ('FRA_LIGUE_1', 'Ligue 1', 'LEAGUE01', (SELECT countryId
+                                          FROM Country
+                                          WHERE countryCode = 'FRA')),
+  ('FRA_LIGUE_2', 'Ligue 2', 'LEAGUE02', (SELECT countryId
+                                            FROM Country
+                                            WHERE countryCode = 'FRA'));
