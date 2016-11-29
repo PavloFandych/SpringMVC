@@ -1,83 +1,235 @@
- INSERT INTO City(cityCode, cityName, countryId) values
-	('AJAC', 'Ajaccio', (select countryId from Country where countryCode='FRA')),
-	('AMIE', 'Amiens', (select countryId from Country where countryCode='FRA')),
-	('ANGE', 'Angers', (select countryId from Country where countryCode='FRA')),
-	('AUXE', 'Auxerre', (select countryId from Country where countryCode='FRA')),
-	('BAST', 'Bastia', (select countryId from Country where countryCode='FRA')),
-	('BORD', 'Bordeaux', (select countryId from Country where countryCode='FRA')),
-	('BOBR', 'Bourg-en-Bresse', (select countryId from Country where countryCode='FRA')),
-	('BRST', 'Brest', (select countryId from Country where countryCode='FRA')),
-	('CAEN', 'Caen', (select countryId from Country where countryCode='FRA')),
-	('CLFE', 'Clermont-Ferrand', (select countryId from Country where countryCode='FRA')),
-	('DIJO', 'Dijon', (select countryId from Country where countryCode='FRA')),
-	('GUIN', 'Guingamp', (select countryId from Country where countryCode='FRA')),
-	('LAVA', 'Laval', (select countryId from Country where countryCode='FRA')),
-	('HAVR', 'Le Havre', (select countryId from Country where countryCode='FRA')),
-	('LENS', 'Lens', (select countryId from Country where countryCode='FRA')),
-	('LILL', 'Lille', (select countryId from Country where countryCode='FRA')),
-	('LORI', 'Lorient', (select countryId from Country where countryCode='FRA')),
-	('LYON', 'Lyon', (select countryId from Country where countryCode='FRA')),
-	('MARS', 'Marseille', (select countryId from Country where countryCode='FRA')),
-	('METZ', 'Metz', (select countryId from Country where countryCode='FRA')),
-	('MONA', 'Monaco', (select countryId from Country where countryCode='FRA')),
-	('MNTB', 'Montbeliard', (select countryId from Country where countryCode='FRA')),
-	('MONT', 'Montpellier', (select countryId from Country where countryCode='FRA')),
-	('NANC', 'Nancy', (select countryId from Country where countryCode='FRA')),
-	('NANT', 'Nantes', (select countryId from Country where countryCode='FRA')),
-	('NICE', 'Nice', (select countryId from Country where countryCode='FRA')),
-	('NIME', 'Nimes', (select countryId from Country where countryCode='FRA')),
-	('NIOR', 'Niort', (select countryId from Country where countryCode='FRA')),
-	('ORLE', 'Orleans', (select countryId from Country where countryCode='FRA')),
-	('PARI', 'Paris', (select countryId from Country where countryCode='FRA')),
-	('REIM', 'Reims', (select countryId from Country where countryCode='FRA')),
-	('RENN', 'Rennes', (select countryId from Country where countryCode='FRA')),
-	('SAET', 'Saint-Etienne', (select countryId from Country where countryCode='FRA')),
-	('SAOU', 'Saint-Ouen', (select countryId from Country where countryCode='FRA')),
-	('STRS', 'Strasbourg', (select countryId from Country where countryCode='FRA')),
-	('TOUL', 'Toulouse', (select countryId from Country where countryCode='FRA')),
-	('TOUR', 'Tours', (select countryId from Country where countryCode='FRA')),
-	('TROY', 'Troyes', (select countryId from Country where countryCode='FRA')),
-	('VALN', 'Valenciennes', (select countryId from Country where countryCode='FRA'));
+INSERT INTO City (cityCode, cityName, countryId) VALUES
+  ('AJAC', 'Ajaccio', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'FRA')),
+  ('AMIE', 'Amiens', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'FRA')),
+  ('ANGE', 'Angers', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'FRA')),
+  ('AUXE', 'Auxerre', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'FRA')),
+  ('BAST', 'Bastia', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'FRA')),
+  ('BORD', 'Bordeaux', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'FRA')),
+  ('BOBR', 'Bourg-en-Bresse', (SELECT countryId
+                               FROM Country
+                               WHERE countryCode = 'FRA')),
+  ('BRST', 'Brest', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'FRA')),
+  ('CAEN', 'Caen', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'FRA')),
+  ('CLFE', 'Clermont-Ferrand', (SELECT countryId
+                                FROM Country
+                                WHERE countryCode = 'FRA')),
+  ('DIJO', 'Dijon', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'FRA')),
+  ('GUIN', 'Guingamp', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'FRA')),
+  ('LAVA', 'Laval', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'FRA')),
+  ('HAVR', 'Le Havre', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'FRA')),
+  ('LENS', 'Lens', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'FRA')),
+  ('LILL', 'Lille', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'FRA')),
+  ('LORI', 'Lorient', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'FRA')),
+  ('LYON', 'Lyon', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'FRA')),
+  ('MARS', 'Marseille', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'FRA')),
+  ('METZ', 'Metz', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'FRA')),
+  ('MONA', 'Monaco', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'FRA')),
+  ('MNTB', 'Montbeliard', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'FRA')),
+  ('MONT', 'Montpellier', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'FRA')),
+  ('NANC', 'Nancy', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'FRA')),
+  ('NANT', 'Nantes', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'FRA')),
+  ('NICE', 'Nice', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'FRA')),
+  ('NIME', 'Nimes', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'FRA')),
+  ('NIOR', 'Niort', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'FRA')),
+  ('ORLE', 'Orleans', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'FRA')),
+  ('PARI', 'Paris', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'FRA')),
+  ('REIM', 'Reims', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'FRA')),
+  ('RENN', 'Rennes', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'FRA')),
+  ('SAET', 'Saint-Etienne', (SELECT countryId
+                             FROM Country
+                             WHERE countryCode = 'FRA')),
+  ('SAOU', 'Saint-Ouen', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'FRA')),
+  ('STRS', 'Strasbourg', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'FRA')),
+  ('TOUL', 'Toulouse', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'FRA')),
+  ('TOUR', 'Tours', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'FRA')),
+  ('TROY', 'Troyes', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'FRA')),
+  ('VALN', 'Valenciennes', (SELECT countryId
+                            FROM Country
+                            WHERE countryCode = 'FRA'));
 
 -- Spain
- INSERT INTO City(cityCode, cityName, countryId) values
-	('VIGA', 'Vitoria-Gasteiz', (select countryId from Country where countryCode='ESP')),
-	('BILB', 'Bilbao', (select countryId from Country where countryCode='ESP')),
-	('MADR', 'Madrid', (select countryId from Country where countryCode='ESP')),
-	('BARC', 'Barcelona', (select countryId from Country where countryCode='ESP')),
-	('VIGO', 'Vigo', (select countryId from Country where countryCode='ESP')),
-	('CORU', 'A Coruña', (select countryId from Country where countryCode='ESP')),
-	('EIBA', 'Eibar', (select countryId from Country where countryCode='ESP')),
-	('GRAN', 'Granada', (select countryId from Country where countryCode='ESP')),
-	('LPAL', 'Las Palmas', (select countryId from Country where countryCode='ESP')),
-	('LEGA', 'Leganés', (select countryId from Country where countryCode='ESP')),
-	('MALA', 'Málaga', (select countryId from Country where countryCode='ESP')),
-	('PAMP', 'Pamplona', (select countryId from Country where countryCode='ESP')),
-	('SEVI', 'Seville', (select countryId from Country where countryCode='ESP')),
-	('SASE', 'San Sebastián', (select countryId from Country where countryCode='ESP')),
-	('GIJO', 'Gijón', (select countryId from Country where countryCode='ESP')),
-	('VALE', 'Valencia', (select countryId from Country where countryCode='ESP')),
-	('VILL', 'Villarreal', (select countryId from Country where countryCode='ESP')),
-	('ALCO', 'Alcorcón', (select countryId from Country where countryCode='ESP')),
-	('ALME', 'Almería', (select countryId from Country where countryCode='ESP')),
-	('CADI', 'Cádiz', (select countryId from Country where countryCode='ESP')),
-	('CORD', 'Córdoba', (select countryId from Country where countryCode='ESP')),
-	('ELCH', 'Elche', (select countryId from Country where countryCode='ESP')),
-	('GETA', 'Getafe', (select countryId from Country where countryCode='ESP')),
-	('TARR', 'Tarragona', (select countryId from Country where countryCode='ESP')),
-	('GIRO', 'Girona', (select countryId from Country where countryCode='ESP')),
-	('HUES', 'Huesca', (select countryId from Country where countryCode='ESP')),
-	('VALE', 'Valencia', (select countryId from Country where countryCode='ESP')),
-	('LUGO', 'Lugo', (select countryId from Country where countryCode='ESP')),
-	('PALM', 'Palma', (select countryId from Country where countryCode='ESP')),
-	('MIEB', 'Miranda de Ebro', (select countryId from Country where countryCode='ESP')),
-	('SORI', 'Soria', (select countryId from Country where countryCode='ESP')),
-	('OVIE', 'Oviedo', (select countryId from Country where countryCode='ESP')),
-	('REUS', 'Reus', (select countryId from Country where countryCode='ESP')),
-	('SACR', 'Santa Cruz', (select countryId from Country where countryCode='ESP')),
-	('MURC', 'Murcia', (select countryId from Country where countryCode='ESP')),
-	('VALL', 'Valladolid', (select countryId from Country where countryCode='ESP')),
-	('ZARA', 'Zaragoza', (select countryId from Country where countryCode='ESP'));
+INSERT INTO City (cityCode, cityName, countryId) VALUES
+  ('VIGA', 'Vitoria-Gasteiz', (SELECT countryId
+                               FROM Country
+                               WHERE countryCode = 'ESP')),
+  ('BILB', 'Bilbao', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ESP')),
+  ('MADR', 'Madrid', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ESP')),
+  ('BARC', 'Barcelona', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ESP')),
+  ('VIGO', 'Vigo', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'ESP')),
+  ('CORU', 'A Coruña', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ESP')),
+  ('EIBA', 'Eibar', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ESP')),
+  ('GRAN', 'Granada', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ESP')),
+  ('LPAL', 'Las Palmas', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'ESP')),
+  ('LEGA', 'Leganés', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ESP')),
+  ('MALA', 'Málaga', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ESP')),
+  ('PAMP', 'Pamplona', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ESP')),
+  ('SEVI', 'Seville', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ESP')),
+  ('SASE', 'San Sebastián', (SELECT countryId
+                             FROM Country
+                             WHERE countryCode = 'ESP')),
+  ('GIJO', 'Gijón', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ESP')),
+  ('VALE', 'Valencia', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ESP')),
+  ('VILL', 'Villarreal', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'ESP')),
+  ('ALCO', 'Alcorcón', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ESP')),
+  ('ALME', 'Almería', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ESP')),
+  ('CADI', 'Cádiz', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ESP')),
+  ('CORD', 'Córdoba', (SELECT countryId
+                       FROM Country
+                       WHERE countryCode = 'ESP')),
+  ('ELCH', 'Elche', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ESP')),
+  ('GETA', 'Getafe', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ESP')),
+  ('TARR', 'Tarragona', (SELECT countryId
+                         FROM Country
+                         WHERE countryCode = 'ESP')),
+  ('GIRO', 'Girona', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ESP')),
+  ('HUES', 'Huesca', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ESP')),
+  ('VALE', 'Valencia', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ESP')),
+  ('LUGO', 'Lugo', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'ESP')),
+  ('PALM', 'Palma', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ESP')),
+  ('MIEB', 'Miranda de Ebro', (SELECT countryId
+                               FROM Country
+                               WHERE countryCode = 'ESP')),
+  ('SORI', 'Soria', (SELECT countryId
+                     FROM Country
+                     WHERE countryCode = 'ESP')),
+  ('OVIE', 'Oviedo', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ESP')),
+  ('REUS', 'Reus', (SELECT countryId
+                    FROM Country
+                    WHERE countryCode = 'ESP')),
+  ('SACR', 'Santa Cruz', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'ESP')),
+  ('MURC', 'Murcia', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ESP')),
+  ('VALL', 'Valladolid', (SELECT countryId
+                          FROM Country
+                          WHERE countryCode = 'ESP')),
+  ('ZARA', 'Zaragoza', (SELECT countryId
+                        FROM Country
+                        WHERE countryCode = 'ESP'));
 
 
 -- England, Wales

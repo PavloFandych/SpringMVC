@@ -1,41 +1,121 @@
-INSERT INTO Team(teamCode, teamName, cityId) values
-('FRA001', 'Brest', (select cityId from City where cityCode='BRST')),
-('FRA002', 'Bordeaux', (select cityId from City where cityCode='BORD')),
-('FRA003', 'Angers', (select cityId from City where cityCode='ANGE')),
-('FRA004', 'Red Star', (select cityId from City where cityCode='SAOU')),
-('FRA005', 'Marseille', (select cityId from City where cityCode='MARS')),
-('FRA006', 'Le Havre', (select cityId from City where cityCode='HAVR')),
-('FRA007', 'Lille', (select cityId from City where cityCode='LILL')),
-('FRA008', 'Nancy', (select cityId from City where cityCode='NANC')),
-('FRA009', 'Valenciennes', (select cityId from City where cityCode='VALN')),
-('FRA010', 'Niort', (select cityId from City where cityCode='NIOR')),
-('FRA011', 'Bourg-en-Bresse', (select cityId from City where cityCode='BOBR')),
-('FRA012', 'Monaco', (select cityId from City where cityCode='MONA')),
-('FRA013', 'Nice', (select cityId from City where cityCode='NICE')),
-('FRA014', 'Metz', (select cityId from City where cityCode='METZ')),
-('FRA015', 'Nimes', (select cityId from City where cityCode='NIME')),
-('FRA016', 'Orleans', (select cityId from City where cityCode='ORLE')),
-('FRA017', 'Paris Saint-Germain', (select cityId from City where cityCode='PARI')),
-('FRA018', 'Ajaccio', (select cityId from City where cityCode='AJAC')),
-('FRA019', 'Auxerre', (select cityId from City where cityCode='AUXE')),
-('FRA020', 'Nantes', (select cityId from City where cityCode='NANT')),
-('FRA021', 'Clermont Foot', (select cityId from City where cityCode='CLFE')),
-('FRA022', 'Guingamp', (select cityId from City where cityCode='GUIN')),
-('FRA023', 'Troyes', (select cityId from City where cityCode='TROY')),
-('FRA024', 'Lyon', (select cityId from City where cityCode='LYON')),
-('FRA025', 'Tours', (select cityId from City where cityCode='TOUR')),
-('FRA026', 'Toulouse', (select cityId from City where cityCode='TOUL')),
-('FRA027', 'Lorient', (select cityId from City where cityCode='LORI')),
-('FRA028', 'Dijon', (select cityId from City where cityCode='DIJO')),
-('FRA029', 'Reims', (select cityId from City where cityCode='REIM')),
-('FRA030', 'Montpellier', (select cityId from City where cityCode='MONT')),
-('FRA031', 'Laval', (select cityId from City where cityCode='LAVA')),
-('FRA032', 'Strasbourg', (select cityId from City where cityCode='STRS')),
-('FRA033', 'Rennes', (select cityId from City where cityCode='RENN')),
-('FRA034', 'Amiens', (select cityId from City where cityCode='AMIE')),
-('FRA035', 'Sochaux', (select cityId from City where cityCode='MNTB')),
-('FRA036', 'Bastia', (select cityId from City where cityCode='BAST')),
-('FRA037', 'Caen', (select cityId from City where cityCode='CAEN')),
-('FRA038', 'Lens', (select cityId from City where cityCode='LENS')),
-('FRA039', 'Saint-Etienne', (select cityId from City where cityCode='SAET')),
-('FRA040', 'Gazelec Ajaccio', (select cityId from City where cityCode='AJAC'));
+INSERT INTO Team (teamCode, teamName, cityId) VALUES
+  ('FRA001', 'Brest', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'BRST')),
+  ('FRA002', 'Bordeaux', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'BORD')),
+  ('FRA003', 'Angers', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'ANGE')),
+  ('FRA004', 'Red Star', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'SAOU')),
+  ('FRA005', 'Marseille', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'MARS')),
+  ('FRA006', 'Le Havre', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'HAVR')),
+  ('FRA007', 'Lille', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'LILL')),
+  ('FRA008', 'Nancy', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'NANC')),
+  ('FRA009', 'Valenciennes', (SELECT cityId
+                              FROM City
+                              WHERE cityCode = 'VALN')),
+  ('FRA010', 'Niort', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'NIOR')),
+  ('FRA011', 'Bourg-en-Bresse', (SELECT cityId
+                                 FROM City
+                                 WHERE cityCode = 'BOBR')),
+  ('FRA012', 'Monaco', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'MONA')),
+  ('FRA013', 'Nice', (SELECT cityId
+                      FROM City
+                      WHERE cityCode = 'NICE')),
+  ('FRA014', 'Metz', (SELECT cityId
+                      FROM City
+                      WHERE cityCode = 'METZ')),
+  ('FRA015', 'Nimes', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'NIME')),
+  ('FRA016', 'Orleans', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'ORLE')),
+  ('FRA017', 'Paris Saint-Germain', (SELECT cityId
+                                     FROM City
+                                     WHERE cityCode = 'PARI')),
+  ('FRA018', 'Ajaccio', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'AJAC')),
+  ('FRA019', 'Auxerre', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'AUXE')),
+  ('FRA020', 'Nantes', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'NANT')),
+  ('FRA021', 'Clermont Foot', (SELECT cityId
+                               FROM City
+                               WHERE cityCode = 'CLFE')),
+  ('FRA022', 'Guingamp', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'GUIN')),
+  ('FRA023', 'Troyes', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'TROY')),
+  ('FRA024', 'Lyon', (SELECT cityId
+                      FROM City
+                      WHERE cityCode = 'LYON')),
+  ('FRA025', 'Tours', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'TOUR')),
+  ('FRA026', 'Toulouse', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'TOUL')),
+  ('FRA027', 'Lorient', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'LORI')),
+  ('FRA028', 'Dijon', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'DIJO')),
+  ('FRA029', 'Reims', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'REIM')),
+  ('FRA030', 'Montpellier', (SELECT cityId
+                             FROM City
+                             WHERE cityCode = 'MONT')),
+  ('FRA031', 'Laval', (SELECT cityId
+                       FROM City
+                       WHERE cityCode = 'LAVA')),
+  ('FRA032', 'Strasbourg', (SELECT cityId
+                            FROM City
+                            WHERE cityCode = 'STRS')),
+  ('FRA033', 'Rennes', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'RENN')),
+  ('FRA034', 'Amiens', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'AMIE')),
+  ('FRA035', 'Sochaux', (SELECT cityId
+                         FROM City
+                         WHERE cityCode = 'MNTB')),
+  ('FRA036', 'Bastia', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'BAST')),
+  ('FRA037', 'Caen', (SELECT cityId
+                      FROM City
+                      WHERE cityCode = 'CAEN')),
+  ('FRA038', 'Lens', (SELECT cityId
+                      FROM City
+                      WHERE cityCode = 'LENS')),
+  ('FRA039', 'Saint-Etienne', (SELECT cityId
+                               FROM City
+                               WHERE cityCode = 'SAET')),
+  ('FRA040', 'Gazelec Ajaccio', (SELECT cityId
+                                 FROM City
+                                 WHERE cityCode = 'AJAC'));
