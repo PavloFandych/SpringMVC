@@ -20,12 +20,12 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
   ('ESP007', 'Getafe', (SELECT cityId
                         FROM City
                         WHERE cityCode = 'GETA')),
-  ('ESP008', 'Leganés', (SELECT cityId
-                         FROM City
-                         WHERE cityCode = 'LEGA')),
-  ('ESP009', 'Granada', (SELECT cityId
-                         FROM City
-                         WHERE cityCode = 'GRAN')),
+  ('ESP008', 'CD Leganes', (SELECT cityId
+                            FROM City
+                            WHERE cityCode = 'LEGA')),
+  ('ESP009', 'Granada CF', (SELECT cityId
+                            FROM City
+                            WHERE cityCode = 'GRAN')),
   ('ESP010', 'Córdoba', (SELECT cityId
                          FROM City
                          WHERE cityCode = 'CORD')),
@@ -38,9 +38,9 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
   ('ESP013', 'Oviedo', (SELECT cityId
                         FROM City
                         WHERE cityCode = 'OVIE')),
-  ('ESP014', 'Las Palmas', (SELECT cityId
-                            FROM City
-                            WHERE cityCode = 'LPAL')),
+  ('ESP014', 'UD Las Palmas', (SELECT cityId
+                               FROM City
+                               WHERE cityCode = 'LPAL')),
   ('ESP015', 'Valladolid', (SELECT cityId
                             FROM City
                             WHERE cityCode = 'VALL')),
@@ -50,9 +50,9 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
   ('ESP017', 'Numancia', (SELECT cityId
                           FROM City
                           WHERE cityCode = 'SORI')),
-  ('ESP018', 'Real', (SELECT cityId
-                      FROM City
-                      WHERE cityCode = 'MADR')),
+  ('ESP018', 'Real Madrid CF', (SELECT cityId
+                                FROM City
+                                WHERE cityCode = 'MADR')),
   ('ESP019', 'Murcia', (SELECT cityId
                         FROM City
                         WHERE cityCode = 'MURC')),
@@ -62,22 +62,22 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
   ('ESP021', 'Mallorca', (SELECT cityId
                           FROM City
                           WHERE cityCode = 'PALM')),
-  ('ESP022', 'Celta Vigo', (SELECT cityId
+  ('ESP022', 'RC Celta de Vigo', (SELECT cityId
+                                  FROM City
+                                  WHERE cityCode = 'VIGO')),
+  ('ESP023', 'Deportivo Alavés', (SELECT cityId
+                                  FROM City
+                                  WHERE cityCode = 'VIGA')),
+  ('ESP024', 'RCD Espanyol', (SELECT cityId
+                              FROM City
+                              WHERE cityCode = 'BARC')),
+  ('ESP025', 'RC Deportivo La Coruna', (SELECT cityId
+                                        FROM City
+                                        WHERE cityCode = 'CORU')),
+  ('ESP026', 'CA Osasuna', (SELECT cityId
                             FROM City
-                            WHERE cityCode = 'VIGO')),
-  ('ESP023', 'Alavés', (SELECT cityId
-                        FROM City
-                        WHERE cityCode = 'VIGA')),
-  ('ESP024', 'Espanyol', (SELECT cityId
-                          FROM City
-                          WHERE cityCode = 'BARC')),
-  ('ESP025', 'Deportivo', (SELECT cityId
-                           FROM City
-                           WHERE cityCode = 'CORU')),
-  ('ESP026', 'Osasuna', (SELECT cityId
-                         FROM City
-                         WHERE cityCode = 'PAMP')),
-  ('ESP027', 'Barcelona', (SELECT cityId
+                            WHERE cityCode = 'PAMP')),
+  ('ESP027', 'FC Barcelona', (SELECT cityId
                            FROM City
                            WHERE cityCode = 'BARC')),
   ('ESP028', 'Rayo Vallecano', (SELECT cityId
@@ -86,18 +86,18 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
   ('ESP029', 'Reus Deportiu', (SELECT cityId
                                FROM City
                                WHERE cityCode = 'REUS')),
-  ('ESP030', 'Sporting', (SELECT cityId
-                          FROM City
-                          WHERE cityCode = 'GIJO')),
+  ('ESP030', 'Sporting Gijón', (SELECT cityId
+                                FROM City
+                                WHERE cityCode = 'GIJO')),
   ('ESP031', 'Mirandés', (SELECT cityId
                           FROM City
                           WHERE cityCode = 'MIEB')),
-  ('ESP032', 'Eibar', (SELECT cityId
-                       FROM City
-                       WHERE cityCode = 'EIBA')),
-  ('ESP033', 'Sevilla', (SELECT cityId
-                         FROM City
-                         WHERE cityCode = 'SEVI')),
+  ('ESP032', 'SD Eibar', (SELECT cityId
+                          FROM City
+                          WHERE cityCode = 'EIBA')),
+  ('ESP033', 'Sevilla FC', (SELECT cityId
+                            FROM City
+                            WHERE cityCode = 'SEVI')),
   ('ESP034', 'Almería', (SELECT cityId
                          FROM City
                          WHERE cityCode = 'ALME')),
@@ -107,21 +107,21 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
   ('ESP036', 'Lugo', (SELECT cityId
                       FROM City
                       WHERE cityCode = 'LUGO')),
-  ('ESP037', 'Athletic', (SELECT cityId
-                          FROM City
-                          WHERE cityCode = 'BILB')),
-  ('ESP038', 'Málaga', (SELECT cityId
-                        FROM City
-                        WHERE cityCode = 'MALA')),
-  ('ESP039', 'Atletico', (SELECT cityId
-                          FROM City
-                          WHERE cityCode = 'MADR')),
-  ('ESP040', 'Real Sociedad', (SELECT cityId
+  ('ESP037', 'Athletic Club', (SELECT cityId
                                FROM City
-                               WHERE cityCode = 'SASE')),
-  ('ESP041', 'Villarreal', (SELECT cityId
-                            FROM City
-                            WHERE cityCode = 'VILL')),
-  ('ESP042', 'Valencia', (SELECT cityId
-                          FROM City
-                          WHERE cityCode = 'VALE'));
+                               WHERE cityCode = 'BILB')),
+  ('ESP038', 'Málaga CF', (SELECT cityId
+                           FROM City
+                           WHERE cityCode = 'MALA')),
+  ('ESP039', 'Club Atlético de Madrid', (SELECT cityId
+                                         FROM City
+                                         WHERE cityCode = 'MADR')),
+  ('ESP040', 'Real Sociedad de Fútbol', (SELECT cityId
+                                         FROM City
+                                         WHERE cityCode = 'SASE')),
+  ('ESP041', 'Villarreal CF', (SELECT cityId
+                               FROM City
+                               WHERE cityCode = 'VILL')),
+  ('ESP042', 'Valencia CF', (SELECT cityId
+                             FROM City
+                             WHERE cityCode = 'VALE'));
