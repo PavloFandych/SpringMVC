@@ -25,7 +25,8 @@
         <tr>
             <td class="menu-tcell">
                 <select id="SeasonsList" name="SeasonsList">
-                    <option selected value="S20152016">Season 2015-2016</option>
+                    <option selected value="S20162017">Season 2016-2017</option>
+                    <option value="S20152016">Season 2015-2016</option>
                     <option value="S20142015">Season 2014-2015</option>
                     <option value="S20132014">Season 2013-2014</option>
                     <option value="S20122013">Season 2012-2013</option>
@@ -47,10 +48,20 @@
     </table>
 </div>
 
+<div id="get-info-msg" align="center">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <p><b>Requesting data... Please wait... </b></p>
+</div>
+
 <div id="teams-list">
     <table id="tbl01" class="teams-table" cellspacing="1" cellpadding="2" align="center">
         <tbody>
         <tr>
+            <td class="teams-tcell"></td>
+            <td class="teams-tcell"></td>
             <td class="teams-tcell"></td>
             <td class="teams-tcell"></td>
             <td class="teams-tcell"></td>
@@ -80,7 +91,7 @@
 
     <table id="tbl02" class="standings-table" cellspacing="1" cellpadding="2" align="center">
         <tbody>
-        <tr>
+        <tr class="standings-row-header">
             <th class="firstCell"></th>
             <th class="standings-tcell-header">1</th>
             <th class="standings-tcell-header">2</th>
@@ -116,8 +127,12 @@
             <th class="standings-tcell-header">32</th>
             <th class="standings-tcell-header">33</th>
             <th class="standings-tcell-header">34</th>
+            <th class="standings-tcell-header">35</th>
+            <th class="standings-tcell-header">36</th>
+            <th class="standings-tcell-header">37</th>
+            <th class="standings-tcell-header">38</th>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">1</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -153,8 +168,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">2</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -190,8 +209,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">3</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -227,8 +250,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">4</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -264,8 +291,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">5</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -301,8 +332,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">6</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -338,8 +373,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">7</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -375,8 +414,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">8</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -412,8 +455,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">9</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -449,8 +496,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">10</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -486,8 +537,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">11</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -523,8 +578,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">12</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -560,8 +619,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">13</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -597,8 +660,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">14</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -634,8 +701,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">15</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -671,8 +742,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">16</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -708,8 +783,12 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">17</td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
@@ -745,9 +824,99 @@
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
         </tr>
-        <tr>
+        <tr class="standings-row">
             <td class="standings-tcell-place">18</td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+        </tr>
+        <tr class="standings-row">
+            <td class="standings-tcell-place">19</td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+        </tr>
+        <tr class="standings-row">
+            <td class="standings-tcell-place">20</td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
+            <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
             <td class="standings-tcell"></td>
