@@ -1,36 +1,33 @@
-button:hover
-{
-    background:radial-gradient(#FF0000,#880000);
-   color:white;
-   border-color:#660000;
+button:hover {
+    background: radial-gradient(#FF0000, #880000);
+    color: white;
+    border-color: #660000;
 }
 
-
-.team-selected{
-        background:radial-gradient(#FF0000,#880000);
-       color:white;
-       border-color:#660000;
+.team-selected {
+    background: radial-gradient(#FF0000, #880000);
+    color: white;
+    border-color: #660000;
 }
 
 .standings-table {
     border: 1px solid #ccc;
 }
 
-.standings-tcell-place, .standings-tcell-header, .firstCell{
+.standings-tcell-place, .standings-tcell-header, .firstCell {
     background-color: #F4F4F4;
 }
 
-.standings-tcell{
-     background-color: #FFFFFF;
+.standings-tcell {
+    background-color: #FFFFFF;
 }
 
-.standings-tcell, .standings-tcell-place, .standings-tcell-header{
+.standings-tcell, .standings-tcell-place, .standings-tcell-header {
     border: 1px solid #ccc;
-	width: 20px;
-	height: 20px;
+    width: 20px;
+    height: 20px;
 
 }
-
 
 .teams-table {
 
@@ -41,8 +38,8 @@ button:hover
 }
 
 .teams-buttons {
-    height:40px;
-    width:40px;
-    padding:0;
+    height: 40px;
+    width: 40px;
+    padding: 0;
 }
 

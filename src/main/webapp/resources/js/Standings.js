@@ -32,47 +32,47 @@ $(document).ready(function () {
             },
             success: function (data, status) {
 
-                            if (data.length !== 0) {
+                if (data.length !== 0) {
                     $(".teams-tcell").show();
                     var k = 1;
                     for (var i = 0; i < data.length; i++) {
-                    $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + k + "]")).empty();
-                       if (imgPath.hasOwnProperty(data[i][0])) {
-                       $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + k + "]")).append("<button id='" + data[i][0] + "-btn' class='teams-buttons'><img class='team-img' src=/resources/images/" + imgPath[data[i][0]] + "  width='30px' height='30px' /></button>");
-                       k++;
-                            } else{
+                        $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + k + "]")).empty();
+                        if (imgPath.hasOwnProperty(data[i][0])) {
+                            $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + k + "]")).append("<button id='" + data[i][0] + "-btn' class='teams-buttons'><img class='team-img' src=/resources/images/" + imgPath[data[i][0]] + "  width='30px' height='30px' /></button>");
+                            k++;
+                        } else {
                             $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + k + "]")).empty().append("<button id='" + data[i][0] + "-btn' class='teams-buttons'><img class='team-img' src=/resources/images/Ball.png  width='30px' height='30px' /></button>");
                             k++;
-                            }
+                        }
                     }
 
-                    for (var j = data.length+1; j <= 21; j++) {
-                          $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + j + "]")).hide();
-                                }
+                    for (var j = data.length + 1; j <= 21; j++) {
+                        $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + j + "]")).hide();
+                    }
 
-/*        var k = 1;
+                    /*        var k = 1;
 
                      for (var property in imgPath) {
-                                    if (imgPath.hasOwnProperty(property)) {
-                                        $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + k + "]")).empty().append("<button id='" + property + "-btn' class='teams-buttons'><img class='team-img' src=/resources/images/" + imgPath[property] + "  width='30px' height='30px' /></button>");
+                     if (imgPath.hasOwnProperty(property)) {
+                     $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + k + "]")).empty().append("<button id='" + property + "-btn' class='teams-buttons'><img class='team-img' src=/resources/images/" + imgPath[property] + "  width='30px' height='30px' /></button>");
 
-                                        k++;
-                                    }
-                                }*/
+                     k++;
+                     }
+                     }*/
 
-                                $(".teams-buttons").click(function () {
-                                                $(this).toggleClass("team-selected");
-                                                var className = '.' + $(this).attr('id').split(' ')[0].substring(0, 6);
-                                                //alert(className);
-                                                $(className).toggle();
+                    $(".teams-buttons").click(function () {
+                        $(this).toggleClass("team-selected");
+                        var className = '.' + $(this).attr('id').split(' ')[0].substring(0, 6);
+                        //alert(className);
+                        $(className).toggle();
 
-                                            });
-                                   }
-                              },
-                              error: function (xhr, str) {
-                                  $(".teams-buttons").removeClass("team-selected");
+                    });
+                }
+            },
+            error: function (xhr, str) {
+                $(".teams-buttons").removeClass("team-selected");
 
-                              }
+            }
 
         });
 
@@ -89,19 +89,17 @@ $(document).ready(function () {
             },
             success: function (data, status) {
 
-            $("#get-info-msg").hide();
+                $("#get-info-msg").hide();
                 if (data.length === 0) {
                     alert("No results. Sorry. :(");
                 } else {
 
 
-
-
-                        $("#tbl02").show();
-                        $(".standings-row").show();
-                        $(".standings-row-header").show();
-                        $(".standings-tcell").show();
-                        $(".standings-tcell-header").show();
+                    $("#tbl02").show();
+                    $(".standings-row").show();
+                    $(".standings-row-header").show();
+                    $(".standings-tcell").show();
+                    $(".standings-tcell-header").show();
 
                     $("#teams-list").show();
                     for (var i = 0; i < data.length; i++) {
@@ -109,9 +107,9 @@ $(document).ready(function () {
 
                             if (imgPath.hasOwnProperty(data[i][j])) {
                                 $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + (j + 1) + "]")).append("<img class='" + data[i][j] + " cell-img' src=/resources/images/" + imgPath[data[i][j]] + " width='20px' height='20px' />");
-                            } else{
-                            $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + (j + 1) + "]")).append("<img class='" + data[i][j] + " cell-img' src=/resources/images/Ball.png width='20px' height='20px' />");
-                           }
+                            } else {
+                                $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + (j + 1) + "]")).append("<img class='" + data[i][j] + " cell-img' src=/resources/images/Ball.png width='20px' height='20px' />");
+                            }
 
                         }
 
@@ -120,20 +118,18 @@ $(document).ready(function () {
                     for (var i = data.length; i < 20; i++) {
 
                         $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]")).hide();
-                            }
-
+                    }
 
 
                     for (var i = 0; i < data.length; i++) {
-                        for (var j = data.length*2; j <= 39; j++) {
+                        for (var j = data.length * 2; j <= 39; j++) {
 
-                         $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[1]/th[" + j + "]")).hide();
-                         $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + j + "]")).hide();
+                            $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[1]/th[" + j + "]")).hide();
+                            $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + j + "]")).hide();
 
                         }
 
                     }
-
 
 
                 }
@@ -141,14 +137,12 @@ $(document).ready(function () {
                 $(".teams-buttons").removeClass("team-selected");
             },
             error: function (xhr, str) {
-            $("#get-info-msg").hide();
+                $("#get-info-msg").hide();
                 $(".teams-buttons").removeClass("team-selected");
                 alert('Sorry, no results for the ' + $("#TournamentList").val() + '-' + $("#SeasonsList").val());
             }
         });
     });
-
-
 
 
 });
