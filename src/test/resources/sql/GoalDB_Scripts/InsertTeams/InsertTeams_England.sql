@@ -130,4 +130,7 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
                           WHERE cityCode = 'BARN')),
   ('ENG044', 'Blackburn Rovers', (SELECT cityId
                                   FROM City
-                                  WHERE cityCode = 'BLAC'));
+                                  WHERE cityCode = 'BLAC')),
+  ('ENG045', 'Bolton', (SELECT cityId
+                        FROM City
+                        WHERE cityCode = 'BOLT'));

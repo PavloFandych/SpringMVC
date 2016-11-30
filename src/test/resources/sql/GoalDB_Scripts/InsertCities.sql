@@ -332,7 +332,10 @@ INSERT INTO City (cityCode, cityName, countryId) VALUES
                      WHERE countryCode = 'ENG')),
   ('WOLV', 'Wolverhampton', (SELECT countryId
                              FROM Country
-                             WHERE countryCode = 'ENG'));
+                             WHERE countryCode = 'ENG')),
+  ('BOLT', 'Bolton', (SELECT countryId
+                      FROM Country
+                      WHERE countryCode = 'ENG'));
 
 -- GERMANY
 INSERT INTO City (cityCode, cityName, countryId) VALUES
