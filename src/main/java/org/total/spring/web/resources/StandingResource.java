@@ -109,7 +109,7 @@ public class StandingResource {
                         seasonCode,
                         tournamentCode})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
 
             try {
                 if (Version.valueOf(version).equals(Version.V1)) {
@@ -126,19 +126,19 @@ public class StandingResource {
 
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
-                                + getter.getUserName() + " found\n");
+                                + getter.getUserName() + " found");
 
                         if (getPermitionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
-                                    + getter.getUserName() + " has permitions to get list of standings\n");
+                                    + getter.getUserName() + " has permitions to get list of standings");
 
                             List<List<String>> list = getStandingService()
                                     .getStandings(seasonCode, tournamentCode);
 
                             if (list == null || list.isEmpty()) {
                                 LOGGER.warn(" http status = " + HttpStatus.CONFLICT
-                                        + " standings not found\n");
+                                        + " standings not found");
 
                                 response = ContextLoader.getCurrentWebApplicationContext()
                                         .getBean(Response.class);
@@ -152,7 +152,7 @@ public class StandingResource {
                             }
                         } else {
                             LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
-                                    + getter.getUserName() + "\n");
+                                    + getter.getUserName());
 
                             response = ContextLoader.getCurrentWebApplicationContext()
                                     .getBean(Response.class);
@@ -164,7 +164,7 @@ public class StandingResource {
                         }
                     } else {
                         LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
-                                + HttpStatus.CONFLICT + " Getter not found\n");
+                                + HttpStatus.CONFLICT + " Getter not found");
 
                         response = ContextLoader.getCurrentWebApplicationContext()
                                 .getBean(Response.class);
@@ -176,7 +176,7 @@ public class StandingResource {
                     }
                 } else {
                     LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
-                            + HttpStatus.NOT_ACCEPTABLE + "\n");
+                            + HttpStatus.NOT_ACCEPTABLE);
 
                     response = ContextLoader.getCurrentWebApplicationContext()
                             .getBean(Response.class);
@@ -191,7 +191,119 @@ public class StandingResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
-                + HttpStatus.BAD_REQUEST + "\n");
+                + HttpStatus.BAD_REQUEST);
+
+        response = ContextLoader.getCurrentWebApplicationContext()
+                .getBean(Response.class);
+        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        response.setMessage(Constants.ERROR);
+
+        return new ResponseEntity<>(response,
+                response.getHttpStatus());
+    }
+
+    @RequestMapping(value = "/cachedstandings",
+            method = RequestMethod.GET,
+            produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
+    public ResponseEntity<?> fetchCachedStandings(@RequestHeader(name = "Authorization", required = false) String authorization,
+                                                  @RequestHeader(name = "Content-Type",
+                                                          required = false) String contentType,
+                                                  @RequestHeader(name = "Version",
+                                                          required = false) String version,
+                                                  @RequestParam(name = "seasonCode",
+                                                          required = false) String seasonCode,
+                                                  @RequestParam(name = "tournamentCode",
+                                                          required = false) String tournamentCode) {
+        if (getValidator().validate(
+                new String[]{
+                        authorization,
+                        contentType,
+                        version,
+                        seasonCode,
+                        tournamentCode})
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
+
+            try {
+                if (Version.valueOf(version).equals(Version.V1)) {
+                    String credentials = getPasswordManager()
+                            .decodeBase64(authorization);
+
+                    List<String> loginAndPassword = Arrays
+                            .asList(credentials.split(":"));
+
+                    User getter = getUserService()
+                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
+                                    getPasswordManager()
+                                            .encodeMD5(loginAndPassword.get(1)));
+
+                    if (getter != null) {
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
+                                + getter.getUserName() + " found");
+
+                        if (getPermitionManager()
+                                .containEntity(getter, CapabilityType.READ)) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
+                                    + getter.getUserName() + " has permitions to get list of standings");
+
+                            String result = getStandingService().getCachedStandings(seasonCode, tournamentCode);
+
+                            if (result == null || result.isEmpty()) {
+                                LOGGER.warn(" http status = " + HttpStatus.CONFLICT
+                                        + " standings not found");
+
+                                response = ContextLoader.getCurrentWebApplicationContext()
+                                        .getBean(Response.class);
+                                response.setHttpStatus(HttpStatus.CONFLICT);
+                                response.setMessage(Constants.NO_STANDINGS_FOUND);
+
+                                return new ResponseEntity<>(response,
+                                        response.getHttpStatus());
+                            } else {
+                                return new ResponseEntity<>(result, HttpStatus.OK);
+                            }
+                        } else {
+                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
+                                    + getter.getUserName());
+
+                            response = ContextLoader.getCurrentWebApplicationContext()
+                                    .getBean(Response.class);
+                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            response.setMessage(Constants.PERMITION_DENIED);
+
+                            return new ResponseEntity<>(response,
+                                    response.getHttpStatus());
+                        }
+                    } else {
+                        LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
+                                + HttpStatus.CONFLICT + " Getter not found");
+
+                        response = ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(Response.class);
+                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        response.setMessage(Constants.NO_USER_FOUND);
+
+                        return new ResponseEntity<>(response,
+                                response.getHttpStatus());
+                    }
+                } else {
+                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
+                            + HttpStatus.NOT_ACCEPTABLE);
+
+                    response = ContextLoader.getCurrentWebApplicationContext()
+                            .getBean(Response.class);
+                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
+
+                    return new ResponseEntity<>(response,
+                            response.getHttpStatus());
+                }
+            } catch (Exception e) {
+                LOGGER.error(e, e);
+            }
+        }
+        LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
+                + HttpStatus.BAD_REQUEST);
 
         response = ContextLoader.getCurrentWebApplicationContext()
                 .getBean(Response.class);
@@ -226,7 +338,7 @@ public class StandingResource {
                         seasonCode,
                         tournamentCode})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
 
             try {
                 if (Version.valueOf(version).equals(Version.V1)) {
@@ -243,19 +355,19 @@ public class StandingResource {
 
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
-                                + getter.getUserName() + " found\n");
+                                + getter.getUserName() + " found");
 
                         if (getPermitionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
-                                    + getter.getUserName() + " has permitions to get standings\n");
+                                    + getter.getUserName() + " has permitions to get standings");
 
                             List<Standing> list = getStandingService()
                                     .getMatchDayStandings(seasonCode, tournamentCode, Byte.parseByte(matchDay));
 
                             if (list == null || list.isEmpty()) {
                                 LOGGER.warn(" http status = " + HttpStatus.CONFLICT
-                                        + " standings not found\n");
+                                        + " standings not found");
 
                                 response = ContextLoader.getCurrentWebApplicationContext()
                                         .getBean(Response.class);
@@ -269,7 +381,7 @@ public class StandingResource {
                             }
                         } else {
                             LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
-                                    + getter.getUserName() + "\n");
+                                    + getter.getUserName());
 
                             response = ContextLoader.getCurrentWebApplicationContext()
                                     .getBean(Response.class);
@@ -281,7 +393,7 @@ public class StandingResource {
                         }
                     } else {
                         LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
-                                + HttpStatus.CONFLICT + " Getter not found\n");
+                                + HttpStatus.CONFLICT + " Getter not found");
 
                         response = ContextLoader.getCurrentWebApplicationContext()
                                 .getBean(Response.class);
@@ -293,7 +405,7 @@ public class StandingResource {
                     }
                 } else {
                     LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
-                            + HttpStatus.NOT_ACCEPTABLE + "\n");
+                            + HttpStatus.NOT_ACCEPTABLE);
 
                     response = ContextLoader.getCurrentWebApplicationContext()
                             .getBean(Response.class);
@@ -308,7 +420,7 @@ public class StandingResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
-                + HttpStatus.BAD_REQUEST + "\n");
+                + HttpStatus.BAD_REQUEST);
 
         response = ContextLoader.getCurrentWebApplicationContext()
                 .getBean(Response.class);

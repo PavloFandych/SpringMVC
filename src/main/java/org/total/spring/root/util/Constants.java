@@ -47,4 +47,5 @@ public interface Constants {
     public static final String CALL_GET_SEASON_LIST = "getSeasonsList";
     public static final String CALL_GET_TEAM_LIST = "getTeamsList";
     public static final String CALL_GET_TEAM_MATCHES = "getTeamMatches";
+    public static final String CALL_GET_STORED_STANDINGS = "getStoredStandings";
 }

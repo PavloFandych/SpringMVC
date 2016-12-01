@@ -41,6 +41,8 @@ public class TeamDAO extends GenericDAO<List<String>> {
                         .addValue("seasonCode", ((SeasonCode) param[0]).name())
                         .addValue("tournamentCode", ((TournamentCode) param[1]).name()));
 
-        return (List<List<String>>) out.get("teams");
+        List<List<String>> resultList = (List<List<String>>) out.get("teams");
+
+        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
     }
 }

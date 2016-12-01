@@ -51,4 +51,14 @@ public class StandingServiceImpl implements StandingService {
         List<Standing> list = getStandingDAO().getMatchDayStandings(seasonCode, tournamentCode, matchDay);
         return (list != null && !list.isEmpty()) ? list : null;
     }
+
+    @Override
+    @Cacheable(value = "applicationCache",
+            cacheManager = "springCashManager",
+            sync = true
+    )
+    public String getCachedStandings(String seasonCode, String tournamentCode) {
+        String result = getStandingDAO().getCachedStandings(seasonCode, tournamentCode);
+        return (result != null && !result.isEmpty()) ? result : null;
+    }
 }

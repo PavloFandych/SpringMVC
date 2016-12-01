@@ -64,6 +64,8 @@ public class TeamMatchDAO extends GenericDAO<TeamMatch> {
                         .addValue("seasonCode", (String) param[2])
                         .addValue("tournamentCode", (String) param[3]));
 
-        return (List<TeamMatch>) out.get("teamMatches");
+        List<TeamMatch> resultList = (List<TeamMatch>) out.get("teamMatches");
+
+        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
     }
 }

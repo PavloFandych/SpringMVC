@@ -21,6 +21,7 @@ import java.util.Map;
 @Repository("standingDAO")
 public class StandingDAO extends GenericDAO<List<String>> {
     private static final int MAX_RESULT_IN_RESULT_SET = 39;
+
     @Override
     public List<List<String>> getEntities(Object... param) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -46,7 +47,9 @@ public class StandingDAO extends GenericDAO<List<String>> {
                         .addValue("seasonCode", (String) param[0])
                         .addValue("tournamentCode", (String) param[1]));
 
-        return (List<List<String>>) out.get("standings");
+        List<List<String>> resultList = (List<List<String>>) out.get("standings");
+
+        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
     }
 
     public List<Standing> getMatchDayStandings(String seasonCode,
@@ -77,6 +80,28 @@ public class StandingDAO extends GenericDAO<List<String>> {
                         .addValue("tournamentCode", tournamentCode)
                         .addValue("matchDay", matchDay));
 
-        return (List<Standing>) out.get("standings");
+        List<Standing> resultList = (List<Standing>) out.get("standings");
+
+        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
+    }
+
+    public String getCachedStandings(String seasonCode,
+                                     String tournamentCode) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withProcedureName(Constants.CALL_GET_STORED_STANDINGS)
+                .returningResultSet("standing", new RowMapper<String>() {
+                    @Override
+                    public String mapRow(ResultSet resultSet, int i) throws SQLException {
+                        return resultSet.getString("standing");
+                    }
+                });
+        Map<String, Object> out = simpleJdbcCall
+                .execute(new MapSqlParameterSource()
+                        .addValue("seasonCode", seasonCode)
+                        .addValue("tournamentCode", tournamentCode));
+
+        List<String> resultList = (List<String>) out.get("standing");
+
+        return (resultList != null && !resultList.isEmpty()) ? resultList.get(0) : null;
     }
 }
