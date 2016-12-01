@@ -5,9 +5,7 @@ $$
 
 CREATE PROCEDURE getTournamentList()
   BEGIN
-    SELECT
-      tournamentCode,
-      tournamentName
+    SELECT *
     FROM Tournament;
   END$$
 
