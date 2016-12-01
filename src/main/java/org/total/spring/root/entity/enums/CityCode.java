@@ -38,6 +38,7 @@ public enum CityCode {
     SHEF,
     WIGA,
     WOLV,
+    BOLT,
     AACH,
     AALE,
     AHLE,

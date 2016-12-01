@@ -5,6 +5,10 @@
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/CreateTables.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertCities.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertCountries.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertResults.England/InsertResults_20112012_England.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertResults.England/InsertResults_20122013_England.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertResults.England/InsertResults_20132014_England.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertResults.England/InsertResults_20142015_England.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertResults.England/InsertResults_20152016_England.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertResults/Germany/InsertResults_20112012_Germany.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/sql/GoalDB_Scripts/InsertResults/Germany/InsertResults_20122013_Germany.sql" dialect="MySQL" />
