@@ -79,7 +79,7 @@ $(document).ready(function () {
 
         $.ajax({
             data: {"seasonCode": season, "tournamentCode": tournament},
-            url: '/standings',
+            url: '/cachedstandings',
             type: 'GET',
             datatype: 'json',
             headers: {
