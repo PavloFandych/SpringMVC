@@ -1,7 +1,9 @@
 package org.total.spring.root.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.root.dao.StandingDAO;
@@ -53,9 +55,15 @@ public class StandingServiceImpl implements StandingService {
     }
 
     @Override
-    @Cacheable(value = "applicationCache",
+    @Caching(evict = @CacheEvict(
+            value = "applicationCache",
             cacheManager = "springCashManager",
-            sync = true
+            allEntries = true
+    ),
+            cacheable = @Cacheable(
+                    value = "applicationCache",
+                    cacheManager = "springCashManager"
+            )
     )
     public String getCachedStandings(String seasonCode, String tournamentCode) {
         String result = getStandingDAO().getCachedStandings(seasonCode, tournamentCode);

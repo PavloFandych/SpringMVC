@@ -32,10 +32,14 @@ public class AppConfig {
     public DataSource getDataSource() {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         try {
-            dataSource.setDriverClass("com.mysql.jdbc.Driver");
-            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/GoalDB");
-            dataSource.setUser("root");
-            dataSource.setPassword("mysqlpass");
+            Properties credentials = new Properties();
+            credentials.load(AppConfig.class.getClassLoader()
+                    .getResourceAsStream("credentials.properties"));
+
+            dataSource.setDriverClass(credentials.getProperty("mysqlDriver").trim());
+            dataSource.setJdbcUrl(credentials.getProperty("mysqlUrl").trim());
+            dataSource.setUser(credentials.getProperty("mysqlUser").trim());
+            dataSource.setPassword(credentials.getProperty("mysqlUserPass").trim());
             dataSource.setInitialPoolSize(5);
             dataSource.setMaxPoolSize(50);
             dataSource.setMinPoolSize(10);
