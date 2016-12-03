@@ -35,9 +35,11 @@
             </td>
             <td class="menu-tcell">
                 <select id="TournamentList" name="TournamentList">
-                    <option selected value="DEU_BUNDESLIGA_1">Bundesliga (Germany)</option>
+                    <option selected value="ENG_PREM_LEAGUE">Premier League (England)</option>
+                    <option value="DEU_BUNDESLIGA_1">Bundesliga (Germany)</option>
                     <option value="ITA_SERIA_A">Serie A (Italy)</option>
-                    <option value="ENG_PREM_LEAGUE">Premier League (England)</option>
+                    <option value="ESP_PRIMERA">La Liga (Spain)</option>
+                    <option value="FRA_LIGUE_1">Ligue 1 (France)</option>
                 </select>
             </td>
             <td class="menu-tcell">
