@@ -118,4 +118,7 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
                                   WHERE cityCode = 'SAET')),
   ('FRA040', 'Gazelec Ajaccio', (SELECT cityId
                                  FROM City
-                                 WHERE cityCode = 'AJAC'));
+                                 WHERE cityCode = 'AJAC')),
+  ('FRA041', 'Evian', (SELECT cityId
+                                   FROM City
+                                   WHERE cityCode = 'ANNE'));

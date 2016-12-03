@@ -124,4 +124,7 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
                                WHERE cityCode = 'VILL')),
   ('ESP042', 'Valencia CF', (SELECT cityId
                              FROM City
-                             WHERE cityCode = 'VALE'));
+                             WHERE cityCode = 'VALE')),
+  ('ESP043', 'Racing', (SELECT cityId
+                                FROM City
+                                WHERE cityCode = 'STDR'));

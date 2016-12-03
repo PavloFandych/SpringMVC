@@ -115,7 +115,10 @@ INSERT INTO City (cityCode, cityName, countryId) VALUES
                       WHERE countryCode = 'FRA')),
   ('VALN', 'Valenciennes', (SELECT countryId
                             FROM Country
-                            WHERE countryCode = 'FRA'));
+                            WHERE countryCode = 'FRA')),
+  ('ANNE', 'Annecy', (SELECT countryId
+                              FROM Country
+                              WHERE countryCode = 'FRA'));
 
 -- Spain
 INSERT INTO City (cityCode, cityName, countryId) VALUES
@@ -226,7 +229,10 @@ INSERT INTO City (cityCode, cityName, countryId) VALUES
                           WHERE countryCode = 'ESP')),
   ('ZARA', 'Zaragoza', (SELECT countryId
                         FROM Country
-                        WHERE countryCode = 'ESP'));
+                        WHERE countryCode = 'ESP')),
+  ('STDR', 'Santander', (SELECT countryId
+                           FROM Country
+                           WHERE countryCode = 'ESP'));
 
 
 -- England, Wales
