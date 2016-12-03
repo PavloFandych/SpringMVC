@@ -71,7 +71,7 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
   ('ITA024', 'Bologna', (SELECT cityId
                          FROM City
                          WHERE cityCode = 'BOLO')),
-  ('ITA025', 'Südtirol', (SELECT cityId
+  ('ITA025', 'Sudtirol', (SELECT cityId
                           FROM City
                           WHERE cityCode = 'BOLZ')),
   ('ITA026', 'Fidelis Andria', (SELECT cityId
@@ -98,7 +98,7 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
   ('ITA033', 'Venezia', (SELECT cityId
                          FROM City
                          WHERE cityCode = 'VENE')),
-  ('ITA034', 'Forlì', (SELECT cityId
+  ('ITA034', 'Forli', (SELECT cityId
                        FROM City
                        WHERE cityCode = 'FORL')),
   ('ITA035', 'AlbinoLeffe', (SELECT cityId
@@ -203,7 +203,7 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
   ('ITA068', 'Gubbio', (SELECT cityId
                         FROM City
                         WHERE cityCode = 'GUBB')),
-  ('ITA069', 'FeralpiSalò', (SELECT cityId
+  ('ITA069', 'FeralpiSalo', (SELECT cityId
                              FROM City
                              WHERE cityCode = 'SALO')),
   ('ITA070', 'Lumezzane', (SELECT cityId
