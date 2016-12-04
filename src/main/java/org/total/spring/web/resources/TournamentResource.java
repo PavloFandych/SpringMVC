@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.ContextLoader;
 import org.total.spring.root.entity.Tournament;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
@@ -77,10 +76,8 @@ public class TournamentResource extends AbstractResourse {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_TOURNAMENT_FOUND
                                         + " http status = " + HttpStatus.OK);
 
-                                Response response = ContextLoader.getCurrentWebApplicationContext()
-                                        .getBean(Response.class);
-                                response.setMessage(Constants.NO_TOURNAMENT_FOUND);
-                                response.setHttpStatus(HttpStatus.OK);
+                                Response response = generateResponse(Constants.NO_TOURNAMENT_FOUND,
+                                        HttpStatus.OK);
 
                                 return new ResponseEntity<>(response,
                                         response.getHttpStatus());
@@ -94,10 +91,8 @@ public class TournamentResource extends AbstractResourse {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
                                     + " http status = " + HttpStatus.CONFLICT);
 
-                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                    .getBean(Response.class);
-                            response.setMessage(Constants.PERMISSION_DENIED);
-                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            Response response = generateResponse(Constants.PERMISSION_DENIED,
+                                    HttpStatus.CONFLICT);
 
                             return new ResponseEntity<>(response,
                                     response.getHttpStatus());
@@ -106,10 +101,8 @@ public class TournamentResource extends AbstractResourse {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
                                 + " http status = " + HttpStatus.CONFLICT);
 
-                        Response response = ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(Response.class);
-                        response.setMessage(Constants.NO_GETTER_FOUND);
-                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        Response response = generateResponse(Constants.NO_GETTER_FOUND,
+                                HttpStatus.CONFLICT);
 
                         return new ResponseEntity<>(response,
                                 response.getHttpStatus());
@@ -118,10 +111,8 @@ public class TournamentResource extends AbstractResourse {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
                             + " http status = " + HttpStatus.NOT_ACCEPTABLE);
 
-                    Response response = ContextLoader.getCurrentWebApplicationContext()
-                            .getBean(Response.class);
-                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
-                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
+                            HttpStatus.NOT_ACCEPTABLE);
 
                     return new ResponseEntity<>(response,
                             response.getHttpStatus());
@@ -133,10 +124,8 @@ public class TournamentResource extends AbstractResourse {
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
                 " http status = " + HttpStatus.BAD_REQUEST);
 
-        Response response = ContextLoader.getCurrentWebApplicationContext()
-                .getBean(Response.class);
-        response.setMessage(Constants.ERROR);
-        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        Response response = generateResponse(Constants.ERROR,
+                HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(response,
                 response.getHttpStatus());

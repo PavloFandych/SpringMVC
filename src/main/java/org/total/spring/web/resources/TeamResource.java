@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.ContextLoader;
 import org.total.spring.root.entity.Team;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
@@ -35,15 +34,15 @@ public class TeamResource extends AbstractResourse {
     @RequestMapping(value = "/teams",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchStandings(@RequestHeader(name = "Authorization", required = false) String authorization,
-                                            @RequestHeader(name = "Content-Type",
-                                                    required = false) String contentType,
-                                            @RequestHeader(name = "Version",
-                                                    required = false) String version,
-                                            @RequestParam(name = "seasonCode",
-                                                    required = false) SeasonCode seasonCode,
-                                            @RequestParam(name = "tournamentCode",
-                                                    required = false) TournamentCode tournamentCode) {
+    public ResponseEntity<?> fetchAllTeams(@RequestHeader(name = "Authorization", required = false) String authorization,
+                                           @RequestHeader(name = "Content-Type",
+                                                   required = false) String contentType,
+                                           @RequestHeader(name = "Version",
+                                                   required = false) String version,
+                                           @RequestParam(name = "seasonCode",
+                                                   required = false) SeasonCode seasonCode,
+                                           @RequestParam(name = "tournamentCode",
+                                                   required = false) TournamentCode tournamentCode) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -78,10 +77,8 @@ public class TeamResource extends AbstractResourse {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_TEAM_FOUND
                                         + " http status = " + HttpStatus.OK);
 
-                                Response response = ContextLoader.getCurrentWebApplicationContext()
-                                        .getBean(Response.class);
-                                response.setMessage(Constants.NO_TEAM_FOUND);
-                                response.setHttpStatus(HttpStatus.OK);
+                                Response response = generateResponse(Constants.NO_TEAM_FOUND,
+                                        HttpStatus.OK);
 
                                 return new ResponseEntity<>(response,
                                         response.getHttpStatus());
@@ -95,10 +92,8 @@ public class TeamResource extends AbstractResourse {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
                                     + " http status = " + HttpStatus.CONFLICT);
 
-                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                    .getBean(Response.class);
-                            response.setMessage(Constants.PERMISSION_DENIED);
-                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            Response response = generateResponse(Constants.PERMISSION_DENIED,
+                                    HttpStatus.CONFLICT);
 
                             return new ResponseEntity<>(response,
                                     response.getHttpStatus());
@@ -107,10 +102,8 @@ public class TeamResource extends AbstractResourse {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
                                 + " http status = " + HttpStatus.CONFLICT);
 
-                        Response response = ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(Response.class);
-                        response.setMessage(Constants.NO_GETTER_FOUND);
-                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        Response response = generateResponse(Constants.NO_GETTER_FOUND,
+                                HttpStatus.CONFLICT);
 
                         return new ResponseEntity<>(response,
                                 response.getHttpStatus());
@@ -119,10 +112,8 @@ public class TeamResource extends AbstractResourse {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
                             + " http status = " + HttpStatus.NOT_ACCEPTABLE);
 
-                    Response response = ContextLoader.getCurrentWebApplicationContext()
-                            .getBean(Response.class);
-                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
-                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
+                            HttpStatus.NOT_ACCEPTABLE);
 
                     return new ResponseEntity<>(response,
                             response.getHttpStatus());
@@ -134,10 +125,8 @@ public class TeamResource extends AbstractResourse {
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
                 " http status = " + HttpStatus.BAD_REQUEST);
 
-        Response response = ContextLoader.getCurrentWebApplicationContext()
-                .getBean(Response.class);
-        response.setMessage(Constants.ERROR);
-        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        Response response = generateResponse(Constants.ERROR,
+                HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(response,
                 response.getHttpStatus());
@@ -146,12 +135,12 @@ public class TeamResource extends AbstractResourse {
     @RequestMapping(value = "/teams/{id}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchTeamById(@PathVariable Long id,
-                                           @RequestHeader(name = "Authorization", required = false) String authorization,
-                                           @RequestHeader(name = "Content-Type",
-                                                   required = false) String contentType,
-                                           @RequestHeader(name = "Version",
-                                                   required = false) String version) {
+    public ResponseEntity<?> fetchTeamByTeamId(@PathVariable Long id,
+                                               @RequestHeader(name = "Authorization", required = false) String authorization,
+                                               @RequestHeader(name = "Content-Type",
+                                                       required = false) String contentType,
+                                               @RequestHeader(name = "Version",
+                                                       required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -186,10 +175,8 @@ public class TeamResource extends AbstractResourse {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_TEAM_FOUND
                                         + " http status = " + HttpStatus.OK);
 
-                                Response response = ContextLoader.getCurrentWebApplicationContext()
-                                        .getBean(Response.class);
-                                response.setMessage(Constants.NO_TEAM_FOUND);
-                                response.setHttpStatus(HttpStatus.OK);
+                                Response response = generateResponse(Constants.NO_TEAM_FOUND,
+                                        HttpStatus.OK);
 
                                 return new ResponseEntity<>(response,
                                         response.getHttpStatus());
@@ -203,10 +190,8 @@ public class TeamResource extends AbstractResourse {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
                                     + " http status = " + HttpStatus.CONFLICT);
 
-                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                    .getBean(Response.class);
-                            response.setMessage(Constants.PERMISSION_DENIED);
-                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            Response response = generateResponse(Constants.PERMISSION_DENIED,
+                                    HttpStatus.CONFLICT);
 
                             return new ResponseEntity<>(response,
                                     response.getHttpStatus());
@@ -215,10 +200,8 @@ public class TeamResource extends AbstractResourse {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
                                 + " http status = " + HttpStatus.CONFLICT);
 
-                        Response response = ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(Response.class);
-                        response.setMessage(Constants.NO_GETTER_FOUND);
-                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        Response response = generateResponse(Constants.NO_GETTER_FOUND,
+                                HttpStatus.CONFLICT);
 
                         return new ResponseEntity<>(response,
                                 response.getHttpStatus());
@@ -227,10 +210,8 @@ public class TeamResource extends AbstractResourse {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
                             + " http status = " + HttpStatus.NOT_ACCEPTABLE);
 
-                    Response response = ContextLoader.getCurrentWebApplicationContext()
-                            .getBean(Response.class);
-                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
-                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
+                            HttpStatus.NOT_ACCEPTABLE);
 
                     return new ResponseEntity<>(response,
                             response.getHttpStatus());
@@ -242,10 +223,8 @@ public class TeamResource extends AbstractResourse {
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
                 " http status = " + HttpStatus.BAD_REQUEST);
 
-        Response response = ContextLoader.getCurrentWebApplicationContext()
-                .getBean(Response.class);
-        response.setMessage(Constants.ERROR);
-        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        Response response = generateResponse(Constants.ERROR,
+                HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(response,
                 response.getHttpStatus());

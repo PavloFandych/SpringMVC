@@ -111,10 +111,8 @@ public class UserResource extends AbstractResourse {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_USER_FOUND
                                         + " http status = " + HttpStatus.OK);
 
-                                Response response = ContextLoader.getCurrentWebApplicationContext()
-                                        .getBean(Response.class);
-                                response.setMessage(Constants.NO_USER_FOUND);
-                                response.setHttpStatus(HttpStatus.OK);
+                                Response response = generateResponse(Constants.NO_USER_FOUND,
+                                        HttpStatus.OK);
 
                                 return new ResponseEntity<>(getContentHandler().marshal(response),
                                         response.getHttpStatus());
@@ -129,10 +127,8 @@ public class UserResource extends AbstractResourse {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
                                     + " http status = " + HttpStatus.CONFLICT);
 
-                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                    .getBean(Response.class);
-                            response.setMessage(Constants.PERMISSION_DENIED);
-                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            Response response = generateResponse(Constants.PERMISSION_DENIED,
+                                    HttpStatus.CONFLICT);
 
                             return new ResponseEntity<>(getContentHandler().marshal(response),
                                     response.getHttpStatus());
@@ -141,10 +137,8 @@ public class UserResource extends AbstractResourse {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
                                 + " http status = " + HttpStatus.CONFLICT);
 
-                        Response response = ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(Response.class);
-                        response.setMessage(Constants.NO_GETTER_FOUND);
-                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        Response response = generateResponse(Constants.NO_GETTER_FOUND,
+                                HttpStatus.CONFLICT);
 
                         return new ResponseEntity<>(getContentHandler().marshal(response),
                                 response.getHttpStatus());
@@ -153,10 +147,8 @@ public class UserResource extends AbstractResourse {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
                             + " http status = " + HttpStatus.NOT_ACCEPTABLE);
 
-                    Response response = ContextLoader.getCurrentWebApplicationContext()
-                            .getBean(Response.class);
-                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
-                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
+                            HttpStatus.NOT_ACCEPTABLE);
 
                     return new ResponseEntity<>(getContentHandler().marshal(response),
                             response.getHttpStatus());
@@ -168,15 +160,12 @@ public class UserResource extends AbstractResourse {
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
                 " http status = " + HttpStatus.BAD_REQUEST);
 
-        Response response = ContextLoader.getCurrentWebApplicationContext()
-                .getBean(Response.class);
-        response.setMessage(Constants.ERROR);
-        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        Response response = generateResponse(Constants.ERROR,
+                HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(getContentHandler().marshal(response),
                 response.getHttpStatus());
     }
-
 
     @RequestMapping(value = "/users/pagination",
             method = RequestMethod.GET,
@@ -201,7 +190,6 @@ public class UserResource extends AbstractResourse {
                 && StringUtils.isNumeric(pageIndex)
                 && StringUtils.isNumeric(numRecPerPage)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
-
             try {
                 if (Version.valueOf(version).equals(Version.V1)) {
                     String credentials = getPasswordManager()
@@ -230,10 +218,8 @@ public class UserResource extends AbstractResourse {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_USER_FOUND
                                         + " http status = " + HttpStatus.OK);
 
-                                Response response = ContextLoader.getCurrentWebApplicationContext()
-                                        .getBean(Response.class);
-                                response.setMessage(Constants.NO_USER_FOUND);
-                                response.setHttpStatus(HttpStatus.OK);
+                                Response response = generateResponse(Constants.NO_USER_FOUND,
+                                        HttpStatus.OK);
 
                                 return new ResponseEntity<>(getContentHandler().marshal(response),
                                         response.getHttpStatus());
@@ -248,10 +234,8 @@ public class UserResource extends AbstractResourse {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
                                     + " http status = " + HttpStatus.CONFLICT);
 
-                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                    .getBean(Response.class);
-                            response.setMessage(Constants.PERMISSION_DENIED);
-                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            Response response = generateResponse(Constants.PERMISSION_DENIED,
+                                    HttpStatus.CONFLICT);
 
                             return new ResponseEntity<>(getContentHandler().marshal(response),
                                     response.getHttpStatus());
@@ -260,10 +244,8 @@ public class UserResource extends AbstractResourse {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
                                 + " http status = " + HttpStatus.CONFLICT);
 
-                        Response response = ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(Response.class);
-                        response.setMessage(Constants.NO_GETTER_FOUND);
-                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        Response response = generateResponse(Constants.NO_GETTER_FOUND,
+                                HttpStatus.CONFLICT);
 
                         return new ResponseEntity<>(getContentHandler().marshal(response),
                                 response.getHttpStatus());
@@ -272,10 +254,8 @@ public class UserResource extends AbstractResourse {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
                             + " http status = " + HttpStatus.NOT_ACCEPTABLE);
 
-                    Response response = ContextLoader.getCurrentWebApplicationContext()
-                            .getBean(Response.class);
-                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
-                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
+                            HttpStatus.NOT_ACCEPTABLE);
 
                     return new ResponseEntity<>(getContentHandler().marshal(response),
                             response.getHttpStatus());
@@ -287,10 +267,8 @@ public class UserResource extends AbstractResourse {
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
                 " http status = " + HttpStatus.BAD_REQUEST);
 
-        Response response = ContextLoader.getCurrentWebApplicationContext()
-                .getBean(Response.class);
-        response.setMessage(Constants.ERROR);
-        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        Response response = generateResponse(Constants.ERROR,
+                HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(getContentHandler().marshal(response),
                 response.getHttpStatus());
@@ -299,13 +277,13 @@ public class UserResource extends AbstractResourse {
     @RequestMapping(value = "/users/{id}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_XML)
-    public ResponseEntity<?> fetchUserById(@PathVariable String id,
-                                           @RequestHeader(name = "Authorization",
-                                                   required = false) String authorization,
-                                           @RequestHeader(name = "Content-Type",
-                                                   required = false) String contentType,
-                                           @RequestHeader(name = "Version",
-                                                   required = false) String version) {
+    public ResponseEntity<?> fetchUserByUserId(@PathVariable String id,
+                                               @RequestHeader(name = "Authorization",
+                                                       required = false) String authorization,
+                                               @RequestHeader(name = "Content-Type",
+                                                       required = false) String contentType,
+                                               @RequestHeader(name = "Version",
+                                                       required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         id,
@@ -342,10 +320,8 @@ public class UserResource extends AbstractResourse {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_USER_FOUND
                                         + " http status = " + HttpStatus.OK);
 
-                                Response response = ContextLoader.getCurrentWebApplicationContext()
-                                        .getBean(Response.class);
-                                response.setMessage(Constants.NO_USER_FOUND);
-                                response.setHttpStatus(HttpStatus.OK);
+                                Response response = generateResponse(Constants.NO_USER_FOUND,
+                                        HttpStatus.OK);
 
                                 return new ResponseEntity<>(getContentHandler().marshal(response),
                                         response.getHttpStatus());
@@ -360,10 +336,8 @@ public class UserResource extends AbstractResourse {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
                                     + " http status = " + HttpStatus.CONFLICT);
 
-                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                    .getBean(Response.class);
-                            response.setMessage(Constants.PERMISSION_DENIED);
-                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            Response response = generateResponse(Constants.PERMISSION_DENIED,
+                                    HttpStatus.CONFLICT);
 
                             return new ResponseEntity<>(getContentHandler().marshal(response),
                                     response.getHttpStatus());
@@ -372,10 +346,8 @@ public class UserResource extends AbstractResourse {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
                                 + " http status = " + HttpStatus.CONFLICT);
 
-                        Response response = ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(Response.class);
-                        response.setMessage(Constants.NO_GETTER_FOUND);
-                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        Response response = generateResponse(Constants.NO_GETTER_FOUND,
+                                HttpStatus.CONFLICT);
 
                         return new ResponseEntity<>(getContentHandler().marshal(response),
                                 response.getHttpStatus());
@@ -384,10 +356,8 @@ public class UserResource extends AbstractResourse {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
                             + " http status = " + HttpStatus.NOT_ACCEPTABLE);
 
-                    Response response = ContextLoader.getCurrentWebApplicationContext()
-                            .getBean(Response.class);
-                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
-                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
+                            HttpStatus.NOT_ACCEPTABLE);
 
                     return new ResponseEntity<>(getContentHandler().marshal(response),
                             response.getHttpStatus());
@@ -399,10 +369,8 @@ public class UserResource extends AbstractResourse {
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
                 " http status = " + HttpStatus.BAD_REQUEST);
 
-        Response response = ContextLoader.getCurrentWebApplicationContext()
-                .getBean(Response.class);
-        response.setMessage(Constants.ERROR);
-        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        Response response = generateResponse(Constants.ERROR,
+                HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(getContentHandler().marshal(response),
                 response.getHttpStatus());
@@ -411,13 +379,13 @@ public class UserResource extends AbstractResourse {
     @RequestMapping(value = "/userName/{userName}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_XML)
-    public ResponseEntity<?> fetchUserByName(@PathVariable String userName,
-                                             @RequestHeader(name = "Authorization",
-                                                     required = false) String authorization,
-                                             @RequestHeader(name = "Content-Type",
-                                                     required = false) String contentType,
-                                             @RequestHeader(name = "Version",
-                                                     required = false) String version) {
+    public ResponseEntity<?> fetchUserByUserName(@PathVariable String userName,
+                                                 @RequestHeader(name = "Authorization",
+                                                         required = false) String authorization,
+                                                 @RequestHeader(name = "Content-Type",
+                                                         required = false) String contentType,
+                                                 @RequestHeader(name = "Version",
+                                                         required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         userName,
@@ -453,10 +421,8 @@ public class UserResource extends AbstractResourse {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_USER_FOUND
                                         + " http status = " + HttpStatus.OK);
 
-                                Response response = ContextLoader.getCurrentWebApplicationContext()
-                                        .getBean(Response.class);
-                                response.setMessage(Constants.NO_USER_FOUND);
-                                response.setHttpStatus(HttpStatus.OK);
+                                Response response = generateResponse(Constants.NO_USER_FOUND,
+                                        HttpStatus.OK);
 
                                 return new ResponseEntity<>(getContentHandler().marshal(response),
                                         response.getHttpStatus());
@@ -471,10 +437,8 @@ public class UserResource extends AbstractResourse {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
                                     + " http status = " + HttpStatus.CONFLICT);
 
-                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                    .getBean(Response.class);
-                            response.setMessage(Constants.PERMISSION_DENIED);
-                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            Response response = generateResponse(Constants.PERMISSION_DENIED,
+                                    HttpStatus.CONFLICT);
 
                             return new ResponseEntity<>(getContentHandler().marshal(response),
                                     response.getHttpStatus());
@@ -483,10 +447,8 @@ public class UserResource extends AbstractResourse {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
                                 + " http status = " + HttpStatus.CONFLICT);
 
-                        Response response = ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(Response.class);
-                        response.setMessage(Constants.NO_GETTER_FOUND);
-                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        Response response = generateResponse(Constants.NO_GETTER_FOUND,
+                                HttpStatus.CONFLICT);
 
                         return new ResponseEntity<>(getContentHandler().marshal(response),
                                 response.getHttpStatus());
@@ -495,10 +457,8 @@ public class UserResource extends AbstractResourse {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
                             + " http status = " + HttpStatus.NOT_ACCEPTABLE);
 
-                    Response response = ContextLoader.getCurrentWebApplicationContext()
-                            .getBean(Response.class);
-                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
-                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
+                            HttpStatus.NOT_ACCEPTABLE);
 
                     return new ResponseEntity<>(getContentHandler().marshal(response),
                             response.getHttpStatus());
@@ -510,10 +470,8 @@ public class UserResource extends AbstractResourse {
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
                 " http status = " + HttpStatus.BAD_REQUEST);
 
-        Response response = ContextLoader.getCurrentWebApplicationContext()
-                .getBean(Response.class);
-        response.setMessage(Constants.ERROR);
-        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        Response response = generateResponse(Constants.ERROR,
+                HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(getContentHandler().marshal(response),
                 response.getHttpStatus());
@@ -522,13 +480,13 @@ public class UserResource extends AbstractResourse {
     @RequestMapping(value = "/users/{userName}",
             method = RequestMethod.DELETE,
             produces = Constants.CONTENT_TYPE_APPLICATION_XML)
-    public ResponseEntity<?> deleteUserById(@PathVariable String userName,
-                                            @RequestHeader(name = "Authorization",
-                                                    required = false) String authorization,
-                                            @RequestHeader(name = "Content-Type",
-                                                    required = false) String contentType,
-                                            @RequestHeader(name = "Version",
-                                                    required = false) String version) {
+    public ResponseEntity<?> deleteUserByUserName(@PathVariable String userName,
+                                                  @RequestHeader(name = "Authorization",
+                                                          required = false) String authorization,
+                                                  @RequestHeader(name = "Content-Type",
+                                                          required = false) String contentType,
+                                                  @RequestHeader(name = "Version",
+                                                          required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         userName,
@@ -567,10 +525,8 @@ public class UserResource extends AbstractResourse {
                                     LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.CANNOT_DELETE_USER
                                             + " http status = " + HttpStatus.CONFLICT);
 
-                                    Response response = ContextLoader.getCurrentWebApplicationContext()
-                                            .getBean(Response.class);
-                                    response.setMessage(Constants.CANNOT_DELETE_USER);
-                                    response.setHttpStatus(HttpStatus.CONFLICT);
+                                    Response response = generateResponse(Constants.CANNOT_DELETE_USER,
+                                            HttpStatus.CONFLICT);
 
                                     return new ResponseEntity<>(getContentHandler().marshal(response),
                                             response.getHttpStatus());
@@ -580,10 +536,8 @@ public class UserResource extends AbstractResourse {
                                     LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
                                             + " http status = " + HttpStatus.OK);
 
-                                    Response response = ContextLoader.getCurrentWebApplicationContext()
-                                            .getBean(Response.class);
-                                    response.setMessage(Constants.SUCCESS);
-                                    response.setHttpStatus(HttpStatus.OK);
+                                    Response response = generateResponse(Constants.SUCCESS,
+                                            HttpStatus.OK);
 
                                     return new ResponseEntity<>(getContentHandler().marshal(response),
                                             response.getHttpStatus());
@@ -592,10 +546,8 @@ public class UserResource extends AbstractResourse {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_USER_FOUND
                                         + " http status = " + HttpStatus.CONFLICT);
 
-                                Response response = ContextLoader.getCurrentWebApplicationContext()
-                                        .getBean(Response.class);
-                                response.setMessage(Constants.NO_USER_FOUND);
-                                response.setHttpStatus(HttpStatus.CONFLICT);
+                                Response response = generateResponse(Constants.NO_USER_FOUND,
+                                        HttpStatus.CONFLICT);
 
                                 return new ResponseEntity<>(getContentHandler().marshal(response),
                                         response.getHttpStatus());
@@ -604,10 +556,8 @@ public class UserResource extends AbstractResourse {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
                                     + " http status = " + HttpStatus.CONFLICT);
 
-                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                    .getBean(Response.class);
-                            response.setMessage(Constants.PERMISSION_DENIED);
-                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            Response response = generateResponse(Constants.PERMISSION_DENIED,
+                                    HttpStatus.CONFLICT);
 
                             return new ResponseEntity<>(getContentHandler().marshal(response),
                                     response.getHttpStatus());
@@ -616,10 +566,8 @@ public class UserResource extends AbstractResourse {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_DELETER_FOUND
                                 + " http status = " + HttpStatus.CONFLICT);
 
-                        Response response = ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(Response.class);
-                        response.setMessage(Constants.NO_DELETER_FOUND);
-                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        Response response = generateResponse(Constants.NO_DELETER_FOUND,
+                                HttpStatus.CONFLICT);
 
                         return new ResponseEntity<>(getContentHandler().marshal(response),
                                 response.getHttpStatus());
@@ -628,10 +576,8 @@ public class UserResource extends AbstractResourse {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
                             + " http status = " + HttpStatus.NOT_ACCEPTABLE);
 
-                    Response response = ContextLoader.getCurrentWebApplicationContext()
-                            .getBean(Response.class);
-                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
-                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
+                            HttpStatus.NOT_ACCEPTABLE);
 
                     return new ResponseEntity<>(getContentHandler().marshal(response),
                             response.getHttpStatus());
@@ -643,10 +589,8 @@ public class UserResource extends AbstractResourse {
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
                 " http status = " + HttpStatus.BAD_REQUEST);
 
-        Response response = ContextLoader.getCurrentWebApplicationContext()
-                .getBean(Response.class);
-        response.setMessage(Constants.ERROR);
-        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        Response response = generateResponse(Constants.ERROR,
+                HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(getContentHandler().marshal(response),
                 response.getHttpStatus());
@@ -702,10 +646,8 @@ public class UserResource extends AbstractResourse {
                                         LOGGER.debug(Constants.STATUS_REQ_FAIL + " " + Constants.USER_ALREADY_EXISTS
                                                 + " http status = " + HttpStatus.CONFLICT);
 
-                                        Response response = ContextLoader.getCurrentWebApplicationContext()
-                                                .getBean(Response.class);
-                                        response.setMessage(Constants.USER_ALREADY_EXISTS);
-                                        response.setHttpStatus(HttpStatus.CONFLICT);
+                                        Response response = generateResponse(Constants.USER_ALREADY_EXISTS,
+                                                HttpStatus.CONFLICT);
 
                                         return new ResponseEntity<>(getContentHandler().marshal(response),
                                                 response.getHttpStatus());
@@ -725,10 +667,8 @@ public class UserResource extends AbstractResourse {
                                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
                                                     + " http status = " + HttpStatus.OK);
 
-                                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                                    .getBean(Response.class);
-                                            response.setMessage(Constants.SUCCESS);
-                                            response.setHttpStatus(HttpStatus.OK);
+                                            Response response = generateResponse(Constants.SUCCESS,
+                                                    HttpStatus.OK);
 
                                             return new ResponseEntity<>(getContentHandler().marshal(response),
                                                     response.getHttpStatus());
@@ -736,12 +676,10 @@ public class UserResource extends AbstractResourse {
                                     }
                                 } else {
                                     LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
-                                            + " http status = " + HttpStatus.CONFLICT);
+                                            + " http status = " + HttpStatus.EXPECTATION_FAILED);
 
-                                    Response response = ContextLoader.getCurrentWebApplicationContext()
-                                            .getBean(Response.class);
-                                    response.setMessage(Constants.UNMARSHALING_FAILED);
-                                    response.setHttpStatus(HttpStatus.CONFLICT);
+                                    Response response = generateResponse(Constants.UNMARSHALING_FAILED,
+                                            HttpStatus.EXPECTATION_FAILED);
 
                                     return new ResponseEntity<>(getContentHandler().marshal(response),
                                             response.getHttpStatus());
@@ -749,14 +687,11 @@ public class UserResource extends AbstractResourse {
                             } catch (Exception ex) {
                                 LOGGER.error(ex, ex);
                             }
-
                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
-                                    + " http status = " + HttpStatus.CONFLICT);
+                                    + " http status = " + HttpStatus.EXPECTATION_FAILED);
 
-                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                    .getBean(Response.class);
-                            response.setMessage(Constants.UNMARSHALING_FAILED);
-                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            Response response = generateResponse(Constants.UNMARSHALING_FAILED,
+                                    HttpStatus.EXPECTATION_FAILED);
 
                             return new ResponseEntity<>(getContentHandler().marshal(response),
                                     response.getHttpStatus());
@@ -764,10 +699,8 @@ public class UserResource extends AbstractResourse {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
                                     + " http status = " + HttpStatus.CONFLICT);
 
-                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                    .getBean(Response.class);
-                            response.setMessage(Constants.PERMISSION_DENIED);
-                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            Response response = generateResponse(Constants.PERMISSION_DENIED,
+                                    HttpStatus.CONFLICT);
 
                             return new ResponseEntity<>(getContentHandler().marshal(response),
                                     response.getHttpStatus());
@@ -776,10 +709,8 @@ public class UserResource extends AbstractResourse {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_CREATOR_FOUND
                                 + " http status = " + HttpStatus.CONFLICT);
 
-                        Response response = ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(Response.class);
-                        response.setMessage(Constants.NO_CREATOR_FOUND);
-                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        Response response = generateResponse(Constants.NO_CREATOR_FOUND,
+                                HttpStatus.CONFLICT);
 
                         return new ResponseEntity<>(getContentHandler().marshal(response),
                                 response.getHttpStatus());
@@ -788,10 +719,8 @@ public class UserResource extends AbstractResourse {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
                             + " http status = " + HttpStatus.NOT_ACCEPTABLE);
 
-                    Response response = ContextLoader.getCurrentWebApplicationContext()
-                            .getBean(Response.class);
-                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
-                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
+                            HttpStatus.NOT_ACCEPTABLE);
 
                     return new ResponseEntity<>(getContentHandler().marshal(response),
                             response.getHttpStatus());
@@ -803,10 +732,8 @@ public class UserResource extends AbstractResourse {
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
                 " http status = " + HttpStatus.BAD_REQUEST);
 
-        Response response = ContextLoader.getCurrentWebApplicationContext()
-                .getBean(Response.class);
-        response.setMessage(Constants.ERROR);
-        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        Response response = generateResponse(Constants.ERROR,
+                HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(getContentHandler().marshal(response),
                 response.getHttpStatus());
@@ -885,44 +812,37 @@ public class UserResource extends AbstractResourse {
                                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
                                                     + " http status = " + HttpStatus.OK);
 
-                                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                                    .getBean(Response.class);
-                                            response.setMessage(Constants.SUCCESS);
-                                            response.setHttpStatus(HttpStatus.OK);
+                                            Response response = generateResponse(Constants.SUCCESS,
+                                                    HttpStatus.OK);
 
                                             return new ResponseEntity<>(getContentHandler().marshal(response),
                                                     response.getHttpStatus());
                                         } else {
                                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
-                                                    " http status = " + HttpStatus.CONFLICT);
-                                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                                    .getBean(Response.class);
-                                            response.setMessage(Constants.ERROR);
-                                            response.setHttpStatus(HttpStatus.CONFLICT);
+                                                    " http status = " + HttpStatus.EXPECTATION_FAILED);
+
+                                            Response response = generateResponse(Constants.ERROR,
+                                                    HttpStatus.EXPECTATION_FAILED);
 
                                             return new ResponseEntity<>(getContentHandler().marshal(response),
                                                     response.getHttpStatus());
                                         }
                                     } else {
                                         LOGGER.debug(Constants.STATUS_REQ_FAIL + "User for updating not found"
-                                                + " http status = " + HttpStatus.CONFLICT);
+                                                + " http status = " + HttpStatus.EXPECTATION_FAILED);
 
-                                        Response response = ContextLoader.getCurrentWebApplicationContext()
-                                                .getBean(Response.class);
-                                        response.setMessage(Constants.NO_USER_FOUND);
-                                        response.setHttpStatus(HttpStatus.CONFLICT);
+                                        Response response = generateResponse(Constants.NO_USER_FOUND,
+                                                HttpStatus.EXPECTATION_FAILED);
 
                                         return new ResponseEntity<>(getContentHandler().marshal(response),
                                                 response.getHttpStatus());
                                     }
                                 } else {
                                     LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
-                                            + " http status = " + HttpStatus.CONFLICT);
+                                            + " http status = " + HttpStatus.EXPECTATION_FAILED);
 
-                                    Response response = ContextLoader.getCurrentWebApplicationContext()
-                                            .getBean(Response.class);
-                                    response.setMessage(Constants.UNMARSHALING_FAILED);
-                                    response.setHttpStatus(HttpStatus.CONFLICT);
+                                    Response response = generateResponse(Constants.UNMARSHALING_FAILED,
+                                            HttpStatus.EXPECTATION_FAILED);
 
                                     return new ResponseEntity<>(getContentHandler().marshal(response),
                                             response.getHttpStatus());
@@ -931,12 +851,10 @@ public class UserResource extends AbstractResourse {
                                 LOGGER.error(ex, ex);
                             }
                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
-                                    + " http status = " + HttpStatus.CONFLICT);
+                                    + " http status = " + HttpStatus.EXPECTATION_FAILED);
 
-                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                    .getBean(Response.class);
-                            response.setMessage(Constants.UNMARSHALING_FAILED);
-                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            Response response = generateResponse(Constants.UNMARSHALING_FAILED,
+                                    HttpStatus.EXPECTATION_FAILED);
 
                             return new ResponseEntity<>(getContentHandler().marshal(response),
                                     response.getHttpStatus());
@@ -944,10 +862,8 @@ public class UserResource extends AbstractResourse {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
                                     + " http status = " + HttpStatus.CONFLICT);
 
-                            Response response = ContextLoader.getCurrentWebApplicationContext()
-                                    .getBean(Response.class);
-                            response.setMessage(Constants.PERMISSION_DENIED);
-                            response.setHttpStatus(HttpStatus.CONFLICT);
+                            Response response = generateResponse(Constants.PERMISSION_DENIED,
+                                    HttpStatus.CONFLICT);
 
                             return new ResponseEntity<>(getContentHandler().marshal(response),
                                     response.getHttpStatus());
@@ -956,10 +872,8 @@ public class UserResource extends AbstractResourse {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_UPDATER_FOUND
                                 + " http status = " + HttpStatus.CONFLICT);
 
-                        Response response = ContextLoader.getCurrentWebApplicationContext()
-                                .getBean(Response.class);
-                        response.setMessage(Constants.NO_UPDATER_FOUND);
-                        response.setHttpStatus(HttpStatus.CONFLICT);
+                        Response response = generateResponse(Constants.NO_UPDATER_FOUND,
+                                HttpStatus.CONFLICT);
 
                         return new ResponseEntity<>(getContentHandler().marshal(response),
                                 response.getHttpStatus());
@@ -968,10 +882,8 @@ public class UserResource extends AbstractResourse {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
                             + " http status = " + HttpStatus.NOT_ACCEPTABLE);
 
-                    Response response = ContextLoader.getCurrentWebApplicationContext()
-                            .getBean(Response.class);
-                    response.setMessage(Constants.VERSION_NOT_SUPPORTED);
-                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
+                            HttpStatus.NOT_ACCEPTABLE);
 
                     return new ResponseEntity<>(getContentHandler().marshal(response),
                             response.getHttpStatus());
@@ -983,10 +895,8 @@ public class UserResource extends AbstractResourse {
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
                 " http status = " + HttpStatus.BAD_REQUEST);
 
-        Response response = ContextLoader.getCurrentWebApplicationContext()
-                .getBean(Response.class);
-        response.setMessage(Constants.ERROR);
-        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        Response response = generateResponse(Constants.ERROR,
+                HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(getContentHandler().marshal(response),
                 response.getHttpStatus());
