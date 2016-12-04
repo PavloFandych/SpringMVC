@@ -1,8 +1,6 @@
 package org.total.spring.web.resources;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,16 +8,9 @@ import org.total.spring.root.entity.Country;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.entity.enums.CountryCode;
-import org.total.spring.root.entity.enums.RoleType;
-import org.total.spring.root.exceptions.ApplicationException;
-import org.total.spring.root.marshall.ContentHandler;
+import org.total.spring.root.response.Response;
 import org.total.spring.root.service.interfaces.CountryService;
-import org.total.spring.root.service.interfaces.RoleService;
-import org.total.spring.root.service.interfaces.UserService;
 import org.total.spring.root.util.Constants;
-import org.total.spring.root.util.PasswordManager;
-import org.total.spring.root.util.PermitionManager;
-import org.total.spring.root.util.Validator;
 import org.total.spring.root.version.Version;
 
 import java.util.ArrayList;
@@ -27,29 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-public class CountryResource {
-    private static final Logger LOGGER = Logger.getLogger(CountryResource.class);
-
+public class CountryResource extends AbstractResourse {
     @Autowired
     private CountryService countryService;
-
-    @Autowired
-    private PasswordManager passwordManager;
-
-    @Autowired
-    private ContentHandler contentHandler;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private Validator validator;
-
-    @Autowired
-    private PermitionManager permitionManager;
 
     public CountryService getCountryService() {
         return countryService;
@@ -59,72 +30,21 @@ public class CountryResource {
         this.countryService = countryService;
     }
 
-    public PasswordManager getPasswordManager() {
-        return passwordManager;
-    }
-
-    public void setPasswordManager(PasswordManager passwordManager) {
-        this.passwordManager = passwordManager;
-    }
-
-    public ContentHandler getContentHandler() {
-        return contentHandler;
-    }
-
-    public void setContentHandler(ContentHandler contentHandler) {
-        this.contentHandler = contentHandler;
-    }
-
-    public UserService getUserService() {
-        return userService;
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    public RoleService getRoleService() {
-        return roleService;
-    }
-
-    public void setRoleService(RoleService roleService) {
-        this.roleService = roleService;
-    }
-
-    @Qualifier("webInputParamsValidator")
-    public Validator getValidator() {
-        return validator;
-    }
-
-    public void setValidator(Validator validator) {
-        this.validator = validator;
-    }
-
-    @Qualifier("permitionManagerCapability")
-    public PermitionManager getPermitionManager() {
-        return permitionManager;
-    }
-
-    public void setPermitionManager(PermitionManager permitionManager) {
-        this.permitionManager = permitionManager;
-    }
-
     @RequestMapping(value = "/countries",
             method = RequestMethod.GET,
-            produces = Constants.CONTENT_TYPE_APPLICATION_XML)
+            produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
     public ResponseEntity<?> fetchAllCountries(@RequestHeader(name = "Authorization", required = false) String authorization,
-                                @RequestHeader(name = "Content-Type",
-                                        required = false) String contentType,
-                                @RequestHeader(name = "Version",
-                                        required = false) String version) throws ApplicationException {
+                                               @RequestHeader(name = "Content-Type",
+                                                       required = false) String contentType,
+                                               @RequestHeader(name = "Version",
+                                                       required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
                         contentType,
                         version})
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
-
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
                 if (Version.valueOf(version).equals(Version.V1)) {
                     String credentials = getPasswordManager()
@@ -139,73 +59,90 @@ public class CountryResource {
                                             .encodeMD5(loginAndPassword.get(1)));
 
                     if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
-                                + getter.getUserName() + " found\n");
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.GETTER_FOUND);
 
                         if (getPermitionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
-                                    + getter.getUserName() + " has permitions to get list of countries\n");
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
 
                             List<Country> list = getCountryService().findAll();
 
-                            if (list == null) {
-                                throw new ApplicationException(HttpStatus.CONFLICT,
-                                        Constants.NO_COUNTRY_FOUND);
+                            if (list == null || list.isEmpty()) {
+                                LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_COUNTRY_FOUND
+                                        + " http status = " + HttpStatus.OK);
+
+                                Response response = generateResponse(Constants.NO_COUNTRY_FOUND,
+                                        HttpStatus.OK);
+
+                                return new ResponseEntity<>(response,
+                                        response.getHttpStatus());
                             } else {
-                                return new ResponseEntity<>(getContentHandler()
-                                        .marshal(list, "countries"), HttpStatus.OK);
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
+                                        + " http status = " + HttpStatus.OK);
+
+                                return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
-                                    + getter.getUserName() + "\n");
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
+                                    + " http status = " + HttpStatus.CONFLICT);
 
-                            throw new ApplicationException(HttpStatus.CONFLICT,
-                                    Constants.PERMITION_DENIED);
+                            Response response = generateResponse(Constants.PERMISSION_DENIED,
+                                    HttpStatus.CONFLICT);
+
+                            return new ResponseEntity<>(response,
+                                    response.getHttpStatus());
                         }
                     } else {
-                        LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
-                                + HttpStatus.CONFLICT + " Getter not found\n");
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
+                                + " http status = " + HttpStatus.CONFLICT);
 
-                        throw new ApplicationException(HttpStatus.CONFLICT,
-                                Constants.NO_USER_FOUND);
+                        Response response = generateResponse(Constants.NO_GETTER_FOUND,
+                                HttpStatus.CONFLICT);
+
+                        return new ResponseEntity<>(response,
+                                response.getHttpStatus());
                     }
                 } else {
-                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
-                            + HttpStatus.NOT_ACCEPTABLE + "\n");
+                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
+                            + " http status = " + HttpStatus.NOT_ACCEPTABLE);
 
-                    throw new ApplicationException(HttpStatus.NOT_ACCEPTABLE,
-                            Constants.VERSION_NOT_SUPPORTED);
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
+                            HttpStatus.NOT_ACCEPTABLE);
+
+                    return new ResponseEntity<>(response,
+                            response.getHttpStatus());
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
             }
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
-                + HttpStatus.BAD_REQUEST + "\n");
+        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
+                " http status = " + HttpStatus.BAD_REQUEST);
 
-        throw new ApplicationException(HttpStatus.BAD_REQUEST,
-                Constants.ERROR);
+        Response response = generateResponse(Constants.ERROR,
+                HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(response,
+                response.getHttpStatus());
     }
 
     @RequestMapping(value = "/countries/{countryCode}",
             method = RequestMethod.GET,
-            produces = Constants.CONTENT_TYPE_APPLICATION_XML)
-    public String fetchUserById(@PathVariable String countryCode,
-                                @RequestHeader(name = "Authorization", required = false) String authorization,
-                                @RequestHeader(name = "Content-Type",
-                                        required = false) String contentType,
-                                @RequestHeader(name = "Version",
-                                        required = false) String version) throws ApplicationException {
+            produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
+    public ResponseEntity<?> fetchCountryByCountryCode(@PathVariable String countryCode,
+                                                       @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                       @RequestHeader(name = "Content-Type",
+                                                               required = false) String contentType,
+                                                       @RequestHeader(name = "Version",
+                                                               required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         countryCode,
                         authorization,
                         contentType,
                         version})
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
-
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
                 if (Version.valueOf(version).equals(Version.V1)) {
                     String credentials = getPasswordManager().decodeBase64(authorization);
@@ -216,34 +153,73 @@ public class CountryResource {
                             getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
                     if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName() + " found\n");
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.GETTER_FOUND);
 
-                        if (getter.getRoles().contains(getRoleService().findRoleByRoleType(RoleType.ADMIN))) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " User " + getter.getUserName()
-                                    + " has permitions to get country information\n");
+                        if (getPermitionManager()
+                                .containEntity(getter, CapabilityType.READ)) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
 
-                            List<Country> countries = new ArrayList<Country>();
-                            countries.add(getCountryService()
+                            List<Country> list = new ArrayList<Country>();
+                            list.add(getCountryService()
                                     .findCountryByCountryCode(CountryCode
                                             .valueOf(countryCode)));
 
-                            return getContentHandler().marshal(countries, "countries");
-                        } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for user "
-                                    + getter.getUserName() + "\n");
+                            if (list.isEmpty()) {
+                                LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_COUNTRY_FOUND
+                                        + " http status = " + HttpStatus.OK);
 
-                            return Constants.PERMITION_DENIED;
+                                Response response = generateResponse(Constants.NO_COUNTRY_FOUND,
+                                        HttpStatus.OK);
+
+                                return new ResponseEntity<>(response,
+                                        response.getHttpStatus());
+                            } else {
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
+                                        + " http status = " + HttpStatus.OK);
+
+                                return new ResponseEntity<>(list, HttpStatus.OK);
+                            }
+                        } else {
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
+                                    + " http status = " + HttpStatus.CONFLICT);
+
+                            Response response = generateResponse(Constants.PERMISSION_DENIED,
+                                    HttpStatus.CONFLICT);
+
+                            return new ResponseEntity<>(response,
+                                    response.getHttpStatus());
                         }
                     } else {
-                        return Constants.NO_USER_FOUND;
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
+                                + " http status = " + HttpStatus.CONFLICT);
+
+                        Response response = generateResponse(Constants.NO_GETTER_FOUND,
+                                HttpStatus.CONFLICT);
+
+                        return new ResponseEntity<>(response,
+                                response.getHttpStatus());
                     }
                 } else {
-                    return Constants.VERSION_NOT_SUPPORTED;
+                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
+                            + " http status = " + HttpStatus.NOT_ACCEPTABLE);
+
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
+                            HttpStatus.NOT_ACCEPTABLE);
+
+                    return new ResponseEntity<>(response,
+                            response.getHttpStatus());
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
             }
         }
-        return Constants.ERROR;
+        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
+                " http status = " + HttpStatus.BAD_REQUEST);
+
+        Response response = generateResponse(Constants.ERROR,
+                HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(response,
+                response.getHttpStatus());
     }
 }

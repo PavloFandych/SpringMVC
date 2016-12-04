@@ -4,10 +4,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +19,7 @@ import java.util.Set;
         }
 )
 @XmlRootElement
-@XmlType(propOrder = {"userId", "userName", "password", "roles", "userEmail", "city"})
+@XmlType(propOrder = {"userId", "userName", "password", "roles", "userEmail"})
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class User implements Serializable {
     private long userId;
@@ -142,7 +139,7 @@ public class User implements Serializable {
             nullable = true,
             foreignKey = @ForeignKey(name = "FK_userId_cityId")
     )
-    @XmlElement(name = "city")
+    @XmlTransient
     public City getCity() {
         return city;
     }

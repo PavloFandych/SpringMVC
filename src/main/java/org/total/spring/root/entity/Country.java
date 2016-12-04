@@ -1,12 +1,12 @@
 package org.total.spring.root.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.total.spring.root.entity.enums.CountryCode;
 import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -19,8 +19,6 @@ import java.util.Set;
                         columnNames = "countryCode")
         }
 )
-@XmlRootElement
-@XmlType(propOrder = {"countryId", "countryName", "countryCode"})
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Country implements Serializable {
     private long countryId;
@@ -48,7 +46,6 @@ public class Country implements Serializable {
     @Column(name = "countryId",
             nullable = false
     )
-    @XmlElement
     public long getCountryId() {
         return countryId;
     }
@@ -60,7 +57,6 @@ public class Country implements Serializable {
     @Column(name = "countryName",
             nullable = false
     )
-    @XmlElement
     public String getCountryName() {
         return countryName;
     }
@@ -74,7 +70,6 @@ public class Country implements Serializable {
             length = Constants.COUNTRY_CODE_SIZE
     )
     @Enumerated(EnumType.STRING)
-    @XmlElement
     public CountryCode getCountryCode() {
         return countryCode;
     }
@@ -86,7 +81,7 @@ public class Country implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "country"
     )
-    @XmlTransient
+    @JsonIgnore
     public Set<City> getCities() {
         return cities;
     }
@@ -98,7 +93,7 @@ public class Country implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "country"
     )
-    @XmlTransient
+    @JsonIgnore
     public Set<Tournament> getTournaments() {
         return tournaments;
     }

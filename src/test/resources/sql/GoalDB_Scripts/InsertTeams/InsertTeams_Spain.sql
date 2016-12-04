@@ -126,5 +126,5 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
                              FROM City
                              WHERE cityCode = 'VALE')),
   ('ESP043', 'Racing', (SELECT cityId
-                                FROM City
-                                WHERE cityCode = 'STDR'));
+                        FROM City
+                        WHERE cityCode = 'STDR'));
