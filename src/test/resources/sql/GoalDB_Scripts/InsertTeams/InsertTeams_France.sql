@@ -120,5 +120,5 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
                                  FROM City
                                  WHERE cityCode = 'AJAC')),
   ('FRA041', 'Evian', (SELECT cityId
-                                   FROM City
-                                   WHERE cityCode = 'ANNE'));
+                       FROM City
+                       WHERE cityCode = 'ANNE'));
