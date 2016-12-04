@@ -1,5 +1,7 @@
 package org.total.spring.root.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.total.spring.root.util.Constants;
@@ -49,6 +51,7 @@ public class Result implements Serializable {
     @Column(name = "resultId",
             nullable = false
     )
+    @JsonIgnore
     public long getResultId() {
         return resultId;
     }
@@ -74,6 +77,7 @@ public class Result implements Serializable {
             nullable = false,
             foreignKey = @ForeignKey(name = "FK_tournamentId")
     )
+    @JsonIgnore
     public Tournament getTournament() {
         return tournament;
     }
@@ -87,6 +91,7 @@ public class Result implements Serializable {
             nullable = false,
             foreignKey = @ForeignKey(name = "FK_seasonId")
     )
+    @JsonIgnore
     public Season getSeason() {
         return season;
     }
@@ -98,6 +103,7 @@ public class Result implements Serializable {
     @Column(name = "matchDay",
             nullable = false
     )
+    @JsonIgnore
     public byte getMatchDay() {
         return matchDay;
     }
@@ -111,6 +117,7 @@ public class Result implements Serializable {
             nullable = false,
             foreignKey = @ForeignKey(name = "FK_hostTeamId")
     )
+    @JsonIgnore
     public Team getHostTeam() {
         return hostTeam;
     }
@@ -124,6 +131,7 @@ public class Result implements Serializable {
             nullable = false,
             foreignKey = @ForeignKey(name = "FK_guestTeamId")
     )
+    @JsonIgnore
     public Team getGuestTeam() {
         return guestTeam;
     }
@@ -157,6 +165,7 @@ public class Result implements Serializable {
     @Column(name = "date",
             nullable = true
     )
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
     public Calendar getDate() {
         return date;
     }

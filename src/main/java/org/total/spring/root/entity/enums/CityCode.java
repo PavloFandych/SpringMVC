@@ -404,5 +404,8 @@ public enum CityCode {
     TOUL,
     TOUR,
     TROY,
-    VALN
+    VALN,
+
+    STDR,
+    ANNE
 }

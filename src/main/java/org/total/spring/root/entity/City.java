@@ -1,12 +1,12 @@
 package org.total.spring.root.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.total.spring.root.entity.enums.CityCode;
 import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,8 +20,6 @@ import java.util.Set;
                         columnNames = "cityCode"),
         }
 )
-@XmlRootElement
-@XmlType(propOrder = {"cityId", "cityName", "cityCode"})
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class City implements Serializable {
     private long cityId;
@@ -44,7 +42,6 @@ public class City implements Serializable {
     @Column(name = "cityId",
             nullable = false
     )
-    @XmlElement
     public long getCityId() {
         return cityId;
     }
@@ -56,7 +53,6 @@ public class City implements Serializable {
     @Column(name = "cityName",
             nullable = false
     )
-    @XmlElement
     public String getCityName() {
         return cityName;
     }
@@ -69,7 +65,6 @@ public class City implements Serializable {
             nullable = false,
             length = Constants.CITY_CODE_SIZE
     )
-    @XmlElement
     @Enumerated(EnumType.STRING)
     public CityCode getCityCode() {
         return cityCode;
@@ -84,7 +79,7 @@ public class City implements Serializable {
             nullable = true,
             foreignKey = @ForeignKey(name = "FK_cityId_countryId")
     )
-    @XmlTransient
+    @JsonIgnore
     public Country getCountry() {
         return country;
     }
@@ -96,7 +91,7 @@ public class City implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "city"
     )
-    @XmlTransient
+    @JsonIgnore
     public Set<Team> getTeams() {
         if (this.teams == null) {
             this.teams = new HashSet<>();
@@ -111,7 +106,7 @@ public class City implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "city"
     )
-    @XmlTransient
+    @JsonIgnore
     public Set<User> getUsers() {
         return users;
     }

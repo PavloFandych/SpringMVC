@@ -1,8 +1,6 @@
 package org.total.spring.web.resources;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +10,7 @@ import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.proc.TeamMatch;
 import org.total.spring.root.response.Response;
 import org.total.spring.root.service.interfaces.TeamMatchService;
-import org.total.spring.root.service.interfaces.UserService;
 import org.total.spring.root.util.Constants;
-import org.total.spring.root.util.PasswordManager;
-import org.total.spring.root.util.PermitionManager;
-import org.total.spring.root.util.Validator;
 import org.total.spring.root.version.Version;
 
 import java.util.Arrays;
@@ -27,25 +21,9 @@ import java.util.List;
  */
 
 @RestController
-public class TeamMatchResource {
-    private static final Logger LOGGER = Logger.getLogger(TeamMatchResource.class);
-
+public class TeamMatchResource extends AbstractResourse {
     @Autowired
     private TeamMatchService teamMatchService;
-
-    @Autowired
-    private Validator<String> validator;
-
-    @Autowired
-    private PasswordManager passwordManager;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private PermitionManager<User, CapabilityType> permitionManager;
-
-    private Response response;
 
     public TeamMatchService getTeamMatchService() {
         return teamMatchService;
@@ -53,40 +31,6 @@ public class TeamMatchResource {
 
     public void setTeamMatchService(TeamMatchService teamMatchService) {
         this.teamMatchService = teamMatchService;
-    }
-
-    @Qualifier("webInputParamsValidator")
-    public Validator<String> getValidator() {
-        return validator;
-    }
-
-    public void setValidator(Validator<String> validator) {
-        this.validator = validator;
-    }
-
-    public PasswordManager getPasswordManager() {
-        return passwordManager;
-    }
-
-    public void setPasswordManager(PasswordManager passwordManager) {
-        this.passwordManager = passwordManager;
-    }
-
-    public UserService getUserService() {
-        return userService;
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    @Qualifier("permitionManagerCapability")
-    public PermitionManager<User, CapabilityType> getPermitionManager() {
-        return permitionManager;
-    }
-
-    public void setPermitionManager(PermitionManager<User, CapabilityType> permitionManager) {
-        this.permitionManager = permitionManager;
     }
 
     @RequestMapping(value = "/teamMatches",
@@ -112,8 +56,7 @@ public class TeamMatchResource {
                         version,
                         teamCode})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
-
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
                 if (Version.valueOf(version).equals(Version.V1)) {
                     String credentials = getPasswordManager()
@@ -128,13 +71,11 @@ public class TeamMatchResource {
                                             .encodeMD5(loginAndPassword.get(1)));
 
                     if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
-                                + getter.getUserName() + " found\n");
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.GETTER_FOUND);
 
                         if (getPermitionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " Getter "
-                                    + getter.getUserName() + " has permitions to get list of team matches\n");
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
 
                             String opponentTeamCodeArgument = null;
                             String seasonCodeArgument = null;
@@ -159,51 +100,54 @@ public class TeamMatchResource {
                                             tournamentCodeArgument);
 
                             if (list == null || list.isEmpty()) {
-                                LOGGER.warn(" http status = " + HttpStatus.CONFLICT
-                                        + " team matches not found\n");
+                                LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_TEAM_MATCHES_FOUND
+                                        + " http status = " + HttpStatus.OK);
 
-                                response = ContextLoader.getCurrentWebApplicationContext()
+                                Response response = ContextLoader.getCurrentWebApplicationContext()
                                         .getBean(Response.class);
-                                response.setHttpStatus(HttpStatus.CONFLICT);
                                 response.setMessage(Constants.NO_TEAM_MATCHES_FOUND);
+                                response.setHttpStatus(HttpStatus.OK);
 
                                 return new ResponseEntity<>(response,
                                         response.getHttpStatus());
                             } else {
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
+                                        + " http status = " + HttpStatus.OK);
+
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
-                            LOGGER.debug(Constants.STATUS_REQ_FAIL + " Permition denied for getter "
-                                    + getter.getUserName() + "\n");
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
+                                    + " http status = " + HttpStatus.CONFLICT);
 
-                            response = ContextLoader.getCurrentWebApplicationContext()
+                            Response response = ContextLoader.getCurrentWebApplicationContext()
                                     .getBean(Response.class);
+                            response.setMessage(Constants.PERMISSION_DENIED);
                             response.setHttpStatus(HttpStatus.CONFLICT);
-                            response.setMessage(Constants.PERMITION_DENIED);
 
                             return new ResponseEntity<>(response,
                                     response.getHttpStatus());
                         }
                     } else {
-                        LOGGER.warn(Constants.NO_USER_FOUND + " http status = "
-                                + HttpStatus.CONFLICT + " Getter not found\n");
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
+                                + " http status = " + HttpStatus.CONFLICT);
 
-                        response = ContextLoader.getCurrentWebApplicationContext()
+                        Response response = ContextLoader.getCurrentWebApplicationContext()
                                 .getBean(Response.class);
+                        response.setMessage(Constants.NO_GETTER_FOUND);
                         response.setHttpStatus(HttpStatus.CONFLICT);
-                        response.setMessage(Constants.NO_USER_FOUND);
 
                         return new ResponseEntity<>(response,
                                 response.getHttpStatus());
                     }
                 } else {
-                    LOGGER.warn(Constants.VERSION_NOT_SUPPORTED + " http status = "
-                            + HttpStatus.NOT_ACCEPTABLE + "\n");
+                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
+                            + " http status = " + HttpStatus.NOT_ACCEPTABLE);
 
-                    response = ContextLoader.getCurrentWebApplicationContext()
+                    Response response = ContextLoader.getCurrentWebApplicationContext()
                             .getBean(Response.class);
-                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
                     response.setMessage(Constants.VERSION_NOT_SUPPORTED);
+                    response.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
 
                     return new ResponseEntity<>(response,
                             response.getHttpStatus());
@@ -212,13 +156,13 @@ public class TeamMatchResource {
                 LOGGER.error(e, e);
             }
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL + " http status = "
-                + HttpStatus.BAD_REQUEST + "\n");
+        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
+                " http status = " + HttpStatus.BAD_REQUEST);
 
-        response = ContextLoader.getCurrentWebApplicationContext()
+        Response response = ContextLoader.getCurrentWebApplicationContext()
                 .getBean(Response.class);
-        response.setHttpStatus(HttpStatus.BAD_REQUEST);
         response.setMessage(Constants.ERROR);
+        response.setHttpStatus(HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(response,
                 response.getHttpStatus());

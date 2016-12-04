@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Scope;
 import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -19,8 +18,6 @@ import java.util.Set;
                         columnNames = "teamCode")
         }
 )
-@XmlRootElement
-@XmlType(propOrder = {"teamId", "teamName", "teamCode"})
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Team implements Serializable {
     private long teamId;
@@ -47,7 +44,6 @@ public class Team implements Serializable {
     @Column(name = "teamId",
             nullable = false
     )
-    @XmlElement
     public long getTeamId() {
         return teamId;
     }
@@ -59,7 +55,6 @@ public class Team implements Serializable {
     @Column(name = "teamName",
             nullable = false
     )
-    @XmlElement
     public String getTeamName() {
         return teamName;
     }
@@ -72,7 +67,6 @@ public class Team implements Serializable {
             nullable = false,
             length = Constants.TEAM_CODE_SIZE
     )
-    @XmlElement
     public String getTeamCode() {
         return teamCode;
     }
@@ -86,7 +80,6 @@ public class Team implements Serializable {
             nullable = false,
             foreignKey = @ForeignKey(name = "FK_cityId")
     )
-    @XmlTransient
     @JsonIgnore
     public City getCity() {
         return city;
@@ -96,8 +89,6 @@ public class Team implements Serializable {
         this.city = city;
     }
 
-    @XmlElementWrapper(name = "teamResultsAsHost")
-    @XmlElement(name = "result")
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "hostTeam"
     )
@@ -110,8 +101,6 @@ public class Team implements Serializable {
         this.resultsAsHost = resultsAsHost;
     }
 
-    @XmlElementWrapper(name = "teamResultsAsGuest")
-    @XmlElement(name = "result")
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "guestTeam"
     )
