@@ -405,7 +405,6 @@ public enum CityCode {
     TOUR,
     TROY,
     VALN,
-
     STDR,
     ANNE
 }
