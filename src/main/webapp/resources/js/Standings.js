@@ -82,6 +82,14 @@ $(document).ready(function () {
                 'Authorization': 'Basic QWRtaW46YWRtaW4='
             },
             success: function (data, status) {
+/*            alert(data.message);
+
+            if (data.message.indexOf("No standings found") > -1){
+                      $("#get-info-msg").hide();
+                      $(".teams-buttons").removeClass("team-selected");
+                      alert('Sorry, no results for the ' + $("#TournamentList").val() + '-' + $("#SeasonsList").val());
+
+            }else{*/
 
                 $("#get-info-msg").hide();
                 if (data.length === 0) {
@@ -117,6 +125,7 @@ $(document).ready(function () {
                 }
 
                 $(".teams-buttons").removeClass("team-selected");
+                //}
             },
             error: function (xhr, str) {
                 $("#get-info-msg").hide();
