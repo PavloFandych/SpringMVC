@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 @RestController
-public class TournamentResource extends AbstractResourse {
+public class TournamentResource extends AbstractResource {
     @Autowired
     private TournamentService tournamentService;
 

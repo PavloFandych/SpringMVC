@@ -3,15 +3,11 @@ package org.total.spring.web.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.total.spring.root.entity.Result;
+import org.springframework.web.bind.annotation.*;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.response.Response;
-import org.total.spring.root.service.interfaces.ResultService;
+import org.total.spring.root.service.interfaces.CouplesService;
 import org.total.spring.root.util.Constants;
 import org.total.spring.root.version.Version;
 
@@ -19,35 +15,41 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by total on 10/31/16.
+ * Created by pavlo.fandych on 12/5/2016.
  */
 
 @RestController
-public class ResultResource extends AbstractResource {
+public class CouplesResource extends AbstractResource {
     @Autowired
-    private ResultService resultService;
+    private CouplesService couplesService;
 
-    public ResultService getResultService() {
-        return resultService;
+    public CouplesService getCouplesService() {
+        return couplesService;
     }
 
-    public void setResultService(ResultService resultService) {
-        this.resultService = resultService;
+    public void setCouplesService(CouplesService couplesService) {
+        this.couplesService = couplesService;
     }
 
-    @RequestMapping(value = "/results",
+    @RequestMapping(value = "/couples",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllResults(@RequestHeader(name = "Authorization", required = false) String authorization,
-                                             @RequestHeader(name = "Content-Type",
-                                                     required = false) String contentType,
-                                             @RequestHeader(name = "Version",
-                                                     required = false) String version) {
+    public ResponseEntity<?> fetchCouples(@RequestHeader(name = "Authorization", required = false) String authorization,
+                                          @RequestHeader(name = "Content-Type",
+                                                  required = false) String contentType,
+                                          @RequestHeader(name = "Version",
+                                                  required = false) String version,
+                                          @RequestParam(name = "seasonCode",
+                                                  required = false) String seasonCode,
+                                          @RequestParam(name = "tournamentCode",
+                                                  required = false) String tournamentCode) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
                         contentType,
-                        version})
+                        version,
+                        seasonCode,
+                        tournamentCode})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
@@ -59,8 +61,8 @@ public class ResultResource extends AbstractResource {
                             .asList(credentials.split(":"));
 
                     User getter = getUserService()
-                            .findUserByUserNameAndPassword(
-                                    loginAndPassword.get(0), getPasswordManager()
+                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
+                                    getPasswordManager()
                                             .encodeMD5(loginAndPassword.get(1)));
 
                     if (getter != null) {
@@ -70,13 +72,14 @@ public class ResultResource extends AbstractResource {
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
 
-                            List<Result> list = getResultService().findAll();
+                            List<List<String>> list = getCouplesService()
+                                    .getCouples(seasonCode, tournamentCode);
 
                             if (list == null || list.isEmpty()) {
-                                LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_RESULT_FOUND
+                                LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_COUPLES_FOUND
                                         + " http status = " + HttpStatus.OK);
 
-                                Response response = generateResponse(Constants.NO_RESULT_FOUND,
+                                Response response = generateResponse(Constants.NO_COUPLES_FOUND,
                                         HttpStatus.OK);
 
                                 return new ResponseEntity<>(response,

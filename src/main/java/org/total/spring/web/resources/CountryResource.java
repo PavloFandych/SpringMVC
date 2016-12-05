@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-public class CountryResource extends AbstractResourse {
+public class CountryResource extends AbstractResource {
     @Autowired
     private CountryService countryService;
 

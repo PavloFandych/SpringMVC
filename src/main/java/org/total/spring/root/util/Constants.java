@@ -30,6 +30,8 @@ public interface Constants {
     public static final String NO_RESULT_FOUND = "No result found";
     public static final String NO_TEAM_MATCHES_FOUND = "No team matches found";
     public static final String NO_STANDINGS_FOUND = "No standings found";
+    public static final String NO_COUPLES_FOUND = "No couples found";
+
     public static final String NO_TOURNAMENT_FOUND = "No tournament found";
     public static final String NO_TEAM_FOUND = "No team found";
     public static final String NO_SEASON_FOUND = "No season found";
@@ -57,4 +59,5 @@ public interface Constants {
     public static final String CALL_GET_TEAM_LIST = "getTeamsList";
     public static final String CALL_GET_TEAM_MATCHES = "getTeamMatches";
     public static final String CALL_GET_STORED_STANDINGS = "getStoredStandings";
+    public static final String CALL_GET_COUPLES = "getCouplesBySeasonCodeAndTournamentCode";
 }

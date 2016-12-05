@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 @RestController
-public class SeasonResource extends AbstractResourse {
+public class SeasonResource extends AbstractResource {
     @Autowired
     private SeasonService seasonService;
 

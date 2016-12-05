@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 @RestController
-public class TeamMatchResource extends AbstractResourse {
+public class TeamMatchResource extends AbstractResource {
     @Autowired
     private TeamMatchService teamMatchService;
 

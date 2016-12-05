@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 @RestController
-public class StandingResource extends AbstractResourse {
+public class StandingResource extends AbstractResource {
     @Autowired
     private StandingService standingService;
 

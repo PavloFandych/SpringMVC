@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-public class UserResource extends AbstractResourse {
+public class UserResource extends AbstractResource {
     @Autowired
     private RoleService roleService;
 

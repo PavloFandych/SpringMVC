@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-public class CityResource extends AbstractResourse {
+public class CityResource extends AbstractResource {
     @Autowired
     private CityService cityService;
 

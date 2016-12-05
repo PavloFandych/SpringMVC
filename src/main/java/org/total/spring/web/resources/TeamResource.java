@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-public class TeamResource extends AbstractResourse {
+public class TeamResource extends AbstractResource {
     @Autowired
     private TeamService teamService;
 

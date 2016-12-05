@@ -15,8 +15,8 @@ import org.total.spring.root.util.Validator;
  * Created by total on 12/4/16.
  */
 
-public abstract class AbstractResourse {
-    protected static final Logger LOGGER = Logger.getLogger(AbstractResourse.class);
+public abstract class AbstractResource {
+    protected static final Logger LOGGER = Logger.getLogger(AbstractResource.class);
 
     @Autowired
     private UserService userService;
