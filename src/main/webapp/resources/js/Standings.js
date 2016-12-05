@@ -62,15 +62,12 @@ $(document).ready(function () {
                     $(".teams-buttons").click(function () {
                         $(this).toggleClass("team-selected");
                         var className = '.' + $(this).attr('id').split(' ')[0].substring(0, 6);
-                        //alert(className);
                         $(className).toggle();
-
                     });
                 }
             },
             error: function (xhr, str) {
                 $(".teams-buttons").removeClass("team-selected");
-
             }
         });
 
@@ -99,7 +96,6 @@ $(document).ready(function () {
                     $("#teams-list").show();
                     for (var i = 0; i < data.length; i++) {
                         for (var j = 1; j < data[i].length; j++) {
-
                             if (imgPath.hasOwnProperty(data[i][j])) {
                                 $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + (j + 1) + "]")).append("<img class='" + data[i][j] + " cell-img' src=/resources/images/" + imgPath[data[i][j]] + " width='20px' height='20px' />");
                             } else {
@@ -116,7 +112,6 @@ $(document).ready(function () {
                         for (var j = data.length * 2; j <= 39; j++) {
                             $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[1]/th[" + j + "]")).hide();
                             $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + j + "]")).hide();
-
                         }
                     }
                 }
