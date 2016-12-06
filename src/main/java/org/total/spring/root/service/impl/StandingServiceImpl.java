@@ -44,8 +44,11 @@ public class StandingServiceImpl implements StandingService {
     @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public List<Standing> getMatchDayStandings(String seasonCode, String tournamentCode, Byte matchDay) {
-        List<Standing> list = getStandingDAO().getMatchDayStandings(seasonCode, tournamentCode, matchDay);
+    public List<Standing> getMatchDayStandings(String seasonCode, String tournamentCode, Integer matchDay) {
+        List<Standing> list = null;
+        if (matchDay >= 1 && matchDay <= 38) {
+            list = getStandingDAO().getMatchDayStandings(seasonCode, tournamentCode, matchDay);
+        }
         return (list != null && !list.isEmpty()) ? list : null;
     }
 

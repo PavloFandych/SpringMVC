@@ -262,7 +262,7 @@ public class StandingResource extends AbstractResource {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
 
                             List<Standing> list = getStandingService()
-                                    .getMatchDayStandings(seasonCode, tournamentCode, Byte.parseByte(matchDay));
+                                    .getMatchDayStandings(seasonCode, tournamentCode, Integer.parseInt(matchDay));
 
                             if (list == null || list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_STANDINGS_FOUND

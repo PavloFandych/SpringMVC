@@ -54,7 +54,7 @@ public class StandingDAO extends GenericDAO<List<String>> {
 
     public List<Standing> getMatchDayStandings(String seasonCode,
                                                String tournamentCode,
-                                               Byte matchDay) {
+                                               Integer matchDay) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_TEAMS_ORDER_BY_MATCH_DAY)
                 .returningResultSet("standings", new RowMapper<Standing>() {
