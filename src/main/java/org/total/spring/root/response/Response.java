@@ -2,12 +2,8 @@ package org.total.spring.root.response;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
 /**
@@ -15,31 +11,17 @@ import java.io.Serializable;
  */
 
 @Component("response")
-@XmlRootElement
-@XmlType(propOrder = {"httpStatus", "message"})
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Response implements Serializable {
-    private HttpStatus httpStatus;
     private String message;
 
     public Response() {
     }
 
-    public Response(HttpStatus httpStatus, String message) {
-        this.httpStatus = httpStatus;
+    public Response(String message) {
         this.message = message;
     }
 
-    @XmlElement(name = "httpStatus")
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
-
-    public void setHttpStatus(HttpStatus httpStatus) {
-        this.httpStatus = httpStatus;
-    }
-
-    @XmlElement(name = "message")
     public String getMessage() {
         return message;
     }

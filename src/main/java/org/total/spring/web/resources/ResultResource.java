@@ -76,10 +76,9 @@ public class ResultResource extends AbstractResource {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_RESULT_FOUND
                                         + " http status = " + HttpStatus.NOT_FOUND);
 
-                                Response response = generateResponse(Constants.NO_RESULT_FOUND,
-                                        HttpStatus.NOT_FOUND);
+                                Response response = generateResponse(Constants.NO_RESULT_FOUND);
 
-                                return new ResponseEntity<>(response, response.getHttpStatus());
+                                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
                                         + " http status = " + HttpStatus.OK);
@@ -90,31 +89,25 @@ public class ResultResource extends AbstractResource {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
                                     + " http status = " + HttpStatus.CONFLICT);
 
-                            Response response = generateResponse(Constants.PERMISSION_DENIED,
-                                    HttpStatus.CONFLICT);
+                            Response response = generateResponse(Constants.PERMISSION_DENIED);
 
-                            return new ResponseEntity<>(response,
-                                    response.getHttpStatus());
+                            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
                                 + " http status = " + HttpStatus.CONFLICT);
 
-                        Response response = generateResponse(Constants.NO_GETTER_FOUND,
-                                HttpStatus.CONFLICT);
+                        Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
-                        return new ResponseEntity<>(response,
-                                response.getHttpStatus());
+                        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
                             + " http status = " + HttpStatus.NOT_ACCEPTABLE);
 
-                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
-                            HttpStatus.NOT_ACCEPTABLE);
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
-                    return new ResponseEntity<>(response,
-                            response.getHttpStatus());
+                    return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
@@ -123,10 +116,8 @@ public class ResultResource extends AbstractResource {
         LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
                 " http status = " + HttpStatus.BAD_REQUEST);
 
-        Response response = generateResponse(Constants.ERROR,
-                HttpStatus.BAD_REQUEST);
+        Response response = generateResponse(Constants.ERROR);
 
-        return new ResponseEntity<>(response,
-                response.getHttpStatus());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

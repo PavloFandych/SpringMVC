@@ -1,10 +1,10 @@
 package org.total.spring.root.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,8 +18,6 @@ import java.util.Set;
                         columnNames = "userName")
         }
 )
-@XmlRootElement
-@XmlType(propOrder = {"userId", "userName", "password", "roles", "userEmail"})
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class User implements Serializable {
     private long userId;
@@ -71,7 +69,6 @@ public class User implements Serializable {
     @Column(name = "userId",
             nullable = false
     )
-    @XmlElement
     public long getUserId() {
         return userId;
     }
@@ -84,7 +81,6 @@ public class User implements Serializable {
     @Column(name = "userName",
             nullable = false
     )
-    @XmlElement
     public String getUserName() {
         return userName;
     }
@@ -97,7 +93,6 @@ public class User implements Serializable {
     @Column(name = "password",
             nullable = false
     )
-    @XmlElement
     public String getPassword() {
         return password;
     }
@@ -121,8 +116,6 @@ public class User implements Serializable {
             foreignKey = @ForeignKey(name = "FK_userId"),
             inverseForeignKey = @ForeignKey(name = "FK_UserIdroleId")
     )
-    @XmlElementWrapper(name = "userRoles")
-    @XmlElement(name = "role")
     public Set<Role> getRoles() {
         if (this.roles == null) {
             this.roles = new HashSet<>();
@@ -139,7 +132,7 @@ public class User implements Serializable {
             nullable = true,
             foreignKey = @ForeignKey(name = "FK_userId_cityId")
     )
-    @XmlTransient
+    @JsonIgnore
     public City getCity() {
         return city;
     }
@@ -152,7 +145,6 @@ public class User implements Serializable {
     @Column(name = "userEmail",
             nullable = true
     )
-    @XmlElement
     public String getUserEmail() {
         return userEmail;
     }

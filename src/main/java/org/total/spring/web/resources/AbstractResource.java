@@ -3,7 +3,6 @@ package org.total.spring.web.resources;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.context.ContextLoader;
 import org.total.spring.root.response.Response;
 import org.total.spring.root.service.interfaces.UserService;
@@ -64,11 +63,10 @@ public abstract class AbstractResource {
         this.validator = validator;
     }
 
-    protected Response generateResponse(String message, HttpStatus httpStatus) {
+    protected Response generateResponse(String message) {
         Response response = ContextLoader.getCurrentWebApplicationContext()
                 .getBean(Response.class);
         response.setMessage(message);
-        response.setHttpStatus(httpStatus);
         return response;
     }
 }

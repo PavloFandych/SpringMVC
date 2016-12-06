@@ -1,14 +1,11 @@
 package org.total.spring.root.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.total.spring.root.entity.enums.RoleType;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,8 +19,6 @@ import java.util.Set;
                         columnNames = "roleType")
         }
 )
-@XmlRootElement
-@XmlType(propOrder = {"roleId", "roleType"})
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Role implements Serializable {
     private long roleId;
@@ -50,7 +45,6 @@ public class Role implements Serializable {
     @Column(name = "roleId",
             nullable = false
     )
-    @XmlElement
     public long getRoleId() {
         return roleId;
     }
@@ -64,7 +58,6 @@ public class Role implements Serializable {
             nullable = false
     )
     @Enumerated(EnumType.STRING)
-    @XmlElement
     public RoleType getRoleType() {
         return roleType;
     }
@@ -78,7 +71,7 @@ public class Role implements Serializable {
             mappedBy = "roles",
             cascade = CascadeType.ALL
     )
-    @XmlTransient
+    @JsonIgnore
     public Set<User> getUsers() {
         if (this.users == null) {
             this.users = new HashSet<>();
@@ -101,7 +94,7 @@ public class Role implements Serializable {
             foreignKey = @ForeignKey(name = "FK_roleId"),
             inverseForeignKey = @ForeignKey(name = "FK_roleIdCapabilityId")
     )
-    @XmlTransient
+    @JsonIgnore
     public Set<Capability> getCapabilities() {
         if (capabilities == null) {
             capabilities = new HashSet<>();
