@@ -1,8 +1,6 @@
 package org.total.spring.root.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.total.spring.root.entity.enums.CountryCode;
 import org.total.spring.root.util.Constants;
 
@@ -19,7 +17,6 @@ import java.util.Set;
                         columnNames = "countryCode")
         }
 )
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Country implements Serializable {
     private long countryId;
     private String countryName;

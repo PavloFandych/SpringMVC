@@ -107,11 +107,6 @@ public class AppConfig {
         return new SimpleKeyGenerator();
     }
 
-//    @Bean(name = "springCashManager")
-//    public CacheManager cacheManager() {
-//        return new ConcurrentMapCacheManager("applicationCache");
-//    }
-
     @Bean
     public JdbcTemplate jdbcTemplate() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();

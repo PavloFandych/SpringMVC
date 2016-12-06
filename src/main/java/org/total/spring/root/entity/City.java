@@ -1,8 +1,6 @@
 package org.total.spring.root.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.total.spring.root.entity.enums.CityCode;
 import org.total.spring.root.util.Constants;
 
@@ -20,7 +18,6 @@ import java.util.Set;
                         columnNames = "cityCode"),
         }
 )
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class City implements Serializable {
     private long cityId;
     private String cityName;
@@ -42,6 +39,7 @@ public class City implements Serializable {
     @Column(name = "cityId",
             nullable = false
     )
+    @JsonIgnore
     public long getCityId() {
         return cityId;
     }
@@ -142,8 +140,7 @@ public class City implements Serializable {
     @Override
     public String toString() {
         return "City{" +
-                "country=" + country +
-                ", cityCode='" + cityCode + '\'' +
+                "cityCode='" + cityCode + '\'' +
                 ", cityName='" + cityName + '\'' +
                 ", cityId=" + cityId +
                 '}';

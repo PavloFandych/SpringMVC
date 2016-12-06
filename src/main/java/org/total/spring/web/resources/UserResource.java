@@ -1,12 +1,18 @@
 package org.total.spring.web.resources;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.total.spring.root.entity.City;
+import org.total.spring.root.entity.Role;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
+import org.total.spring.root.entity.enums.CityCode;
+import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.response.Response;
 import org.total.spring.root.service.interfaces.CityService;
 import org.total.spring.root.service.interfaces.RoleService;
@@ -342,7 +348,7 @@ public class UserResource extends AbstractResource {
                         authorization,
                         contentType,
                         version})
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
                 if (Version.valueOf(version).equals(Version.V1)) {
@@ -531,142 +537,126 @@ public class UserResource extends AbstractResource {
                                                 required = false) String contentType,
                                         @RequestHeader(name = "Version",
                                                 required = false) String version) {
-//        if (getValidator().validate(
-//                new String[]{
-//                        body,
-//                        authorization,
-//                        contentType,
-//                        version})
-//                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
-//            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
-//            try {
-//                if (Version.valueOf(version).equals(Version.V1)) {
-//                    String credentials = getPasswordManager()
-//                            .decodeBase64(authorization);
-//
-//                    List<String> loginAndPassword = Arrays
-//                            .asList(credentials.split(":"));
-//
-//                    User creator = getUserService()
-//                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
-//                                    getPasswordManager()
-//                                            .encodeMD5(loginAndPassword.get(1)));
-//
-//                    if (creator != null) {
-//                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.CREATOR_FOUND);
-//
-//                        if (getPermitionManager()
-//                                .containEntity(creator, CapabilityType.CREATE)) {
-//
-//                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
-//
-//                            try {
-//                                User userXML = (getContentHandler()
-//                                        .unmarshal(User.class, body)).get(0);
-//                                if (userXML != null) {
-//                                    User userToCreate = getUserService()
-//                                            .findUserByUserName(userXML.getUserName());
-//
-//                                    if (userToCreate != null) {
-//                                        LOGGER.debug(Constants.STATUS_REQ_FAIL + " " + Constants.USER_ALREADY_EXISTS
-//                                                + " http status = " + HttpStatus.CONFLICT);
-//
-//                                        Response response = generateResponse(Constants.USER_ALREADY_EXISTS,
-//                                                HttpStatus.CONFLICT);
-//
-//                                        return new ResponseEntity<>(getContentHandler().marshal(response),
-//                                                response.getHttpStatus());
-//                                    } else {
-//                                        userToCreate = ContextLoader.getCurrentWebApplicationContext()
-//                                                .getBean(User.class);
-//                                        userToCreate.setUserName(userXML.getUserName());
-//                                        userToCreate.setPassword(getPasswordManager()
-//                                                .encodeMD5(userXML.getPassword()));
-//                                        userToCreate.setUserEmail(userXML.getUserEmail());
-//                                        userToCreate.getRoles().add(
-//                                                getRoleService().findRoleByRoleType(RoleType.USER));
-//                                        userToCreate.setCity(getCityService()
-//                                                .findCityByCityName(userXML.getCity().getCityName()));
-//
-//                                        if (getUserService().save(userToCreate) != null) {
-//                                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
-//                                                    + " http status = " + HttpStatus.OK);
-//
-//                                            Response response = generateResponse(Constants.SUCCESS,
-//                                                    HttpStatus.OK);
-//
-//                                            return new ResponseEntity<>(getContentHandler().marshal(response),
-//                                                    response.getHttpStatus());
-//                                        }
-//                                    }
-//                                } else {
-//                                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
-//                                            + " http status = " + HttpStatus.EXPECTATION_FAILED);
-//
-//                                    Response response = generateResponse(Constants.UNMARSHALING_FAILED,
-//                                            HttpStatus.EXPECTATION_FAILED);
-//
-//                                    return new ResponseEntity<>(getContentHandler().marshal(response),
-//                                            response.getHttpStatus());
-//                                }
-//                            } catch (Exception ex) {
-//                                LOGGER.error(ex, ex);
-//                            }
-//                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
-//                                    + " http status = " + HttpStatus.EXPECTATION_FAILED);
-//
-//                            Response response = generateResponse(Constants.UNMARSHALING_FAILED,
-//                                    HttpStatus.EXPECTATION_FAILED);
-//
-//                            return new ResponseEntity<>(getContentHandler().marshal(response),
-//                                    response.getHttpStatus());
-//                        } else {
-//                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
-//                                    + " http status = " + HttpStatus.CONFLICT);
-//
-//                            Response response = generateResponse(Constants.PERMISSION_DENIED,
-//                                    HttpStatus.CONFLICT);
-//
-//                            return new ResponseEntity<>(getContentHandler().marshal(response),
-//                                    response.getHttpStatus());
-//                        }
-//                    } else {
-//                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_CREATOR_FOUND
-//                                + " http status = " + HttpStatus.CONFLICT);
-//
-//                        Response response = generateResponse(Constants.NO_CREATOR_FOUND,
-//                                HttpStatus.CONFLICT);
-//
-//                        return new ResponseEntity<>(getContentHandler().marshal(response),
-//                                response.getHttpStatus());
-//                    }
-//                } else {
-//                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
-//                            + " http status = " + HttpStatus.NOT_ACCEPTABLE);
-//
-//                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
-//                            HttpStatus.NOT_ACCEPTABLE);
-//
-//                    return new ResponseEntity<>(getContentHandler().marshal(response),
-//                            response.getHttpStatus());
-//                }
-//            } catch (Exception e) {
-//                LOGGER.error(e, e);
-//            }
-//        }
-//        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
-//                " http status = " + HttpStatus.BAD_REQUEST);
-//
-//        Response response = generateResponse(Constants.ERROR,
-//                HttpStatus.BAD_REQUEST);
-//
-//        return new ResponseEntity<>(getContentHandler().marshal(response),
-//                response.getHttpStatus());
-        return null;
+        if (getValidator().validate(
+                new String[]{
+                        body,
+                        authorization,
+                        contentType,
+                        version})
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
+            try {
+                if (Version.valueOf(version).equals(Version.V1)) {
+                    String credentials = getPasswordManager()
+                            .decodeBase64(authorization);
+
+                    List<String> loginAndPassword = Arrays
+                            .asList(credentials.split(":"));
+
+                    User creator = getUserService()
+                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
+                                    getPasswordManager()
+                                            .encodeMD5(loginAndPassword.get(1)));
+
+                    if (creator != null) {
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.CREATOR_FOUND);
+
+                        if (getPermitionManager()
+                                .containEntity(creator, CapabilityType.CREATE)) {
+
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
+
+                            try {
+                                ObjectMapper mapper = new ObjectMapper();
+
+                                User userJSON = mapper.readValue(body, new TypeReference<User>() {
+                                });
+
+                                if (userJSON != null) {
+                                    User userToCreate = getUserService()
+                                            .findUserByUserName(userJSON.getUserName());
+
+                                    if (userToCreate != null) {
+                                        LOGGER.debug(Constants.STATUS_REQ_FAIL + " " + Constants.USER_ALREADY_EXISTS
+                                                + " http status = " + HttpStatus.CONFLICT);
+
+                                        Response response = generateResponse(Constants.USER_ALREADY_EXISTS);
+
+                                        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+                                    } else {
+                                        userToCreate = new User();
+                                        userToCreate.setUserName(userJSON.getUserName());
+                                        userToCreate.setPassword(getPasswordManager()
+                                                .encodeMD5(userJSON.getPassword()));
+                                        userToCreate.setUserEmail(userJSON.getUserEmail());
+                                        userToCreate.getRoles().add(
+                                                getRoleService().findRoleByRoleType(RoleType.USER));
+                                        userToCreate.setCity(getCityService()
+                                                .findCityByCityName(userJSON.getCity().getCityName()));
+
+                                        if (getUserService().save(userToCreate) != null) {
+                                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
+                                                    + " http status = " + HttpStatus.OK);
+
+                                            Response response = generateResponse(Constants.SUCCESS);
+
+                                            return new ResponseEntity<>(response, HttpStatus.OK);
+                                        }
+                                    }
+                                } else {
+                                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
+                                            + " http status = " + HttpStatus.EXPECTATION_FAILED);
+
+                                    Response response = generateResponse(Constants.UNMARSHALING_FAILED);
+
+                                    return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
+                                }
+                            } catch (Exception ex) {
+                                LOGGER.error(ex, ex);
+                            }
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
+                                    + " http status = " + HttpStatus.EXPECTATION_FAILED);
+
+                            Response response = generateResponse(Constants.UNMARSHALING_FAILED);
+
+                            return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
+                        } else {
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
+                                    + " http status = " + HttpStatus.CONFLICT);
+
+                            Response response = generateResponse(Constants.PERMISSION_DENIED);
+
+                            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+                        }
+                    } else {
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_CREATOR_FOUND
+                                + " http status = " + HttpStatus.CONFLICT);
+
+                        Response response = generateResponse(Constants.NO_CREATOR_FOUND);
+
+                        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+                    }
+                } else {
+                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
+                            + " http status = " + HttpStatus.NOT_ACCEPTABLE);
+
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
+
+                    return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
+                }
+            } catch (Exception e) {
+                LOGGER.error(e, e);
+            }
+        }
+        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
+                " http status = " + HttpStatus.BAD_REQUEST);
+
+        Response response = generateResponse(Constants.ERROR);
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/users",
-
             method = RequestMethod.PUT,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
     public ResponseEntity<?> updateUser(@RequestBody String body,
@@ -676,157 +666,140 @@ public class UserResource extends AbstractResource {
                                                 required = false) String contentType,
                                         @RequestHeader(name = "Version",
                                                 required = false) String version) {
-//        if (getValidator().validate(
-//                new String[]{
-//                        body,
-//                        authorization,
-//                        contentType,
-//                        version})
-//                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_XML)) {
-//            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
-//            try {
-//                if (Version.valueOf(version).equals(Version.V1)) {
-//                    String credentials = getPasswordManager()
-//                            .decodeBase64(authorization);
-//
-//                    List<String> loginAndPassword = Arrays
-//                            .asList(credentials.split(":"));
-//
-//                    User updater = getUserService()
-//                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
-//                                    getPasswordManager()
-//                                            .encodeMD5(loginAndPassword.get(1)));
-//
-//                    if (updater != null) {
-//                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.UPDATER_FOUND);
-//
-//                        if (getPermitionManager()
-//                                .containEntity(updater, CapabilityType.UPDATE)) {
-//                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
-//
-//                            try {
-//                                User userXML = (getContentHandler()
-//                                        .unmarshal(User.class, body)).get(0);
-//                                if (userXML != null) {
-//                                    User userToUpdate = getUserService()
-//                                            .findUserByUserName(userXML.getUserName());
-//
-//                                    if (userToUpdate != null) {
-//                                        userToUpdate.setUserName(userXML.getUserName());
-//                                        userToUpdate.setPassword(getPasswordManager()
-//                                                .encodeMD5(userXML.getPassword()));
-//                                        userToUpdate.setUserEmail(userXML.getUserEmail());
-//                                        userToUpdate.getRoles().clear();
-//
-//                                        for (Role item : userXML.getRoles()) {
-//                                            getUserRoleService()
-//                                                    .assignRole(userToUpdate.getUserName(),
-//                                                            item.getRoleType());
-//                                        }
-//
-//                                        City city = getCityService()
-//                                                .findCityByCityName(userXML.
-//                                                        getCity().getCityName());
-//
-//                                        if (city != null) {
-//                                            userToUpdate.setCity(city);
-//                                        } else {
-//                                            userToUpdate.setCity(getCityService()
-//                                                    .findCityByCityCode(CityCode.NKWN));
-//                                        }
-//
-//                                        if (getUserService().update(userToUpdate) != null) {
-//                                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
-//                                                    + " http status = " + HttpStatus.OK);
-//
-//                                            Response response = generateResponse(Constants.SUCCESS,
-//                                                    HttpStatus.OK);
-//
-//                                            return new ResponseEntity<>(getContentHandler().marshal(response),
-//                                                    response.getHttpStatus());
-//                                        } else {
-//                                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
-//                                                    " http status = " + HttpStatus.EXPECTATION_FAILED);
-//
-//                                            Response response = generateResponse(Constants.ERROR,
-//                                                    HttpStatus.EXPECTATION_FAILED);
-//
-//                                            return new ResponseEntity<>(getContentHandler().marshal(response),
-//                                                    response.getHttpStatus());
-//                                        }
-//                                    } else {
-//                                        LOGGER.debug(Constants.STATUS_REQ_FAIL + "User for updating not found"
-//                                                + " http status = " + HttpStatus.EXPECTATION_FAILED);
-//
-//                                        Response response = generateResponse(Constants.NO_USER_FOUND,
-//                                                HttpStatus.EXPECTATION_FAILED);
-//
-//                                        return new ResponseEntity<>(getContentHandler().marshal(response),
-//                                                response.getHttpStatus());
-//                                    }
-//                                } else {
-//                                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
-//                                            + " http status = " + HttpStatus.EXPECTATION_FAILED);
-//
-//                                    Response response = generateResponse(Constants.UNMARSHALING_FAILED,
-//                                            HttpStatus.EXPECTATION_FAILED);
-//
-//                                    return new ResponseEntity<>(getContentHandler().marshal(response),
-//                                            response.getHttpStatus());
-//                                }
-//                            } catch (Exception ex) {
-//                                LOGGER.error(ex, ex);
-//                            }
-//                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
-//                                    + " http status = " + HttpStatus.EXPECTATION_FAILED);
-//
-//                            Response response = generateResponse(Constants.UNMARSHALING_FAILED,
-//                                    HttpStatus.EXPECTATION_FAILED);
-//
-//                            return new ResponseEntity<>(getContentHandler().marshal(response),
-//                                    response.getHttpStatus());
-//                        } else {
-//                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
-//                                    + " http status = " + HttpStatus.CONFLICT);
-//
-//                            Response response = generateResponse(Constants.PERMISSION_DENIED,
-//                                    HttpStatus.CONFLICT);
-//
-//                            return new ResponseEntity<>(getContentHandler().marshal(response),
-//                                    response.getHttpStatus());
-//                        }
-//                    } else {
-//                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_UPDATER_FOUND
-//                                + " http status = " + HttpStatus.CONFLICT);
-//
-//                        Response response = generateResponse(Constants.NO_UPDATER_FOUND,
-//                                HttpStatus.CONFLICT);
-//
-//                        return new ResponseEntity<>(getContentHandler().marshal(response),
-//                                response.getHttpStatus());
-//                    }
-//                } else {
-//                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
-//                            + " http status = " + HttpStatus.NOT_ACCEPTABLE);
-//
-//                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED,
-//                            HttpStatus.NOT_ACCEPTABLE);
-//
-//                    return new ResponseEntity<>(getContentHandler().marshal(response),
-//                            response.getHttpStatus());
-//                }
-//            } catch (Exception e) {
-//                LOGGER.error(e, e);
-//            }
-//        }
-//        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
-//                " http status = " + HttpStatus.BAD_REQUEST);
-//
-//        Response response = generateResponse(Constants.ERROR,
-//                HttpStatus.BAD_REQUEST);
-//
-//        return new ResponseEntity<>(getContentHandler().marshal(response),
-//                response.getHttpStatus());
-        return null;
+        if (getValidator().validate(
+                new String[]{
+                        body,
+                        authorization,
+                        contentType,
+                        version})
+                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
+            try {
+                if (Version.valueOf(version).equals(Version.V1)) {
+                    String credentials = getPasswordManager()
+                            .decodeBase64(authorization);
+
+                    List<String> loginAndPassword = Arrays
+                            .asList(credentials.split(":"));
+
+                    User updater = getUserService()
+                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
+                                    getPasswordManager()
+                                            .encodeMD5(loginAndPassword.get(1)));
+
+                    if (updater != null) {
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.UPDATER_FOUND);
+
+                        if (getPermitionManager()
+                                .containEntity(updater, CapabilityType.UPDATE)) {
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
+
+                            try {
+                                ObjectMapper mapper = new ObjectMapper();
+
+                                User userJSON = mapper.readValue(body, new TypeReference<User>() {
+                                });
+                                if (userJSON != null) {
+                                    User userToUpdate = getUserService()
+                                            .findUserByUserName(userJSON.getUserName());
+
+                                    if (userToUpdate != null) {
+                                        userToUpdate.setUserName(userJSON.getUserName());
+                                        userToUpdate.setPassword(getPasswordManager()
+                                                .encodeMD5(userJSON.getPassword()));
+                                        userToUpdate.setUserEmail(userJSON.getUserEmail());
+                                        userToUpdate.getRoles().clear();
+
+                                        for (Role item : userJSON.getRoles()) {
+                                            getUserRoleService()
+                                                    .assignRole(userToUpdate.getUserName(),
+                                                            item.getRoleType());
+                                        }
+
+                                        City city = getCityService()
+                                                .findCityByCityName(userJSON.
+                                                        getCity().getCityName());
+
+                                        if (city != null) {
+                                            userToUpdate.setCity(city);
+                                        } else {
+                                            userToUpdate.setCity(getCityService()
+                                                    .findCityByCityCode(CityCode.NKWN));
+                                        }
+
+                                        if (getUserService().update(userToUpdate) != null) {
+                                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
+                                                    + " http status = " + HttpStatus.OK);
+
+                                            Response response = generateResponse(Constants.SUCCESS);
+
+                                            return new ResponseEntity<>(response, HttpStatus.OK);
+                                        } else {
+                                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
+                                                    " http status = " + HttpStatus.EXPECTATION_FAILED);
+
+                                            Response response = generateResponse(Constants.ERROR);
+
+                                            return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
+                                        }
+                                    } else {
+                                        LOGGER.debug(Constants.STATUS_REQ_FAIL + "User for updating not found"
+                                                + " http status = " + HttpStatus.EXPECTATION_FAILED);
+
+                                        Response response = generateResponse(Constants.NO_USER_FOUND);
+
+                                        return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
+                                    }
+                                } else {
+                                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
+                                            + " http status = " + HttpStatus.EXPECTATION_FAILED);
+
+                                    Response response = generateResponse(Constants.UNMARSHALING_FAILED);
+
+                                    return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
+                                }
+                            } catch (Exception ex) {
+                                LOGGER.error(ex, ex);
+                            }
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
+                                    + " http status = " + HttpStatus.EXPECTATION_FAILED);
+
+                            Response response = generateResponse(Constants.UNMARSHALING_FAILED);
+
+                            return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
+                        } else {
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
+                                    + " http status = " + HttpStatus.CONFLICT);
+
+                            Response response = generateResponse(Constants.PERMISSION_DENIED);
+
+                            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+                        }
+                    } else {
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_UPDATER_FOUND
+                                + " http status = " + HttpStatus.CONFLICT);
+
+                        Response response = generateResponse(Constants.NO_UPDATER_FOUND);
+
+                        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+                    }
+                } else {
+                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
+                            + " http status = " + HttpStatus.NOT_ACCEPTABLE);
+
+                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
+
+                    return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
+                }
+            } catch (Exception e) {
+                LOGGER.error(e, e);
+            }
+        }
+        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
+                " http status = " + HttpStatus.BAD_REQUEST);
+
+        Response response = generateResponse(Constants.ERROR);
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

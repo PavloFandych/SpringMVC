@@ -1,8 +1,6 @@
 package org.total.spring.root.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.total.spring.root.entity.enums.RoleType;
 
 import javax.persistence.*;
@@ -19,7 +17,6 @@ import java.util.Set;
                         columnNames = "roleType")
         }
 )
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Role implements Serializable {
     private long roleId;
     private RoleType roleType;
@@ -45,6 +42,7 @@ public class Role implements Serializable {
     @Column(name = "roleId",
             nullable = false
     )
+    @JsonIgnore
     public long getRoleId() {
         return roleId;
     }
@@ -69,7 +67,10 @@ public class Role implements Serializable {
     /*users field mapping*/
     @ManyToMany(fetch = FetchType.LAZY,
             mappedBy = "roles",
-            cascade = CascadeType.ALL
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
     )
     @JsonIgnore
     public Set<User> getUsers() {

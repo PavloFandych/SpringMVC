@@ -1,9 +1,5 @@
 package org.total.spring.root.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -18,7 +14,6 @@ import java.util.Set;
                         columnNames = "userName")
         }
 )
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class User implements Serializable {
     private long userId;
     private String userName;
@@ -103,7 +98,10 @@ public class User implements Serializable {
 
     /*roles field mapping*/
     @ManyToMany(fetch = FetchType.LAZY,
-            cascade = CascadeType.MERGE
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
     )
     @JoinTable(
             name = "User_Role",
@@ -132,7 +130,6 @@ public class User implements Serializable {
             nullable = true,
             foreignKey = @ForeignKey(name = "FK_userId_cityId")
     )
-    @JsonIgnore
     public City getCity() {
         return city;
     }
@@ -161,6 +158,7 @@ public class User implements Serializable {
                 ", password='" + password + '\'' +
                 ", roles=" + roles +
                 ", userEmail='" + userEmail + '\'' +
+                ", city='" + city + '\'' +
                 '}';
     }
 

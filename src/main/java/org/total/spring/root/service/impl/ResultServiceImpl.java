@@ -5,13 +5,17 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.root.entity.Result;
+import org.total.spring.root.entity.User;
 import org.total.spring.root.repository.ResultRepository;
 import org.total.spring.root.service.interfaces.ResultService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,7 +49,33 @@ public class ResultServiceImpl implements ResultService {
             )
     )
     public List<Result> findAll() {
-        return getResultRepository().findAll();
+        List<Result> list = new ArrayList<>();
+        for (Result item : getResultRepository().findAll()) {
+            list.add(item);
+        }
+        return list;
+    }
+
+    @Override
+    @Caching(evict = @CacheEvict(
+            value = "applicationCache",
+            cacheManager = "springCashManager",
+            allEntries = true
+    ),
+            cacheable = @Cacheable(
+                    value = "applicationCache",
+                    cacheManager = "springCashManager"
+            )
+    )
+    public List<Result> findAll(Integer pageIndex, Integer numRecPerPage) {
+        Sort sort = new Sort(Sort.Direction.ASC, "date");
+        /*
+        * @param page zero-based page index.
+        * @param size the size of the page to be returned.
+        * @param sort can be {@literal null}.
+        */
+        return getResultRepository()
+                .findAll(new PageRequest(pageIndex, numRecPerPage, sort)).getContent();
     }
 
     @Override

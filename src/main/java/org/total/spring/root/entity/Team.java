@@ -1,8 +1,6 @@
 package org.total.spring.root.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.total.spring.root.util.Constants;
 
 import javax.persistence.*;
@@ -18,7 +16,6 @@ import java.util.Set;
                         columnNames = "teamCode")
         }
 )
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Team implements Serializable {
     private long teamId;
     private String teamName;

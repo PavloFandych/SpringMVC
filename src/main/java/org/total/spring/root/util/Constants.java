@@ -10,7 +10,6 @@ public interface Constants {
     public static final String STATUS_REQ_ENTRY = "Status: REQ_ENTRY";
     public static final String STATUS_REQ_FAIL = "Status: REQ_FAIL";
 
-    public static final String CONTENT_TYPE_APPLICATION_XML = "application/xml";
     public static final String CONTENT_TYPE_APPLICATION_JSON = "application/json";
 
     public static final String GETTER_FOUND = "Getter found";
