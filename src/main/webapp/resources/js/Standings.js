@@ -82,14 +82,14 @@ $(document).ready(function () {
                 'Authorization': 'Basic QWRtaW46YWRtaW4='
             },
             success: function (data, status) {
-/*            alert(data.message);
+                /*            alert(data.message);
 
-            if (data.message.indexOf("No standings found") > -1){
-                      $("#get-info-msg").hide();
-                      $(".teams-buttons").removeClass("team-selected");
-                      alert('Sorry, no results for the ' + $("#TournamentList").val() + '-' + $("#SeasonsList").val());
+                 if (data.message.indexOf("No standings found") > -1){
+                 $("#get-info-msg").hide();
+                 $(".teams-buttons").removeClass("team-selected");
+                 alert('Sorry, no results for the ' + $("#TournamentList").val() + '-' + $("#SeasonsList").val());
 
-            }else{*/
+                 }else{*/
 
                 $("#get-info-msg").hide();
                 if (data.length === 0) {
@@ -151,10 +151,5 @@ $(document).ready(function () {
 
             }
         });
-
-//        $('td').click(function(){
-//          var col = $(this).parent().children().index($(this));
-//          var row = $(this).parent().parent().children().index($(this).parent());
-//        });
     });
 });

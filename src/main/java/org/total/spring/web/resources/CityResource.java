@@ -69,13 +69,12 @@ public class CityResource extends AbstractResource {
 
                             if (list == null || list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_CITY_FOUND
-                                        + " http status = " + HttpStatus.OK);
+                                        + " http status = " + HttpStatus.NOT_FOUND);
 
                                 Response response = generateResponse(Constants.NO_CITY_FOUND,
-                                        HttpStatus.OK);
+                                        HttpStatus.NOT_FOUND);
 
-                                return new ResponseEntity<>(response,
-                                        response.getHttpStatus());
+                                return new ResponseEntity<>(response, response.getHttpStatus());
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
                                         + " http status = " + HttpStatus.OK);
@@ -171,13 +170,12 @@ public class CityResource extends AbstractResource {
 
                             if (list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_CITY_FOUND
-                                        + " http status = " + HttpStatus.OK);
+                                        + " http status = " + HttpStatus.NOT_FOUND);
 
                                 Response response = generateResponse(Constants.NO_CITY_FOUND,
-                                        HttpStatus.OK);
+                                        HttpStatus.NOT_FOUND);
 
-                                return new ResponseEntity<>(response,
-                                        response.getHttpStatus());
+                                return new ResponseEntity<>(response, response.getHttpStatus());
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
                                         + " http status = " + HttpStatus.OK);
