@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.root.dao.StandingDAO;
 import org.total.spring.root.proc.Standing;
 import org.total.spring.root.service.interfaces.StandingService;
+import org.total.spring.root.util.Constants;
 
 import java.util.List;
 
@@ -39,14 +40,13 @@ public class StandingServiceImpl implements StandingService {
         return (standings != null && !standings.isEmpty()) ? standings : null;
     }
 
-
     @Override
     @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
     public List<Standing> getMatchDayStandings(String seasonCode, String tournamentCode, Integer matchDay) {
         List<Standing> list = null;
-        if (matchDay >= 1 && matchDay <= 38) {
+        if (matchDay >= 1 && matchDay <= Constants.MAX_MATCH_DAY) {
             list = getStandingDAO().getMatchDayStandings(seasonCode, tournamentCode, matchDay);
         }
         return (list != null && !list.isEmpty()) ? list : null;
