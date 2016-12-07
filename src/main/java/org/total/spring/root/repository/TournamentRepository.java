@@ -10,7 +10,7 @@ import java.util.List;
  * Created by kostya on 10/21/16.
  */
 public interface TournamentRepository extends JpaRepository<Tournament, Long> {
-    List<Tournament> findByTournamentName(String tournamentName);
+    public List<Tournament> findByTournamentName(final String tournamentName);
 
-    List<Tournament> findByTournamentCode(TournamentCode tournamentCode);
+    public List<Tournament> findByTournamentCode(final TournamentCode tournamentCode);
 }

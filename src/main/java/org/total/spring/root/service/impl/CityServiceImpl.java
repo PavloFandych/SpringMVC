@@ -18,7 +18,7 @@ import java.util.List;
 @Repository
 @Transactional
 @Service("cityService")
-public class CityServiceImpl implements CityService {
+public final class CityServiceImpl implements CityService {
     @Autowired
     private CityRepository cityRepository;
 
@@ -50,7 +50,7 @@ public class CityServiceImpl implements CityService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public City findById(Long cityId) {
+    public City findById(final Long cityId) {
         return getCityRepository().findOne(cityId);
     }
 
@@ -58,7 +58,7 @@ public class CityServiceImpl implements CityService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public City save(City entity) {
+    public City save(final City entity) {
         return getCityRepository().save(entity);
     }
 
@@ -66,7 +66,7 @@ public class CityServiceImpl implements CityService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public City update(City entity) {
+    public City update(final City entity) {
         return getCityRepository().save(entity);
     }
 
@@ -74,7 +74,7 @@ public class CityServiceImpl implements CityService {
     @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public void deleteCityByCityId(Long cityId) {
+    public void deleteCityByCityId(final Long cityId) {
         getCityRepository().delete(cityId);
     }
 
@@ -83,7 +83,7 @@ public class CityServiceImpl implements CityService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public City findCityByCityName(String cityName) {
+    public City findCityByCityName(final String cityName) {
         List<City> cities = getCityRepository().findByCityName(cityName);
         return (cities != null && !cities.isEmpty()) ? cities.get(0) : null;
     }
@@ -93,7 +93,7 @@ public class CityServiceImpl implements CityService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public City findCityByCityCode(CityCode cityCode) {
+    public City findCityByCityCode(final CityCode cityCode) {
         List<City> cities = getCityRepository().findByCityCode(cityCode);
         return (cities != null && !cities.isEmpty()) ? cities.get(0) : null;
     }

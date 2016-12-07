@@ -17,7 +17,7 @@ import java.util.Date;
 
 @Component("teamMatch")
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class TeamMatch implements Serializable {
+public final class TeamMatch implements Serializable {
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private Date matchDate;
     private SeasonCode seasonCode;

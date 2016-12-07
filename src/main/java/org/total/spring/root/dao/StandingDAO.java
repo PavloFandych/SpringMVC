@@ -23,7 +23,7 @@ public class StandingDAO extends GenericDAO<List<String>> {
     private static final int MAX_RESULT_IN_RESULT_SET = 39;
 
     @Override
-    public List<List<String>> getEntities(Object... param) {
+    public List<List<String>> getEntities(final Object... param) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_STANDINGS)
                 .returningResultSet("standings", new RowMapper<List<String>>() {
@@ -52,9 +52,9 @@ public class StandingDAO extends GenericDAO<List<String>> {
         return (resultList != null && !resultList.isEmpty()) ? resultList : null;
     }
 
-    public List<Standing> getMatchDayStandings(String seasonCode,
-                                               String tournamentCode,
-                                               Integer matchDay) {
+    public List<Standing> getMatchDayStandings(final String seasonCode,
+                                               final String tournamentCode,
+                                               final Integer matchDay) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_TEAMS_ORDER_BY_MATCH_DAY)
                 .returningResultSet("standings", new RowMapper<Standing>() {
@@ -85,8 +85,8 @@ public class StandingDAO extends GenericDAO<List<String>> {
         return (resultList != null && !resultList.isEmpty()) ? resultList : null;
     }
 
-    public String getCachedStandings(String seasonCode,
-                                     String tournamentCode) {
+    public String getCachedStandings(final String seasonCode,
+                                     final String tournamentCode) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_STORED_STANDINGS)
                 .returningResultSet("standing", new RowMapper<String>() {

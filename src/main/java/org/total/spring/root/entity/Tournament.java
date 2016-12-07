@@ -22,7 +22,7 @@ import java.util.Set;
                         columnNames = "tournamentCode")
         }
 )
-public class Tournament implements Serializable {
+public final class Tournament implements Serializable {
     private long tournamentId;
     private TournamentType tournamentType;
     private TournamentCode tournamentCode;

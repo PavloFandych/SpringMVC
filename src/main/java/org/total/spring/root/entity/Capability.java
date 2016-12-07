@@ -17,7 +17,7 @@ import java.util.Set;
                         columnNames = "capabilityType")
         }
 )
-public class Capability implements Serializable {
+public final class Capability implements Serializable {
     private long capabilityId;
     private CapabilityType capabilityType;
     private Set<Role> roles;

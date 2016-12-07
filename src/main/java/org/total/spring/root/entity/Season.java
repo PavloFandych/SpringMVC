@@ -21,7 +21,7 @@ import java.util.Set;
                         columnNames = "seasonCode")
         }
 )
-public class Season implements Serializable {
+public final class Season implements Serializable {
     private long seasonId;
     private String seasonName;
     private SeasonCode seasonCode;

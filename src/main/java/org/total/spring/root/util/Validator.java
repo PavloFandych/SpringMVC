@@ -5,5 +5,5 @@ package org.total.spring.root.util;
  */
 
 public interface Validator<T> {
-    public boolean validate(T... params);
+    public boolean validate(final T... params);
 }

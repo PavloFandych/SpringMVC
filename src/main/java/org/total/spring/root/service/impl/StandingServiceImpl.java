@@ -18,7 +18,7 @@ import java.util.List;
 
 @Transactional
 @Service("standingService")
-public class StandingServiceImpl implements StandingService {
+public final class StandingServiceImpl implements StandingService {
     @Autowired
     private StandingDAO standingDAO;
 
@@ -34,8 +34,8 @@ public class StandingServiceImpl implements StandingService {
     @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public List<List<String>> getStandings(String seasonCode,
-                                           String tournamentCode) {
+    public List<List<String>> getStandings(final String seasonCode,
+                                           final String tournamentCode) {
         List<List<String>> standings = getStandingDAO().getEntities(seasonCode, tournamentCode);
         return (standings != null && !standings.isEmpty()) ? standings : null;
     }
@@ -44,7 +44,9 @@ public class StandingServiceImpl implements StandingService {
     @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public List<Standing> getMatchDayStandings(String seasonCode, String tournamentCode, Integer matchDay) {
+    public List<Standing> getMatchDayStandings(final String seasonCode,
+                                               final String tournamentCode,
+                                               final Integer matchDay) {
         List<Standing> list = null;
         if (matchDay >= 1 && matchDay <= Constants.MAX_MATCH_DAY) {
             list = getStandingDAO().getMatchDayStandings(seasonCode, tournamentCode, matchDay);
@@ -56,7 +58,8 @@ public class StandingServiceImpl implements StandingService {
     @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public String getCachedStandings(String seasonCode, String tournamentCode) {
+    public String getCachedStandings(final String seasonCode,
+                                     final String tournamentCode) {
         String result = getStandingDAO().getCachedStandings(seasonCode, tournamentCode);
         return (result != null && !result.isEmpty()) ? result : null;
     }

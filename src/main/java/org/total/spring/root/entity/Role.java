@@ -17,7 +17,7 @@ import java.util.Set;
                         columnNames = "roleType")
         }
 )
-public class Role implements Serializable {
+public final class Role implements Serializable {
     private long roleId;
     private RoleType roleType;
     private Set<User> users;

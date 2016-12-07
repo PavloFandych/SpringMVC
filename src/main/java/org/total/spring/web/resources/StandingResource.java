@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 @RestController
-public class StandingResource extends AbstractResource {
+public final class StandingResource extends AbstractResource {
     @Autowired
     private StandingService standingService;
 
@@ -35,14 +35,14 @@ public class StandingResource extends AbstractResource {
     @RequestMapping(value = "/standings",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchStandings(@RequestHeader(name = "Authorization", required = false) String authorization,
-                                            @RequestHeader(name = "Content-Type",
+    public ResponseEntity<?> fetchStandings(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                            final @RequestHeader(name = "Content-Type",
                                                     required = false) String contentType,
-                                            @RequestHeader(name = "Version",
+                                            final @RequestHeader(name = "Version",
                                                     required = false) String version,
-                                            @RequestParam(name = "seasonCode",
+                                            final @RequestParam(name = "seasonCode",
                                                     required = false) String seasonCode,
-                                            @RequestParam(name = "tournamentCode",
+                                            final @RequestParam(name = "tournamentCode",
                                                     required = false) String tournamentCode) {
         if (getValidator().validate(
                 new String[]{
@@ -128,14 +128,14 @@ public class StandingResource extends AbstractResource {
     @RequestMapping(value = "/cachedstandings",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchCachedStandings(@RequestHeader(name = "Authorization", required = false) String authorization,
-                                                  @RequestHeader(name = "Content-Type",
+    public ResponseEntity<?> fetchCachedStandings(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                  final @RequestHeader(name = "Content-Type",
                                                           required = false) String contentType,
-                                                  @RequestHeader(name = "Version",
+                                                  final @RequestHeader(name = "Version",
                                                           required = false) String version,
-                                                  @RequestParam(name = "seasonCode",
+                                                  final @RequestParam(name = "seasonCode",
                                                           required = false) String seasonCode,
-                                                  @RequestParam(name = "tournamentCode",
+                                                  final @RequestParam(name = "tournamentCode",
                                                           required = false) String tournamentCode) {
         if (getValidator().validate(
                 new String[]{
@@ -220,16 +220,16 @@ public class StandingResource extends AbstractResource {
     @RequestMapping(value = "/standings/{matchDay}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchMatchDayStandings(@RequestHeader(name = "Authorization", required = false) String authorization,
-                                                    @RequestHeader(name = "Content-Type",
+    public ResponseEntity<?> fetchMatchDayStandings(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                    final @RequestHeader(name = "Content-Type",
                                                             required = false) String contentType,
-                                                    @RequestHeader(name = "Version",
+                                                    final @RequestHeader(name = "Version",
                                                             required = false) String version,
-                                                    @PathVariable(name = "matchDay",
+                                                    final @PathVariable(name = "matchDay",
                                                             required = false) String matchDay,
-                                                    @RequestParam(name = "seasonCode",
+                                                    final @RequestParam(name = "seasonCode",
                                                             required = false) String seasonCode,
-                                                    @RequestParam(name = "tournamentCode",
+                                                    final @RequestParam(name = "tournamentCode",
                                                             required = false) String tournamentCode) {
         if (getValidator().validate(
                 new String[]{

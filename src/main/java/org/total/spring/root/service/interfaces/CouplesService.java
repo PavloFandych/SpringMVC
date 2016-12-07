@@ -7,5 +7,6 @@ import java.util.List;
  */
 
 public interface CouplesService {
-    public List<List<String>> getCouples(String seasonCode, String tournamentCode);
+    public List<List<String>> getCouples(final String seasonCode,
+                                         final String tournamentCode);
 }

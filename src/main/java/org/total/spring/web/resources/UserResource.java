@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-public class UserResource extends AbstractResource {
+public final class UserResource extends AbstractResource {
     @Autowired
     private RoleService roleService;
 
@@ -62,10 +62,10 @@ public class UserResource extends AbstractResource {
     @RequestMapping(value = "/users",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllUsers(@RequestHeader(name = "Authorization", required = false) String authorization,
-                                           @RequestHeader(name = "Content-Type",
+    public ResponseEntity<?> fetchAllUsers(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                           final @RequestHeader(name = "Content-Type",
                                                    required = false) String contentType,
-                                           @RequestHeader(name = "Version",
+                                           final @RequestHeader(name = "Version",
                                                    required = false) String version) {
         if (getValidator().validate(
                 new String[]{
@@ -148,14 +148,14 @@ public class UserResource extends AbstractResource {
     @RequestMapping(value = "/users/pagination",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllUsers(@RequestHeader(name = "Authorization", required = false) String authorization,
-                                           @RequestHeader(name = "Content-Type",
+    public ResponseEntity<?> fetchAllUsers(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                           final @RequestHeader(name = "Content-Type",
                                                    required = false) String contentType,
-                                           @RequestHeader(name = "Version",
+                                           final @RequestHeader(name = "Version",
                                                    required = false) String version,
-                                           @RequestParam(name = "pageIndex",
+                                           final @RequestParam(name = "pageIndex",
                                                    required = false) String pageIndex,
-                                           @RequestParam(name = "numRecPerPage",
+                                           final @RequestParam(name = "numRecPerPage",
                                                    required = false) String numRecPerPage) {
         if (getValidator().validate(
                 new String[]{
@@ -244,12 +244,12 @@ public class UserResource extends AbstractResource {
     @RequestMapping(value = "/users/{id}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchUserByUserId(@PathVariable String id,
-                                               @RequestHeader(name = "Authorization",
+    public ResponseEntity<?> fetchUserByUserId(final @PathVariable String id,
+                                               final @RequestHeader(name = "Authorization",
                                                        required = false) String authorization,
-                                               @RequestHeader(name = "Content-Type",
+                                               final @RequestHeader(name = "Content-Type",
                                                        required = false) String contentType,
-                                               @RequestHeader(name = "Version",
+                                               final @RequestHeader(name = "Version",
                                                        required = false) String version) {
         if (getValidator().validate(
                 new String[]{
@@ -335,12 +335,12 @@ public class UserResource extends AbstractResource {
     @RequestMapping(value = "/userName/{userName}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchUserByUserName(@PathVariable String userName,
-                                                 @RequestHeader(name = "Authorization",
+    public ResponseEntity<?> fetchUserByUserName(final @PathVariable String userName,
+                                                 final @RequestHeader(name = "Authorization",
                                                          required = false) String authorization,
-                                                 @RequestHeader(name = "Content-Type",
+                                                 final @RequestHeader(name = "Content-Type",
                                                          required = false) String contentType,
-                                                 @RequestHeader(name = "Version",
+                                                 final @RequestHeader(name = "Version",
                                                          required = false) String version) {
         if (getValidator().validate(
                 new String[]{
@@ -425,12 +425,12 @@ public class UserResource extends AbstractResource {
     @RequestMapping(value = "/users/{userName}",
             method = RequestMethod.DELETE,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> deleteUserByUserName(@PathVariable String userName,
-                                                  @RequestHeader(name = "Authorization",
+    public ResponseEntity<?> deleteUserByUserName(final @PathVariable String userName,
+                                                  final @RequestHeader(name = "Authorization",
                                                           required = false) String authorization,
-                                                  @RequestHeader(name = "Content-Type",
+                                                  final @RequestHeader(name = "Content-Type",
                                                           required = false) String contentType,
-                                                  @RequestHeader(name = "Version",
+                                                  final @RequestHeader(name = "Version",
                                                           required = false) String version) {
         if (getValidator().validate(
                 new String[]{
@@ -530,12 +530,12 @@ public class UserResource extends AbstractResource {
     @RequestMapping(value = "/users",
             method = RequestMethod.POST,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> createUser(@RequestBody String body,
-                                        @RequestHeader(name = "Authorization",
+    public ResponseEntity<?> createUser(final @RequestBody String body,
+                                        final @RequestHeader(name = "Authorization",
                                                 required = false) String authorization,
-                                        @RequestHeader(name = "Content-Type",
+                                        final @RequestHeader(name = "Content-Type",
                                                 required = false) String contentType,
-                                        @RequestHeader(name = "Version",
+                                        final @RequestHeader(name = "Version",
                                                 required = false) String version) {
         if (getValidator().validate(
                 new String[]{
@@ -659,12 +659,12 @@ public class UserResource extends AbstractResource {
     @RequestMapping(value = "/users",
             method = RequestMethod.PUT,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> updateUser(@RequestBody String body,
-                                        @RequestHeader(name = "Authorization",
+    public ResponseEntity<?> updateUser(final @RequestBody String body,
+                                        final @RequestHeader(name = "Authorization",
                                                 required = false) String authorization,
-                                        @RequestHeader(name = "Content-Type",
+                                        final @RequestHeader(name = "Content-Type",
                                                 required = false) String contentType,
-                                        @RequestHeader(name = "Version",
+                                        final @RequestHeader(name = "Version",
                                                 required = false) String version) {
         if (getValidator().validate(
                 new String[]{

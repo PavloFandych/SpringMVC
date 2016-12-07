@@ -15,7 +15,7 @@ import org.total.spring.root.service.interfaces.GoalsService;
 @Repository
 @Transactional
 @Service("goalsService")
-public class GoalsServiceImpl implements GoalsService {
+public final class GoalsServiceImpl implements GoalsService {
     @Autowired
     private GoalsRepository goalsRepository;
 
@@ -32,7 +32,7 @@ public class GoalsServiceImpl implements GoalsService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public Integer calcMoreGoalsPerGame(Integer goals) {
+    public Integer calcMoreGoalsPerGame(final Integer goals) {
         return getGoalsRepository().calcMoreGoalsPerGame(goals);
     }
 }

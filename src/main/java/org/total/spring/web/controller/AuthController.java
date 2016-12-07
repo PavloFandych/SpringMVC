@@ -18,7 +18,7 @@ import org.total.spring.root.util.PasswordManager;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class AuthController {
+public final class AuthController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
@@ -45,15 +45,15 @@ public class AuthController {
 
     @RequestMapping(value = "/authorization",
             method = RequestMethod.GET)
-    public String authorization(Model model) {
+    public String authorization(final Model model) {
         model.addAttribute("loginBean", new LoginBean());
         return "/authoriz";
     }
 
     @RequestMapping(value = "/authorization",
             method = RequestMethod.POST)
-    public String authorization(@ModelAttribute("loginBean") LoginBean loginBean,
-                                HttpServletRequest request) {
+    public String authorization(final @ModelAttribute("loginBean") LoginBean loginBean,
+                                final HttpServletRequest request) {
         try {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY + " Authorization begin\n");
 

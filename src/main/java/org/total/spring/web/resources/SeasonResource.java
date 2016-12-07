@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 @RestController
-public class SeasonResource extends AbstractResource {
+public final class SeasonResource extends AbstractResource {
     @Autowired
     private SeasonService seasonService;
 
@@ -37,10 +37,10 @@ public class SeasonResource extends AbstractResource {
     @RequestMapping(value = "/seasons",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllSeasons(@RequestHeader(name = "Authorization", required = false) String authorization,
-                                             @RequestHeader(name = "Content-Type",
+    public ResponseEntity<?> fetchAllSeasons(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                             final @RequestHeader(name = "Content-Type",
                                                      required = false) String contentType,
-                                             @RequestHeader(name = "Version",
+                                             final @RequestHeader(name = "Version",
                                                      required = false) String version) {
         if (getValidator().validate(
                 new String[]{

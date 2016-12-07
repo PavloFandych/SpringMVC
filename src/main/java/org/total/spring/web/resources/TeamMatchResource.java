@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 @RestController
-public class TeamMatchResource extends AbstractResource {
+public final class TeamMatchResource extends AbstractResource {
     @Autowired
     private TeamMatchService teamMatchService;
 
@@ -35,18 +35,18 @@ public class TeamMatchResource extends AbstractResource {
     @RequestMapping(value = "/teamMatches",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchTeamMatches(@RequestHeader(name = "Authorization", required = false) String authorization,
-                                              @RequestHeader(name = "Content-Type",
+    public ResponseEntity<?> fetchTeamMatches(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                              final @RequestHeader(name = "Content-Type",
                                                       required = false) String contentType,
-                                              @RequestHeader(name = "Version",
+                                              final @RequestHeader(name = "Version",
                                                       required = false) String version,
-                                              @RequestParam(name = "teamCode",
+                                              final @RequestParam(name = "teamCode",
                                                       required = false) String teamCode,
-                                              @RequestParam(name = "opponentTeamCode",
+                                              final @RequestParam(name = "opponentTeamCode",
                                                       required = false) String opponentTeamCode,
-                                              @RequestParam(name = "seasonCode",
+                                              final @RequestParam(name = "seasonCode",
                                                       required = false) String seasonCode,
-                                              @RequestParam(name = "tournamentCode",
+                                              final @RequestParam(name = "tournamentCode",
                                                       required = false) String tournamentCode) {
         if (getValidator().validate(
                 new String[]{

@@ -17,7 +17,7 @@ import java.util.Set;
                         columnNames = "countryCode")
         }
 )
-public class Country implements Serializable {
+public final class Country implements Serializable {
     private long countryId;
     private String countryName;
     private CountryCode countryCode;

@@ -16,7 +16,7 @@ import java.util.Set;
                         columnNames = "teamCode")
         }
 )
-public class Team implements Serializable {
+public final class Team implements Serializable {
     private long teamId;
     private String teamName;
     private String teamCode;

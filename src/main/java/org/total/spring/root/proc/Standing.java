@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 @Component("standing")
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class Standing implements Serializable {
+public final class Standing implements Serializable {
     private Byte place;
     private String teamCode;
     private String teamName;

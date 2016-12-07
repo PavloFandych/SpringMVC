@@ -20,7 +20,7 @@ import java.util.List;
 @Repository
 @Transactional
 @Service("teamService")
-public class TeamServiceImpl implements TeamService {
+public final class TeamServiceImpl implements TeamService {
     @Autowired
     private TeamRepository teamRepository;
 
@@ -70,7 +70,8 @@ public class TeamServiceImpl implements TeamService {
                     cacheManager = "springCashManager"
             )
     )
-    public List<List<String>> findAllStoredProc(SeasonCode seasonCode, TournamentCode tournamentCode) {
+    public List<List<String>> findAllStoredProc(final SeasonCode seasonCode,
+                                                final TournamentCode tournamentCode) {
         return getTeamDAO().getEntities(seasonCode, tournamentCode);
     }
 
@@ -80,7 +81,7 @@ public class TeamServiceImpl implements TeamService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public Team findById(Long teamId) {
+    public Team findById(final Long teamId) {
         return getTeamRepository().findOne(teamId);
     }
 
@@ -88,7 +89,7 @@ public class TeamServiceImpl implements TeamService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Team save(Team entity) {
+    public Team save(final Team entity) {
         return getTeamRepository().save(entity);
     }
 
@@ -96,7 +97,7 @@ public class TeamServiceImpl implements TeamService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Team update(Team entity) {
+    public Team update(final Team entity) {
         return getTeamRepository().save(entity);
     }
 
@@ -104,7 +105,7 @@ public class TeamServiceImpl implements TeamService {
     @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public void deleteTeamByTeamId(Long teamId) {
+    public void deleteTeamByTeamId(final Long teamId) {
         getTeamRepository().delete(teamId);
     }
 
@@ -113,7 +114,7 @@ public class TeamServiceImpl implements TeamService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public Team findTeamByTeamName(String teamName) {
+    public Team findTeamByTeamName(final String teamName) {
         List<Team> teams = getTeamRepository().findByTeamName(teamName);
         return (teams != null && !teams.isEmpty()) ? teams.get(0) : null;
     }

@@ -11,9 +11,13 @@ CREATE PROCEDURE getAllResultsBySeasonCodeAndTournamentCode(
     SELECT *
     FROM GoalDB.Result
     WHERE
-     seasonId=(SELECT seasonId FROM GoalDB.Season WHERE seasonCode=seasonCodeVar)
-    AND
-     tournamentId=(SELECT tournamentId FROM GoalDB.Tournament WHERE tournamentCode=tournamentCodeVar);
+      seasonId = (SELECT seasonId
+                  FROM GoalDB.Season
+                  WHERE seasonCode = seasonCodeVar)
+      AND
+      tournamentId = (SELECT tournamentId
+                      FROM GoalDB.Tournament
+                      WHERE tournamentCode = tournamentCodeVar);
   END$$
 
 DELIMITER ;

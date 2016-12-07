@@ -25,7 +25,7 @@ import java.util.List;
 @Repository
 @Transactional
 @Service("resultService")
-public class ResultServiceImpl implements ResultService {
+public final class ResultServiceImpl implements ResultService {
     @Autowired
     private ResultRepository resultRepository;
 
@@ -67,7 +67,7 @@ public class ResultServiceImpl implements ResultService {
                     cacheManager = "springCashManager"
             )
     )
-    public List<Result> findAll(Integer pageIndex, Integer numRecPerPage) {
+    public List<Result> findAll(final Integer pageIndex, final Integer numRecPerPage) {
         Sort sort = new Sort(Sort.Direction.ASC, "date");
         /*
         * @param page zero-based page index.
@@ -83,7 +83,7 @@ public class ResultServiceImpl implements ResultService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public Result findById(Long resultId) {
+    public Result findById(final Long resultId) {
         return getResultRepository().findOne(resultId);
     }
 
@@ -91,7 +91,7 @@ public class ResultServiceImpl implements ResultService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Result save(Result entity) {
+    public Result save(final Result entity) {
         return getResultRepository().save(entity);
     }
 
@@ -99,7 +99,7 @@ public class ResultServiceImpl implements ResultService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Result update(Result entity) {
+    public Result update(final Result entity) {
         return getResultRepository().save(entity);
     }
 
@@ -107,7 +107,7 @@ public class ResultServiceImpl implements ResultService {
     @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public void deleteResultByResultId(Long resultId) {
+    public void deleteResultByResultId(final Long resultId) {
         getResultRepository().delete(resultId);
     }
 
@@ -116,7 +116,7 @@ public class ResultServiceImpl implements ResultService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public Result findResultByResultCode(String resultCode) {
+    public Result findResultByResultCode(final String resultCode) {
         List<Result> results = getResultRepository().findByResultCode(resultCode);
         return (results != null && !results.isEmpty()) ? results.get(0) : null;
     }

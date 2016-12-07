@@ -9,9 +9,11 @@ import java.util.List;
  */
 
 public interface StandingService {
-    public List<List<String>> getStandings(String seasonCode, String tournamentCode);
+    public List<List<String>> getStandings(final String seasonCode, final String tournamentCode);
 
-    public List<Standing> getMatchDayStandings(String seasonCode, String tournamentCode, Integer matchDay);
+    public List<Standing> getMatchDayStandings(final String seasonCode,
+                                               final String tournamentCode,
+                                               final Integer matchDay);
 
-    public String getCachedStandings(String seasonCode, String tournamentCode);
+    public String getCachedStandings(final String seasonCode, final String tournamentCode);
 }

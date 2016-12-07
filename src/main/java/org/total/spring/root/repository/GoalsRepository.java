@@ -8,7 +8,8 @@ import org.total.spring.root.proc.Goals;
 /**
  * Created by pavlo.fandych on 11/2/2016.
  */
+
 public interface GoalsRepository extends JpaRepository<Goals, Long> {
     @Procedure(name = "moreGoalsPerGameProcedure")
-    Integer calcMoreGoalsPerGame(@Param("goals") Integer goals);
+    public Integer calcMoreGoalsPerGame(final @Param("goals") Integer goals);
 }

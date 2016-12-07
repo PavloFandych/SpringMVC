@@ -8,15 +8,15 @@ import java.util.List;
 public interface CityService {
     public List<City> findAll();
 
-    public City findById(Long cityId);
+    public City findById(final Long cityId);
 
-    public City save(City entity);
+    public City save(final City entity);
 
-    public City update(City entity);
+    public City update(final City entity);
 
-    public void deleteCityByCityId(Long cityId);
+    public void deleteCityByCityId(final Long cityId);
 
-    public City findCityByCityName(String cityName);
+    public City findCityByCityName(final String cityName);
 
-    public City findCityByCityCode(CityCode cityCode);
+    public City findCityByCityCode(final CityCode cityCode);
 }

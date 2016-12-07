@@ -18,7 +18,7 @@ import java.util.List;
 @Repository
 @Transactional
 @Service("roleService")
-public class RoleServiceImpl implements RoleService {
+public final class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
@@ -49,7 +49,7 @@ public class RoleServiceImpl implements RoleService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Role findById(Long roleId) {
+    public Role findById(final Long roleId) {
         return getRoleRepository().findOne(roleId);
     }
 
@@ -57,7 +57,7 @@ public class RoleServiceImpl implements RoleService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Role save(Role entity) {
+    public Role save(final Role entity) {
         return getRoleRepository().save(entity);
     }
 
@@ -65,7 +65,7 @@ public class RoleServiceImpl implements RoleService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Role update(Role entity) {
+    public Role update(final Role entity) {
         return getRoleRepository().save(entity);
     }
 
@@ -73,7 +73,7 @@ public class RoleServiceImpl implements RoleService {
     @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public void deleteRoleByRoleId(Long roleId) {
+    public void deleteRoleByRoleId(final Long roleId) {
         getRoleRepository().delete(roleId);
     }
 
@@ -81,7 +81,7 @@ public class RoleServiceImpl implements RoleService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Role findRoleByRoleType(RoleType roleType) {
+    public Role findRoleByRoleType(final RoleType roleType) {
         List<Role> roles = getRoleRepository().findByRoleType(roleType);
         return (roles != null && !roles.isEmpty()) ? roles.get(0) : null;
     }

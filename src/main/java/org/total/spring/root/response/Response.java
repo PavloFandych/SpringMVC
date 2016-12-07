@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 @Component("response")
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class Response implements Serializable {
+public final class Response implements Serializable {
     private String message;
 
     public Response() {

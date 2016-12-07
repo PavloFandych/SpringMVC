@@ -12,5 +12,5 @@ import java.util.List;
 
 public interface ResultRepository extends PagingAndSortingRepository<Result, Long>,
         JpaSpecificationExecutor<Result> {
-    List<Result> findByResultCode(String resultCode);
+    public List<Result> findByResultCode(final String resultCode);
 }

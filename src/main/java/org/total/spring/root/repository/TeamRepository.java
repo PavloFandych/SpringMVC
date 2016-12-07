@@ -6,5 +6,5 @@ import org.total.spring.root.entity.Team;
 import java.util.List;
 
 public interface TeamRepository extends JpaRepository<Team, Long> {
-    List<Team> findByTeamName(String teamName);
+    public List<Team> findByTeamName(final String teamName);
 }

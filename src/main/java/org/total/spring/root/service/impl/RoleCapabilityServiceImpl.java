@@ -20,7 +20,7 @@ import org.total.spring.root.service.interfaces.RoleService;
 @Repository
 @Transactional
 @Service("roleCapabilityService")
-public class RoleCapabilityServiceImpl implements RoleCapabilityService {
+public final class RoleCapabilityServiceImpl implements RoleCapabilityService {
     private static final Logger LOGGER = Logger.getLogger(RoleCapabilityServiceImpl.class);
 
     @Autowired
@@ -46,7 +46,7 @@ public class RoleCapabilityServiceImpl implements RoleCapabilityService {
     }
 
     @Override
-    public boolean assignCapability(RoleType roleType, CapabilityType capabilityType) {
+    public boolean assignCapability(final RoleType roleType, final CapabilityType capabilityType) {
         Role roleToUpdate = getRoleService()
                 .findRoleByRoleType(roleType);
         Capability capabilityToAssign = getCapabilityService()
@@ -66,7 +66,7 @@ public class RoleCapabilityServiceImpl implements RoleCapabilityService {
     }
 
     @Override
-    public boolean revokeCapability(RoleType roleType, CapabilityType capabilityType) {
+    public boolean revokeCapability(final RoleType roleType, final CapabilityType capabilityType) {
         return false;
     }
 }

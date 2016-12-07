@@ -21,7 +21,7 @@ import java.util.Calendar;
                         columnNames = "resultCode")
         }
 )
-public class Result implements Serializable {
+public final class Result implements Serializable {
     private long resultId;
     private String resultCode;
     private Tournament tournament;

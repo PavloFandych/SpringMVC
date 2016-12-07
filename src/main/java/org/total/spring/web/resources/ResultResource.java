@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 @RestController
-public class ResultResource extends AbstractResource {
+public final class ResultResource extends AbstractResource {
     @Autowired
     private ResultService resultService;
 
@@ -36,10 +36,10 @@ public class ResultResource extends AbstractResource {
     @RequestMapping(value = "/results",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllResults(@RequestHeader(name = "Authorization", required = false) String authorization,
-                                             @RequestHeader(name = "Content-Type",
+    public ResponseEntity<?> fetchAllResults(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                             final @RequestHeader(name = "Content-Type",
                                                      required = false) String contentType,
-                                             @RequestHeader(name = "Version",
+                                             final @RequestHeader(name = "Version",
                                                      required = false) String version) {
         if (getValidator().validate(
                 new String[]{
@@ -122,14 +122,14 @@ public class ResultResource extends AbstractResource {
     @RequestMapping(value = "/results/pagination",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllResults(@RequestHeader(name = "Authorization", required = false) String authorization,
-                                             @RequestHeader(name = "Content-Type",
+    public ResponseEntity<?> fetchAllResults(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                             final @RequestHeader(name = "Content-Type",
                                                      required = false) String contentType,
-                                             @RequestHeader(name = "Version",
+                                             final @RequestHeader(name = "Version",
                                                      required = false) String version,
-                                             @RequestParam(name = "pageIndex",
+                                             final @RequestParam(name = "pageIndex",
                                                      required = false) String pageIndex,
-                                             @RequestParam(name = "numRecPerPage",
+                                             final @RequestParam(name = "numRecPerPage",
                                                      required = false) String numRecPerPage) {
         if (getValidator().validate(
                 new String[]{
@@ -216,11 +216,11 @@ public class ResultResource extends AbstractResource {
     @RequestMapping(value = "/results/{resultCode}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchResultByResultCode(@PathVariable String resultCode,
-                                                     @RequestHeader(name = "Authorization", required = false) String authorization,
-                                                     @RequestHeader(name = "Content-Type",
+    public ResponseEntity<?> fetchResultByResultCode(final @PathVariable String resultCode,
+                                                     final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                     final @RequestHeader(name = "Content-Type",
                                                              required = false) String contentType,
-                                                     @RequestHeader(name = "Version",
+                                                     final @RequestHeader(name = "Version",
                                                              required = false) String version) {
         if (getValidator().validate(
                 new String[]{

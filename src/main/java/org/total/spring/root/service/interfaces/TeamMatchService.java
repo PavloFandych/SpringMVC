@@ -1,7 +1,5 @@
 package org.total.spring.root.service.interfaces;
 
-import org.total.spring.root.entity.enums.SeasonCode;
-import org.total.spring.root.entity.enums.TournamentCode;
 import org.total.spring.root.proc.TeamMatch;
 
 import java.util.List;
@@ -11,8 +9,8 @@ import java.util.List;
  */
 
 public interface TeamMatchService {
-    public List<TeamMatch> getTeamMatches(String teamCode,
-                                          String opponentTeamCode,
-                                          String seasonCode,
-                                          String tournamentCode);
+    public List<TeamMatch> getTeamMatches(final String teamCode,
+                                          final String opponentTeamCode,
+                                          final String seasonCode,
+                                          final String tournamentCode);
 }

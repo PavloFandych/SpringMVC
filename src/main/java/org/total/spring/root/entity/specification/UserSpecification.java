@@ -12,7 +12,7 @@ import javax.persistence.criteria.Root;
  * Created by total on 11/6/16.
  */
 
-public class UserSpecification implements Specification<User> {
+public final class UserSpecification implements Specification<User> {
     private SearchCriteria criteria;
 
     public SearchCriteria getCriteria() {
@@ -24,9 +24,9 @@ public class UserSpecification implements Specification<User> {
     }
 
     @Override
-    public Predicate toPredicate(Root<User> root,
-                                 CriteriaQuery<?> criteriaQuery,
-                                 CriteriaBuilder criteriaBuilder) {
+    public Predicate toPredicate(final Root<User> root,
+                                 final CriteriaQuery<?> criteriaQuery,
+                                 final CriteriaBuilder criteriaBuilder) {
         if (criteria.getOperation().equalsIgnoreCase(">")) {
             return criteriaBuilder.greaterThanOrEqualTo(root.<String>get(criteria.getKey()),
                     criteria.getValue().toString());

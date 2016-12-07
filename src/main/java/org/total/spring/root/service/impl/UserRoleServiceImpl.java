@@ -15,7 +15,7 @@ import org.total.spring.root.service.interfaces.UserService;
 @Repository
 @Transactional
 @Service("userRoleService")
-public class UserRoleServiceImpl implements UserRoleService {
+public final class UserRoleServiceImpl implements UserRoleService {
     private static final Logger LOGGER = Logger.getLogger(UserRoleServiceImpl.class);
 
     @Autowired
@@ -41,7 +41,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public boolean assignRole(String userName, RoleType roleType) {
+    public boolean assignRole(final String userName, final RoleType roleType) {
         User userToUpdate = getUserService().findUserByUserName(userName);
         Role roleToAssign = getRoleService().findRoleByRoleType(roleType);
         if (userToUpdate != null && roleToAssign != null) {
@@ -56,7 +56,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public boolean revokeRole(String userName, RoleType roleType) {
+    public boolean revokeRole(final String userName, final RoleType roleType) {
         User userToUpdate = getUserService().findUserByUserName(userName);
         Role roleToRevoke = getRoleService().findRoleByRoleType(roleType);
         if (userToUpdate != null && roleToRevoke != null) {

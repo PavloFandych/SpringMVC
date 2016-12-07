@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Created by total on 10/28/16.
  */
+
 public interface CapabilityRepository extends JpaRepository<Capability, Long> {
-    List<Capability> findByCapabilityType(CapabilityType capabilityType);
+    public List<Capability> findByCapabilityType(final CapabilityType capabilityType);
 }

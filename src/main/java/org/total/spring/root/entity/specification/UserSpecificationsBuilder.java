@@ -11,8 +11,7 @@ import java.util.List;
  * Created by total on 11/6/16.
  */
 
-public class UserSpecificationsBuilder {
-
+public final class UserSpecificationsBuilder {
     private final List<SearchCriteria> params;
 
     public UserSpecificationsBuilder() {

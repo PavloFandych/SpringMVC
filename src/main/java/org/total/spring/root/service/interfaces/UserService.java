@@ -7,22 +7,21 @@ import java.util.List;
 public interface UserService {
     public List<User> findAll();
 
-    public List<User> findAll(Integer pageIndex, Integer numRecPerPage);
+    public List<User> findAll(final Integer pageIndex, final Integer numRecPerPage);
 
-    public User findById(Long userId);
+    public User findById(final Long userId);
 
-    public User save(User entity);
+    public User save(final User entity);
 
-    public User update(User entity);
+    public User update(final User entity);
 
-    public void deleteUserByUserId(Long userId);
+    public void deleteUserByUserId(final Long userId);
 
-    public User findUserByUserName(String userName);
+    public User findUserByUserName(final String userName);
 
-    public User findUserByUserNameAndPassword(String userName, String password);
+    public User findUserByUserNameAndPassword(final String userName, final String password);
 
-    public User fetchUserByPassword(String password);
+    public User fetchUserByPassword(final String password);
 
-    public User fetchUserByUserIdAndUserName(Long userId, String userName);
+    public User fetchUserByUserIdAndUserName(final Long userId, final String userName);
 }
-

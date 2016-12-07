@@ -23,7 +23,7 @@ import java.util.List;
 @Repository
 @Transactional
 @Service("seasonService")
-public class SeasonServiceImpl implements SeasonService {
+public final class SeasonServiceImpl implements SeasonService {
     @Autowired
     private SeasonRepository seasonRepository;
 
@@ -81,7 +81,7 @@ public class SeasonServiceImpl implements SeasonService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public Season findById(Long seasonId) {
+    public Season findById(final Long seasonId) {
         return getSeasonRepository().findOne(seasonId);
     }
 
@@ -89,7 +89,7 @@ public class SeasonServiceImpl implements SeasonService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Season save(Season entity) {
+    public Season save(final Season entity) {
         return getSeasonRepository().save(entity);
     }
 
@@ -97,7 +97,7 @@ public class SeasonServiceImpl implements SeasonService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Season update(Season entity) {
+    public Season update(final Season entity) {
         return getSeasonRepository().save(entity);
     }
 
@@ -105,7 +105,7 @@ public class SeasonServiceImpl implements SeasonService {
     @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public void deleteSeasonBySeasonId(Long seasonId) {
+    public void deleteSeasonBySeasonId(final Long seasonId) {
         getSeasonRepository().delete(seasonId);
     }
 
@@ -114,7 +114,7 @@ public class SeasonServiceImpl implements SeasonService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public Season findSeasonBySeasonName(String seasonName) {
+    public Season findSeasonBySeasonName(final String seasonName) {
         List<Season> seasons = getSeasonRepository().findBySeasonName(seasonName);
         return (seasons != null && !seasons.isEmpty()) ? seasons.get(0) : null;
 
@@ -125,7 +125,7 @@ public class SeasonServiceImpl implements SeasonService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public Season findSeasonBySeasonCode(SeasonCode seasonCode) {
+    public Season findSeasonBySeasonCode(final SeasonCode seasonCode) {
         List<Season> seasons = getSeasonRepository().findBySeasonCode(seasonCode);
         return (seasons != null && !seasons.isEmpty()) ? seasons.get(0) : null;
     }

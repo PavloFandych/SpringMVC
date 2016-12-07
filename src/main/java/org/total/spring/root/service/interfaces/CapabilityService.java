@@ -12,13 +12,13 @@ import java.util.List;
 public interface CapabilityService {
     public List<Capability> findAll();
 
-    public Capability findByCapabilityId(Long capabilityId);
+    public Capability findByCapabilityId(final Long capabilityId);
 
-    public Capability save(Capability entity);
+    public Capability save(final Capability entity);
 
-    public Capability update(Capability entity);
+    public Capability update(final Capability entity);
 
-    public void deleteCapabilityByCapabilityId(Long capabilityId);
+    public void deleteCapabilityByCapabilityId(final Long capabilityId);
 
-    public Capability findCapabilityByCapabilityType(CapabilityType capabilityType);
+    public Capability findCapabilityByCapabilityType(final CapabilityType capabilityType);
 }

@@ -19,7 +19,7 @@ import java.util.Map;
 @Repository("coulpesDAO")
 public class CoulpesDAO extends GenericDAO<List<String>> {
     @Override
-    public List<List<String>> getEntities(Object... param) {
+    public List<List<String>> getEntities(final Object... param) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_COUPLES)
                 .returningResultSet("couples", new RowMapper<List<String>>() {

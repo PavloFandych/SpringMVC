@@ -8,15 +8,15 @@ import java.util.List;
 public interface CountryService {
     public List<Country> findAll();
 
-    public Country findById(Long countryId);
+    public Country findById(final Long countryId);
 
-    public Country save(Country entity);
+    public Country save(final Country entity);
 
-    public Country update(Country entity);
+    public Country update(final Country entity);
 
-    public void deleteCountryByCountryId(Long countryId);
+    public void deleteCountryByCountryId(final Long countryId);
 
-    public Country findCountryByCountryName(String countryName);
+    public Country findCountryByCountryName(final String countryName);
 
-    public Country findCountryByCountryCode(CountryCode countryCode);
+    public Country findCountryByCountryCode(final CountryCode countryCode);
 }

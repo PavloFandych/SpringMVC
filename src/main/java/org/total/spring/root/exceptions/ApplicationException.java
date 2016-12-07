@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
  * Created by pavlo.fandych on 11/9/2016.
  */
 
-public class ApplicationException extends Exception {
+public final class ApplicationException extends Exception {
     private HttpStatus httpStatus;
     private String errorMessage;
 

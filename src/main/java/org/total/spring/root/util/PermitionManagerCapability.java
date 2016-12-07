@@ -14,7 +14,7 @@ import org.total.spring.root.service.interfaces.CapabilityService;
  */
 
 @Component("permitionManagerCapability")
-public class PermitionManagerCapability implements PermitionManager<User, CapabilityType> {
+public final class PermitionManagerCapability implements PermitionManager<User, CapabilityType> {
     @Autowired
     private CapabilityService capabilityService;
 
@@ -27,7 +27,7 @@ public class PermitionManagerCapability implements PermitionManager<User, Capabi
     }
 
     @Override
-    public boolean containEntity(User owner, CapabilityType target) {
+    public boolean containEntity(final User owner, final CapabilityType target) {
         boolean hasCapability = false;
         for (Role role : owner.getRoles()) {
             if (role.getCapabilities()

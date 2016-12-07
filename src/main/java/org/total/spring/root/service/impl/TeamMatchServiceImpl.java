@@ -18,7 +18,7 @@ import java.util.List;
 
 @Transactional
 @Service("teamMatchService")
-public class TeamMatchServiceImpl implements TeamMatchService {
+public final class TeamMatchServiceImpl implements TeamMatchService {
     @Autowired
     private TeamMatchDAO teamMatchDAO;
 
@@ -35,10 +35,10 @@ public class TeamMatchServiceImpl implements TeamMatchService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public List<TeamMatch> getTeamMatches(String teamCode,
-                                          String opponentTeamCode,
-                                          String seasonCode,
-                                          String tournamentCode) {
+    public List<TeamMatch> getTeamMatches(final String teamCode,
+                                          final String opponentTeamCode,
+                                          final String seasonCode,
+                                          final String tournamentCode) {
         List<TeamMatch> list = getTeamMatchDAO().getEntities(teamCode,
                 opponentTeamCode,
                 seasonCode,

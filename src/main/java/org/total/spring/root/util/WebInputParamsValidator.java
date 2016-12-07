@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 
 @Component("webInputParamsValidator")
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-public class WebInputParamsValidator implements Validator<String> {
+public final class WebInputParamsValidator implements Validator<String> {
     @Override
-    public boolean validate(String... params) {
+    public boolean validate(final String... params) {
         for (String item : params) {
             if (item == null || item.isEmpty()) {
                 return false;

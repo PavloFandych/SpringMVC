@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-public class TeamResource extends AbstractResource {
+public final class TeamResource extends AbstractResource {
     @Autowired
     private TeamService teamService;
 
@@ -34,14 +34,14 @@ public class TeamResource extends AbstractResource {
     @RequestMapping(value = "/teams",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllTeams(@RequestHeader(name = "Authorization", required = false) String authorization,
-                                           @RequestHeader(name = "Content-Type",
+    public ResponseEntity<?> fetchAllTeams(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                           final @RequestHeader(name = "Content-Type",
                                                    required = false) String contentType,
-                                           @RequestHeader(name = "Version",
+                                           final @RequestHeader(name = "Version",
                                                    required = false) String version,
-                                           @RequestParam(name = "seasonCode",
+                                           final @RequestParam(name = "seasonCode",
                                                    required = false) SeasonCode seasonCode,
-                                           @RequestParam(name = "tournamentCode",
+                                           final @RequestParam(name = "tournamentCode",
                                                    required = false) TournamentCode tournamentCode) {
         if (getValidator().validate(
                 new String[]{
@@ -125,11 +125,11 @@ public class TeamResource extends AbstractResource {
     @RequestMapping(value = "/teams/{id}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchTeamByTeamId(@PathVariable Long id,
-                                               @RequestHeader(name = "Authorization", required = false) String authorization,
-                                               @RequestHeader(name = "Content-Type",
+    public ResponseEntity<?> fetchTeamByTeamId(final @PathVariable Long id,
+                                               final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                               final @RequestHeader(name = "Content-Type",
                                                        required = false) String contentType,
-                                               @RequestHeader(name = "Version",
+                                               final @RequestHeader(name = "Version",
                                                        required = false) String version) {
         if (getValidator().validate(
                 new String[]{

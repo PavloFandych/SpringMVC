@@ -4,7 +4,7 @@ package org.total.spring.root.entity.specification;
  * Created by total on 11/6/16.
  */
 
-public class SearchCriteria {
+public final class SearchCriteria {
 
     /* key: the field name – for example: firstName, age, … etc.
     *  operation: the operation – for example: equality, less than, … etc.

@@ -18,7 +18,7 @@ import java.util.List;
 @Repository
 @Transactional
 @Service("countryService")
-public class CountryServiceImpl implements CountryService {
+public final class CountryServiceImpl implements CountryService {
     @Autowired
     private CountryRepository countryRepository;
 
@@ -50,7 +50,7 @@ public class CountryServiceImpl implements CountryService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public Country findById(Long countryId) {
+    public Country findById(final Long countryId) {
         return getCountryRepository().findOne(countryId);
     }
 
@@ -58,7 +58,7 @@ public class CountryServiceImpl implements CountryService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Country save(Country entity) {
+    public Country save(final Country entity) {
         return getCountryRepository().save(entity);
     }
 
@@ -66,7 +66,7 @@ public class CountryServiceImpl implements CountryService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Country update(Country entity) {
+    public Country update(final Country entity) {
         return getCountryRepository().save(entity);
     }
 
@@ -74,7 +74,7 @@ public class CountryServiceImpl implements CountryService {
     @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public void deleteCountryByCountryId(Long roleId) {
+    public void deleteCountryByCountryId(final Long roleId) {
         getCountryRepository().delete(roleId);
     }
 
@@ -83,7 +83,7 @@ public class CountryServiceImpl implements CountryService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public Country findCountryByCountryName(String countryName) {
+    public Country findCountryByCountryName(final String countryName) {
         List<Country> countries = getCountryRepository().findByCountryName(countryName);
         return (countries != null && !countries.isEmpty()) ? countries.get(0) : null;
     }
@@ -93,7 +93,7 @@ public class CountryServiceImpl implements CountryService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public Country findCountryByCountryCode(CountryCode countryCode) {
+    public Country findCountryByCountryCode(final CountryCode countryCode) {
         List<Country> countries = getCountryRepository().findByCountryCode(countryCode);
         return (countries != null && !countries.isEmpty()) ? countries.get(0) : null;
     }

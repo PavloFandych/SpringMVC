@@ -24,7 +24,7 @@ import java.util.List;
 @Repository
 @Transactional
 @Service("userService")
-public class UserServiceImpl implements UserService {
+public final class UserServiceImpl implements UserService {
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
 
     @Autowired
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
                     cacheManager = "springCashManager"
             )
     )
-    public List<User> findAll(Integer pageIndex, Integer numRecPerPage) {
+    public List<User> findAll(final Integer pageIndex, final Integer numRecPerPage) {
         Sort sort = new Sort(Sort.Direction.ASC, "userName");
         /*
         * @param page zero-based page index.
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public User findById(Long userId) {
+    public User findById(final Long userId) {
         return getUserRepository().findOne(userId);
     }
 
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public User save(User entity) {
+    public User save(final User entity) {
         return getUserRepository().save(entity);
     }
 
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public User update(User entity) {
+    public User update(final User entity) {
         return getUserRepository().save(entity);
     }
 
@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
     @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public void deleteUserByUserId(Long userId) {
+    public void deleteUserByUserId(final Long userId) {
         getUserRepository().delete(userId);
     }
 
@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public User findUserByUserName(String userName) {
+    public User findUserByUserName(final String userName) {
         List<User> users = getUserRepository().findByUserName(userName);
         return (users != null && !users.isEmpty()) ? users.get(0) : null;
     }
@@ -124,7 +124,8 @@ public class UserServiceImpl implements UserService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public User findUserByUserNameAndPassword(String userName, String password) {
+    public User findUserByUserNameAndPassword(final String userName,
+                                              final String password) {
         List<User> users = getUserRepository().findByUserNameAndPassword(userName, password);
         return (users != null && !users.isEmpty()) ? users.get(0) : null;
     }
@@ -133,7 +134,7 @@ public class UserServiceImpl implements UserService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public User fetchUserByPassword(String password) {
+    public User fetchUserByPassword(final String password) {
         SearchCriteria searchCriteria = new SearchCriteria();
         searchCriteria.setKey("password");
         searchCriteria.setOperation(":");
@@ -151,7 +152,8 @@ public class UserServiceImpl implements UserService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public User fetchUserByUserIdAndUserName(Long userId, String userName) {
+    public User fetchUserByUserIdAndUserName(final Long userId,
+                                             final String userName) {
         SearchCriteria searchCriteriaUserId = new SearchCriteria();
         searchCriteriaUserId.setKey("userId");
         searchCriteriaUserId.setOperation(":");

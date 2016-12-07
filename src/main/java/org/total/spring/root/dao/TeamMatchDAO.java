@@ -27,7 +27,7 @@ import java.util.Map;
 @Repository("teamMatchDAO")
 public class TeamMatchDAO extends GenericDAO<TeamMatch> {
     @Override
-    public List<TeamMatch> getEntities(Object... param) {
+    public List<TeamMatch> getEntities(final Object... param) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_TEAM_MATCHES)
                 .returningResultSet("teamMatches", new RowMapper<TeamMatch>() {

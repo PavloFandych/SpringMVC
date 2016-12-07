@@ -15,7 +15,7 @@ import java.util.List;
 
 @Transactional
 @Service("couplesService")
-public class CouplesServiceImpl implements CouplesService {
+public final class CouplesServiceImpl implements CouplesService {
     @Autowired
     private CoulpesDAO coulpesDAO;
 
@@ -32,7 +32,8 @@ public class CouplesServiceImpl implements CouplesService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public List<List<String>> getCouples(String seasonCode, String tournamentCode) {
+    public List<List<String>> getCouples(final String seasonCode,
+                                         final String tournamentCode) {
         List<List<String>> couples = getCoulpesDAO().getEntities(seasonCode, tournamentCode);
         return (couples != null && !couples.isEmpty()) ? couples : null;
     }

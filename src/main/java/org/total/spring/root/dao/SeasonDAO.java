@@ -18,7 +18,7 @@ import java.util.Map;
 @Repository("seasonDAO")
 public class SeasonDAO extends GenericDAO<List<String>> {
     @Override
-    public List<List<String>> getEntities(Object... param) {
+    public List<List<String>> getEntities(final Object... param) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_SEASON_LIST)
                 .returningResultSet("seasonList", new RowMapper<List<String>>() {

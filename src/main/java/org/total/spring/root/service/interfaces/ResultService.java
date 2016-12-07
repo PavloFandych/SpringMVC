@@ -10,15 +10,15 @@ import java.util.List;
 public interface ResultService {
     public List<Result> findAll();
 
-    public List<Result> findAll(Integer pageIndex, Integer numRecPerPage);
+    public List<Result> findAll(final Integer pageIndex, final Integer numRecPerPage);
 
-    public Result findById(Long resultId);
+    public Result findById(final Long resultId);
 
-    public Result save(Result entity);
+    public Result save(final Result entity);
 
-    public Result update(Result entity);
+    public Result update(final Result entity);
 
-    public void deleteResultByResultId(Long resultId);
+    public void deleteResultByResultId(final Long resultId);
 
-    public Result findResultByResultCode(String resultCode);
+    public Result findResultByResultCode(final String resultCode);
 }

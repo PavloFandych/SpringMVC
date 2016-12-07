@@ -22,7 +22,7 @@ import java.util.List;
 @Repository
 @Transactional
 @Service("tournamentService")
-public class TournamentServiceImpl implements TournamentService {
+public final class TournamentServiceImpl implements TournamentService {
 
     @Autowired
     private TournamentRepository tournamentRepository;
@@ -55,7 +55,7 @@ public class TournamentServiceImpl implements TournamentService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public Tournament findById(Long tournamentId) {
+    public Tournament findById(final Long tournamentId) {
         return getTournamentRepository().findOne(tournamentId);
     }
 
@@ -63,7 +63,7 @@ public class TournamentServiceImpl implements TournamentService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Tournament save(Tournament entity) {
+    public Tournament save(final Tournament entity) {
         return getTournamentRepository().save(entity);
     }
 
@@ -71,7 +71,7 @@ public class TournamentServiceImpl implements TournamentService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Tournament update(Tournament entity) {
+    public Tournament update(final Tournament entity) {
         return getTournamentRepository().save(entity);
     }
 
@@ -79,7 +79,7 @@ public class TournamentServiceImpl implements TournamentService {
     @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public void deleteTournamentByTournamentId(Long tournamentId) {
+    public void deleteTournamentByTournamentId(final Long tournamentId) {
         getTournamentRepository().delete(tournamentId);
     }
 
@@ -88,7 +88,7 @@ public class TournamentServiceImpl implements TournamentService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public Tournament findTournamentByTournamentName(String tournamentName) {
+    public Tournament findTournamentByTournamentName(final String tournamentName) {
         List<Tournament> tournaments = getTournamentRepository().findByTournamentName(tournamentName);
         return (tournaments != null && !tournaments.isEmpty()) ? tournaments.get(0) : null;
 
@@ -99,7 +99,7 @@ public class TournamentServiceImpl implements TournamentService {
             cacheManager = "springCashManager",
             sync = true
     )
-    public Tournament findTournamentByTournamentCode(TournamentCode tournamentCode) {
+    public Tournament findTournamentByTournamentCode(final TournamentCode tournamentCode) {
         List<Tournament> tournaments = getTournamentRepository().findByTournamentCode(tournamentCode);
         return (tournaments != null && !tournaments.isEmpty()) ? tournaments.get(0) : null;
     }

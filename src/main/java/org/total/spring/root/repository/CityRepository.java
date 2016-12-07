@@ -7,7 +7,7 @@ import org.total.spring.root.entity.enums.CityCode;
 import java.util.List;
 
 public interface CityRepository extends JpaRepository<City, Long> {
-    List<City> findByCityName(String cityName);
+    public List<City> findByCityName(final String cityName);
 
-    List<City> findByCityCode(CityCode cityCode);
+    public List<City> findByCityCode(final CityCode cityCode);
 }

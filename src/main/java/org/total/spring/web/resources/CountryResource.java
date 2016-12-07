@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-public class CountryResource extends AbstractResource {
+public final class CountryResource extends AbstractResource {
     @Autowired
     private CountryService countryService;
 
@@ -33,10 +33,10 @@ public class CountryResource extends AbstractResource {
     @RequestMapping(value = "/countries",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllCountries(@RequestHeader(name = "Authorization", required = false) String authorization,
-                                               @RequestHeader(name = "Content-Type",
+    public ResponseEntity<?> fetchAllCountries(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                               final @RequestHeader(name = "Content-Type",
                                                        required = false) String contentType,
-                                               @RequestHeader(name = "Version",
+                                               final @RequestHeader(name = "Version",
                                                        required = false) String version) {
         if (getValidator().validate(
                 new String[]{
@@ -119,11 +119,11 @@ public class CountryResource extends AbstractResource {
     @RequestMapping(value = "/countries/{countryCode}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchCountryByCountryCode(@PathVariable String countryCode,
-                                                       @RequestHeader(name = "Authorization", required = false) String authorization,
-                                                       @RequestHeader(name = "Content-Type",
+    public ResponseEntity<?> fetchCountryByCountryCode(final @PathVariable String countryCode,
+                                                       final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                       final @RequestHeader(name = "Content-Type",
                                                                required = false) String contentType,
-                                                       @RequestHeader(name = "Version",
+                                                       final @RequestHeader(name = "Version",
                                                                required = false) String version) {
         if (getValidator().validate(
                 new String[]{

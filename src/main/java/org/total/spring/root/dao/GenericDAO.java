@@ -24,5 +24,5 @@ public abstract class GenericDAO<T> {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public abstract List<T> getEntities(Object... param);
+    public abstract List<T> getEntities(final Object... param);
 }

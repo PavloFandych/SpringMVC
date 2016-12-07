@@ -8,18 +8,19 @@ import java.util.List;
 /**
  * Created by kostya on 10/21/16.
  */
+
 public interface TournamentService {
     public List<Tournament> findAll();
 
-    public Tournament findById(Long tournamentId);
+    public Tournament findById(final Long tournamentId);
 
-    public Tournament save(Tournament entity);
+    public Tournament save(final Tournament entity);
 
-    public Tournament update(Tournament entity);
+    public Tournament update(final Tournament entity);
 
-    public void deleteTournamentByTournamentId(Long tournamentId);
+    public void deleteTournamentByTournamentId(final Long tournamentId);
 
-    public Tournament findTournamentByTournamentName(String tournamentName);
+    public Tournament findTournamentByTournamentName(final String tournamentName);
 
-    public Tournament findTournamentByTournamentCode(TournamentCode tournamentCode);
+    public Tournament findTournamentByTournamentCode(final TournamentCode tournamentCode);
 }

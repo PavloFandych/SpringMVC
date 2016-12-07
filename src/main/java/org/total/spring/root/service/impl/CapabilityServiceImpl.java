@@ -22,7 +22,7 @@ import java.util.List;
 @Repository
 @Transactional
 @Service("capabilityService")
-public class CapabilityServiceImpl implements CapabilityService {
+public final class CapabilityServiceImpl implements CapabilityService {
     @Autowired
     private CapabilityRepository capabilityRepository;
 
@@ -53,7 +53,7 @@ public class CapabilityServiceImpl implements CapabilityService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Capability findByCapabilityId(Long capabilityId) {
+    public Capability findByCapabilityId(final Long capabilityId) {
         return getCapabilityRepository().findOne(capabilityId);
     }
 
@@ -61,7 +61,7 @@ public class CapabilityServiceImpl implements CapabilityService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Capability save(Capability entity) {
+    public Capability save(final Capability entity) {
         return getCapabilityRepository().save(entity);
     }
 
@@ -69,7 +69,7 @@ public class CapabilityServiceImpl implements CapabilityService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Capability update(Capability entity) {
+    public Capability update(final Capability entity) {
         return getCapabilityRepository().save(entity);
     }
 
@@ -77,7 +77,7 @@ public class CapabilityServiceImpl implements CapabilityService {
     @CacheEvict(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public void deleteCapabilityByCapabilityId(Long capabilityId) {
+    public void deleteCapabilityByCapabilityId(final Long capabilityId) {
         getCapabilityRepository().delete(capabilityId);
     }
 
@@ -85,7 +85,7 @@ public class CapabilityServiceImpl implements CapabilityService {
     @CachePut(value = "applicationCache",
             cacheManager = "springCashManager"
     )
-    public Capability findCapabilityByCapabilityType(CapabilityType capabilityType) {
+    public Capability findCapabilityByCapabilityType(final CapabilityType capabilityType) {
         List<Capability> capabilities = getCapabilityRepository().findByCapabilityType(capabilityType);
         return (capabilities != null && !capabilities.isEmpty()) ? capabilities.get(0) : null;
     }

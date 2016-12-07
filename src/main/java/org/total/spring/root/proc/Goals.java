@@ -23,7 +23,7 @@ import java.io.Serializable;
                 )
         }
 )
-public class Goals implements Serializable {
+public final class Goals implements Serializable {
     private long Id;
 
     @Id

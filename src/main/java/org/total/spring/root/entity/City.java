@@ -18,7 +18,7 @@ import java.util.Set;
                         columnNames = "cityCode"),
         }
 )
-public class City implements Serializable {
+public final class City implements Serializable {
     private long cityId;
     private String cityName;
     private CityCode cityCode;

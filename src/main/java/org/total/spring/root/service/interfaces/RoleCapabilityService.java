@@ -6,8 +6,9 @@ import org.total.spring.root.entity.enums.RoleType;
 /**
  * Created by total on 10/28/16.
  */
-public interface RoleCapabilityService {
-    public boolean assignCapability(RoleType roleType, CapabilityType capabilityType);
 
-    public boolean revokeCapability(RoleType roleType, CapabilityType capabilityType);
+public interface RoleCapabilityService {
+    public boolean assignCapability(final RoleType roleType, final CapabilityType capabilityType);
+
+    public boolean revokeCapability(final RoleType roleType, final CapabilityType capabilityType);
 }
