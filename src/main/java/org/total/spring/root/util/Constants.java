@@ -1,6 +1,6 @@
 package org.total.spring.root.util;
 
-public interface Constants {
+public final class Constants {
     public static final String INVALID_CREDENTIALS = "Invalid credentials";
     public static final String ERROR = "Error";
     public static final String SUCCESS = "Operation done successful";
