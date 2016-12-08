@@ -48,6 +48,7 @@ public final class Season implements Serializable {
     @Column(name = "seasonId",
             nullable = false
     )
+    @JsonIgnore
     public long getSeasonId() {
         return seasonId;
     }
