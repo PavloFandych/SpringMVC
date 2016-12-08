@@ -129,4 +129,19 @@ public final class SeasonServiceImpl implements SeasonService {
         List<Season> seasons = getSeasonRepository().findBySeasonCode(seasonCode);
         return (seasons != null && !seasons.isEmpty()) ? seasons.get(0) : null;
     }
+
+    @Override
+    @Caching(evict = @CacheEvict(
+            value = "applicationCache",
+            cacheManager = "springCashManager",
+            allEntries = true
+    ),
+            cacheable = @Cacheable(
+                    value = "applicationCache",
+                    cacheManager = "springCashManager"
+            )
+    )
+    public List<Season> getActualSeasons() {
+        return getSeasonDAO().getActualSeasons();
+    }
 }

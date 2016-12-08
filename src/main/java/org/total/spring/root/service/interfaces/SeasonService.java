@@ -25,4 +25,6 @@ public interface SeasonService {
     public Season findSeasonBySeasonName(final String seasonName);
 
     public Season findSeasonBySeasonCode(final SeasonCode seasonCode);
+
+    public List<Season> getActualSeasons();
 }

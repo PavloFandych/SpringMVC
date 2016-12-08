@@ -57,6 +57,8 @@ public final class Constants {
     public static final String CALL_GET_TEAMS_ORDER_BY_MATCH_DAY = "getTeamsOrderByMatchDay";
     public static final String CALL_GET_STANDINGS = "getStandings";
     public static final String CALL_GET_SEASON_LIST = "getSeasonsList";
+    public static final String CALL_GET_ACTUAL_SEASON_LIST = "getActualSeasons";
+    public static final String CALL_GET_ACTUAL_TOURNAMENT_LIST = "getActualTournaments";
     public static final String CALL_GET_TEAM_LIST = "getTeamsList";
     public static final String CALL_GET_TEAM_MATCHES = "getTeamMatches";
     public static final String CALL_GET_STORED_STANDINGS = "getStoredStandings";

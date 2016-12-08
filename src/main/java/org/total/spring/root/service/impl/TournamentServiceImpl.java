@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.total.spring.root.dao.TournamentDAO;
 import org.total.spring.root.entity.Tournament;
 import org.total.spring.root.entity.enums.TournamentCode;
 import org.total.spring.root.repository.TournamentRepository;
@@ -23,6 +24,8 @@ import java.util.List;
 @Transactional
 @Service("tournamentService")
 public final class TournamentServiceImpl implements TournamentService {
+    @Autowired
+    private TournamentDAO tournamentDAO;
 
     @Autowired
     private TournamentRepository tournamentRepository;
@@ -33,6 +36,14 @@ public final class TournamentServiceImpl implements TournamentService {
 
     public void setTournamentRepository(TournamentRepository tournamentRepository) {
         this.tournamentRepository = tournamentRepository;
+    }
+
+    public TournamentDAO getTournamentDAO() {
+        return tournamentDAO;
+    }
+
+    public void setTournamentDAO(TournamentDAO tournamentDAO) {
+        this.tournamentDAO = tournamentDAO;
     }
 
     @Override
@@ -89,7 +100,8 @@ public final class TournamentServiceImpl implements TournamentService {
             sync = true
     )
     public Tournament findTournamentByTournamentName(final String tournamentName) {
-        List<Tournament> tournaments = getTournamentRepository().findByTournamentName(tournamentName);
+        List<Tournament> tournaments = getTournamentRepository()
+                .findByTournamentName(tournamentName);
         return (tournaments != null && !tournaments.isEmpty()) ? tournaments.get(0) : null;
 
     }
@@ -100,7 +112,23 @@ public final class TournamentServiceImpl implements TournamentService {
             sync = true
     )
     public Tournament findTournamentByTournamentCode(final TournamentCode tournamentCode) {
-        List<Tournament> tournaments = getTournamentRepository().findByTournamentCode(tournamentCode);
+        List<Tournament> tournaments = getTournamentRepository()
+                .findByTournamentCode(tournamentCode);
         return (tournaments != null && !tournaments.isEmpty()) ? tournaments.get(0) : null;
+    }
+
+    @Override
+    @Caching(evict = @CacheEvict(
+            value = "applicationCache",
+            cacheManager = "springCashManager",
+            allEntries = true
+    ),
+            cacheable = @Cacheable(
+                    value = "applicationCache",
+                    cacheManager = "springCashManager"
+            )
+    )
+    public List<Tournament> getActualTournaments() {
+        return getTournamentDAO().getEntities();
     }
 }
