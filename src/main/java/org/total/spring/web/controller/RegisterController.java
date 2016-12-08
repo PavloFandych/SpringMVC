@@ -79,7 +79,7 @@ public class RegisterController {
     public String registration(@ModelAttribute("registrationBean") RegistrationBean registrationBean,
                                HttpServletRequest request) {
         try {
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY + " Registration begin.");
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY.concat(" ").concat("Registration begins"));
 
             if (registrationBean != null &&
                     registrationBean.getUserName() != null &&
@@ -89,16 +89,22 @@ public class RegisterController {
                     registrationBean.getUserEmail() != null &&
                     !registrationBean.getUserEmail().isEmpty()) {
 
-                LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" Login = ").concat(registrationBean.getUserName()));
+                LOGGER.debug(Constants.STATUS_REQ_SUCCESS
+                        .concat(" Login = ")
+                        .concat(registrationBean.getUserName()));
 
                 User user = getUserService().findUserByUserName(registrationBean.getUserName());
 
                 if (user != null) {
-                    LOGGER.debug(Constants.STATUS_REQ_FAIL + " User " + registrationBean.getUserName()
-                            + " already exists");
+                    LOGGER.debug(Constants.STATUS_REQ_FAIL
+                            .concat(" User ")
+                            .concat(registrationBean.getUserName())
+                            .concat(" already exists"));
 
-                    request.setAttribute(Constants.ERROR, "User " + registrationBean.getUserName()
-                            + " already exists");
+                    request.setAttribute(Constants.ERROR, "User "
+                            .concat(registrationBean.getUserName())
+                            .concat(" ")
+                            .concat("already exists"));
                     return "/register";
                 } else {
                     User userToRegister = null;
@@ -119,24 +125,32 @@ public class RegisterController {
                                 registrationBean.getUserEmail());
                     }
 
-                    LOGGER.debug("User created. " + userToRegister);
+                    LOGGER.debug("User created. ".concat(userToRegister.toString()));
 
                     try {
                         getUserService().save(userToRegister);
                         getUserRoleService().assignRole(registrationBean.getUserName(),
                                 RoleType.USER);
 
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " role \"" + RoleType.USER
-                                + "\" to user " + registrationBean.getUserName() + " assigned successful");
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS
+                                .concat(" role \"")
+                                .concat(RoleType.USER.name())
+                                .concat("\" to user ")
+                                .concat(registrationBean.getUserName())
+                                .concat(" assigned successful"));
 
                         request.getSession().setAttribute("User", userToRegister);
                         return "/index";
                     } catch (Exception e) {
-                        LOGGER.error(Constants.STATUS_REQ_FAIL + " Error while performing registration");
+                        LOGGER.error(Constants.STATUS_REQ_FAIL
+                                .concat(" ")
+                                .concat("Error while performing registration"));
                     }
                 }
             } else {
-                LOGGER.error(Constants.ERROR + " Registration form is invalid");
+                LOGGER.error(Constants.ERROR
+                        .concat(" ")
+                        .concat("Registration form is invalid"));
             }
         } catch (Exception e) {
             LOGGER.error(e);

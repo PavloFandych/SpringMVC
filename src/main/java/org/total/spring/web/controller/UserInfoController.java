@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.entity.User;
+import org.total.spring.root.entity.enums.RoleType;
 import org.total.spring.root.service.interfaces.RoleService;
 import org.total.spring.root.service.interfaces.UserService;
 import org.total.spring.root.util.Constants;
@@ -45,7 +45,7 @@ public class UserInfoController {
     @RequestMapping(value = "/userinfo",
             method = RequestMethod.GET)
     public String userInfo(HttpServletRequest request) {
-        LOGGER.debug(Constants.STATUS_REQ_ENTRY + "\n");
+        LOGGER.debug(Constants.STATUS_REQ_ENTRY);
 
         Collection<User> users = null;
 
@@ -65,11 +65,11 @@ public class UserInfoController {
                     .findRoleByRoleType(RoleType.ADMIN))) {
                 users = getUserService().findAll();
             } else {
-                users = new ArrayList<User>();
+                users = new ArrayList<>();
                 users.add(authorizedUser);
             }
 
-            LOGGER.debug("Users userInfo = " + users);
+            LOGGER.debug("Users userInfo = ".concat(users.toString()));
 
             request.setAttribute("Users", users);
         } catch (Exception e) {
