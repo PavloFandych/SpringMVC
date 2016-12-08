@@ -88,46 +88,46 @@ public final class UserResource extends AbstractResource {
                                             .encodeMD5(loginAndPassword.get(1)));
 
                     if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.GETTER_FOUND);
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
                         if (getPermitionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<User> list = getUserService().findAll();
 
                             if (list == null || list.isEmpty()) {
-                                LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_USER_FOUND
-                                        + " http status = " + HttpStatus.NOT_FOUND);
+                                LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
+                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_USER_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
-                                        + " http status = " + HttpStatus.OK);
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
+                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
-                                    + " http status = " + HttpStatus.CONFLICT);
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
                             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                         }
                     } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
-                                + " http status = " + HttpStatus.CONFLICT);
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
                         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                     }
                 } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
-                            + " http status = " + HttpStatus.NOT_ACCEPTABLE);
+                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -137,8 +137,8 @@ public final class UserResource extends AbstractResource {
                 LOGGER.error(e, e);
             }
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
-                " http status = " + HttpStatus.BAD_REQUEST);
+        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
+                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -182,48 +182,48 @@ public final class UserResource extends AbstractResource {
                                             .encodeMD5(loginAndPassword.get(1)));
 
                     if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.GETTER_FOUND);
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
                         if (getPermitionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<User> list = getUserService()
                                     .findAll(Integer.parseInt(pageIndex),
                                             Integer.parseInt(numRecPerPage));
 
                             if (list == null || list.isEmpty()) {
-                                LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_USER_FOUND
-                                        + " http status = " + HttpStatus.NOT_FOUND);
+                                LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
+                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_USER_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
-                                        + " http status = " + HttpStatus.OK);
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
+                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
-                                    + " http status = " + HttpStatus.CONFLICT);
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
                             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                         }
                     } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
-                                + " http status = " + HttpStatus.CONFLICT);
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
                         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                     }
                 } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
-                            + " http status = " + HttpStatus.NOT_ACCEPTABLE);
+                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -233,8 +233,8 @@ public final class UserResource extends AbstractResource {
                 LOGGER.error(e, e);
             }
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
-                " http status = " + HttpStatus.BAD_REQUEST);
+        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
+                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -274,47 +274,47 @@ public final class UserResource extends AbstractResource {
                                             .encodeMD5(loginAndPassword.get(1)));
 
                     if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.GETTER_FOUND);
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
                         if (getPermitionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<User> list = new ArrayList<>();
                             list.add(getUserService().findById(Long.parseLong(id)));
 
                             if (list.isEmpty()) {
-                                LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_USER_FOUND
-                                        + " http status = " + HttpStatus.NOT_FOUND);
+                                LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
+                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_USER_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
-                                        + " http status = " + HttpStatus.OK);
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
+                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
-                                    + " http status = " + HttpStatus.CONFLICT);
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
                             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                         }
                     } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
-                                + " http status = " + HttpStatus.CONFLICT);
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
                         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                     }
                 } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
-                            + " http status = " + HttpStatus.NOT_ACCEPTABLE);
+                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -324,8 +324,8 @@ public final class UserResource extends AbstractResource {
                 LOGGER.error(e, e);
             }
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
-                " http status = " + HttpStatus.BAD_REQUEST);
+        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
+                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -364,47 +364,47 @@ public final class UserResource extends AbstractResource {
                                             .encodeMD5(loginAndPassword.get(1)));
 
                     if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.GETTER_FOUND);
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
                         if (getPermitionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<User> list = new ArrayList<>();
                             list.add(getUserService().findUserByUserName(userName));
 
                             if (list.isEmpty()) {
-                                LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_USER_FOUND
-                                        + " http status = " + HttpStatus.NOT_FOUND);
+                                LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
+                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_USER_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
-                                        + " http status = " + HttpStatus.OK);
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
+                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
-                                    + " http status = " + HttpStatus.CONFLICT);
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
                             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                         }
                     } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_GETTER_FOUND
-                                + " http status = " + HttpStatus.CONFLICT);
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
                         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                     }
                 } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
-                            + " http status = " + HttpStatus.NOT_ACCEPTABLE);
+                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -414,8 +414,8 @@ public final class UserResource extends AbstractResource {
                 LOGGER.error(e, e);
             }
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
-                " http status = " + HttpStatus.BAD_REQUEST);
+        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
+                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -452,23 +452,23 @@ public final class UserResource extends AbstractResource {
                                     .encodeMD5(loginAndPassword.get(1)));
 
                     if (deleter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.DELETER_FOUND);
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.DELETER_FOUND));
 
                         if (getPermitionManager()
                                 .containEntity(deleter, CapabilityType.DELETE)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             User userToDelete = getUserService()
                                     .findUserByUserName(userName);
 
                             if (userToDelete != null) {
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS + "User with id "
-                                        + userToDelete.getUserId() + " found");
+                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat("User with id ")
+                                        .concat(String.valueOf(userToDelete.getUserId())).concat(" found"));
 
                                 if (userToDelete.getUserName()
                                         .equals(deleter.getUserName())) {
-                                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.CANNOT_DELETE_USER
-                                            + " http status = " + HttpStatus.CONFLICT);
+                                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.CANNOT_DELETE_USER)
+                                            .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                                     Response response = generateResponse(Constants.CANNOT_DELETE_USER);
 
@@ -476,40 +476,40 @@ public final class UserResource extends AbstractResource {
                                 } else {
                                     getUserService().deleteUserByUserId(userToDelete.getUserId());
 
-                                    LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
-                                            + " http status = " + HttpStatus.OK);
+                                    LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
+                                            .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                     Response response = generateResponse(Constants.SUCCESS);
 
                                     return new ResponseEntity<>(response, HttpStatus.OK);
                                 }
                             } else {
-                                LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_USER_FOUND
-                                        + " http status = " + HttpStatus.CONFLICT);
+                                LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
+                                        .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                                 Response response = generateResponse(Constants.NO_USER_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                             }
                         } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
-                                    + " http status = " + HttpStatus.CONFLICT);
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
                             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                         }
                     } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_DELETER_FOUND
-                                + " http status = " + HttpStatus.CONFLICT);
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_DELETER_FOUND)
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_DELETER_FOUND);
 
                         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                     }
                 } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
-                            + " http status = " + HttpStatus.NOT_ACCEPTABLE);
+                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -519,8 +519,8 @@ public final class UserResource extends AbstractResource {
                 LOGGER.error(e, e);
             }
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
-                " http status = " + HttpStatus.BAD_REQUEST);
+        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
+                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -559,12 +559,12 @@ public final class UserResource extends AbstractResource {
                                             .encodeMD5(loginAndPassword.get(1)));
 
                     if (creator != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.CREATOR_FOUND);
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.CREATOR_FOUND));
 
                         if (getPermitionManager()
                                 .containEntity(creator, CapabilityType.CREATE)) {
 
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             try {
                                 ObjectMapper mapper = new ObjectMapper();
@@ -577,8 +577,8 @@ public final class UserResource extends AbstractResource {
                                             .findUserByUserName(userJSON.getUserName());
 
                                     if (userToCreate != null) {
-                                        LOGGER.debug(Constants.STATUS_REQ_FAIL + " " + Constants.USER_ALREADY_EXISTS
-                                                + " http status = " + HttpStatus.CONFLICT);
+                                        LOGGER.debug(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.USER_ALREADY_EXISTS)
+                                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                                         Response response = generateResponse(Constants.USER_ALREADY_EXISTS);
 
@@ -595,8 +595,8 @@ public final class UserResource extends AbstractResource {
                                                 .findCityByCityName(userJSON.getCity().getCityName()));
 
                                         if (getUserService().save(userToCreate) != null) {
-                                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
-                                                    + " http status = " + HttpStatus.OK);
+                                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
+                                                    .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                             Response response = generateResponse(Constants.SUCCESS);
 
@@ -604,8 +604,8 @@ public final class UserResource extends AbstractResource {
                                         }
                                     }
                                 } else {
-                                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
-                                            + " http status = " + HttpStatus.EXPECTATION_FAILED);
+                                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.UNMARSHALING_FAILED)
+                                            .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
 
                                     Response response = generateResponse(Constants.UNMARSHALING_FAILED);
 
@@ -614,31 +614,31 @@ public final class UserResource extends AbstractResource {
                             } catch (Exception ex) {
                                 LOGGER.error(ex, ex);
                             }
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
-                                    + " http status = " + HttpStatus.EXPECTATION_FAILED);
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.UNMARSHALING_FAILED)
+                                    .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
 
                             Response response = generateResponse(Constants.UNMARSHALING_FAILED);
 
                             return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
                         } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
-                                    + " http status = " + HttpStatus.CONFLICT);
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
                             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                         }
                     } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_CREATOR_FOUND
-                                + " http status = " + HttpStatus.CONFLICT);
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_CREATOR_FOUND)
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_CREATOR_FOUND);
 
                         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                     }
                 } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
-                            + " http status = " + HttpStatus.NOT_ACCEPTABLE);
+                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -648,8 +648,8 @@ public final class UserResource extends AbstractResource {
                 LOGGER.error(e, e);
             }
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
-                " http status = " + HttpStatus.BAD_REQUEST);
+        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
+                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -688,11 +688,11 @@ public final class UserResource extends AbstractResource {
                                             .encodeMD5(loginAndPassword.get(1)));
 
                     if (updater != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.UPDATER_FOUND);
+                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.UPDATER_FOUND));
 
                         if (getPermitionManager()
                                 .containEntity(updater, CapabilityType.UPDATE)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.PERMISSION_RECEIVED);
+                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             try {
                                 ObjectMapper mapper = new ObjectMapper();
@@ -728,31 +728,31 @@ public final class UserResource extends AbstractResource {
                                         }
 
                                         if (getUserService().update(userToUpdate) != null) {
-                                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS + " " + Constants.SUCCESS
-                                                    + " http status = " + HttpStatus.OK);
+                                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
+                                                    .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                             Response response = generateResponse(Constants.SUCCESS);
 
                                             return new ResponseEntity<>(response, HttpStatus.OK);
                                         } else {
-                                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
-                                                    " http status = " + HttpStatus.EXPECTATION_FAILED);
+                                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
+                                                    .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
 
                                             Response response = generateResponse(Constants.ERROR);
 
                                             return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
                                         }
                                     } else {
-                                        LOGGER.debug(Constants.STATUS_REQ_FAIL + "User for updating not found"
-                                                + " http status = " + HttpStatus.EXPECTATION_FAILED);
+                                        LOGGER.debug(Constants.STATUS_REQ_FAIL.concat(" ").concat("User for updating not found")
+                                                .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
 
                                         Response response = generateResponse(Constants.NO_USER_FOUND);
 
                                         return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
                                     }
                                 } else {
-                                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
-                                            + " http status = " + HttpStatus.EXPECTATION_FAILED);
+                                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.UNMARSHALING_FAILED)
+                                            .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
 
                                     Response response = generateResponse(Constants.UNMARSHALING_FAILED);
 
@@ -761,31 +761,31 @@ public final class UserResource extends AbstractResource {
                             } catch (Exception ex) {
                                 LOGGER.error(ex, ex);
                             }
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.UNMARSHALING_FAILED
-                                    + " http status = " + HttpStatus.EXPECTATION_FAILED);
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.UNMARSHALING_FAILED)
+                                    .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
 
                             Response response = generateResponse(Constants.UNMARSHALING_FAILED);
 
                             return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
                         } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.PERMISSION_DENIED
-                                    + " http status = " + HttpStatus.CONFLICT);
+                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
                             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                         }
                     } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.NO_UPDATER_FOUND
-                                + " http status = " + HttpStatus.CONFLICT);
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_UPDATER_FOUND)
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_UPDATER_FOUND);
 
                         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                     }
                 } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.VERSION_NOT_SUPPORTED
-                            + " http status = " + HttpStatus.NOT_ACCEPTABLE);
+                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -795,8 +795,8 @@ public final class UserResource extends AbstractResource {
                 LOGGER.error(e, e);
             }
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL + " " + Constants.ERROR +
-                " http status = " + HttpStatus.BAD_REQUEST);
+        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
+                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
