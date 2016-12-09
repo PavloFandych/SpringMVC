@@ -27,5 +27,8 @@ INSERT INTO Tournament (tournamentCode, tournamentName, tournamentType, countryI
                                           FROM Country
                                           WHERE countryCode = 'FRA')),
   ('FRA_LIGUE_2', 'Ligue 2', 'LEAGUE02', (SELECT countryId
-                                            FROM Country
-                                            WHERE countryCode = 'FRA'));
+                                          FROM Country
+                                          WHERE countryCode = 'FRA')),
+  ('CHAMPIONS_LEAGUE', 'European Champions League', 'CHAMP_LEAGUE', (SELECT countryId
+                                                                     FROM Country
+                                                                     WHERE countryCode = 'ITR'));
