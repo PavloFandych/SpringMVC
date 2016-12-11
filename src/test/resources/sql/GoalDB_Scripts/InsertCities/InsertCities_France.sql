@@ -117,5 +117,5 @@ INSERT INTO City (cityCode, cityName, countryId) VALUES
                             FROM Country
                             WHERE countryCode = 'FRA')),
   ('ANNE', 'Annecy', (SELECT countryId
-                              FROM Country
-                              WHERE countryCode = 'FRA'));
+                      FROM Country
+                      WHERE countryCode = 'FRA'));

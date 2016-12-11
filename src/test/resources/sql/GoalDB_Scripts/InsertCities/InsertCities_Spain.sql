@@ -108,5 +108,5 @@ INSERT INTO City (cityCode, cityName, countryId) VALUES
                         FROM Country
                         WHERE countryCode = 'ESP')),
   ('STDR', 'Santander', (SELECT countryId
-                           FROM Country
-                           WHERE countryCode = 'ESP'));
+                         FROM Country
+                         WHERE countryCode = 'ESP'));
