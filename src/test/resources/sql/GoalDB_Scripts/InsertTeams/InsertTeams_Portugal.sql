@@ -53,13 +53,3 @@ INSERT INTO Team (teamCode, teamName, cityId) VALUES
   ('PRT018', 'Clube Desportivo de Tondela', (SELECT cityId
                                              FROM City
                                              WHERE cityCode = 'TNDL'));
-
-
-
-
-
-
-
-
-
-
