@@ -45,7 +45,5 @@ INSERT INTO City (cityCode, cityName, countryId) VALUES
                         FROM Country
                         WHERE countryCode = 'NLD')),
   ('DVTR', 'Deventer', (SELECT countryId
-                          FROM Country
-                          WHERE countryCode = 'NLD'));
-
-
+                        FROM Country
+                        WHERE countryCode = 'NLD'));

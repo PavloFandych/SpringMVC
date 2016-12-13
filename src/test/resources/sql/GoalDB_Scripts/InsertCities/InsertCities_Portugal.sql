@@ -40,11 +40,4 @@ INSERT INTO City (cityCode, cityName, countryId) VALUES
                     WHERE countryCode = 'PRT')),
   ('TNDL', 'Tondela', (SELECT countryId
                        FROM Country
-                       WHERE countryCode = 'PRT'))
-
-
-
-
-
-
-
+                       WHERE countryCode = 'PRT'));
