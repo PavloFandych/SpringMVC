@@ -3,6 +3,7 @@ package org.total.spring.root.entity.enums;
 /**
  * Created by kostya on 10/20/16.
  */
+
 public enum TournamentCode {
     ENG_PREM_LEAGUE,
     ENG_CHAMPIONSHIP,
@@ -16,5 +17,6 @@ public enum TournamentCode {
     ESP_SEGUNDA,
     FRA_LIGUE_1,
     FRA_LIGUE_2,
-    CHAMPIONS_LEAGUE
+    CHAMPIONS_LEAGUE,
+    NLD_EREDIVISIE
 }

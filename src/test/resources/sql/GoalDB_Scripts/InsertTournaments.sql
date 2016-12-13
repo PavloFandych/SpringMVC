@@ -32,3 +32,6 @@ INSERT INTO Tournament (tournamentCode, tournamentName, tournamentType, countryI
   ('CHAMPIONS_LEAGUE', 'European Champions League', 'CHAMP_LEAGUE', (SELECT countryId
                                                                      FROM Country
                                                                      WHERE countryCode = 'ITR'));
+  ('NLD_EREDIVISIE', 'Eredivisie', 'LEAGUE01', (SELECT countryId
+                                                FROM Country
+                                                WHERE countryCode = 'NLD'));

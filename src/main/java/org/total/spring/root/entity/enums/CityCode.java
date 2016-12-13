@@ -406,5 +406,21 @@ public enum CityCode {
     TROY,
     VALN,
     STDR,
-    ANNE
+    ANNE,
+    RTDM,
+    AMDM,
+    EDHN,
+    HRVN,
+    ALKM,
+    UTRT,
+    ENDE,
+    ARNM,
+    GRGN,
+    ALML,
+    NJMG,
+    TLBG,
+    HAGU,
+    ZWLE,
+    KERK,
+    DVTR
 }
