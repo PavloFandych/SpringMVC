@@ -34,4 +34,7 @@ INSERT INTO Tournament (tournamentCode, tournamentName, tournamentType, countryI
                                                                      WHERE countryCode = 'ITR'));
   ('NLD_EREDIVISIE', 'Eredivisie', 'LEAGUE01', (SELECT countryId
                                                 FROM Country
-                                                WHERE countryCode = 'NLD'));
+                                                WHERE countryCode = 'NLD')),
+  ('PRT_PRIMEIRA_LIGA', 'Primeira Liga', 'LEAGUE01', (SELECT countryId
+                                                      FROM Country
+                                                      WHERE countryCode = 'PRT'));
