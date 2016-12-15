@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.proc.Standing;
+import org.total.spring.root.proc.StructuredStanding;
 import org.total.spring.root.response.Response;
 import org.total.spring.root.service.interfaces.StandingService;
 import org.total.spring.root.util.Constants;
 import org.total.spring.root.version.Version;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -355,8 +355,8 @@ public final class StandingResource extends AbstractResource {
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
-                            //TODO Implement new business logic
-                            List<Standing> list = new ArrayList<>();
+                            List<List<StructuredStanding>> list = getStandingService()
+                                    .getStructuredStandings(seasonCode, tournamentCode);
 
                             if (list == null || list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_STANDINGS_FOUND)

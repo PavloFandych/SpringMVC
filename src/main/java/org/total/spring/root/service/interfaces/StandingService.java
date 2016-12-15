@@ -1,6 +1,7 @@
 package org.total.spring.root.service.interfaces;
 
 import org.total.spring.root.proc.Standing;
+import org.total.spring.root.proc.StructuredStanding;
 
 import java.util.List;
 
@@ -16,4 +17,7 @@ public interface StandingService {
                                                final Integer matchDay);
 
     public String getCachedStandings(final String seasonCode, final String tournamentCode);
+
+    public List<List<StructuredStanding>> getStructuredStandings(final String seasonCode,
+                                                                 final String tournamentCode);
 }

@@ -63,4 +63,5 @@ public final class Constants {
     public static final String CALL_GET_TEAM_MATCHES = "getTeamMatches";
     public static final String CALL_GET_STORED_STANDINGS = "getStoredStandings";
     public static final String CALL_GET_COUPLES = "getCouplesBySeasonCodeAndTournamentCode";
+    public static final String CALL_GET_STANDINGS_LIST = "getStandingsList";
 }

@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.context.ContextLoader;
 import org.total.spring.root.proc.Standing;
+import org.total.spring.root.proc.StructuredStanding;
 import org.total.spring.root.util.Constants;
 
 import java.sql.ResultSet;
@@ -103,5 +104,37 @@ public class StandingDAO extends GenericDAO<List<String>> {
         List<String> resultList = (List<String>) out.get("standing");
 
         return (resultList != null && !resultList.isEmpty()) ? resultList.get(0) : null;
+    }
+
+    public List<StructuredStanding> getStructuredStandings(final String seasonCode,
+                                                           final String tournamentCode) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withProcedureName(Constants.CALL_GET_STANDINGS_LIST)
+                .returningResultSet("structuredStandings", new RowMapper<StructuredStanding>() {
+                    @Override
+                    public StructuredStanding mapRow(ResultSet resultSet, int i) throws SQLException {
+                        StructuredStanding structuredStanding = ContextLoader.getCurrentWebApplicationContext()
+                                .getBean(StructuredStanding.class);
+
+                        structuredStanding.setPlace(resultSet.getByte("place"));
+                        structuredStanding.setMatchDay(resultSet.getByte("matchDay"));
+                        structuredStanding.setTeamCode(resultSet.getString("teamCode"));
+                        structuredStanding.setTeamName(resultSet.getString("teamName"));
+                        structuredStanding.setGoalsScored(resultSet.getShort("goalsScored"));
+                        structuredStanding.setGoalsDiff(resultSet.getShort("goalsDiff"));
+                        structuredStanding.setPoints(resultSet.getByte("points"));
+
+                        return structuredStanding;
+                    }
+                });
+
+        Map<String, Object> out = simpleJdbcCall
+                .execute(new MapSqlParameterSource()
+                        .addValue("seasonCode", seasonCode)
+                        .addValue("tournamentCode", tournamentCode));
+
+        List<StructuredStanding> resultList = (List<StructuredStanding>) out.get("structuredStandings");
+
+        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
     }
 }
