@@ -1,105 +1,131 @@
 DELIMITER $$
 
-DROP PROCEDURE IF exists getStandingsList;$$
+DROP PROCEDURE IF EXISTS getStandingsList;
+$$
 
-CREATE PROCEDURE getStandingsList(
-IN seasonCode VARCHAR(9),
-IN tournamentCode VARCHAR(20)
--- , IN matchDay tinyint(4)
+CREATE PROCEDURE getStandingsList(IN seasonCode     VARCHAR(9),
+                                  IN tournamentCode VARCHAR(20)
 )
-    BEGIN
-DECLARE maxMatchDay INT default 0;
-DECLARE v_counter int unsigned default 1;
+  BEGIN
+    DECLARE maxMatchDay INT DEFAULT 0;
+    DECLARE v_counter INT UNSIGNED DEFAULT 1;
 
-CREATE TEMPORARY TABLE IF NOT EXISTS TeamOrder_temp(
-	matchDay INT,
-	place INT,
-	teamCode VARCHAR(6),
-	teamName VARCHAR(255),
-	goalsScored INT,
-	goalsDiff INT,
-	points INT,
-	result VARCHAR(255),
-	opponentCode VARCHAR(6));
+    CREATE TEMPORARY TABLE IF NOT EXISTS TeamOrder_temp (
+      matchDay     INT,
+      place        INT,
+      teamCode     VARCHAR(6),
+      teamName     VARCHAR(255),
+      goalsScored  INT,
+      goalsDiff    INT,
+      points       INT,
+      result       VARCHAR(255),
+      opponentCode VARCHAR(6)
+    );
 
-set @max=0;
-select max(matchDay) into maxMatchDay from Result r
-						join Tournament tr on r.tournamentId=tr.tournamentId
-						join Season s on r.seasonId=s.seasonId
-						where tr.tournamentCode=tournamentCode
-							and s.seasonCode=seasonCode;
+    SET @max = 0;
+    SELECT max(matchDay)
+    INTO maxMatchDay
+    FROM Result r
+      JOIN Tournament tr ON r.tournamentId = tr.tournamentId
+      JOIN Season s ON r.seasonId = s.seasonId
+    WHERE tr.tournamentCode = tournamentCode
+          AND s.seasonCode = seasonCode;
 
-		IF (maxMatchDay<=0) then
+    IF (maxMatchDay <= 0)
+    THEN
 
-		  SELECT 'matchDay', 'place', 'teamCode', 'teamName', 'goalsScored', 'goalsDiff', 'points', 'result', 'opponentCode' LIMIT 0;
-		else
+      SELECT
+        'matchDay',
+        'place',
+        'teamCode',
+        'teamName',
+        'goalsScored',
+        'goalsDiff',
+        'points',
+        'result',
+        'opponentCode'
+      LIMIT 0;
+    ELSE
 -- -------------------------------------------
 
-  while v_counter <= maxMatchDay do
-	SET @row_number= 0;
-	insert into TeamOrder_temp (
+      WHILE v_counter <= maxMatchDay DO
+        SET @row_number = 0;
+        INSERT INTO TeamOrder_temp (
 
-		select  v_counter as matchDay,
- CAST(@row_number:=@row_number+1 AS CHAR) AS place,
- teamCode,
- teamName,
- goalsScored,
- goalsDiff,
- points,
- result,
- opponentCode from (
-			select  TeamList.teamCode
-					,TeamList.teamName
-				, case when tournamentCode in ('ESP_PRIMERA', 'ITA_SERIA_A')
-					   then getTeamPointsForTiedTeams (TeamList.teamCode, seasonCode, tournamentCode, v_counter)
-					   else 0 end
-					   as pointsForTiedTeams
-				, case when tournamentCode in ('ESP_PRIMERA', 'ITA_SERIA_A')
-					   then getTeamGoalsDiffForTiedTeams (TeamList.teamCode, seasonCode, tournamentCode, v_counter)
-					   else 0 end
-					   as goalsDiffForTiedTeams
-				, case when tournamentCode in ('ESP_PRIMERA')
-					   then getTeamGoalsTotalForTiedTeams (TeamList.teamCode, seasonCode, tournamentCode, v_counter)
-					   else 0 end
-					   as goalsTotalForTiedTeams
-				, getTeamPointsByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, v_counter) as points
-				, getTeamGoalsTotalByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, v_counter) as goalsScored
-				, getTeamGoalsDiffTotalByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, v_counter) as goalsDiff
-				, getTeamResultByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, v_counter) as result
-				, getTeamOpponentByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, v_counter) as opponentCode
-					from (
-					select distinct te.teamCode, te.teamName from Result r
-						join Tournament tr on r.tournamentId=tr.tournamentId
-						join Season s on r.seasonId=s.seasonId
-						join Team te on r.hostTeamId=te.teamId
-						where tr.tournamentCode=tournamentCode
-							and s.seasonCode=seasonCode
-							and r.matchDay<=v_counter
-						union
-						select distinct te.teamCode, te.teamName from Result r
-						join Tournament tr on r.tournamentId=tr.tournamentId
-						join Season s on r.seasonId=s.seasonId
-						join Team te on r.guestTeamId=te.teamId
-						where tr.tournamentCode=tournamentCode
-							and s.seasonCode=seasonCode
-							and r.matchDay<=v_counter) TeamList
-		order by points desc,
-				pointsForTiedTeams desc,
-				goalsDiffForTiedTeams desc,
-				goalsTotalForTiedTeams desc,
-				goalsDiff desc,
-				goalsScored desc ) TeamsOrdered
-	);
+          SELECT
+            v_counter                                    AS matchDay,
+            CAST(@row_number := @row_number + 1 AS CHAR) AS place,
+            teamCode,
+            teamName,
+            goalsScored,
+            goalsDiff,
+            points,
+            result,
+            opponentCode
+          FROM (
+                 SELECT
+                   TeamList.teamCode,
+                   TeamList.teamName,
+                   CASE WHEN tournamentCode IN ('ESP_PRIMERA', 'ITA_SERIA_A')
+                   THEN getTeamPointsForTiedTeams(TeamList.teamCode, seasonCode, tournamentCode, v_counter)
+                   ELSE 0 END
+                                                                                                     AS pointsForTiedTeams,
+                   CASE WHEN tournamentCode IN ('ESP_PRIMERA', 'ITA_SERIA_A')
+                   THEN getTeamGoalsDiffForTiedTeams(TeamList.teamCode, seasonCode, tournamentCode, v_counter)
+                   ELSE 0 END
+                                                                                                     AS goalsDiffForTiedTeams,
+                   CASE WHEN tournamentCode IN ('ESP_PRIMERA')
+                   THEN getTeamGoalsTotalForTiedTeams(TeamList.teamCode, seasonCode, tournamentCode, v_counter)
+                   ELSE 0 END
+                                                                                                     AS goalsTotalForTiedTeams,
+                   getTeamPointsByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, v_counter) AS points,
+                   getTeamGoalsTotalByMatchDay(TeamList.teamCode, seasonCode, tournamentCode,
+                                               v_counter)                                            AS goalsScored,
+                   getTeamGoalsDiffTotalByMatchDay(TeamList.teamCode, seasonCode, tournamentCode,
+                                                   v_counter)                                        AS goalsDiff,
+                   getTeamResultByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, v_counter) AS result,
+                   getTeamOpponentByMatchDay(TeamList.teamCode, seasonCode, tournamentCode,
+                                             v_counter)                                              AS opponentCode
+                 FROM (
+                        SELECT DISTINCT
+                          te.teamCode,
+                          te.teamName
+                        FROM Result r
+                          JOIN Tournament tr ON r.tournamentId = tr.tournamentId
+                          JOIN Season s ON r.seasonId = s.seasonId
+                          JOIN Team te ON r.hostTeamId = te.teamId
+                        WHERE tr.tournamentCode = tournamentCode
+                              AND s.seasonCode = seasonCode
+                              AND r.matchDay <= v_counter
+                        UNION
+                        SELECT DISTINCT
+                          te.teamCode,
+                          te.teamName
+                        FROM Result r
+                          JOIN Tournament tr ON r.tournamentId = tr.tournamentId
+                          JOIN Season s ON r.seasonId = s.seasonId
+                          JOIN Team te ON r.guestTeamId = te.teamId
+                        WHERE tr.tournamentCode = tournamentCode
+                              AND s.seasonCode = seasonCode
+                              AND r.matchDay <= v_counter) TeamList
+                 ORDER BY points DESC,
+                   pointsForTiedTeams DESC,
+                   goalsDiffForTiedTeams DESC,
+                   goalsTotalForTiedTeams DESC,
+                   goalsDiff DESC,
+                   goalsScored DESC) TeamsOrdered
+        );
 
-	set v_counter=v_counter+1;
-	end while;
+        SET v_counter = v_counter + 1;
+      END WHILE;
 
 -- -------------------------------------------
- select * from TeamOrder_temp;
-		end if;
+      SELECT *
+      FROM TeamOrder_temp;
+    END IF;
 
 
- drop table TeamOrder_temp;
-    END$$
+    DROP TABLE TeamOrder_temp;
+  END$$
 
 DELIMITER ;

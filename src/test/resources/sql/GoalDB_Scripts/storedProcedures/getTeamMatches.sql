@@ -3,11 +3,10 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS getTeamMatches;
 $$
 
-CREATE PROCEDURE getTeamMatches(
-  IN teamCode         VARCHAR(6),
-  IN opponentTeamCode VARCHAR(6),
-  IN seasonCode       VARCHAR(9),
-  IN tournamentCode   VARCHAR(20))
+CREATE PROCEDURE getTeamMatches(IN teamCode         VARCHAR(6),
+                                IN opponentTeamCode VARCHAR(6),
+                                IN seasonCode       VARCHAR(9),
+                                IN tournamentCode   VARCHAR(20))
 
   BEGIN
     SELECT

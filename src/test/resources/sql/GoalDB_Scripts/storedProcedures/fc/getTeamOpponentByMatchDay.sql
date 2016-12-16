@@ -1,44 +1,45 @@
 DELIMITER $$
-DROP FUNCTION IF exists getTeamOpponentByMatchDay;$$
- 
-CREATE FUNCTION getTeamOpponentByMatchDay(teamCode VARCHAR(6),
-seasonCode VARCHAR(9), 
-tournamentCode VARCHAR(20), 
-matchDay INT) 
-RETURNS VARCHAR(255)
-    DETERMINISTIC
-BEGIN
+DROP FUNCTION IF EXISTS getTeamOpponentByMatchDay;
+$$
+
+CREATE FUNCTION getTeamOpponentByMatchDay(teamCode       VARCHAR(6),
+                                          seasonCode     VARCHAR(9),
+                                          tournamentCode VARCHAR(20),
+                                          matchDay       INT)
+  RETURNS VARCHAR(255)
+DETERMINISTIC
+  BEGIN
     DECLARE res VARCHAR(255) DEFAULT '';
- 
 
-select TR.teamOpponent into res from (
-select 
-te2.teamCode as teamOpponent 
-from Result r 
-join Team te on r.hostTeamId=te.teamId
-join Team te2 on r.guestTeamId=te2.teamId
-join Season s on r.seasonId=s.seasonId
-join Tournament t on r.tournamentId=t.tournamentId
-	where	te.teamCode=teamCode 
-		and s.seasonCode=seasonCode 
-		and t.tournamentCode=tournamentCode 
-		and r.matchDay=matchDay
 
-UNION all
+    SELECT TR.teamOpponent
+    INTO res
+    FROM (
+           SELECT te2.teamCode AS teamOpponent
+           FROM Result r
+             JOIN Team te ON r.hostTeamId = te.teamId
+             JOIN Team te2 ON r.guestTeamId = te2.teamId
+             JOIN Season s ON r.seasonId = s.seasonId
+             JOIN Tournament t ON r.tournamentId = t.tournamentId
+           WHERE te.teamCode = teamCode
+                 AND s.seasonCode = seasonCode
+                 AND t.tournamentCode = tournamentCode
+                 AND r.matchDay = matchDay
 
-select 
-te2.teamCode as teamOpponent 
-from Result r 
-join Team te on r.guestTeamId=te.teamId
-join Team te2 on r.hostTeamId=te2.teamId
-join Season s on r.seasonId=s.seasonId
-join Tournament t on r.tournamentId=t.tournamentId
-	where	te.teamCode=teamCode 
-		and s.seasonCode=seasonCode 
-		and t.tournamentCode=tournamentCode 
-		and r.matchDay=matchDay ) TR;
- 
- RETURN res;
-END$$
+           UNION ALL
+
+           SELECT te2.teamCode AS teamOpponent
+           FROM Result r
+             JOIN Team te ON r.guestTeamId = te.teamId
+             JOIN Team te2 ON r.hostTeamId = te2.teamId
+             JOIN Season s ON r.seasonId = s.seasonId
+             JOIN Tournament t ON r.tournamentId = t.tournamentId
+           WHERE te.teamCode = teamCode
+                 AND s.seasonCode = seasonCode
+                 AND t.tournamentCode = tournamentCode
+                 AND r.matchDay = matchDay) TR;
+
+    RETURN res;
+  END$$
 
 DELIMITER ;
