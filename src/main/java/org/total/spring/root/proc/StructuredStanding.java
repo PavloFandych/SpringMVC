@@ -18,6 +18,8 @@ public class StructuredStanding {
     private short goalsScored;
     private short goalsDiff;
     private byte points;
+    private String result;
+    private String opponentCode;
 
     public byte getMatchDay() {
         return matchDay;
@@ -73,5 +75,21 @@ public class StructuredStanding {
 
     public void setPoints(byte points) {
         this.points = points;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public String getOpponentCode() {
+        return opponentCode;
+    }
+
+    public void setOpponentCode(String opponentCode) {
+        this.opponentCode = opponentCode;
     }
 }

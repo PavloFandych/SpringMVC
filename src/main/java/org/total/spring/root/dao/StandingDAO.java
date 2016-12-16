@@ -123,6 +123,8 @@ public class StandingDAO extends GenericDAO<List<String>> {
                         structuredStanding.setGoalsScored(resultSet.getShort("goalsScored"));
                         structuredStanding.setGoalsDiff(resultSet.getShort("goalsDiff"));
                         structuredStanding.setPoints(resultSet.getByte("points"));
+                        structuredStanding.setResult(resultSet.getString("result"));
+                        structuredStanding.setOpponentCode(resultSet.getString("opponentCode"));
 
                         return structuredStanding;
                     }
