@@ -5,7 +5,7 @@ DROP PROCEDURE IF exists getStandingsList;$$
 CREATE PROCEDURE getStandingsList(
 IN seasonCode VARCHAR(9),
 IN tournamentCode VARCHAR(20)
-
+-- , IN matchDay tinyint(4)
 )
     BEGIN
 DECLARE maxMatchDay INT default 0;
@@ -19,7 +19,8 @@ CREATE TEMPORARY TABLE IF NOT EXISTS TeamOrder_temp(
 	goalsScored INT,
 	goalsDiff INT,
 	points INT,
-	result VARCHAR(255));
+	result VARCHAR(255),
+	opponentCode VARCHAR(6));
 
 set @max=0;
 select max(matchDay) into maxMatchDay from Result r
@@ -30,7 +31,7 @@ select max(matchDay) into maxMatchDay from Result r
 
 		IF (maxMatchDay<=0) then
 
-		  SELECT 'matchDay', 'place', 'teamCode', 'teamName', 'goalsScored', 'goalsDiff', 'points', 'result' LIMIT 0;
+		  SELECT 'matchDay', 'place', 'teamCode', 'teamName', 'goalsScored', 'goalsDiff', 'points', 'result', 'opponentCode' LIMIT 0;
 		else
 -- -------------------------------------------
 
@@ -45,7 +46,8 @@ select max(matchDay) into maxMatchDay from Result r
  goalsScored,
  goalsDiff,
  points,
- result from (
+ result,
+ opponentCode from (
 			select  TeamList.teamCode
 					,TeamList.teamName
 				, case when tournamentCode in ('ESP_PRIMERA', 'ITA_SERIA_A')
@@ -64,7 +66,8 @@ select max(matchDay) into maxMatchDay from Result r
 				, getTeamGoalsTotalByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, v_counter) as goalsScored
 				, getTeamGoalsDiffTotalByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, v_counter) as goalsDiff
 				, getTeamResultByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, v_counter) as result
-				from (
+				, getTeamOpponentByMatchDay(TeamList.teamCode, seasonCode, tournamentCode, v_counter) as opponentCode
+					from (
 					select distinct te.teamCode, te.teamName from Result r
 						join Tournament tr on r.tournamentId=tr.tournamentId
 						join Season s on r.seasonId=s.seasonId
