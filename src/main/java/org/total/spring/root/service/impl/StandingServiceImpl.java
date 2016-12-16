@@ -56,21 +56,17 @@ public final class StandingServiceImpl implements StandingService {
         return (list != null && !list.isEmpty()) ? list : null;
     }
 
-    @Override
-    @CacheEvict(value = "applicationCache",
-            cacheManager = "springCashManager"
-    )
+//        @Override
+//    @Cacheable(value = "applicationCache",
+//            key = "#seasonCode.concat(#tournamentCode)",
+//            cacheManager = "springCashManager"
+//    )
     public String getCachedStandings(final String seasonCode,
                                      final String tournamentCode) {
         String result = getStandingDAO().getCachedStandings(seasonCode, tournamentCode);
         return (result != null && !result.isEmpty()) ? result : null;
     }
 
-    @Override
-    @Cacheable(value = "structuredStandings",
-            key = "#seasonCode.concat(‘-’).concat(#tournamentCode)",
-            cacheManager = "springCashManager"
-    )
     public List<List<StructuredStanding>> getStructuredStandings(final String seasonCode,
                                                                  final String tournamentCode) {
         List<StructuredStanding> list = getStandingDAO()
