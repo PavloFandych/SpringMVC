@@ -141,7 +141,7 @@ CREATE TABLE `User_Role` (
 CREATE TABLE `Standings` (
   `seasonId`     BIGINT(20) NOT NULL,
   `tournamentId` BIGINT(20) NOT NULL,
-  `standing`     TEXT,
+  `standing`     MEDIUMTEXT,
   PRIMARY KEY (`seasonId`, `tournamentId`),
   CONSTRAINT `FK_Standings_seasonId` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`),
   CONSTRAINT `FK_Standings_tournamentId` FOREIGN KEY (`tournamentId`) REFERENCES `Tournament` (`tournamentId`)

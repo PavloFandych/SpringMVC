@@ -103,11 +103,11 @@ $(document).ready(function () {
 
                     $("#teams-list").show();
                     for (var i = 0; i < data.length; i++) {
-                        for (var j = 1; j < data[i].length; j++) {
-                            if (imgPath.hasOwnProperty(data[i][j])) {
-                                $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + (j + 1) + "]")).append("<img class='" + data[i][j] + " cell-img' src=/resources/images/" + imgPath[data[i][j]] + " width='20px' height='20px' />");
+                        for (var j = 0; j < data[i].length; j++) {
+                            if (imgPath.hasOwnProperty(data[i][j].teamCode)) {
+                                $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + (j + 2) + "]")).append("<img class='" + data[i][j].teamCode + " cell-img' src=/resources/images/" + imgPath[data[i][j].teamCode] + " width='20px' height='20px' />");
                             } else {
-                                $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + (j + 1) + "]")).append("<img class='" + data[i][j] + " cell-img' src=/resources/images/Ball.png width='20px' height='20px' />");
+                                $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + (j + 2) + "]")).append("<img class='" + data[i][j].teamCode + " cell-img' src=/resources/images/Ball.png width='20px' height='20px' />");
                             }
                         }
                     }
