@@ -60,9 +60,17 @@ $(document).ready(function () {
                      }*/
 
                     $(".teams-buttons").click(function () {
+                        if($(".team-selected").length===0){
+                        $(".cell-img").hide();
+                        }
+
                         $(this).toggleClass("team-selected");
                         var className = '.' + $(this).attr('id').split(' ')[0].substring(0, 6);
                         $(className).toggle();
+
+                         if($(".team-selected").length===0){
+                              $(".cell-img").show();
+                                                }
                     });
                 }
             },
