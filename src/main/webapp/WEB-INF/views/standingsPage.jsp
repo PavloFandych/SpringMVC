@@ -16,13 +16,16 @@
     <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
     <script src="<c:url value="/resources/js/xpathTools.js" />"></script>
 </head>
-<body>
+<body class="NoCountry">
 
 
 <div id="top-menu">
     <table id="tbl00" class="menu-table" cellspacing="1" cellpadding="2" align="center">
         <tbody>
         <tr>
+            <td class="menu-tcell">
+                <img src=/resources/images/app/TT_Logo_02_White.png width="120px" height="32px" align="right"/>
+            </td>
             <td class="menu-tcell">
                 <select id="SeasonsList" name="SeasonsList">
                     <option selected value="S20162017">Season 2016-2017</option>
@@ -43,12 +46,15 @@
                 </select>
             </td>
             <td class="menu-tcell">
-                <button id="getStandingsButton">Get Standings</button>
+                <!-- <button id="getStandingsButton"><img src=/resources/images/app/Ball_02.png width="20px" height="20px"/></button> -->
+                <button id="getStandingsButton"><b>GET</b></button>
             </td>
 
         </tbody>
     </table>
 </div>
+
+<br/>
 
 <div id="get-info-msg" align="center">
     <br/>

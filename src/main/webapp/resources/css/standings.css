@@ -1,8 +1,44 @@
+   body {
+    background-image: url(/resources/images/app/silver.jpg);
+    background-size: 100%;
+
+   }
+
+    .ITA {
+       background-image: url(/resources/images/app/ITA_flag.jpg);
+       background-size: 100%;
+
+      }
+
+    .ENG {
+       background-image: url(/resources/images/app/ENG_flag.jpg);
+       background-size: 100%;
+
+      }
+
+    .FRA {
+       background-image: url(/resources/images/app/FRA_flag.jpg);
+       background-size: 100%;
+
+      }
+
+    .ESP {
+       background-image: url(/resources/images/app/ESP_flag.jpg);
+       background-size: 100%;
+
+      }
+
+    .DEU {
+       background-image: url(/resources/images/app/DEU_flag.jpg);
+       background-size: 100%;
+
+      }
+
 button:hover {
     /*background: radial-gradient(#FF0000, #880000);*/
     background: radial-gradient(#77FF00, #00AA00);
     color: white;
-    -webkit-border-radius: 4px;
+    -webkit-border-radius: 10px;
     border-color: #00AA00;
 }
 
@@ -10,7 +46,7 @@ button:hover {
     /*background: radial-gradient(#FF0000, #880000);*/
     background: radial-gradient(#77FF00, #00AA00);
     color: white;
-    -webkit-border-radius: 4px;
+    -webkit-border-radius: 10px;
     border-color: #00AA00;
 }
 
