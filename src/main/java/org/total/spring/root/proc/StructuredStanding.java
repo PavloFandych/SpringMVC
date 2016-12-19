@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component("structuredStanding")
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class StructuredStanding {
+public final class StructuredStanding {
     private byte place;
     private byte matchDay;
     private String teamCode;

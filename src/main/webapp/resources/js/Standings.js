@@ -19,44 +19,42 @@ $(document).ready(function () {
         var season = $("#SeasonsList").val();
         var tournament = $("#TournamentList").val();
 
-        switch(tournament.substring(0, 3)) {
-          case 'ITA':
-            if (!$('body').hasClass('ITA')){
-                $('body').removeClass('NoCountry ENG DEU FRA ESP')
-                $('body').addClass('ITA');
-            }
-            break;
-          case 'ENG':
-            if (!$('body').hasClass('ENG')){
-                $('body').removeClass('NoCountry ITA DEU FRA ESP')
-                $('body').addClass('ENG');
-            }
-            break;
-          case 'FRA':
-            if (!$('body').hasClass('FRA')){
-                $('body').removeClass('NoCountry ITA DEU ENG ESP')
-                $('body').addClass('FRA');
-            }
-            break;
-          case 'ESP':
-            if (!$('body').hasClass('ESP')){
-                $('body').removeClass('NoCountry ITA DEU FRA ENG')
-                $('body').addClass('ESP');
-            }
-            break;
-          case 'DEU':
-            if (!$('body').hasClass('DEU')){
-                $('body').removeClass('NoCountry ITA ENG FRA ESP')
-                $('body').addClass('DEU');
-            }
-            break;
+        switch (tournament.substring(0, 3)) {
+            case 'ITA':
+                if (!$('body').hasClass('ITA')) {
+                    $('body').removeClass('NoCountry ENG DEU FRA ESP')
+                    $('body').addClass('ITA');
+                }
+                break;
+            case 'ENG':
+                if (!$('body').hasClass('ENG')) {
+                    $('body').removeClass('NoCountry ITA DEU FRA ESP')
+                    $('body').addClass('ENG');
+                }
+                break;
+            case 'FRA':
+                if (!$('body').hasClass('FRA')) {
+                    $('body').removeClass('NoCountry ITA DEU ENG ESP')
+                    $('body').addClass('FRA');
+                }
+                break;
+            case 'ESP':
+                if (!$('body').hasClass('ESP')) {
+                    $('body').removeClass('NoCountry ITA DEU FRA ENG')
+                    $('body').addClass('ESP');
+                }
+                break;
+            case 'DEU':
+                if (!$('body').hasClass('DEU')) {
+                    $('body').removeClass('NoCountry ITA ENG FRA ESP')
+                    $('body').addClass('DEU');
+                }
+                break;
         }
-
-
 
         $.ajax({
             data: {"seasonCode": season, "tournamentCode": tournament},
-            url: '/teams',
+            url: '/storedteams',
             type: 'GET',
             datatype: 'json',
             headers: {
@@ -65,47 +63,36 @@ $(document).ready(function () {
                 'Authorization': 'Basic QWRtaW46YWRtaW4='
             },
             success: function (data, status) {
-
-                if (data.length !== 0) {
+                if (data.content.length !== 0) {
                     $(".teams-tcell").show();
                     var k = 1;
-                    for (var i = 0; i < data.length; i++) {
+                    for (var i = 0; i < data.content.length; i++) {
                         $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + k + "]")).empty();
-                        if (imgPath.hasOwnProperty(data[i][0])) {
-                            $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + k + "]")).append("<button id='" + data[i][0] + "-btn' class='teams-buttons' title='" + data[i][1] + "'><img class='team-img' src=/resources/images/" + imgPath[data[i][0]] + "  width='30px' height='30px' /></button>");
+                        if (imgPath.hasOwnProperty(data.content[i][0])) {
+                            $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + k + "]")).append("<button id='" + data.content[i][0] + "-btn' class='teams-buttons' title='" + data.content[i][1] + "'><img class='team-img' src=/resources/images/" + imgPath[data.content[i][0]] + "  width='30px' height='30px' /></button>");
                             k++;
                         } else {
-                            $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + k + "]")).empty().append("<button id='" + data[i][0] + "-btn' class='teams-buttons' title='" + data[i][1] + "'><img class='team-img' src=/resources/images/Ball.png  width='30px' height='30px' /></button>");
+                            $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + k + "]")).empty().append("<button id='" + data.content[i][0] + "-btn' class='teams-buttons' title='" + data.content[i][1] + "'><img class='team-img' src=/resources/images/Ball.png  width='30px' height='30px' /></button>");
                             k++;
                         }
                     }
 
-                    for (var j = data.length + 1; j <= 21; j++) {
+                    for (var j = data.content.length + 1; j <= 21; j++) {
                         $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + j + "]")).hide();
                     }
 
-                    /*        var k = 1;
-
-                     for (var property in imgPath) {
-                     if (imgPath.hasOwnProperty(property)) {
-                     $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + k + "]")).empty().append("<button id='" + property + "-btn' class='teams-buttons'><img class='team-img' src=/resources/images/" + imgPath[property] + "  width='30px' height='30px' /></button>");
-
-                     k++;
-                     }
-                     }*/
-
                     $(".teams-buttons").click(function () {
-                        if($(".team-selected").length===0){
-                        $(".cell-img").hide();
+                        if ($(".team-selected").length === 0) {
+                            $(".cell-img").hide();
                         }
 
                         $(this).toggleClass("team-selected");
                         var className = '.' + $(this).attr('id').split(' ')[0].substring(0, 6);
                         $(className).toggle();
 
-                         if($(".team-selected").length===0){
-                              $(".cell-img").show();
-                                                }
+                        if ($(".team-selected").length === 0) {
+                            $(".cell-img").show();
+                        }
                     });
                 }
             },

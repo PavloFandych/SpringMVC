@@ -149,14 +149,14 @@ CREATE TABLE `Standings` (
 )
   DEFAULT CHARSET = utf8;
 
-  -- create 'TeamsList' table
-  CREATE TABLE `TeamsList` (
-    `seasonId`     BIGINT(20) NOT NULL,
-    `tournamentId` BIGINT(20) NOT NULL,
-    `list`     TEXT,
-    PRIMARY KEY (`seasonId`, `tournamentId`),
-    CONSTRAINT `FK_TeamsList_seasonId` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`),
-    CONSTRAINT `FK_TeamsList_tournamentId` FOREIGN KEY (`tournamentId`) REFERENCES `Tournament` (`tournamentId`)
+-- create 'TeamsList' table
+CREATE TABLE `TeamsList` (
+  `seasonId`     BIGINT(20) NOT NULL,
+  `tournamentId` BIGINT(20) NOT NULL,
+  `list`         TEXT,
+  PRIMARY KEY (`seasonId`, `tournamentId`),
+  CONSTRAINT `FK_TeamsList_seasonId` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`),
+  CONSTRAINT `FK_TeamsList_tournamentId` FOREIGN KEY (`tournamentId`) REFERENCES `Tournament` (`tournamentId`)
 
-  )
-    DEFAULT CHARSET = utf8;
+)
+  DEFAULT CHARSET = utf8;

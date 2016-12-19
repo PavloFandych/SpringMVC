@@ -12,6 +12,7 @@ import org.total.spring.root.dao.TeamDAO;
 import org.total.spring.root.entity.Team;
 import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.entity.enums.TournamentCode;
+import org.total.spring.root.proc.StoredTeamsCache;
 import org.total.spring.root.repository.TeamRepository;
 import org.total.spring.root.service.interfaces.TeamService;
 
@@ -58,7 +59,6 @@ public final class TeamServiceImpl implements TeamService {
         return getTeamRepository().findAll();
     }
 
-
     @Override
     @Caching(evict = @CacheEvict(
             value = "applicationCache",
@@ -75,6 +75,22 @@ public final class TeamServiceImpl implements TeamService {
         return getTeamDAO().getEntities(seasonCode, tournamentCode);
     }
 
+    @Override
+    @Caching(evict = @CacheEvict(
+            value = "applicationCache",
+            cacheManager = "springCashManager",
+            allEntries = true
+    ),
+            cacheable = @Cacheable(
+                    value = "applicationCache",
+                    cacheManager = "springCashManager"
+            )
+    )
+    public StoredTeamsCache getStoredTeamsList(final String seasonCode,
+                                               final String tournamentCode) {
+        return getTeamDAO().getStoredTeamsList(SeasonCode.valueOf(seasonCode),
+                TournamentCode.valueOf(tournamentCode));
+    }
 
     @Override
     @Cacheable(value = "applicationCache",
