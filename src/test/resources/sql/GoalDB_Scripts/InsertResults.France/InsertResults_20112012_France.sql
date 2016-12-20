@@ -1,4 +1,4 @@
-INSERT INTO Result (resultCode, date, seasonId, matchDay, tournamentId, hostTeamId, guestTeamId, goalsByHost, goalsByGuest)
+INSERT INTO ArchResultFrance (resultCode, date, seasonId, matchDay, tournamentId, hostTeamId, guestTeamId, goalsByHost, goalsByGuest)
 VALUES
   ('20052012FRA019FRA030XXXX', '2012.05.20', (SELECT seasonId
                                               FROM Season

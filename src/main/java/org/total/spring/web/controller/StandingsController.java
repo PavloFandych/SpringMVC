@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 
 @Controller
-public class StandingsController {
+public final class StandingsController {
     @RequestMapping(value = "/standingsPage",
             method = RequestMethod.GET)
     public String standings(Model model) {

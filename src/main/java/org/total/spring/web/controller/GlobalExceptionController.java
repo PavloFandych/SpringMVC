@@ -13,7 +13,7 @@ import org.total.spring.root.response.Response;
  */
 
 @ControllerAdvice
-public class GlobalExceptionController {
+public final class GlobalExceptionController {
     private static final Logger LOGGER = Logger.getLogger(GlobalExceptionController.class);
 
     @ExceptionHandler(ApplicationException.class)

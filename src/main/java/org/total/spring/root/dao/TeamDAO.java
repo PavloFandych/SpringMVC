@@ -48,7 +48,7 @@ public class TeamDAO extends GenericDAO<List<String>> {
         return (resultList != null && !resultList.isEmpty()) ? resultList : null;
     }
 
-    public StoredTeamsCache getStoredTeamsList(final SeasonCode seasonCode,
+    public List<StoredTeamsCache> getStoredTeamsList(final SeasonCode seasonCode,
                                                final TournamentCode tournamentCode) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_STORED_TEAMS_LIST)
@@ -75,6 +75,6 @@ public class TeamDAO extends GenericDAO<List<String>> {
 
         List<StoredTeamsCache> resultList = (List<StoredTeamsCache>) out.get("storedTeamsList");
 
-        return (resultList != null && !resultList.isEmpty()) ? resultList.get(0) : null;
+        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
     }
 }

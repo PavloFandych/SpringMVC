@@ -13,8 +13,8 @@ public interface TeamService {
     public List<List<String>> findAllStoredProc(final SeasonCode seasonCode,
                                                 final TournamentCode tournamentCode);
 
-    public StoredTeamsCache getStoredTeamsList(final String seasonCode,
-                                               final String tournamentCode);
+    public List<StoredTeamsCache> getStoredTeamsList(final String seasonCode,
+                                                     final String tournamentCode);
 
     public Team findById(final Long teamId);
 

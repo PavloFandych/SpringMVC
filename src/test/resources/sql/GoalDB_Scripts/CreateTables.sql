@@ -160,3 +160,123 @@ CREATE TABLE `TeamsList` (
 
 )
   DEFAULT CHARSET = utf8;
+
+CREATE TABLE `ArchResultEngland` (
+  `resultId`     BIGINT(20)  NOT NULL AUTO_INCREMENT,
+  `date`         DATETIME             DEFAULT NULL,
+  `goalsByGuest` TINYINT(4)           DEFAULT NULL,
+  `goalsByHost`  TINYINT(4)           DEFAULT NULL,
+  `matchDay`     TINYINT(4)  NOT NULL,
+  `resultCode`   VARCHAR(24) NOT NULL,
+  `guestTeamId`  BIGINT(20)  NOT NULL,
+  `hostTeamId`   BIGINT(20)  NOT NULL,
+  `seasonId`     BIGINT(20)  NOT NULL,
+  `tournamentId` BIGINT(20)  NOT NULL,
+  PRIMARY KEY (`resultId`),
+  UNIQUE KEY `resultCode` (`resultCode`),
+  KEY `FK_ArchResultEngland_guestTeamId` (`guestTeamId`),
+  KEY `FK_ArchResultEngland_hostTeamId` (`hostTeamId`),
+  KEY `FK_ArchResultEngland_seasonId` (`seasonId`),
+  KEY `FK_ArchResultEngland_tournamentId` (`tournamentId`),
+  CONSTRAINT `FK_ArchResultEngland_guestTeamId` FOREIGN KEY (`guestTeamId`) REFERENCES `Team` (`teamId`),
+  CONSTRAINT `FK_ArchResultEngland_hostTeamId` FOREIGN KEY (`hostTeamId`) REFERENCES `Team` (`teamId`),
+  CONSTRAINT `FK_ArchResultEngland_seasonId` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`),
+  CONSTRAINT `FK_ArchResultEngland_tournamentId` FOREIGN KEY (`tournamentId`) REFERENCES `Tournament` (`tournamentId`)
+)
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE `ArchResultGermany` (
+  `resultId`     BIGINT(20)  NOT NULL AUTO_INCREMENT,
+  `date`         DATETIME             DEFAULT NULL,
+  `goalsByGuest` TINYINT(4)           DEFAULT NULL,
+  `goalsByHost`  TINYINT(4)           DEFAULT NULL,
+  `matchDay`     TINYINT(4)  NOT NULL,
+  `resultCode`   VARCHAR(24) NOT NULL,
+  `guestTeamId`  BIGINT(20)  NOT NULL,
+  `hostTeamId`   BIGINT(20)  NOT NULL,
+  `seasonId`     BIGINT(20)  NOT NULL,
+  `tournamentId` BIGINT(20)  NOT NULL,
+  PRIMARY KEY (`resultId`),
+  UNIQUE KEY `resultCode` (`resultCode`),
+  KEY `FK_ArchResultGermany_guestTeamId` (`guestTeamId`),
+  KEY `FK_ArchResultGermany_hostTeamId` (`hostTeamId`),
+  KEY `FK_ArchResultGermany_seasonId` (`seasonId`),
+  KEY `FK_ArchResultGermany_tournamentId` (`tournamentId`),
+  CONSTRAINT `FK_ArchResultGermany_tournamentId` FOREIGN KEY (`tournamentId`) REFERENCES `Tournament` (`tournamentId`),
+  CONSTRAINT `FK_ArchResultGermany_guestTeamId` FOREIGN KEY (`guestTeamId`) REFERENCES `Team` (`teamId`),
+  CONSTRAINT `FK_ArchResultGermany_hostTeamId` FOREIGN KEY (`hostTeamId`) REFERENCES `Team` (`teamId`),
+  CONSTRAINT `FK_ArchResultGermany_seasonId` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`)
+)
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE `ArchResultItaly` (
+  `resultId`     BIGINT(20)  NOT NULL AUTO_INCREMENT,
+  `date`         DATETIME             DEFAULT NULL,
+  `goalsByGuest` TINYINT(4)           DEFAULT NULL,
+  `goalsByHost`  TINYINT(4)           DEFAULT NULL,
+  `matchDay`     TINYINT(4)  NOT NULL,
+  `resultCode`   VARCHAR(24) NOT NULL,
+  `guestTeamId`  BIGINT(20)  NOT NULL,
+  `hostTeamId`   BIGINT(20)  NOT NULL,
+  `seasonId`     BIGINT(20)  NOT NULL,
+  `tournamentId` BIGINT(20)  NOT NULL,
+  PRIMARY KEY (`resultId`),
+  UNIQUE KEY `resultCode` (`resultCode`),
+  KEY `FK_ArchResultItaly_guestTeamId` (`guestTeamId`),
+  KEY `FK_ArchResultItaly_hostTeamId` (`hostTeamId`),
+  KEY `FK_ArchResultItaly_seasonId` (`seasonId`),
+  KEY `FK_ArchResultItaly_tournamentId` (`tournamentId`),
+  CONSTRAINT `FK_ArchResultItaly_tournamentId` FOREIGN KEY (`tournamentId`) REFERENCES `Tournament` (`tournamentId`),
+  CONSTRAINT `FK_ArchResultItaly_guestTeamId` FOREIGN KEY (`guestTeamId`) REFERENCES `Team` (`teamId`),
+  CONSTRAINT `FK_ArchResultItaly_hostTeamId` FOREIGN KEY (`hostTeamId`) REFERENCES `Team` (`teamId`),
+  CONSTRAINT `FK_ArchResultItaly_seasonId` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`)
+)
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE `ArchResultSpain` (
+  `resultId`     BIGINT(20)  NOT NULL AUTO_INCREMENT,
+  `date`         DATETIME             DEFAULT NULL,
+  `goalsByGuest` TINYINT(4)           DEFAULT NULL,
+  `goalsByHost`  TINYINT(4)           DEFAULT NULL,
+  `matchDay`     TINYINT(4)  NOT NULL,
+  `resultCode`   VARCHAR(24) NOT NULL,
+  `guestTeamId`  BIGINT(20)  NOT NULL,
+  `hostTeamId`   BIGINT(20)  NOT NULL,
+  `seasonId`     BIGINT(20)  NOT NULL,
+  `tournamentId` BIGINT(20)  NOT NULL,
+  PRIMARY KEY (`resultId`),
+  UNIQUE KEY `resultCode` (`resultCode`),
+  KEY `FK_ArchResultSpain_guestTeamId` (`guestTeamId`),
+  KEY `FK_ArchResultSpain_hostTeamId` (`hostTeamId`),
+  KEY `FK_ArchResultSpain_seasonId` (`seasonId`),
+  KEY `FK_ArchResultSpain_tournamentId` (`tournamentId`),
+  CONSTRAINT `FK_ArchResultSpain_tournamentId` FOREIGN KEY (`tournamentId`) REFERENCES `Tournament` (`tournamentId`),
+  CONSTRAINT `FK_ArchResultSpain_guestTeamId` FOREIGN KEY (`guestTeamId`) REFERENCES `Team` (`teamId`),
+  CONSTRAINT `FK_ArchResultSpain_hostTeamId` FOREIGN KEY (`hostTeamId`) REFERENCES `Team` (`teamId`),
+  CONSTRAINT `FK_ArchResultSpain_seasonId` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`)
+)
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE `ArchResultFrance` (
+  `resultId`     BIGINT(20)  NOT NULL AUTO_INCREMENT,
+  `date`         DATETIME             DEFAULT NULL,
+  `goalsByGuest` TINYINT(4)           DEFAULT NULL,
+  `goalsByHost`  TINYINT(4)           DEFAULT NULL,
+  `matchDay`     TINYINT(4)  NOT NULL,
+  `resultCode`   VARCHAR(24) NOT NULL,
+  `guestTeamId`  BIGINT(20)  NOT NULL,
+  `hostTeamId`   BIGINT(20)  NOT NULL,
+  `seasonId`     BIGINT(20)  NOT NULL,
+  `tournamentId` BIGINT(20)  NOT NULL,
+  PRIMARY KEY (`resultId`),
+  UNIQUE KEY `resultCode` (`resultCode`),
+  KEY `FK_ArchResultFrance_guestTeamId` (`guestTeamId`),
+  KEY `FK_ArchResultFrance_hostTeamId` (`hostTeamId`),
+  KEY `FK_ArchResultFrance_seasonId` (`seasonId`),
+  KEY `FK_ArchResultFrance_tournamentId` (`tournamentId`),
+  CONSTRAINT `FK_ArchResultFrance_tournamentId` FOREIGN KEY (`tournamentId`) REFERENCES `Tournament` (`tournamentId`),
+  CONSTRAINT `FK_ArchResultFrance_guestTeamId` FOREIGN KEY (`guestTeamId`) REFERENCES `Team` (`teamId`),
+  CONSTRAINT `FK_ArchResultFrance_hostTeamId` FOREIGN KEY (`hostTeamId`) REFERENCES `Team` (`teamId`),
+  CONSTRAINT `FK_ArchResultFrance_seasonId` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`)
+)
+  DEFAULT CHARSET = utf8;

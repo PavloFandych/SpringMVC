@@ -20,7 +20,7 @@ import org.total.spring.root.util.PasswordManager;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class RegisterController {
+public final class RegisterController {
     private static final Logger LOGGER = Logger.getLogger(RegisterController.class);
 
     @Autowired

@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * Created by kostya on 10/21/16.
  */
+
 public interface ResultService {
     public List<Result> findAll();
 

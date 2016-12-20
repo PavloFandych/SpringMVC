@@ -258,10 +258,10 @@ public final class TeamResource extends AbstractResource {
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
-                            StoredTeamsCache storedTeamsCache = getTeamService()
+                            List<StoredTeamsCache> list = getTeamService()
                                     .getStoredTeamsList(seasonCode, tournamentCode);
 
-                            if (storedTeamsCache == null) {
+                            if (list == null || list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_TEAM_FOUND)
                                         .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
 
@@ -272,7 +272,7 @@ public final class TeamResource extends AbstractResource {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
                                         .concat(" http status = ").concat(HttpStatus.OK.name()));
 
-                                return new ResponseEntity<>(storedTeamsCache, HttpStatus.OK);
+                                return new ResponseEntity<>(list.get(0).getContent(), HttpStatus.OK);
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)

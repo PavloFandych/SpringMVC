@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
-public class UserInfoController {
+public final class UserInfoController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserInfoController.class);
 
     @Autowired

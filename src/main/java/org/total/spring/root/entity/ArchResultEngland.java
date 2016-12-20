@@ -9,11 +9,11 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 /**
- * Created by kostya on 10/15/16.
+ * Created by total on 12/20/16.
  */
 
 @Entity
-@Table(name = "Result",
+@Table(name = "ArchResultEngland",
         uniqueConstraints = {
                 @UniqueConstraint(name = "resultId",
                         columnNames = "resultId"),
@@ -21,7 +21,7 @@ import java.util.Calendar;
                         columnNames = "resultCode")
         }
 )
-public final class Result implements Serializable {
+public final class ArchResultEngland implements Serializable {
     private long resultId;
     private String resultCode;
     private Tournament tournament;
@@ -33,13 +33,10 @@ public final class Result implements Serializable {
     private byte goalsByGuest;
     private Calendar date;
 
-    public Result() {
+    public ArchResultEngland() {
     }
 
-    public Result(Team hostTeam,
-                  Team guestTeam,
-                  byte goalsByHost,
-                  byte goalsByGuest) {
+    public ArchResultEngland(Team hostTeam, Team guestTeam, byte goalsByHost, byte goalsByGuest) {
         this.hostTeam = hostTeam;
         this.guestTeam = guestTeam;
         this.goalsByHost = goalsByHost;
@@ -75,7 +72,7 @@ public final class Result implements Serializable {
     @ManyToOne
     @JoinColumn(name = "tournamentId",
             nullable = false,
-            foreignKey = @ForeignKey(name = "FK_tournamentId")
+            foreignKey = @ForeignKey(name = "FK_ArchResultEngland_tournamentId")
     )
     @JsonIgnore
     public Tournament getTournament() {
@@ -89,7 +86,7 @@ public final class Result implements Serializable {
     @ManyToOne
     @JoinColumn(name = "seasonId",
             nullable = false,
-            foreignKey = @ForeignKey(name = "FK_seasonId")
+            foreignKey = @ForeignKey(name = "FK_ArchResultEngland_seasonId")
     )
     @JsonIgnore
     public Season getSeason() {
@@ -115,7 +112,7 @@ public final class Result implements Serializable {
     @ManyToOne
     @JoinColumn(name = "hostTeamId",
             nullable = false,
-            foreignKey = @ForeignKey(name = "FK_hostTeamId")
+            foreignKey = @ForeignKey(name = "FK_ArchResultEngland_hostTeamId")
     )
     public Team getHostTeam() {
         return hostTeam;
@@ -128,7 +125,7 @@ public final class Result implements Serializable {
     @ManyToOne
     @JoinColumn(name = "guestTeamId",
             nullable = false,
-            foreignKey = @ForeignKey(name = "FK_guestTeamId")
+            foreignKey = @ForeignKey(name = "FK_ArchResultEngland_guestTeamId")
     )
     public Team getGuestTeam() {
         return guestTeam;
@@ -177,7 +174,7 @@ public final class Result implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Result result = (Result) o;
+        ArchResultEngland result = (ArchResultEngland) o;
 
         if ((resultId != result.resultId)
                 || (!resultCode.equals(result.resultCode))
@@ -210,7 +207,7 @@ public final class Result implements Serializable {
 
     @Override
     public String toString() {
-        return "Result{" +
+        return "ArchResultEngland{" +
                 "goalsByHost=" + goalsByHost +
                 ", goalsByGuest=" + goalsByGuest +
                 ", resultId=" + resultId +

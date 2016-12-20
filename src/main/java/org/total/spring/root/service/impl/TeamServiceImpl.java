@@ -86,8 +86,8 @@ public final class TeamServiceImpl implements TeamService {
                     cacheManager = "springCashManager"
             )
     )
-    public StoredTeamsCache getStoredTeamsList(final String seasonCode,
-                                               final String tournamentCode) {
+    public List<StoredTeamsCache> getStoredTeamsList(final String seasonCode,
+                                                     final String tournamentCode) {
         return getTeamDAO().getStoredTeamsList(SeasonCode.valueOf(seasonCode),
                 TournamentCode.valueOf(tournamentCode));
     }
