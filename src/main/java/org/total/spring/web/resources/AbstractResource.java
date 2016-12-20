@@ -1,6 +1,5 @@
 package org.total.spring.web.resources;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.context.ContextLoader;
@@ -15,8 +14,6 @@ import org.total.spring.root.util.Validator;
  */
 
 public abstract class AbstractResource {
-    protected static final Logger LOGGER = Logger.getLogger(AbstractResource.class);
-
     @Autowired
     private UserService userService;
 

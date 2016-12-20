@@ -1,5 +1,6 @@
 package org.total.spring.web.resources;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,8 @@ import java.util.List;
 
 @RestController
 public final class StandingResource extends AbstractResource {
+    private static final Logger LOGGER = Logger.getLogger(StandingResource.class);
+
     @Autowired
     private StandingService standingService;
 

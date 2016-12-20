@@ -3,6 +3,7 @@ package org.total.spring.web.resources;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,8 @@ import java.util.List;
 
 @RestController
 public final class UserResource extends AbstractResource {
+    private static final Logger LOGGER = Logger.getLogger(UserResource.class);
+
     @Autowired
     private RoleService roleService;
 
