@@ -23,7 +23,7 @@ import java.util.List;
 @Repository
 @Transactional
 @Service("archResultSpainService")
-public class ArchResultSpainServiceImpl implements ArchResultSpainService {
+public final class ArchResultSpainServiceImpl implements ArchResultSpainService {
     @Autowired
     private ArchResultSpainRepository archResultSpainRepository;
 
