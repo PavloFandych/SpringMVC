@@ -42,11 +42,29 @@ button:hover {
     border-color: #00AA00;
 }
 
+.header-MD:hover {
+    /*background: radial-gradient(#FF0000, #880000);*/
+    /*background: radial-gradient(#77FF00, #00AA00);*/
+    background: radial-gradient(#cdcdcd, #727272);
+
+    color: white;
+    -webkit-border-radius: 4px;
+    /*border-color: #00AA00;*/
+}
+
+.MD-selected {
+    /*background: radial-gradient(#FF0000, #880000);*/
+    background: radial-gradient(#cdcdcd, #727272);
+    color: white;
+    -webkit-border-radius: 4px;
+    border-color: #00AA00;
+}
+
 .team-selected {
     /*background: radial-gradient(#FF0000, #880000);*/
     background: radial-gradient(#77FF00, #00AA00);
     color: white;
-    -webkit-border-radius: 10px;
+    -webkit-border-radius: 4px;
     border-color: #00AA00;
 }
 
@@ -55,17 +73,23 @@ button:hover {
 }
 
 .standings-tcell-place, .standings-tcell-header, .firstCell {
-    background-color: #F4F4F4;
+    /*background-color: #F4F4F4;*/
+    background-color: #dddddd  ;
+
 }
 
 .standings-tcell {
     background-color: #FFFFFF;
+    valign: top;
+
+
 }
 
 .standings-tcell, .standings-tcell-place, .standings-tcell-header {
     border: 1px solid #ccc;
     width: 20px;
     height: 20px;
+
 
 }
 
@@ -82,4 +106,22 @@ button:hover {
     width: 40px;
     padding: 0;
 }
+
+
+ .GP {
+    font-size: 72%;
+    align: center;
+    display:none;
+
+
+}
+
+ .GP1 {
+    font-size: 75%;
+    align: right;
+    display:none;
+
+}
+
+
 
