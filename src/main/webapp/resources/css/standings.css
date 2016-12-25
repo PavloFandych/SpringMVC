@@ -74,7 +74,7 @@ button:hover {
 
 .standings-tcell-place, .standings-tcell-header, .firstCell {
     /*background-color: #F4F4F4;*/
-    background-color: #dddddd  ;
+    background-color: #dddddd;
 
 }
 
@@ -82,14 +82,12 @@ button:hover {
     background-color: #FFFFFF;
     valign: top;
 
-
 }
 
 .standings-tcell, .standings-tcell-place, .standings-tcell-header {
     border: 1px solid #ccc;
     width: 20px;
     height: 20px;
-
 
 }
 
@@ -107,19 +105,17 @@ button:hover {
     padding: 0;
 }
 
-
- .GP {
+.GP {
     font-size: 72%;
     align: center;
-    display:none;
-
+    display: none;
 
 }
 
- .GP1 {
+.GP1 {
     font-size: 75%;
     align: right;
-    display:none;
+    display: none;
 
 }
 

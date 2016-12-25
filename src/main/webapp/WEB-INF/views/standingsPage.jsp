@@ -99,44 +99,120 @@
         <tbody>
         <tr class="standings-row-header">
             <th class="firstCell"></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">1<span class="GP GlsPts-1" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">2<span class="GP GlsPts-2" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">3<span class="GP GlsPts-3" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">4<span class="GP GlsPts-4" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">5<span class="GP GlsPts-5" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">6<span class="GP GlsPts-6" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">7<span class="GP GlsPts-7" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">8<span class="GP GlsPts-8" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">9<span class="GP GlsPts-9" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">10<span class="GP GlsPts-10" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">11<span class="GP GlsPts-11" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">12<span class="GP GlsPts-12" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">13<span class="GP GlsPts-13" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">14<span class="GP GlsPts-14" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">15<span class="GP GlsPts-15" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">16<span class="GP GlsPts-16" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">17<span class="GP GlsPts-17" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">18<span class="GP GlsPts-18" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">19<span class="GP GlsPts-19" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">20<span class="GP GlsPts-20" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">21<span class="GP GlsPts-21" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">22<span class="GP GlsPts-22" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">23<span class="GP GlsPts-23" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">24<span class="GP GlsPts-24" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">25<span class="GP GlsPts-25" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">26<span class="GP GlsPts-26" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">27<span class="GP GlsPts-27" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">28<span class="GP GlsPts-28" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">29<span class="GP GlsPts-29" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">30<span class="GP GlsPts-30" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">31<span class="GP GlsPts-31" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">32<span class="GP GlsPts-32" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">33<span class="GP GlsPts-33" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">34<span class="GP GlsPts-34" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">35<span class="GP GlsPts-35" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">36<span class="GP GlsPts-36" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">37<span class="GP GlsPts-37" > || Goals | Points</span></div></th>
-            <th class="standings-tcell-header" nowrap ><div class="header-MD">38<span class="GP GlsPts-38" > || Goals | Points</span></div></th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">1<span class="GP GlsPts-1"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">2<span class="GP GlsPts-2"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">3<span class="GP GlsPts-3"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">4<span class="GP GlsPts-4"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">5<span class="GP GlsPts-5"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">6<span class="GP GlsPts-6"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">7<span class="GP GlsPts-7"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">8<span class="GP GlsPts-8"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">9<span class="GP GlsPts-9"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">10<span class="GP GlsPts-10"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">11<span class="GP GlsPts-11"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">12<span class="GP GlsPts-12"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">13<span class="GP GlsPts-13"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">14<span class="GP GlsPts-14"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">15<span class="GP GlsPts-15"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">16<span class="GP GlsPts-16"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">17<span class="GP GlsPts-17"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">18<span class="GP GlsPts-18"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">19<span class="GP GlsPts-19"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">20<span class="GP GlsPts-20"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">21<span class="GP GlsPts-21"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">22<span class="GP GlsPts-22"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">23<span class="GP GlsPts-23"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">24<span class="GP GlsPts-24"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">25<span class="GP GlsPts-25"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">26<span class="GP GlsPts-26"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">27<span class="GP GlsPts-27"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">28<span class="GP GlsPts-28"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">29<span class="GP GlsPts-29"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">30<span class="GP GlsPts-30"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">31<span class="GP GlsPts-31"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">32<span class="GP GlsPts-32"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">33<span class="GP GlsPts-33"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">34<span class="GP GlsPts-34"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">35<span class="GP GlsPts-35"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">36<span class="GP GlsPts-36"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">37<span class="GP GlsPts-37"> || Goals | Points</span></div>
+            </th>
+            <th class="standings-tcell-header" nowrap>
+                <div class="header-MD">38<span class="GP GlsPts-38"> || Goals | Points</span></div>
+            </th>
         </tr>
         <tr class="standings-row">
             <td class="standings-tcell-place">1</td>
