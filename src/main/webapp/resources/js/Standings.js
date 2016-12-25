@@ -131,6 +131,7 @@ $(document).ready(function () {
                     $(".standings-row-header").show();
                     $(".standings-tcell").show();
                     $(".standings-tcell-header").show();
+                    $(".standings-tcell").attr('class', 'standings-tcell');
 
 
                                         $(".GP").removeClass("expanded");
@@ -164,13 +165,12 @@ $(document).ready(function () {
 
                 }
 
+
                  $(".standings-tcell").unbind('mouseenter mouseleave');
                  $(".standings-tcell").hover(function(){
                                         if ($(".team-selected").length === 0){
-                                          var className = '.' + $(this).attr('class').split(' ')[1];
+                                          var className = '.' + $(this).attr('class').split(" ")[1];
                                           var opponentClassName = '.' + $(this).find('.cell-div').data('opponent');
-
-                                          //alert(opponentClassName);
                                           $(className).toggleClass("show-opponent");
                                           $(opponentClassName).toggleClass("show-opponent");
                                         }
