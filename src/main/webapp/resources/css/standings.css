@@ -134,7 +134,7 @@ button:hover {
 }
 
 .show-opponent{
-    background: radial-gradient(#77FF00, #00AA00);
+    background: linear-gradient(to right, #77FF00, #00AA00);
     color: white;
     -webkit-border-radius: 4px;
     border-color: #00AA00;
