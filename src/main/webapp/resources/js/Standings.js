@@ -8,11 +8,7 @@ $(document).ready(function () {
     $("#get-info-msg").hide();
 
 
-
     $("#getStandingsButton").click(function () {
-
-
-
         $(".standings-tcell").empty();
         $(".teams-buttons").removeClass("team-selected");
         $("#teams-list").hide();
@@ -134,18 +130,18 @@ $(document).ready(function () {
                     $(".standings-tcell").attr('class', 'standings-tcell');
 
 
-                                        $(".GP").removeClass("expanded");
-                                        $(".GP").hide();
-                                        $(".MD-selected").toggleClass("MD-selected");
+                    $(".GP").removeClass("expanded");
+                    $(".GP").hide();
+                    $(".MD-selected").toggleClass("MD-selected");
 
                     $("#teams-list").show();
                     for (var i = 0; i < data.length; i++) {
                         for (var j = 0; j < data[i].length; j++) {
                             if (imgPath.hasOwnProperty(data[i][j].teamCode)) {
-                                $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + (j + 2) + "]")).addClass(data[i][j].teamCode+"-"+(j+1));
-                                $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + (j + 2) + "]")).append("<div class='cell-div'  data-opponent='"+data[i][j].opponentCode+"-"+(j+1)+"'><img title='"+data[i][j].result+"' class='" + data[i][j].teamCode + " cell-img' src=/resources/images/" + imgPath[data[i][j].teamCode] + " width='20px' height='20px' /><span class='GP1 GlsPts-"+(j+1)+"' >   &nbsp;&nbsp;|| "+data[i][j].goalsScored+":"+(data[i][j].goalsScored-data[i][j].goalsDiff)+" | "+data[i][j].points+"</span></div>");
+                                $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + (j + 2) + "]")).addClass(data[i][j].teamCode + "-" + (j + 1));
+                                $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + (j + 2) + "]")).append("<div class='cell-div'  data-opponent='" + data[i][j].opponentCode + "-" + (j + 1) + "'><img title='" + data[i][j].result + "' class='" + data[i][j].teamCode + " cell-img' src=/resources/images/" + imgPath[data[i][j].teamCode] + " width='20px' height='20px' /><span class='GP1 GlsPts-" + (j + 1) + "' >   &nbsp;&nbsp;|| " + data[i][j].goalsScored + ":" + (data[i][j].goalsScored - data[i][j].goalsDiff) + " | " + data[i][j].points + "</span></div>");
                             } else {
-                                $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + (j + 2) + "]")).append("<div><img class='" + data[i][j].teamCode + " cell-img' src=/resources/images/Ball.png width='20px' height='20px' /><span class='GP1 GlsPts-"+(j+1)+"' >   || "+data[i][j].goalsScored+":"+(data[i][j].goalsScored-data[i][j].goalsDiff)+" | "+data[i][j].points+"</span></div>");
+                                $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + (j + 2) + "]")).append("<div><img class='" + data[i][j].teamCode + " cell-img' src=/resources/images/Ball.png width='20px' height='20px' /><span class='GP1 GlsPts-" + (j + 1) + "' >   || " + data[i][j].goalsScored + ":" + (data[i][j].goalsScored - data[i][j].goalsDiff) + " | " + data[i][j].points + "</span></div>");
                             }
                         }
                     }
@@ -160,67 +156,56 @@ $(document).ready(function () {
                             $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]/td[" + j + "]")).hide();
                         }
                     }
-
-
-
                 }
 
-
-                 $(".standings-tcell").unbind('mouseenter mouseleave');
-                 $(".standings-tcell").hover(function(){
-                                        if ($(".team-selected").length === 0){
-                                          var className = '.' + $(this).attr('class').split(" ")[1];
-                                          var opponentClassName = '.' + $(this).find('.cell-div').data('opponent');
-                                          $(className).toggleClass("show-opponent");
-                                          $(opponentClassName).toggleClass("show-opponent");
-                                        }
-
-                                  });
+                $(".standings-tcell").unbind('mouseenter mouseleave');
+                $(".standings-tcell").hover(function () {
+                    if ($(".team-selected").length === 0) {
+                        var className = '.' + $(this).attr('class').split(" ")[1];
+                        var opponentClassName = '.' + $(this).find('.cell-div').data('opponent');
+                        $(className).toggleClass("show-opponent");
+                        $(opponentClassName).toggleClass("show-opponent");
+                    }
+                });
 
                 $(".teams-buttons").removeClass("team-selected");
                 $(".standings-tcell-header").unbind('click');
-                $(".standings-tcell-header").click(function(){
-                                                $(".cell-img").show();
-                                                $(".team-selected").toggleClass("team-selected");
+                $(".standings-tcell-header").click(function () {
+                        $(".cell-img").show();
+                        $(".team-selected").toggleClass("team-selected");
 
-                                                var className = '.' + $(this).find('.GP').attr('class').split(' ')[0];
-                                                //alert(className);
-                                                if ($(".expanded").length === 0) {
-                                                    //alert(0);
-                                                    $(className).toggle(800);
-                                                    $(className).toggleClass("expanded");
-                                                    $(this).toggleClass("MD-selected");
-                                                }  else{
-                                                    if ($(className).hasClass("expanded")){
-                                                        //alert(1);
-                                                        $(className).toggle(800);
-                                                        $(className).toggleClass("expanded");
-                                                        $(this).toggleClass("MD-selected");
+                        var className = '.' + $(this).find('.GP').attr('class').split(' ')[0];
+                        //alert(className);
+                        if ($(".expanded").length === 0) {
+                            //alert(0);
+                            $(className).toggle(800);
+                            $(className).toggleClass("expanded");
+                            $(this).toggleClass("MD-selected");
+                        } else {
+                            if ($(className).hasClass("expanded")) {
+                                //alert(1);
+                                $(className).toggle(800);
+                                $(className).toggleClass("expanded");
+                                $(this).toggleClass("MD-selected");
+                            } else {
+                                //alert(2);
+                                $(".expanded").hide();
+                                $(className).toggle(800);
 
-                                                    } else{
-                                                    //alert(2);
-                                                $(".expanded").hide();
-                                                $(className).toggle(800);
-
-                                                $(".expanded").toggleClass("expanded");
-                                                $(".MD-selected").toggleClass("MD-selected");
-                                                $(className).toggleClass("expanded");
-                                                $(this).toggleClass("MD-selected");
-                                                    }
-
-
-
-                                                }
-
+                                $(".expanded").toggleClass("expanded");
+                                $(".MD-selected").toggleClass("MD-selected");
+                                $(className).toggleClass("expanded");
+                                $(this).toggleClass("MD-selected");
+                            }
                         }
-
-                        );
+                    }
+                );
             },
             error: function (xhr, str) {
                 $("#get-info-msg").hide();
-                                    $(".expanded").hide(800);
-                                    $(".expanded").removeClass("expanded");
-                                    $(".MD-selected").toggleClass("MD-selected");
+                $(".expanded").hide(800);
+                $(".expanded").removeClass("expanded");
+                $(".MD-selected").toggleClass("MD-selected");
 
                 $(".teams-buttons").removeClass("team-selected");
                 alert('Sorry, no results for the ' + $("#TournamentList").val() + '-' + $("#SeasonsList").val());

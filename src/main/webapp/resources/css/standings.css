@@ -35,7 +35,7 @@ body {
 }
 
 button {
--webkit-border-radius: 4px;
+    -webkit-border-radius: 4px;
 }
 
 button:hover {
@@ -71,18 +71,14 @@ button:hover {
     border-color: #00AA00;
 }
 
-
-
 .standings-tcell-place, .standings-tcell-header, .firstCell {
     /*background-color: #F4F4F4;*/
-    background-color: #dddddd  ;
+    background-color: #dddddd;
 
 }
 
 .standings-tcell {
     background-color: #FFFFFF;
-
-
 
 }
 
@@ -90,7 +86,6 @@ button:hover {
     border: 1px solid #ccc;
     width: 20px;
     height: 20px;
-
 
 }
 
@@ -109,31 +104,29 @@ button:hover {
     -webkit-border-radius: 4px;
 }
 
-
- .GP {
+.GP {
     font-size: 72%;
     align: center;
-    display:none;
+    display: none;
 
 }
 
- .GP1 {
+.GP1 {
     font-size: 75%;
     align: right;
-    display:none;
+    display: none;
 }
 
-.place, .cell-img{
+.place, .cell-img {
     float: left;
 }
 
-
 .MD-selected {
-     display:  inline-block;
-     width:    95%;
+    display: inline-block;
+    width: 95%;
 }
 
-.show-opponent{
+.show-opponent {
     background: linear-gradient(to right, #77FF00, #00AA00);
     color: white;
     -webkit-border-radius: 4px;
@@ -146,7 +139,7 @@ td, th {
 }
 
 #tbl02 {
-/*background-color: #4f5b66;
--webkit-border-radius: 4px;
-border: 1px solid #ccc;*/
+    /*background-color: #4f5b66;
+    -webkit-border-radius: 4px;
+    border: 1px solid #ccc;*/
 }
