@@ -1,0 +1,28 @@
+body {
+    background-image: url(/resources/images/app/silver.jpg);
+    background-size: 100%;
+
+}
+
+.results-tcell-title, .results-tcell-header {
+    /*background-color: #F4F4F4;*/
+    background-color: #dddddd;
+
+}
+
+.results-tcell {
+    background-color: #FFFFFF;
+
+}
+
+.results-tcell, .results-tcell-title, .results-tcell-header {
+    border: 1px solid #ccc;
+    width: 30px;
+    height: 30px;
+
+}
+
+td, th {
+    -webkit-border-radius: 4px;
+
+}

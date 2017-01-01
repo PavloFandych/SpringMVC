@@ -22,7 +22,9 @@
         <tbody>
         <tr>
             <td class="menu-tcell">
-                <img src=/resources/images/app/TT_Logo_02_White.png width="120px" height="32px" align="right"/>
+                    <a href="/">
+                    <img src=/resources/images/app/TT_Logo_02_White.png width="120px" height="32px" align="right"/>
+                    </a>
             </td>
             <td class="menu-tcell">
                 <select id="SeasonsList" name="SeasonsList">
