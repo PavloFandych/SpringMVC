@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.context.ContextLoader;
+import org.total.spring.root.entity.Team;
 import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.entity.enums.TournamentCode;
 import org.total.spring.root.proc.StoredTeamsCache;
@@ -49,7 +50,7 @@ public class TeamDAO extends GenericDAO<List<String>> {
     }
 
     public List<StoredTeamsCache> getStoredTeamsList(final SeasonCode seasonCode,
-                                               final TournamentCode tournamentCode) {
+                                                     final TournamentCode tournamentCode) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_STORED_TEAMS_LIST)
                 .returningResultSet("storedTeamsList", new RowMapper<StoredTeamsCache>() {
@@ -74,6 +75,30 @@ public class TeamDAO extends GenericDAO<List<String>> {
                         .addValue("tournamentCode", tournamentCode.name()));
 
         List<StoredTeamsCache> resultList = (List<StoredTeamsCache>) out.get("storedTeamsList");
+
+        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
+    }
+
+    public List<Team> getTeamsByCountryCode(final String countryCode) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withProcedureName(Constants.CALL_GET_TEAMS_BY_COUNTRY_CODE)
+                .returningResultSet("teamsList", new RowMapper<Team>() {
+                    @Override
+                    public Team mapRow(ResultSet resultSet, int i) throws SQLException {
+                        Team team = new Team();
+
+                        team.setTeamCode(resultSet.getString("teamCode"));
+                        team.setTeamName(resultSet.getString("teamName"));
+
+                        return team;
+                    }
+                });
+
+        Map<String, Object> out = simpleJdbcCall
+                .execute(new MapSqlParameterSource()
+                        .addValue("countryCode", countryCode));
+
+        List<Team> resultList = (List<Team>) out.get("teamsList");
 
         return (resultList != null && !resultList.isEmpty()) ? resultList : null;
     }

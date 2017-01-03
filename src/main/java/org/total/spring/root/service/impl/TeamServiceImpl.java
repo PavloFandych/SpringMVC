@@ -88,8 +88,9 @@ public final class TeamServiceImpl implements TeamService {
     )
     public List<StoredTeamsCache> getStoredTeamsList(final String seasonCode,
                                                      final String tournamentCode) {
-        return getTeamDAO().getStoredTeamsList(SeasonCode.valueOf(seasonCode),
-                TournamentCode.valueOf(tournamentCode));
+        List<StoredTeamsCache> result = getTeamDAO()
+                .getStoredTeamsList(SeasonCode.valueOf(seasonCode), TournamentCode.valueOf(tournamentCode));
+        return (result != null && !result.isEmpty()) ? result : null;
     }
 
     @Override
@@ -131,7 +132,25 @@ public final class TeamServiceImpl implements TeamService {
             sync = true
     )
     public Team findTeamByTeamName(final String teamName) {
-        List<Team> teams = getTeamRepository().findByTeamName(teamName);
+        List<Team> teams = getTeamRepository()
+                .findByTeamName(teamName);
         return (teams != null && !teams.isEmpty()) ? teams.get(0) : null;
+    }
+
+    @Override
+    @Caching(evict = @CacheEvict(
+            value = "applicationCache",
+            cacheManager = "springCashManager",
+            allEntries = true
+    ),
+            cacheable = @Cacheable(
+                    value = "applicationCache",
+                    cacheManager = "springCashManager"
+            )
+    )
+    public List<Team> findTeamsByCountryCode(final String countryCode) {
+        List<Team> teams = getTeamDAO()
+                .getTeamsByCountryCode(countryCode);
+        return (teams != null && !teams.isEmpty()) ? teams : null;
     }
 }

@@ -60,6 +60,8 @@ public final class Constants {
     public static final String CALL_GET_ACTUAL_SEASON_LIST = "getActualSeasons";
     public static final String CALL_GET_ACTUAL_TOURNAMENT_LIST = "getActualTournaments";
     public static final String CALL_GET_TEAM_LIST = "getTeamsList";
+    public static final String CALL_GET_TEAMS_BY_COUNTRY_CODE = "getTeamsByCountryCode";
+    public static final String CALL_GET_TOURNAMENTS_BY_COUNTRY_CODE = "getTournamentsByCountryCode";
     public static final String CALL_GET_STORED_TEAMS_LIST = "getStoredTeamsList";
     public static final String CALL_GET_TEAM_MATCHES = "getTeamMatches";
     public static final String CALL_GET_STORED_STANDINGS = "getStoredStandings";

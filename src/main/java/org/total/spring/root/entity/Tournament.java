@@ -58,7 +58,6 @@ public final class Tournament implements Serializable {
             length = Constants.TOURNAMENT_SIZE
     )
     @Enumerated(EnumType.STRING)
-    @JsonIgnore
     public TournamentType getTournamentType() {
         return tournamentType;
     }

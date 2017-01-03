@@ -25,4 +25,6 @@ public interface TeamService {
     public void deleteTeamByTeamId(final Long teamId);
 
     public Team findTeamByTeamName(final String teamName);
+
+    public List<Team> findTeamsByCountryCode(final String countryCode);
 }

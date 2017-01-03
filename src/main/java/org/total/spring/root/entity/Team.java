@@ -41,6 +41,7 @@ public final class Team implements Serializable {
     @Column(name = "teamId",
             nullable = false
     )
+    @JsonIgnore
     public long getTeamId() {
         return teamId;
     }

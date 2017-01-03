@@ -16,7 +16,6 @@ import org.total.spring.root.service.interfaces.TeamService;
 import org.total.spring.root.util.Constants;
 import org.total.spring.root.version.Version;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -129,20 +128,21 @@ public final class TeamResource extends AbstractResource {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/teams/{id}",
+    @RequestMapping(value = "/teams/{countryCode}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchTeamByTeamId(final @PathVariable Long id,
-                                               final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                               final @RequestHeader(name = "Content-Type",
-                                                       required = false) String contentType,
-                                               final @RequestHeader(name = "Version",
-                                                       required = false) String version) {
+    public ResponseEntity<?> fetchTeamsByCountryCode(final @PathVariable String countryCode,
+                                                     final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                     final @RequestHeader(name = "Content-Type",
+                                                             required = false) String contentType,
+                                                     final @RequestHeader(name = "Version",
+                                                             required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
                         contentType,
-                        version})
+                        version,
+                        countryCode})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
@@ -165,10 +165,10 @@ public final class TeamResource extends AbstractResource {
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
-                            List<Team> list = new ArrayList<>();
-                            list.add(getTeamService().findById(id));
+                            List<Team> list = getTeamService()
+                                    .findTeamsByCountryCode(countryCode);
 
-                            if (list.isEmpty()) {
+                            if (list == null || list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_TEAM_FOUND)
                                         .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
 

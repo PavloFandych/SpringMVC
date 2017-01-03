@@ -25,4 +25,6 @@ public interface TournamentService {
     public Tournament findTournamentByTournamentCode(final TournamentCode tournamentCode);
 
     public List<Tournament> getActualTournaments();
+
+    public List<Tournament> findTournamentsByCountryCode(final String countryCode);
 }

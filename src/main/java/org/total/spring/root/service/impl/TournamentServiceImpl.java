@@ -131,4 +131,21 @@ public final class TournamentServiceImpl implements TournamentService {
     public List<Tournament> getActualTournaments() {
         return getTournamentDAO().getEntities();
     }
+
+    @Override
+    @Caching(evict = @CacheEvict(
+            value = "applicationCache",
+            cacheManager = "springCashManager",
+            allEntries = true
+    ),
+            cacheable = @Cacheable(
+                    value = "applicationCache",
+                    cacheManager = "springCashManager"
+            )
+    )
+    public List<Tournament> findTournamentsByCountryCode(final String countryCode) {
+        List<Tournament> resultList = getTournamentDAO()
+                .getTournamentsByCountryCode(countryCode);
+        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
+    }
 }
