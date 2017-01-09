@@ -1,5 +1,5 @@
 body {
-    background-image: url(/resources/images/app/silver.jpg);
+    background-image: url(/resources/images/app/texture01.jpg);
     background-size: 100%;
 
 }
@@ -139,9 +139,9 @@ td, th {
 }
 
 #tbl02 {
-    /*background-color: #4f5b66;
+    background-color: #4f5b66;
     -webkit-border-radius: 4px;
-    border: 1px solid #ccc;*/
+    /*border: 1px solid #ccc;*/
 }
 
 

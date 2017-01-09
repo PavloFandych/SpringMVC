@@ -29,7 +29,7 @@
             </td>
             <td class="menu-tcell">
                 <select id="CountriesList" name="CountriesList">
-                    <option selected value="">Select country</option>
+                    <option selected value="selectCountry">Select country</option>
                     <option value="ENG">England</option>
                     <option value="DEU">Germany</option>
                     <option value="ITA">Italy</option>
@@ -39,7 +39,7 @@
             </td>
             <td class="menu-tcell">
                 <select id="TeamsList" name="TeamsList">
-                    <option selected value="">Select team</option>
+                    <option selected value="selectTeam">Select team</option>
                 </select>
             </td>
             <td class="menu-tcell">
@@ -54,7 +54,7 @@
                 </select>
             </td>
             <td class="menu-tcell">
-                <select id="TournamentList" name="TournamentList">
+                <select id="TournamentsList" name="TournamentsList">
                     <option selected value="">All tournaments</option>
                     <option value="ENG_PREM_LEAGUE">Premier League (England)</option>
                     <option value="DEU_BUNDESLIGA_1">Bundesliga (Germany)</option>
@@ -64,8 +64,7 @@
                 </select>
             </td>
             <td class="menu-tcell">
-                <!-- <button id="getStandingsButton"><img src=/resources/images/app/Ball_02.png width="20px" height="20px"/></button> -->
-                <button id="getStandingsButton"><b>GET</b></button>
+                  <button id="getTeamMatchesButton"><b>GET</b></button>
             </td>
         </tr>
         </tbody>
@@ -81,13 +80,17 @@
 
     <p><b>Requesting data... Please wait... </b></p>
 </div>
+<div id="matches">
+
+<div id='team-logo' align='middle'></div>
+</br>
 
 <div class="main-table">
 
     <table id="results-table" cellspacing="1" cellpadding="2" align="center">
         <tbody>
         <tr class="results-row-header">
-            <th class="results-tcell-header results-tcell-title" id="title-date">Date:</th>
+            <th class="results-tcell-title" id="title-date">Date:</th>
             <th class="results-tcell-header" nowrap></th>
             <th class="results-tcell-header" nowrap></th>
             <th class="results-tcell-header" nowrap></th>
@@ -177,6 +180,42 @@
             <td class="results-tcell"></td>
             <td class="results-tcell"></td>
             <td class="results-tcell"></td>
+        </tr>
+    </table>
+</div>
+
+<div class="arrows">
+
+    <table id="arrows-table" cellspacing="1" cellpadding="2" align="center">
+        <tr class="ta-row">
+            <td>
+                <div id="leftArrow">
+                <img src="/resources/images/app/leftArrow.png" width="30px" height="30px">
+                </div>
+            </td>
+            <td>
+                <div id="rightArrow">
+                <img src="/resources/images/app/rightArrow.png" width="30px" height="30px">
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</div>
+
+<br/>
+<br/>
+
+<div id="mt02">
+
+    <table id="rt02" cellspacing="1" cellpadding="2" align="center">
+        <tbody id="rt02-body">
+        <tr class="rt02-row-header">
+            <th class="rt02-tcell-header" id="title-date">Date</th>
+            <th class="rt02-tcell-header" id="title-win" nowrap>Win</th>
+            <th class="rt02-tcell-header" id="title-draw" nowrap>Draw</th>
+            <th class="rt02-tcell-header" id="title-loss" nowrap>Loss</th>
         </tr>
     </table>
 </div>
