@@ -64,7 +64,7 @@
                 </select>
             </td>
             <td class="menu-tcell">
-                  <button id="getTeamMatchesButton"><b>GET</b></button>
+                <button id="getTeamMatchesButton"><b>GET</b></button>
             </td>
         </tr>
         </tbody>
@@ -82,125 +82,125 @@
 </div>
 <div id="matches">
 
-<div id='team-logo' align='middle'></div>
-</br>
+    <div id='team-logo' align='middle'></div>
+    </br>
 
-<div class="main-table">
+    <div class="main-table">
 
-    <table id="results-table" cellspacing="1" cellpadding="2" align="center">
-        <tbody>
-        <tr class="results-row-header">
-            <th class="results-tcell-title" id="title-date">Date:</th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-            <th class="results-tcell-header" nowrap></th>
-        </tr>
-        <tr class="results-row">
-            <td class="results-tcell-title" id="title-win">Win</td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-        </tr>
-        <tr class="results-row">
-            <td class="results-tcell-title" id="title-draw">Draw</td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-        </tr>
-        <tr class="results-row">
-            <td class="results-tcell-title" id="title-loss">Loss</td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-            <td class="results-tcell"></td>
-        </tr>
-    </table>
-</div>
+        <table id="results-table" cellspacing="1" cellpadding="2" align="center">
+            <tbody>
+            <tr class="results-row-header">
+                <th class="results-tcell-title" id="title-date">Date:</th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+                <th class="results-tcell-header" nowrap></th>
+            </tr>
+            <tr class="results-row">
+                <td class="results-tcell-title" id="title-win">Win</td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+            </tr>
+            <tr class="results-row">
+                <td class="results-tcell-title" id="title-draw">Draw</td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+            </tr>
+            <tr class="results-row">
+                <td class="results-tcell-title" id="title-loss">Loss</td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+                <td class="results-tcell"></td>
+            </tr>
+        </table>
+    </div>
 
-<div class="arrows">
+    <div class="arrows">
 
-    <table id="arrows-table" cellspacing="1" cellpadding="2" align="center">
-        <tr class="ta-row">
-            <td>
-                <div id="leftArrow">
-                <img src="/resources/images/app/leftArrow.png" width="30px" height="30px">
-                </div>
-            </td>
-            <td>
-                <div id="rightArrow">
-                <img src="/resources/images/app/rightArrow.png" width="30px" height="30px">
-                </div>
-            </td>
-        </tr>
-    </table>
-</div>
+        <table id="arrows-table" cellspacing="1" cellpadding="2" align="center">
+            <tr class="ta-row">
+                <td>
+                    <div id="leftArrow">
+                        <img src="/resources/images/app/leftArrow.png" width="30px" height="30px">
+                    </div>
+                </td>
+                <td>
+                    <div id="rightArrow">
+                        <img src="/resources/images/app/rightArrow.png" width="30px" height="30px">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
 
 </div>
 

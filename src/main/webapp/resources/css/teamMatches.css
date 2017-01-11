@@ -15,10 +15,9 @@ body {
 
 }
 
-.rt02-tcell-header{
+.rt02-tcell-header {
     background: radial-gradient(#cdcdcd, #727272);
 }
-
 
 .results-tcell, .results-tcell-title, .results-tcell-header, .rt02-tcell-date {
     border: 1px solid #ccc;
@@ -32,11 +31,11 @@ td, th {
 
 }
 
-.results-tcell-header{
+.results-tcell-header {
     font-size: 6pt;
 }
 
-.rt02-tcell, .rt02-tcell-date{
+.rt02-tcell, .rt02-tcell-date {
     font-size: 8pt;
     font-weight: bold;
 }
