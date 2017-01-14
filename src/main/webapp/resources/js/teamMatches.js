@@ -8,8 +8,6 @@ $(document).ready(function () {
     //$("#results-table").hide();
     $("#get-info-msg").hide();
     $("#CountriesList").val("selectCountry");
-    $("#results-table").hide();
-    $("#arrows-table").hide();
     $("#rt02").hide();
     //alert(teams[1][1]);
 
@@ -18,7 +16,9 @@ $(document).ready(function () {
                 var country = $("#CountriesList").val();
 
                 $("#TeamsList").empty();
+                $("#OpponentsList").empty();
                 $("#TeamsList").append("<option selected value='selectTeam'>Select team</option>");
+                $("#OpponentsList").append("<option selected value=''>All opponents</option>");
                 if (country.toLowerCase !== "selectcountry"){
                 //alert(country);
 
@@ -36,6 +36,7 @@ $(document).ready(function () {
                                     for (var i = 0; i < data.length; i++) {
 
                                         $("#TeamsList").append("<option value='" + data[i].teamCode + "'>"+data[i].teamName+"</option>");
+                                        $("#OpponentsList").append("<option value='" + data[i].teamCode + "'>"+data[i].teamName+"</option>");
                                     }
 
 
@@ -50,17 +51,15 @@ $(document).ready(function () {
         });
 
             $("#getTeamMatchesButton").click(function () {
-            $(".results-tcell").empty();
-            $(".results-tcell-header").empty();
             $(".rt02-row").remove();
             $("#team-logo").empty();
 
                 var team = $("#TeamsList").val();
                 if (team.toLowerCase() !== "selectteam"){
                     var season = $("#SeasonsList").val();
-                    var tournament = $("#TournamentsList").val();
-                    //var opponent = $("#OpponentsList").val();
-                    var opponent ="";
+                    //var tournament = $("#TournamentsList").val();
+                    var opponent = $("#OpponentsList").val();
+                    var tournament ="";
 
                         $.ajax({
                             data: {"teamCode": team, "opponentTeamCode": opponent, "seasonCode": season, "tournamentCode": tournament},
@@ -78,80 +77,43 @@ $(document).ready(function () {
 
                                   //alert(total);
                                 if (total !== 0) {
-                                    $("#results-table").show();
-                                    //$("#rt02").show();
-                                    $("#arrows-table").show();
+
+                                    $("#rt02").show();
+
 
                                     $("#team-logo").append("<img id='team-img' src=/resources/images/" + imgPath[team] + "  width='100px' height='100px' />");
 
-                                    $("#team-img").click(function () {
-                                        $("#results-table").toggle();
-                                        $("#arrows-table").toggle();
-                                        $("#rt02").toggle();
-                                    });
+
 
                                 //alert("total !== 0");
+                                var classValue2='odd';
                                 for (var i = 0; i < data.length; i++) {
-                                      var k=2;
+                                      var k=4;
                                       var classValue='win';
                                       switch (data[i].matchResultStatus.toLowerCase()) {
                                                   case 'draw':
-                                                     k=3;
+                                                     k=5;
                                                      classValue='draw';
                                                       break;
                                                   case 'lost':
-                                                     k=4;
+                                                     k=6;
                                                      classValue='lost';
                                                       break;
                                       }
-                                      $(document.getElementByXPath("//table[@id='rt02']/tbody")).append("<tr  class='rt02-row'><td class='rt02-tcell-date'>"+data[i].matchDate.substring(0, 10)+"</td><td class='rt02-tcell' nowrap></td><td class='rt02-tcell' nowrap></td><td class='rt02-tcell' nowrap></td></tr>");
+
+                                      if(i>0 && data[i].seasonCode!==data[i-1].seasonCode){
+                                        if(classValue2=='odd'){
+                                            classValue2='even'
+                                        }else{
+                                            classValue2='odd';
+                                        }
+
+                                      }
+
+                                      $(document.getElementByXPath("//table[@id='rt02']/tbody")).append("<tr  class='rt02-row'><td class='rt02-tcell-season'>"+data[i].seasonName.substring(7, 16)+"</td><td class='rt02-tcell-matchday' align='middle'>"+data[i].matchDay+"</td><td class='rt02-tcell-date'>"+data[i].matchDate.substring(0, 10)+"</td><td class='rt02-tcell "+classValue2+"' nowrap></td><td class='rt02-tcell "+classValue2+"' nowrap></td><td class='rt02-tcell "+classValue2+"' nowrap></td></tr>");
                                     $(document.getElementByXPath("//table[@id='rt02']/tbody/tr["+(i+2)+"]/td[" + k + "]")).append("<div class='cell-div' align='middle'>"+data[i].hostTeamName+" "+data[i].goalsByHost+":"+data[i].goalsByGuest+" "+data[i].guestTeamName+"</div>");
                                      $(document.getElementByXPath("//table[@id='rt02']/tbody/tr["+(i+2)+"]/td[" + k + "]")).addClass(classValue);
                                 }
-
-                                  if((startIndex+20)<total){
-                                  //alert("(startIndex+20)<total --> TRUE");
-                                    var endIndex=startIndex+20;
-                                      for (var i = startIndex; i < endIndex; i++) {
-                                      var k=2;
-                                      var classValue='win';
-                                      switch (data[i].matchResultStatus) {
-                                                  case 'DRAW':
-                                                     k=3;
-                                                     classValue='draw';
-                                                      break;
-                                                  case 'LOST':
-                                                     k=4;
-                                                     classValue='lost';
-                                                      break;
-                                      }
-                                    $(document.getElementByXPath("//table[@id='results-table']/tbody/tr["+k+"]/td[" + (endIndex-i+1) + "]")).addClass(classValue);
-                                       $(document.getElementByXPath("//table[@id='results-table']/tbody/tr[1]/th[" + (endIndex-i+1) + "]")).append("<div class='cell-date'>"+data[i].matchDate.substring(0, 10)+"</div>");
-                                      $(document.getElementByXPath("//table[@id='results-table']/tbody/tr["+k+"]/td[" + (endIndex-i+1) + "]")).append("<div class='cell-div' align='middle'><img class='cell-img' src=/resources/images/Ball.png width='30px' height='30px' title='"+data[i].hostTeamName+" "+data[i].goalsByHost+":"+data[i].goalsByGuest+" "+data[i].guestTeamName+"' /></div>");
-                                           }
-                                  }else{
-                                  //alert("(startIndex+20)<total --> FALSE");
-                                      var endIndex=total;
-
-                                  for (var i = startIndex; i < endIndex; i++) {
-                                      var k=2;
-                                      var classValue='win';
-                                      switch (data[i].matchResultStatus) {
-                                                  case 'DRAW':
-                                                     k=3;
-                                                     classValue='draw';
-                                                      break;
-                                                  case 'LOST':
-                                                     k=4;
-                                                     classValue='lost';
-                                                      break;
-                                      }
-                                   $(document.getElementByXPath("//table[@id='results-table']/tbody/tr["+k+"]/td[" + (endIndex-i+1) + "]")).addClass(classValue);
-                                    $(document.getElementByXPath("//table[@id='results-table']/tbody/tr[1]/th[" + (endIndex-i+1) + "]")).append("<div class='cell-date'>"+data[i].matchDate.substring(0, 10)+"</div>");
-                                      $(document.getElementByXPath("//table[@id='results-table']/tbody/tr["+k+"]/td[" + (endIndex-i+1) + "]")).append("<div class='cell-div' align='middle'><img class='cell-img' src=/resources/images/Ball.png width='30px' height='30px' title='"+data[i].hostTeamName+" "+data[i].goalsByHost+":"+data[i].goalsByGuest+" "+data[i].guestTeamName+"' /></div>");
-                                  }
-
-}
 
                                 }
                             },
