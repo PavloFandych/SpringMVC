@@ -85,8 +85,8 @@ CREATE PROCEDURE getTeamMatches(IN teamCode         VARCHAR(6),
                       ELSE 1 = 1 END)
                  AND (CASE WHEN opponentTeamCode IS NOT NULL THEN te1.teamCode = opponentTeamCode
                       ELSE 1 = 1 END)
--- ----England--------
-			UNION ALL
+           -- ----England--------
+           UNION ALL
            SELECT
              r.date       AS matchDate,
              s.seasonCode,
@@ -148,8 +148,8 @@ CREATE PROCEDURE getTeamMatches(IN teamCode         VARCHAR(6),
                       ELSE 1 = 1 END)
                  AND (CASE WHEN opponentTeamCode IS NOT NULL THEN te1.teamCode = opponentTeamCode
                       ELSE 1 = 1 END)
--- ----Italy--------
-			UNION ALL
+           -- ----Italy--------
+           UNION ALL
            SELECT
              r.date       AS matchDate,
              s.seasonCode,
@@ -211,8 +211,8 @@ CREATE PROCEDURE getTeamMatches(IN teamCode         VARCHAR(6),
                       ELSE 1 = 1 END)
                  AND (CASE WHEN opponentTeamCode IS NOT NULL THEN te1.teamCode = opponentTeamCode
                       ELSE 1 = 1 END)
--- ----Germany--------
-			UNION ALL
+           -- ----Germany--------
+           UNION ALL
            SELECT
              r.date       AS matchDate,
              s.seasonCode,
@@ -274,8 +274,8 @@ CREATE PROCEDURE getTeamMatches(IN teamCode         VARCHAR(6),
                       ELSE 1 = 1 END)
                  AND (CASE WHEN opponentTeamCode IS NOT NULL THEN te1.teamCode = opponentTeamCode
                       ELSE 1 = 1 END)
--- ----Spain--------
-			UNION ALL
+           -- ----Spain--------
+           UNION ALL
            SELECT
              r.date       AS matchDate,
              s.seasonCode,
@@ -337,8 +337,8 @@ CREATE PROCEDURE getTeamMatches(IN teamCode         VARCHAR(6),
                       ELSE 1 = 1 END)
                  AND (CASE WHEN opponentTeamCode IS NOT NULL THEN te1.teamCode = opponentTeamCode
                       ELSE 1 = 1 END)
--- ----France--------
-			UNION ALL
+           -- ----France--------
+           UNION ALL
            SELECT
              r.date       AS matchDate,
              s.seasonCode,
