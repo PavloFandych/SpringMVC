@@ -54,6 +54,35 @@ $(document).ready(function () {
             $(".rt02-row").remove();
             $("#team-logo").empty();
 
+
+                var team = $("#TeamsList").val();
+                if (team.toLowerCase() !== "selectteam"){
+                    var season = $("#SeasonsList").val();
+                    //var tournament = $("#TournamentsList").val();
+                    var opponent = $("#OpponentsList").val();
+                    var tournament ="";
+
+                        $.ajax({
+                            data: {"teamCode": team, "opponentTeamCode": opponent, "seasonCode": season, "tournamentCode": tournament},
+                            url: '/teamMatches',
+                            type: 'GET',
+                            datatype: 'json',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Version': 'V1',
+                                'Authorization': 'Basic QWRtaW46YWRtaW4='
+                            },
+                            success: function (data, status) {
+                                var total=data.length;
+                                var startIndex=0;
+
+                                  //alert(total);
+                                if (total !== 0) {
+                                    $("#main").removeClass("vertical-aligned");
+                                    $("#countries").hide();
+                                    $("#rt02").show();
+                                    $("#team-logo").append("<img id='team-img' src=/resources/images/" + imgPath[team] + "  width='100px' height='100px' />");
+
             var country = $("#CountriesList").val();
 
                     switch (country) {
@@ -88,38 +117,6 @@ $(document).ready(function () {
                             }
                             break;
                     }
-
-
-                var team = $("#TeamsList").val();
-                if (team.toLowerCase() !== "selectteam"){
-                    var season = $("#SeasonsList").val();
-                    //var tournament = $("#TournamentsList").val();
-                    var opponent = $("#OpponentsList").val();
-                    var tournament ="";
-
-                        $.ajax({
-                            data: {"teamCode": team, "opponentTeamCode": opponent, "seasonCode": season, "tournamentCode": tournament},
-                            url: '/teamMatches',
-                            type: 'GET',
-                            datatype: 'json',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Version': 'V1',
-                                'Authorization': 'Basic QWRtaW46YWRtaW4='
-                            },
-                            success: function (data, status) {
-                                var total=data.length;
-                                var startIndex=0;
-
-                                  //alert(total);
-                                if (total !== 0) {
-
-                                    $("#rt02").show();
-
-
-                                    $("#team-logo").append("<img id='team-img' src=/resources/images/" + imgPath[team] + "  width='100px' height='100px' />");
-
-
 
                                 //alert("total !== 0");
                                 var classValue2='odd';

@@ -13,8 +13,8 @@ $(document).ready(function () {
         $(".teams-buttons").removeClass("team-selected");
         $("#teams-list").hide();
         $("#tbl02").hide();
-        $("#get-info-msg").show();
-        //$(".GP").hide();
+        //$("#get-info-msg").show();
+
 
         var season = $("#SeasonsList").val();
         var tournament = $("#TournamentList").val();
@@ -65,6 +65,8 @@ $(document).ready(function () {
             success: function (data, status) {
                 if (data.length !== 0) {
                     $(".teams-tcell").show();
+                    $("#main").removeClass("vertical-aligned");
+                    $("#countries").hide();
                     var k = 1;
                     for (var i = 0; i < data.length; i++) {
                         $(document.getElementByXPath("//table[@id='tbl01']/tbody/tr[1]/td[" + k + "]")).empty();
@@ -208,7 +210,7 @@ $(document).ready(function () {
                 $(".MD-selected").toggleClass("MD-selected");
 
                 $(".teams-buttons").removeClass("team-selected");
-                alert('Sorry, no results for the ' + $("#TournamentList").val() + '-' + $("#SeasonsList").val());
+                //alert('Sorry, no results for the ' + $("#TournamentList").val() + '-' + $("#SeasonsList").val());
             }
         });
     });

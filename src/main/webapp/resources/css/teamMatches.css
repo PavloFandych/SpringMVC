@@ -1,9 +1,22 @@
 
-
 body {
-    background-image: url(/resources/images/app/texture01.jpg);
+    background-image: url(/resources/images/app/texture02.jpg);
     background-size: 100%;
 
+
+}
+
+
+.vertical-aligned{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.country-img{
+    width: 120px;
+    height: 170px
 }
 
 .ITA {
@@ -74,7 +87,7 @@ td, th {
 
 
 .rt02-tcell, .rt02-tcell-date, .rt02-tcell-season, .rt02-tcell-matchday {
-    font-size: 7pt;
+    font-size: 8pt;
     font-weight: bold;
 }
 
@@ -147,10 +160,6 @@ td, th {
 		background-color: #595959;
 
 	}
-
-
-
-
 
 
 	button:hover {

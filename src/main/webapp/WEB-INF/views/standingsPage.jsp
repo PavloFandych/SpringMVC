@@ -17,6 +17,7 @@
     <script src="<c:url value="/resources/js/xpathTools.js" />"></script>
 </head>
 <body class="NoCountry">
+<div id="main" class="vertical-aligned">
 <div id="top-menu">
     <table id="tbl00" class="menu-table" cellspacing="1" cellpadding="2" align="center">
         <tbody>
@@ -41,7 +42,8 @@
             <td class="menu-tcell">
             <div class="menu-bar">
                 <select id="TournamentList" class="grey" name="TournamentList">
-                    <option selected value="ENG_PREM_LEAGUE">Premier League (England)</option>
+                    <option selected value="">Select country</option>
+                    <option value="ENG_PREM_LEAGUE">Premier League (England)</option>
                     <option value="DEU_BUNDESLIGA_1">Bundesliga (Germany)</option>
                     <option value="ITA_SERIA_A">Serie A (Italy)</option>
                     <option value="ESP_PRIMERA">La Liga (Spain)</option>
@@ -58,7 +60,7 @@
         </tbody>
     </table>
 </div>
-<br/>
+
 
 <div id="get-info-msg" align="center">
     <br/>
@@ -69,6 +71,33 @@
     <p><b>Requesting data... Please wait... </b></p>
 </div>
 
+    <div id="countries">
+        <br/>
+        <img id="country-img" src="/resources/images/app/top_european_football_leagues.jpg" hidden/>
+         <table id="countries-table" align="center" style="border:10px; margin:auto; " >
+             <tr>
+                 <td>
+                    <img class="country-img" src="/resources/images/app/ENG_PremierLeague_vertical.png" />
+                 </td>
+
+                 <td>
+                    <img class="country-img" src="/resources/images/app/ITA_SerieA_vertical.png" />
+                 </td>
+
+                 <td>
+                    <img class="country-img" src="/resources/images/app/ESP_Laliga_vertical.png" />
+                 </td>
+
+                 <td>
+                    <img class="country-img" src="/resources/images/app/DEU_Bundesliga_vertical.png" />
+                 </td>
+
+                 <td>
+                    <img class="country-img" src="/resources/images/app/FRA_Ligue1_vertical.png" />
+                 </td>
+             </tr>
+         </table>
+    </div>
 <div id="teams-list">
     <table id="tbl01" class="teams-table" cellspacing="1" cellpadding="2" align="center">
         <tbody>
@@ -98,7 +127,6 @@
     </table>
 </div>
 
-<br/>
 
 <div class="main-table">
 
@@ -1043,6 +1071,7 @@
         </tr>
         </tbody>
     </table>
+</div>
 </div>
 </body>
 </html>

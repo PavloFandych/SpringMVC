@@ -16,9 +16,10 @@
 
 <body class="NoCountry">
 
-<br/>
+<div id="main" class="vertical-aligned">
 
 <div id="top-menu">
+<br/>
     <table id="tbl00" class="menu-table" cellspacing="1" cellpadding="2" align="center">
         <tbody>
         <tr>
@@ -75,7 +76,34 @@
         </tbody>
     </table>
 </div>
-<br/>
+
+    <div id="countries">
+        <br/>
+        <img id="country-img" src="/resources/images/app/top_european_football_leagues.jpg" hidden/>
+         <table id="countries-table" align="center" style="border:10px; margin:auto; " >
+             <tr>
+                 <td>
+                    <img class="country-img" src="/resources/images/app/ENG_PremierLeague_vertical.png" />
+                 </td>
+
+                 <td>
+                    <img class="country-img" src="/resources/images/app/ITA_SerieA_vertical.png" />
+                 </td>
+
+                 <td>
+                    <img class="country-img" src="/resources/images/app/ESP_Laliga_vertical.png" />
+                 </td>
+
+                 <td>
+                    <img class="country-img" src="/resources/images/app/DEU_Bundesliga_vertical.png" />
+                 </td>
+
+                 <td>
+                    <img class="country-img" src="/resources/images/app/FRA_Ligue1_vertical.png" />
+                 </td>
+             </tr>
+         </table>
+    </div>
 
 <div id="get-info-msg" align="center">
     <br/>
@@ -85,10 +113,12 @@
 
     <p><b>Requesting data... Please wait... </b></p>
 </div>
+<br/>
 <div id="matches">
 
-<div id='team-logo' align='middle'></div>
-<br/>
+<div id='team-logo' align='middle'>
+
+</div>
 <br/>
 
 <div id="mt02">
@@ -104,6 +134,7 @@
             <th class="rt02-tcell-header" id="title-loss" nowrap>Loss</th>
         </tr>
     </table>
+</div>
 </div>
 </body>
 </html>
