@@ -14,7 +14,7 @@
     <script src="<c:url value="/resources/js/xpathTools.js" />"></script>
 </head>
 
-<body>
+<body class="NoCountry">
 
 <br/>
 
@@ -28,8 +28,8 @@
                 </a>
             </td>
             <td class="menu-tcell">
-            <div class="styled-select black rounded">
-                <select id="CountriesList" name="CountriesList">
+            <div class="menu-bar">
+                <select id="CountriesList" class='grey' name="CountriesList">
                     <option selected value="selectCountry">Select country</option>
                     <option value="ENG">Premier League (England)</option>
                     <option value="DEU">Bundesliga (Germany)</option>
@@ -40,8 +40,8 @@
             </div>
             </td>
             <td class="menu-tcell">
-            <div class="styled-select black rounded">
-                <select id="SeasonsList" name="SeasonsList">
+            <div class="menu-bar">
+                <select id="SeasonsList" class='grey' name="SeasonsList">
                     <option selected value="">All seasons</option>
                     <option value="S20162017">Season 2016-2017</option>
                     <option value="S20152016">Season 2015-2016</option>
@@ -53,21 +53,23 @@
                 </div>
             </td>
             <td class="menu-tcell">
-            <div class="styled-select black rounded">
-                <select id="TeamsList" name="TeamsList">
+            <div class="menu-bar">
+                <select id="TeamsList" class='grey' name="TeamsList">
                     <option selected value="selectTeam">Select team</option>
                 </select>
              </div>
             </td>
             <td class="menu-tcell">
-            <div class="styled-select black rounded">
-                <select id="OpponentsList" name="OpponentsList">
+            <div class="menu-bar">
+                <select id="OpponentsList" class='grey' name="OpponentsList">
                     <option selected value="">All opponents</option>
                 </select>
                 </div>
             </td>
             <td class="menu-tcell">
-                  <button id="getTeamMatchesButton"><b>GET</b></button>
+            <div class="menu-bar">
+                 <button id="getTeamMatchesButton" class="grey"><b>GET</b></button>
+            </div>
             </td>
         </tr>
         </tbody>

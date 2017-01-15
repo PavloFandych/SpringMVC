@@ -54,6 +54,42 @@ $(document).ready(function () {
             $(".rt02-row").remove();
             $("#team-logo").empty();
 
+            var country = $("#CountriesList").val();
+
+                    switch (country) {
+                        case 'ITA':
+                            if (!$('body').hasClass('ITA')) {
+                                $('body').removeClass('NoCountry ENG DEU FRA ESP')
+                                $('body').addClass('ITA');
+                            }
+                            break;
+                        case 'ENG':
+                            if (!$('body').hasClass('ENG')) {
+                                $('body').removeClass('NoCountry ITA DEU FRA ESP')
+                                $('body').addClass('ENG');
+                            }
+                            break;
+                        case 'FRA':
+                            if (!$('body').hasClass('FRA')) {
+                                $('body').removeClass('NoCountry ITA DEU ENG ESP')
+                                $('body').addClass('FRA');
+                            }
+                            break;
+                        case 'ESP':
+                            if (!$('body').hasClass('ESP')) {
+                                $('body').removeClass('NoCountry ITA DEU FRA ENG')
+                                $('body').addClass('ESP');
+                            }
+                            break;
+                        case 'DEU':
+                            if (!$('body').hasClass('DEU')) {
+                                $('body').removeClass('NoCountry ITA ENG FRA ESP')
+                                $('body').addClass('DEU');
+                            }
+                            break;
+                    }
+
+
                 var team = $("#TeamsList").val();
                 if (team.toLowerCase() !== "selectteam"){
                     var season = $("#SeasonsList").val();
