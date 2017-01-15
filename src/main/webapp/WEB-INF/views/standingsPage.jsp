@@ -27,31 +27,31 @@
                 </a>
             </td>
             <td class="menu-tcell">
-            <div class="menu-bar">
-                <select id="SeasonsList" class="grey" name="SeasonsList">
-                    <option selected value="S20162017">Season 2016-2017</option>
-                    <option value="S20152016">Season 2015-2016</option>
-                    <option value="S20142015">Season 2014-2015</option>
-                    <option value="S20132014">Season 2013-2014</option>
-                    <option value="S20122013">Season 2012-2013</option>
-                    <option value="S20112012">Season 2011-2012</option>
-                </select>
-             </div>
-            </td>
-            <td class="menu-tcell">
-            <div class="menu-bar">
-                <select id="TournamentList" class="grey" name="TournamentList">
-                    <option selected value="ENG_PREM_LEAGUE">Premier League (England)</option>
-                    <option value="DEU_BUNDESLIGA_1">Bundesliga (Germany)</option>
-                    <option value="ITA_SERIA_A">Serie A (Italy)</option>
-                    <option value="ESP_PRIMERA">La Liga (Spain)</option>
-                    <option value="FRA_LIGUE_1">Ligue 1 (France)</option>
-                </select>
-             </div>
+                <div class="menu-bar">
+                    <select id="SeasonsList" class="grey" name="SeasonsList">
+                        <option selected value="S20162017">Season 2016-2017</option>
+                        <option value="S20152016">Season 2015-2016</option>
+                        <option value="S20142015">Season 2014-2015</option>
+                        <option value="S20132014">Season 2013-2014</option>
+                        <option value="S20122013">Season 2012-2013</option>
+                        <option value="S20112012">Season 2011-2012</option>
+                    </select>
+                </div>
             </td>
             <td class="menu-tcell">
                 <div class="menu-bar">
-                <button id="getStandingsButton"><b>GET</b></button>
+                    <select id="TournamentList" class="grey" name="TournamentList">
+                        <option selected value="ENG_PREM_LEAGUE">Premier League (England)</option>
+                        <option value="DEU_BUNDESLIGA_1">Bundesliga (Germany)</option>
+                        <option value="ITA_SERIA_A">Serie A (Italy)</option>
+                        <option value="ESP_PRIMERA">La Liga (Spain)</option>
+                        <option value="FRA_LIGUE_1">Ligue 1 (France)</option>
+                    </select>
+                </div>
+            </td>
+            <td class="menu-tcell">
+                <div class="menu-bar">
+                    <button id="getStandingsButton"><b>GET</b></button>
                 </div>
             </td>
         </tr>
