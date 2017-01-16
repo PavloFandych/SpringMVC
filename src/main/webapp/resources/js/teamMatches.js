@@ -2,7 +2,7 @@ var teamsImgMap = '{"DEU066":"DEU_Kaiserslautern.png", "DEU214":"DEU_GreutherFur
 var imgPath = JSON.parse(teamsImgMap);
 
 /*var teamsData = '[["ENG021","Hull City A.F.C."],["ENG002","Burnley F.C."],["ENG039","Crystal Palace F.C."],["ENG029","Everton F.C."],["ENG016","Middlesbrough F.C."],["ENG034","Southampton F.C."],["ENG042","Manchester City F.C."],["ENG003","A.F.C. Bournemouth"],["ENG020","Arsenal F.C."],["ENG040","Chelsea F.C."],["ENG015","Manchester United F.C."],["ENG019","Stoke City F.C."],["ENG022","West Bromwich Albion F.C."],["ENG013","Swansea City A.F.C."],["ENG011","Tottenham Hotspur F.C."],["ENG031","Watford F.C."],["ENG037","Leicester City F.C."],["ENG027","Sunderland A.F.C."],["ENG014","West Ham United F.C."],["ENG030","Liverpool F.C."]]';
-var teams = JSON.parse(teamsData);*/
+ var teams = JSON.parse(teamsData);*/
 
 $(document).ready(function () {
     //$("#results-table").hide();
@@ -11,152 +11,156 @@ $(document).ready(function () {
     $("#rt02").hide();
     //alert(teams[1][1]);
 
-        $("#CountriesList").change(function () {
+    $("#CountriesList").change(function () {
 
-                var country = $("#CountriesList").val();
+        var country = $("#CountriesList").val();
 
-                $("#TeamsList").empty();
-                $("#OpponentsList").empty();
-                $("#TeamsList").append("<option selected value='selectTeam'>Select team</option>");
-                $("#OpponentsList").append("<option selected value=''>All opponents</option>");
-                if (country.toLowerCase !== "selectcountry"){
-                //alert(country);
+        $("#TeamsList").empty();
+        $("#OpponentsList").empty();
+        $("#TeamsList").append("<option selected value='selectTeam'>Select team</option>");
+        $("#OpponentsList").append("<option selected value=''>All opponents</option>");
+        if (country.toLowerCase !== "selectcountry") {
+            //alert(country);
 
-                        $.ajax({
-                            url: '/teams/'+country,
-                            type: 'GET',
-                            datatype: 'json',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Version': 'V1',
-                                'Authorization': 'Basic QWRtaW46YWRtaW4='
-                            },
-                            success: function (data, status) {
-                                if (data.length !== 0) {
-                                    for (var i = 0; i < data.length; i++) {
+            $.ajax({
+                url: '/teams/' + country,
+                type: 'GET',
+                datatype: 'json',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Version': 'V1',
+                    'Authorization': 'Basic QWRtaW46YWRtaW4='
+                },
+                success: function (data, status) {
+                    if (data.length !== 0) {
+                        for (var i = 0; i < data.length; i++) {
 
-                                        $("#TeamsList").append("<option value='" + data[i].teamCode + "'>"+data[i].teamName+"</option>");
-                                        $("#OpponentsList").append("<option value='" + data[i].teamCode + "'>"+data[i].teamName+"</option>");
-                                    }
-
-
-                                }
-                            },
-                            error: function (xhr, str) {
-
-                            }
-                        });
-
-                }
-        });
-
-            $("#getTeamMatchesButton").click(function () {
-            $(".rt02-row").remove();
-            $("#team-logo").empty();
+                            $("#TeamsList").append("<option value='" + data[i].teamCode + "'>" + data[i].teamName + "</option>");
+                            $("#OpponentsList").append("<option value='" + data[i].teamCode + "'>" + data[i].teamName + "</option>");
+                        }
 
 
-                var team = $("#TeamsList").val();
-                if (team.toLowerCase() !== "selectteam"){
-                    var season = $("#SeasonsList").val();
-                    //var tournament = $("#TournamentsList").val();
-                    var opponent = $("#OpponentsList").val();
-                    var tournament ="";
-
-                        $.ajax({
-                            data: {"teamCode": team, "opponentTeamCode": opponent, "seasonCode": season, "tournamentCode": tournament},
-                            url: '/teamMatches',
-                            type: 'GET',
-                            datatype: 'json',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Version': 'V1',
-                                'Authorization': 'Basic QWRtaW46YWRtaW4='
-                            },
-                            success: function (data, status) {
-                                var total=data.length;
-                                var startIndex=0;
-
-                                  //alert(total);
-                                if (total !== 0) {
-                                    $("#main").removeClass("vertical-aligned");
-                                    $("#countries").hide();
-                                    $("#rt02").show();
-                                    $("#team-logo").append("<img id='team-img' src=/resources/images/" + imgPath[team] + "  width='100px' height='100px' />");
-
-            var country = $("#CountriesList").val();
-
-                    switch (country) {
-                        case 'ITA':
-                            if (!$('body').hasClass('ITA')) {
-                                $('body').removeClass('NoCountry ENG DEU FRA ESP')
-                                $('body').addClass('ITA');
-                            }
-                            break;
-                        case 'ENG':
-                            if (!$('body').hasClass('ENG')) {
-                                $('body').removeClass('NoCountry ITA DEU FRA ESP')
-                                $('body').addClass('ENG');
-                            }
-                            break;
-                        case 'FRA':
-                            if (!$('body').hasClass('FRA')) {
-                                $('body').removeClass('NoCountry ITA DEU ENG ESP')
-                                $('body').addClass('FRA');
-                            }
-                            break;
-                        case 'ESP':
-                            if (!$('body').hasClass('ESP')) {
-                                $('body').removeClass('NoCountry ITA DEU FRA ENG')
-                                $('body').addClass('ESP');
-                            }
-                            break;
-                        case 'DEU':
-                            if (!$('body').hasClass('DEU')) {
-                                $('body').removeClass('NoCountry ITA ENG FRA ESP')
-                                $('body').addClass('DEU');
-                            }
-                            break;
                     }
-
-                                //alert("total !== 0");
-                                var classValue2='odd';
-                                for (var i = 0; i < data.length; i++) {
-                                      var k=4;
-                                      var classValue='win';
-                                      switch (data[i].matchResultStatus.toLowerCase()) {
-                                                  case 'draw':
-                                                     k=5;
-                                                     classValue='draw';
-                                                      break;
-                                                  case 'lost':
-                                                     k=6;
-                                                     classValue='lost';
-                                                      break;
-                                      }
-
-                                      if(i>0 && data[i].seasonCode!==data[i-1].seasonCode){
-                                        if(classValue2=='odd'){
-                                            classValue2='even'
-                                        }else{
-                                            classValue2='odd';
-                                        }
-
-                                      }
-
-                                      $(document.getElementByXPath("//table[@id='rt02']/tbody")).append("<tr  class='rt02-row'><td class='rt02-tcell-season'>"+data[i].seasonName.substring(7, 16)+"</td><td class='rt02-tcell-matchday' align='middle'>"+data[i].matchDay+"</td><td class='rt02-tcell-date'>"+data[i].matchDate.substring(0, 10)+"</td><td class='rt02-tcell "+classValue2+"' nowrap></td><td class='rt02-tcell "+classValue2+"' nowrap></td><td class='rt02-tcell "+classValue2+"' nowrap></td></tr>");
-                                    $(document.getElementByXPath("//table[@id='rt02']/tbody/tr["+(i+2)+"]/td[" + k + "]")).append("<div class='cell-div' align='middle'>"+data[i].hostTeamName+" "+data[i].goalsByHost+":"+data[i].goalsByGuest+" "+data[i].guestTeamName+"</div>");
-                                     $(document.getElementByXPath("//table[@id='rt02']/tbody/tr["+(i+2)+"]/td[" + k + "]")).addClass(classValue);
-                                }
-
-                                }
-                            },
-                            error: function (xhr, str) {
-
-                            }
-                        });
+                },
+                error: function (xhr, str) {
 
                 }
-
             });
+
+        }
+    });
+
+    $("#getTeamMatchesButton").click(function () {
+        $(".rt02-row").remove();
+        $("#team-logo").empty();
+
+
+        var team = $("#TeamsList").val();
+        if (team.toLowerCase() !== "selectteam") {
+            var season = $("#SeasonsList").val();
+            //var tournament = $("#TournamentsList").val();
+            var opponent = $("#OpponentsList").val();
+            var tournament = "";
+
+            $.ajax({
+                data: {
+                    "teamCode": team,
+                    "opponentTeamCode": opponent,
+                    "seasonCode": season,
+                    "tournamentCode": tournament
+                },
+                url: '/teamMatches',
+                type: 'GET',
+                datatype: 'json',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Version': 'V1',
+                    'Authorization': 'Basic QWRtaW46YWRtaW4='
+                },
+                success: function (data, status) {
+                    var total = data.length;
+                    var startIndex = 0;
+
+                    //alert(total);
+                    if (total !== 0) {
+                        $("#main").removeClass("vertical-aligned");
+                        $("#countries").hide();
+                        $("#rt02").show();
+                        $("#team-logo").append("<img id='team-img' src=/resources/images/" + imgPath[team] + "  width='100px' height='100px' />");
+
+                        var country = $("#CountriesList").val();
+
+                        switch (country) {
+                            case 'ITA':
+                                if (!$('body').hasClass('ITA')) {
+                                    $('body').removeClass('NoCountry ENG DEU FRA ESP')
+                                    $('body').addClass('ITA');
+                                }
+                                break;
+                            case 'ENG':
+                                if (!$('body').hasClass('ENG')) {
+                                    $('body').removeClass('NoCountry ITA DEU FRA ESP')
+                                    $('body').addClass('ENG');
+                                }
+                                break;
+                            case 'FRA':
+                                if (!$('body').hasClass('FRA')) {
+                                    $('body').removeClass('NoCountry ITA DEU ENG ESP')
+                                    $('body').addClass('FRA');
+                                }
+                                break;
+                            case 'ESP':
+                                if (!$('body').hasClass('ESP')) {
+                                    $('body').removeClass('NoCountry ITA DEU FRA ENG')
+                                    $('body').addClass('ESP');
+                                }
+                                break;
+                            case 'DEU':
+                                if (!$('body').hasClass('DEU')) {
+                                    $('body').removeClass('NoCountry ITA ENG FRA ESP')
+                                    $('body').addClass('DEU');
+                                }
+                                break;
+                        }
+
+                        //alert("total !== 0");
+                        var classValue2 = 'odd';
+                        for (var i = 0; i < data.length; i++) {
+                            var k = 4;
+                            var classValue = 'win';
+                            switch (data[i].matchResultStatus.toLowerCase()) {
+                                case 'draw':
+                                    k = 5;
+                                    classValue = 'draw';
+                                    break;
+                                case 'lost':
+                                    k = 6;
+                                    classValue = 'lost';
+                                    break;
+                            }
+
+                            if (i > 0 && data[i].seasonCode !== data[i - 1].seasonCode) {
+                                if (classValue2 == 'odd') {
+                                    classValue2 = 'even'
+                                } else {
+                                    classValue2 = 'odd';
+                                }
+                            }
+
+                            $(document.getElementByXPath("//table[@id='rt02']/tbody")).append("<tr  class='rt02-row'><td class='rt02-tcell-season'>" + data[i].seasonName.substring(7, 16) + "</td><td class='rt02-tcell-matchday' align='middle'>" + data[i].matchDay + "</td><td class='rt02-tcell-date'>" + data[i].matchDate.substring(0, 10) + "</td><td class='rt02-tcell " + classValue2 + "' nowrap></td><td class='rt02-tcell " + classValue2 + "' nowrap></td><td class='rt02-tcell " + classValue2 + "' nowrap></td></tr>");
+                            $(document.getElementByXPath("//table[@id='rt02']/tbody/tr[" + (i + 2) + "]/td[" + k + "]")).append("<div class='cell-div' align='middle'>" + data[i].hostTeamName + " " + data[i].goalsByHost + ":" + data[i].goalsByGuest + " " + data[i].guestTeamName + "</div>");
+                            $(document.getElementByXPath("//table[@id='rt02']/tbody/tr[" + (i + 2) + "]/td[" + k + "]")).addClass(classValue);
+                        }
+
+                    }
+                },
+                error: function (xhr, str) {
+
+                }
+            });
+
+        }
+
+    });
 
 });
