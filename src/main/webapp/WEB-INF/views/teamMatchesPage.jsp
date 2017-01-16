@@ -128,8 +128,8 @@
                 <tbody id="rt02-body">
                 <tr class="rt02-row-header">
                     <th class="rt02-tcell-header" id="title-season">Season</th>
-                    <th class="rt02-tcell-header" id="title-matchday">Match Day</th>
-                    <th class="rt02-tcell-header" id="title-date">Date</th>
+                    <th class="rt02-tcell-header" id="title-matchday" nowrap>Match Day</th>
+                    <th class="rt02-tcell-header" id="title-date" nowrap>Date</th>
                     <th class="rt02-tcell-header" id="title-win" nowrap>Win</th>
                     <th class="rt02-tcell-header" id="title-draw" nowrap>Draw</th>
                     <th class="rt02-tcell-header" id="title-loss" nowrap>Loss</th>
@@ -137,5 +137,6 @@
             </table>
         </div>
     </div>
-</body>
+
+   </body>
 </html>

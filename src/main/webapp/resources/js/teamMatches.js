@@ -86,11 +86,13 @@ $(document).ready(function () {
                         $("#main").removeClass("vertical-aligned");
                         $("#countries").hide();
                         $("#rt02").show();
+                        $("#CountriesList option[value='selectCountry']").remove();
+                        $("#TeamsList option[value='selectTeam']").remove();
                         $("#team-logo").append("<img id='team-img' src=/resources/images/" + imgPath[team] + "  width='100px' height='100px' />");
 
                         var country = $("#CountriesList").val();
 
-                        switch (country) {
+ /*                       switch (country) {
                             case 'ITA':
                                 if (!$('body').hasClass('ITA')) {
                                     $('body').removeClass('NoCountry ENG DEU FRA ESP')
@@ -121,7 +123,7 @@ $(document).ready(function () {
                                     $('body').addClass('DEU');
                                 }
                                 break;
-                        }
+                        }*/
 
                         //alert("total !== 0");
                         var classValue2 = 'odd';
@@ -147,7 +149,7 @@ $(document).ready(function () {
                                 }
                             }
 
-                            $(document.getElementByXPath("//table[@id='rt02']/tbody")).append("<tr  class='rt02-row'><td class='rt02-tcell-season'>" + data[i].seasonName.substring(7, 16) + "</td><td class='rt02-tcell-matchday' align='middle'>" + data[i].matchDay + "</td><td class='rt02-tcell-date'>" + data[i].matchDate.substring(0, 10) + "</td><td class='rt02-tcell " + classValue2 + "' nowrap></td><td class='rt02-tcell " + classValue2 + "' nowrap></td><td class='rt02-tcell " + classValue2 + "' nowrap></td></tr>");
+                            $(document.getElementByXPath("//table[@id='rt02']/tbody")).append("<tr  class='rt02-row'><td class='rt02-tcell-season' nowrap>" + data[i].seasonName.substring(7, 16).split("-").join("/") + "</td><td class='rt02-tcell-matchday' align='middle'>" + data[i].matchDay + "</td><td class='rt02-tcell-date' nowrap><div>" + data[i].matchDate.substring(0, 10).split("-").reverse().join("/") + "</div></td><td class='rt02-tcell " + classValue2 + "' nowrap></td><td class='rt02-tcell " + classValue2 + "' nowrap></td><td class='rt02-tcell " + classValue2 + "' nowrap></td></tr>");
                             $(document.getElementByXPath("//table[@id='rt02']/tbody/tr[" + (i + 2) + "]/td[" + k + "]")).append("<div class='cell-div' align='middle'>" + data[i].hostTeamName + " " + data[i].goalsByHost + ":" + data[i].goalsByGuest + " " + data[i].guestTeamName + "</div>");
                             $(document.getElementByXPath("//table[@id='rt02']/tbody/tr[" + (i + 2) + "]/td[" + k + "]")).addClass(classValue);
                         }

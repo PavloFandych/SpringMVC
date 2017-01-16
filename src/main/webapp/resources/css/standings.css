@@ -70,8 +70,8 @@ button {
 }
 
 .teams-buttons {
-    height: 40px;
-    width: 40px;
+    height: 48px;
+    width: 48px;
     padding: 0;
     border: 0 !important; /*Removes border*/
     /*background: radial-gradient(#cdcdcd, #727272);*/
