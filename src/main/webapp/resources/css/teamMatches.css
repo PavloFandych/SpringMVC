@@ -60,11 +60,15 @@ body {
 
 .even {
     background-color: #f2f6ff;
+    background-color: #f3f6b0;
 }
 
 .rt02-tcell-header {
-    background: radial-gradient(#cdcdcd, #727272);
+
+    background: radial-gradient(#909090, #595959);
     font-size: 10pt;
+    color: white;
+    font-family: "Arial", Helvetica, sans-serif;
 }
 
 .results-tcell, .results-tcell-title, .results-tcell-header, .rt02-tcell-date, .rt02-tcell-season, .rt02-tcell-matchday {
@@ -76,7 +80,7 @@ body {
 
 td, th {
     -webkit-border-radius: 4px;
-
+    font-family: "Arial", Helvetica, sans-serif;
 }
 
 .rt02-tcell, .rt02-tcell-date, .rt02-tcell-season, .rt02-tcell-matchday {
