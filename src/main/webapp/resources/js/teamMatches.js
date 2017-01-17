@@ -21,7 +21,6 @@ $(document).ready(function () {
         $("#OpponentsList").append("<option selected value=''>All opponents</option>");
         if (country.toLowerCase !== "selectcountry") {
             //alert(country);
-
             $.ajax({
                 url: '/teams/' + country,
                 type: 'GET',
@@ -29,31 +28,26 @@ $(document).ready(function () {
                 headers: {
                     'Content-Type': 'application/json',
                     'Version': 'V1',
-                    'Authorization': 'Basic QWRtaW46YWRtaW4='
+                    'Authorization': 'Basic ' + btoa('User:user')
                 },
                 success: function (data, status) {
                     if (data.length !== 0) {
                         for (var i = 0; i < data.length; i++) {
-
                             $("#TeamsList").append("<option value='" + data[i].teamCode + "'>" + data[i].teamName + "</option>");
                             $("#OpponentsList").append("<option value='" + data[i].teamCode + "'>" + data[i].teamName + "</option>");
                         }
-
-
                     }
                 },
                 error: function (xhr, str) {
 
                 }
             });
-
         }
     });
 
     $("#getTeamMatchesButton").click(function () {
         $(".rt02-row").remove();
         $("#team-logo").empty();
-
 
         var team = $("#TeamsList").val();
         if (team.toLowerCase() !== "selectteam") {
@@ -75,7 +69,7 @@ $(document).ready(function () {
                 headers: {
                     'Content-Type': 'application/json',
                     'Version': 'V1',
-                    'Authorization': 'Basic QWRtaW46YWRtaW4='
+                    'Authorization': 'Basic ' + btoa('User:user')
                 },
                 success: function (data, status) {
                     var total = data.length;
@@ -125,7 +119,6 @@ $(document).ready(function () {
                          break;
                          }*/
 
-                        //alert("total !== 0");
                         var classValue2 = 'odd';
                         for (var i = 0; i < data.length; i++) {
                             var k = 4;
@@ -153,16 +146,12 @@ $(document).ready(function () {
                             $(document.getElementByXPath("//table[@id='rt02']/tbody/tr[" + (i + 2) + "]/td[" + k + "]")).append("<div class='cell-div' align='middle'>" + data[i].hostTeamName + " " + data[i].goalsByHost + ":" + data[i].goalsByGuest + " " + data[i].guestTeamName + "</div>");
                             $(document.getElementByXPath("//table[@id='rt02']/tbody/tr[" + (i + 2) + "]/td[" + k + "]")).addClass(classValue);
                         }
-
                     }
                 },
                 error: function (xhr, str) {
 
                 }
             });
-
         }
-
     });
-
 });

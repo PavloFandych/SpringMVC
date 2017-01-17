@@ -30,22 +30,22 @@
           <collectionProp name="Arguments.arguments">
             <elementProp name="hostIP" elementType="Argument">
               <stringProp name="Argument.name">hostIP</stringProp>
-              <stringProp name="Argument.value">localhost</stringProp>
+              <stringProp name="Argument.value">teamstracker.com</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="hostPort" elementType="Argument">
               <stringProp name="Argument.name">hostPort</stringProp>
-              <stringProp name="Argument.value">8080</stringProp>
+              <stringProp name="Argument.value">80</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="user" elementType="Argument">
               <stringProp name="Argument.name">user</stringProp>
-              <stringProp name="Argument.value">Admin</stringProp>
+              <stringProp name="Argument.value">User</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="password" elementType="Argument">
               <stringProp name="Argument.name">password</stringProp>
-              <stringProp name="Argument.value">admin</stringProp>
+              <stringProp name="Argument.value">user</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
@@ -1250,7 +1250,7 @@
           </HTTPSamplerProxy>
           <hashTree/>
         </hashTree>
-        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="tournaments" enabled="true">
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="tournaments" enabled="false">
           <boolProp name="LoopController.continue_forever">true</boolProp>
           <stringProp name="LoopController.loops">5</stringProp>
         </LoopController>
@@ -2221,7 +2221,7 @@
             <hashTree/>
           </hashTree>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="teamMatches" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="teamMatches" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">

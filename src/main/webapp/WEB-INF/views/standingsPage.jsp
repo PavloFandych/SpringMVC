@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Standings</title>
+    <title>Teams Tracker - Standings</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link href="<c:url value="/resources/css/standings.css" />" rel="stylesheet">
     <!-- <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
@@ -17,6 +17,23 @@
     <script src="<c:url value="/resources/js/xpathTools.js" />"></script>
 </head>
 <body class="NoCountry">
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-90501603-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
 <div id="main" class="vertical-aligned">
     <div id="top-menu">
         <table id="tbl00" class="menu-table" cellspacing="1" cellpadding="2" align="center">

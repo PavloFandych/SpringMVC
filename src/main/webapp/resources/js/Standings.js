@@ -8,14 +8,11 @@ $(document).ready(function () {
     $("#tbl02").hide();
     $("#get-info-msg").hide();
 
-
     $("#getStandingsButton").click(function () {
         $(".standings-tcell").empty();
         $(".teams-buttons").removeClass("team-selected");
         $("#teams-list").hide();
         $("#tbl02").hide();
-        //$("#get-info-msg").show();
-
 
         var season = $("#SeasonsList").val();
         var tournament = $("#TournamentList").val();
@@ -61,7 +58,7 @@ $(document).ready(function () {
             headers: {
                 'Content-Type': 'application/json',
                 'Version': 'V1',
-                'Authorization': 'Basic QWRtaW46YWRtaW4='
+                'Authorization': 'Basic ' + btoa('User:user')
             },
             success: function (data, status) {
                 if (data.length !== 0) {
@@ -116,11 +113,10 @@ $(document).ready(function () {
             headers: {
                 'Content-Type': 'application/json',
                 'Version': 'V1',
-                'Authorization': 'Basic QWRtaW46YWRtaW4='
+                'Authorization': 'Basic ' + btoa('User:user')
             },
             success: function (data, status) {
                 $("#get-info-msg").hide();
-
 
                 if (data.length === 0) {
                     alert("No results. Sorry. :(");
@@ -131,7 +127,6 @@ $(document).ready(function () {
                     $(".standings-tcell").show();
                     $(".standings-tcell-header").show();
                     $(".standings-tcell").attr('class', 'standings-tcell');
-
 
                     $(".GP").removeClass("expanded");
                     $(".GP").hide();
