@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 public final class TeamMatchResource extends AbstractResource {
-    private static final Logger LOGGER = Logger.getLogger(TeamMatchResource.class);
+    private static transient final Logger LOGGER = Logger.getLogger(TeamMatchResource.class);
 
     @Autowired
     private TeamMatchService teamMatchService;
@@ -83,15 +83,15 @@ public final class TeamMatchResource extends AbstractResource {
                             String seasonCodeArgument = null;
                             String tournamentCodeArgument = null;
 
-                            if (!opponentTeamCode.isEmpty()) {
+                            if (opponentTeamCode == null || !opponentTeamCode.isEmpty()) {
                                 opponentTeamCodeArgument = opponentTeamCode;
                             }
 
-                            if (!seasonCode.isEmpty()) {
+                            if (seasonCode == null || !seasonCode.isEmpty()) {
                                 seasonCodeArgument = seasonCode;
                             }
 
-                            if (!tournamentCode.isEmpty()) {
+                            if (tournamentCode == null || !tournamentCode.isEmpty()) {
                                 tournamentCodeArgument = tournamentCode;
                             }
 
@@ -140,6 +140,10 @@ public final class TeamMatchResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)

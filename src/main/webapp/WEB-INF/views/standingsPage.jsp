@@ -12,6 +12,7 @@
     <link href="<c:url value="/resources/css/rules.css" />" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel='shortcut icon' type='image/x-icon' href='/resources/images/app/favicon.ico'/>
     <script src="<c:url value="/resources/js/jquery.js" />"></script>
     <!--<script src="<c:url value="/resources/js/Function.js" />"></script>-->
     <script src="<c:url value="/resources/js/Standings.js" />"></script>

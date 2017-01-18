@@ -25,7 +25,7 @@ import java.util.List;
 
 @RestController
 public final class SeasonResource extends AbstractResource {
-    private static final Logger LOGGER = Logger.getLogger(SeasonResource.class);
+    private static transient final Logger LOGGER = Logger.getLogger(SeasonResource.class);
 
     @Autowired
     private SeasonService seasonService;
@@ -114,6 +114,10 @@ public final class SeasonResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
@@ -200,6 +204,10 @@ public final class SeasonResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)

@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 public final class TournamentResource extends AbstractResource {
-    private static final Logger LOGGER = Logger.getLogger(TournamentResource.class);
+    private static transient final Logger LOGGER = Logger.getLogger(TournamentResource.class);
 
     @Autowired
     private TournamentService tournamentService;
@@ -111,6 +111,10 @@ public final class TournamentResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
@@ -200,6 +204,10 @@ public final class TournamentResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
@@ -209,7 +217,6 @@ public final class TournamentResource extends AbstractResource {
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
-
 
     @RequestMapping(value = "/actualtournaments",
             method = RequestMethod.GET,
@@ -287,6 +294,10 @@ public final class TournamentResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
