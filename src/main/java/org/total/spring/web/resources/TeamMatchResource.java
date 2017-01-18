@@ -83,15 +83,15 @@ public final class TeamMatchResource extends AbstractResource {
                             String seasonCodeArgument = null;
                             String tournamentCodeArgument = null;
 
-                            if (!opponentTeamCode.isEmpty()) {
+                            if (opponentTeamCode == null || !opponentTeamCode.isEmpty()) {
                                 opponentTeamCodeArgument = opponentTeamCode;
                             }
 
-                            if (!seasonCode.isEmpty()) {
+                            if (seasonCode == null || !seasonCode.isEmpty()) {
                                 seasonCodeArgument = seasonCode;
                             }
 
-                            if (!tournamentCode.isEmpty()) {
+                            if (tournamentCode == null || !tournamentCode.isEmpty()) {
                                 tournamentCodeArgument = tournamentCode;
                             }
 
