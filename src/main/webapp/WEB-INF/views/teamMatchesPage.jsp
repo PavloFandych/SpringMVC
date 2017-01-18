@@ -8,6 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link href="<c:url value="/resources/css/rules.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/teamMatches.css" />" rel="stylesheet">
+    <link rel='shortcut icon' type='image/x-icon' href='/resources/images/app/favicon.ico'/>
     <script src="<c:url value="/resources/js/jquery.js" />"></script>
     <script src="<c:url value="/resources/js/teamMatches.js" />"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>

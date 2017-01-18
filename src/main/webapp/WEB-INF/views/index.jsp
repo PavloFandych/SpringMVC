@@ -8,6 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link href="<c:url value="/resources/css/rules.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/home.css" />" rel="stylesheet">
+    <link rel='shortcut icon' type='image/x-icon' href='/resources/images/app/favicon.ico'/>
 </head>
 
 <body>
