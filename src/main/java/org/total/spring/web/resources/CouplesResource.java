@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 public final class CouplesResource extends AbstractResource {
-    private static final Logger LOGGER = Logger.getLogger(CouplesResource.class);
+    private static transient final Logger LOGGER = Logger.getLogger(CouplesResource.class);
 
     @Autowired
     private CouplesService couplesService;
@@ -117,6 +117,10 @@ public final class CouplesResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)

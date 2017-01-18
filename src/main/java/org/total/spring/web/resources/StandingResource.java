@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 public final class StandingResource extends AbstractResource {
-    private static final Logger LOGGER = Logger.getLogger(StandingResource.class);
+    private static transient final Logger LOGGER = Logger.getLogger(StandingResource.class);
 
     @Autowired
     private StandingService standingService;
@@ -119,6 +119,10 @@ public final class StandingResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
@@ -211,6 +215,10 @@ public final class StandingResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
@@ -307,6 +315,10 @@ public final class StandingResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
@@ -400,6 +412,10 @@ public final class StandingResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)

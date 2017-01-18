@@ -27,7 +27,7 @@ import java.util.List;
 
 @RestController
 public final class UserResource extends AbstractResource {
-    private static final Logger LOGGER = Logger.getLogger(UserResource.class);
+    private static transient final Logger LOGGER = Logger.getLogger(UserResource.class);
 
     @Autowired
     private RoleService roleService;
@@ -138,6 +138,10 @@ public final class UserResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
@@ -234,6 +238,10 @@ public final class UserResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
@@ -325,6 +333,10 @@ public final class UserResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
@@ -415,6 +427,10 @@ public final class UserResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
@@ -520,6 +536,10 @@ public final class UserResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
@@ -616,13 +636,11 @@ public final class UserResource extends AbstractResource {
                                 }
                             } catch (Exception ex) {
                                 LOGGER.error(ex, ex);
+
+                                Response response = generateResponse(ex.getMessage());
+
+                                return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
                             }
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.UNMARSHALING_FAILED)
-                                    .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
-
-                            Response response = generateResponse(Constants.UNMARSHALING_FAILED);
-
-                            return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
                                     .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
@@ -649,6 +667,10 @@ public final class UserResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
@@ -763,13 +785,11 @@ public final class UserResource extends AbstractResource {
                                 }
                             } catch (Exception ex) {
                                 LOGGER.error(ex, ex);
+
+                                Response response = generateResponse(ex.getMessage());
+
+                                return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
                             }
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.UNMARSHALING_FAILED)
-                                    .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
-
-                            Response response = generateResponse(Constants.UNMARSHALING_FAILED);
-
-                            return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
                                     .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
@@ -796,6 +816,10 @@ public final class UserResource extends AbstractResource {
                 }
             } catch (Exception e) {
                 LOGGER.error(e, e);
+
+                Response response = generateResponse(e.getMessage());
+
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
