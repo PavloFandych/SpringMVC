@@ -5,22 +5,53 @@ var imgPath = JSON.parse(teamsImgMap);
  var teams = JSON.parse(teamsData);*/
 
 $(document).ready(function () {
-    //$("#results-table").hide();
+
     $("#get-info-msg").hide();
     $("#CountriesList").val("selectCountry");
+    $("#SeasonsList").val("");
     $("#rt02").hide();
-    //alert(teams[1][1]);
+    $("select").change(function(){ this.blur();});
+
+        $("#PremierLeague_logo").click(function () {
+        this.blur();
+            $("#CountriesList").val("ENG").trigger( "change" );
+            $("#CountriesList option[value='selectCountry']").remove();
+        });
+
+        $("#SerieA_logo").click(function () {
+        this.blur();
+            $("#CountriesList").val("ITA").trigger( "change" );
+            $("#CountriesList option[value='selectCountry']").remove();
+        });
+
+        $("#LaLiga_logo").click(function () {
+        this.blur();
+            $("#CountriesList").val("ESP").trigger( "change" );
+            $("#CountriesList option[value='selectCountry']").remove();
+        });
+
+        $("#Bundesliga_logo").click(function () {
+        this.blur();
+            $("#CountriesList").val("DEU").trigger( "change" );
+            $("#CountriesList option[value='selectCountry']").remove();
+        });
+
+        $("#Ligue1_logo").click(function () {
+        this.blur();
+            $("#CountriesList").val("FRA").trigger( "change" );
+            $("#CountriesList option[value='selectCountry']").remove();
+        });
 
     $("#CountriesList").change(function () {
 
         var country = $("#CountriesList").val();
-
+        this.blur();
         $("#TeamsList").empty();
         $("#OpponentsList").empty();
         $("#TeamsList").append("<option selected value='selectTeam'>Select team</option>");
         $("#OpponentsList").append("<option selected value=''>All opponents</option>");
         if (country.toLowerCase !== "selectcountry") {
-            //alert(country);
+
             $.ajax({
                 url: '/teams/' + country,
                 type: 'GET',
@@ -46,8 +77,10 @@ $(document).ready(function () {
     });
 
     $("#getTeamMatchesButton").click(function () {
+        this.blur();
         $(".rt02-row").remove();
         $("#team-logo").empty();
+        $("#rt02").hide();
 
         var team = $("#TeamsList").val();
         if (team.toLowerCase() !== "selectteam") {
@@ -149,7 +182,7 @@ $(document).ready(function () {
                     }
                 },
                 error: function (xhr, str) {
-
+                    $("#rt02").hide();
                 }
             });
         }

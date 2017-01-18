@@ -3,8 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Teams Tracker - Standings</title>
+    <title>Teamstracker.com - football standings: Premier League, Bundesliga, Serie A, La Liga, Ligue 1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" href="/resources/images/app/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/resources/images/app/favicon.ico" type="image/x-icon">
     <link href="<c:url value="/resources/css/standings.css" />" rel="stylesheet">
     <!-- <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/rules.css" />" rel="stylesheet">
@@ -90,27 +92,36 @@
 
     <div id="countries">
         <br/>
-        <img id="country-img" src="/resources/images/app/top_european_football_leagues.jpg" hidden/>
-        <table id="countries-table" align="center" style="border:10px; margin:auto; ">
+         <table id="countries-table" align="center" style="border:10px; margin:auto; ">
             <tr>
-                <td>
+                <td class="countries-cell">
+                    <button id="PremierLeague_logo" class="countries-buttons">
                     <img class="country-img" src="/resources/images/app/ENG_PremierLeague_vertical.png"/>
+                    </button>
                 </td>
 
-                <td>
+                <td class="countries-cell">
+                    <button id="SerieA_logo" class="countries-buttons">
                     <img class="country-img" src="/resources/images/app/ITA_SerieA_vertical.png"/>
+                    </button>
                 </td>
 
-                <td>
+                <td class="countries-cell">
+                    <button id="LaLiga_logo" class="countries-buttons">
                     <img class="country-img" src="/resources/images/app/ESP_Laliga_vertical.png"/>
+                    </button>
                 </td>
 
-                <td>
+                <td class="countries-cell">
+                    <button id="Bundesliga_logo" class="countries-buttons">
                     <img class="country-img" src="/resources/images/app/DEU_Bundesliga_vertical.png"/>
+                    </button>
                 </td>
 
-                <td>
+                <td class="countries-cell">
+                    <button id="Ligue1_logo" class="countries-buttons">
                     <img class="country-img" src="/resources/images/app/FRA_Ligue1_vertical.png"/>
+                    </button>
                 </td>
             </tr>
         </table>

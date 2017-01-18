@@ -11,6 +11,18 @@ body {
     transform: translateX(-50%) translateY(-50%);
 }
 
+.countries-buttons {
+    height: 172px;
+    width: 124px;
+    padding: 0;
+    border: 0 !important; /*Removes border*/
+    /*background: radial-gradient(#cdcdcd, #727272);*/
+    background: transparent;
+    border-radius: 15px;
+
+}
+
+
 .country-img {
     width: 120px;
     height: 170px
@@ -80,13 +92,23 @@ button {
 
 }
 
+
 button:hover {
-    /*background: radial-gradient(#FF0000, #880000);*/
     background: radial-gradient(#77FF00, #00AA00);
     color: white;
     -webkit-border-radius: 15px;
     border-color: #00AA00;
 }
+
+button.countries-buttons:hover {
+
+    background: transparent; opacity: 0.8; filter:alpha(opacity=80);
+    -webkit-border-radius: 15px;
+    border-color: #00AA00;
+
+}
+
+
 
 .standings-tcell-header:hover {
     /*background: radial-gradient(#FF0000, #880000);*/

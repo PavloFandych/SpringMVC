@@ -4,8 +4,10 @@
 
 <html>
 <head>
-    <title>Teams Tracker</title>
+    <title>Teamstracker.com - football statistic: Premier League, Bundesliga, Serie A, La Liga, Ligue 1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" href="/resources/images/app/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/resources/images/app/favicon.ico" type="image/x-icon">
     <link href="<c:url value="/resources/css/rules.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/home.css" />" rel="stylesheet">
 </head>

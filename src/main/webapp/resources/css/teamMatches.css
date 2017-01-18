@@ -12,6 +12,17 @@ body {
     transform: translateX(-50%) translateY(-50%);
 }
 
+.countries-buttons {
+    height: 172px;
+    width: 124px;
+    padding: 0;
+    border: 0 !important; /*Removes border*/
+    /*background: radial-gradient(#cdcdcd, #727272);*/
+    background: transparent;
+    border-radius: 15px;
+
+}
+
 .country-img {
     width: 120px;
     height: 170px
@@ -49,7 +60,7 @@ body {
 
 .results-tcell-title, .results-tcell-header, .rt02-tcell-date, .rt02-tcell-season, .rt02-tcell-matchday, .rt02-tcell-header {
     /*background-color: #F4F4F4;*/
-    background-color: #dddddd;
+    background-color: #b8b8b8;
 
 }
 
@@ -112,7 +123,6 @@ td, th {
 #rt02 {
     background-color: #4f5b66;
     -webkit-border-radius: 4px;
-    /*border: 1px solid #ccc;*/
 }
 
 .menu-bar select {
@@ -164,4 +174,12 @@ button:hover {
     color: white;
     -webkit-border-radius: 15px;
     border-color: #00AA00;
+}
+
+button.countries-buttons:hover {
+
+    background: transparent; opacity: 0.8; filter:alpha(opacity=80);
+    -webkit-border-radius: 15px;
+    border-color: #00AA00;
+
 }
