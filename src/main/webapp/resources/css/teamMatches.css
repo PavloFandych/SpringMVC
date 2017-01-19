@@ -178,7 +178,9 @@ button:hover {
 
 button.countries-buttons:hover {
 
-    background: transparent; opacity: 0.8; filter:alpha(opacity=80);
+    background: transparent;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
     -webkit-border-radius: 15px;
     border-color: #00AA00;
 

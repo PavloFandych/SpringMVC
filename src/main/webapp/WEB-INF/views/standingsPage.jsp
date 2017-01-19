@@ -93,35 +93,35 @@
 
     <div id="countries">
         <br/>
-         <table id="countries-table" align="center" style="border:10px; margin:auto; ">
+        <table id="countries-table" align="center" style="border:10px; margin:auto; ">
             <tr>
                 <td class="countries-cell">
                     <button id="PremierLeague_logo" class="countries-buttons">
-                    <img class="country-img" src="/resources/images/app/ENG_PremierLeague_vertical.png"/>
+                        <img class="country-img" src="/resources/images/app/ENG_PremierLeague_vertical.png"/>
                     </button>
                 </td>
 
                 <td class="countries-cell">
                     <button id="SerieA_logo" class="countries-buttons">
-                    <img class="country-img" src="/resources/images/app/ITA_SerieA_vertical.png"/>
+                        <img class="country-img" src="/resources/images/app/ITA_SerieA_vertical.png"/>
                     </button>
                 </td>
 
                 <td class="countries-cell">
                     <button id="LaLiga_logo" class="countries-buttons">
-                    <img class="country-img" src="/resources/images/app/ESP_Laliga_vertical.png"/>
+                        <img class="country-img" src="/resources/images/app/ESP_Laliga_vertical.png"/>
                     </button>
                 </td>
 
                 <td class="countries-cell">
                     <button id="Bundesliga_logo" class="countries-buttons">
-                    <img class="country-img" src="/resources/images/app/DEU_Bundesliga_vertical.png"/>
+                        <img class="country-img" src="/resources/images/app/DEU_Bundesliga_vertical.png"/>
                     </button>
                 </td>
 
                 <td class="countries-cell">
                     <button id="Ligue1_logo" class="countries-buttons">
-                    <img class="country-img" src="/resources/images/app/FRA_Ligue1_vertical.png"/>
+                        <img class="country-img" src="/resources/images/app/FRA_Ligue1_vertical.png"/>
                     </button>
                 </td>
             </tr>

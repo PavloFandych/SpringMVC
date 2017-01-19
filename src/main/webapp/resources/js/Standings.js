@@ -2,7 +2,6 @@ var teamsImgMap = '{"DEU066":"DEU_Kaiserslautern.png", "DEU214":"DEU_GreutherFur
 var imgPath = JSON.parse(teamsImgMap);
 
 
-
 $(document).ready(function () {
     $("#TournamentList").val("");
     $(".teams-tcell").empty();
@@ -10,34 +9,36 @@ $(document).ready(function () {
     $("#tbl02").hide();
     $("#get-info-msg").hide();
 
-    $("select").change(function(){ this.blur();});
+    $("select").change(function () {
+        this.blur();
+    });
 
     $("#PremierLeague_logo").click(function () {
-    this.blur();
+        this.blur();
         $("#TournamentList").val("ENG_PREM_LEAGUE");
         $("#TournamentList option[value='']").remove();
     });
 
     $("#SerieA_logo").click(function () {
-    this.blur();
+        this.blur();
         $("#TournamentList").val("ITA_SERIA_A");
         $("#TournamentList option[value='']").remove();
     });
 
     $("#LaLiga_logo").click(function () {
-    this.blur();
+        this.blur();
         $("#TournamentList").val("ESP_PRIMERA");
         $("#TournamentList option[value='']").remove();
     });
 
     $("#Bundesliga_logo").click(function () {
-    this.blur();
+        this.blur();
         $("#TournamentList").val("DEU_BUNDESLIGA_1");
         $("#TournamentList option[value='']").remove();
     });
 
     $("#Ligue1_logo").click(function () {
-    this.blur();
+        this.blur();
         $("#TournamentList").val("FRA_LIGUE_1");
         $("#TournamentList option[value='']").remove();
     });

@@ -22,7 +22,6 @@ body {
 
 }
 
-
 .country-img {
     width: 120px;
     height: 170px
@@ -92,7 +91,6 @@ button {
 
 }
 
-
 button:hover {
     background: radial-gradient(#77FF00, #00AA00);
     color: white;
@@ -102,13 +100,13 @@ button:hover {
 
 button.countries-buttons:hover {
 
-    background: transparent; opacity: 0.8; filter:alpha(opacity=80);
+    background: transparent;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
     -webkit-border-radius: 15px;
     border-color: #00AA00;
 
 }
-
-
 
 .standings-tcell-header:hover {
     /*background: radial-gradient(#FF0000, #880000);*/

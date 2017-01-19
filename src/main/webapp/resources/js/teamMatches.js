@@ -10,37 +10,39 @@ $(document).ready(function () {
     $("#CountriesList").val("selectCountry");
     $("#SeasonsList").val("");
     $("#rt02").hide();
-    $("select").change(function(){ this.blur();});
-
-        $("#PremierLeague_logo").click(function () {
+    $("select").change(function () {
         this.blur();
-            $("#CountriesList").val("ENG").trigger( "change" );
-            $("#CountriesList option[value='selectCountry']").remove();
-        });
+    });
 
-        $("#SerieA_logo").click(function () {
+    $("#PremierLeague_logo").click(function () {
         this.blur();
-            $("#CountriesList").val("ITA").trigger( "change" );
-            $("#CountriesList option[value='selectCountry']").remove();
-        });
+        $("#CountriesList").val("ENG").trigger("change");
+        $("#CountriesList option[value='selectCountry']").remove();
+    });
 
-        $("#LaLiga_logo").click(function () {
+    $("#SerieA_logo").click(function () {
         this.blur();
-            $("#CountriesList").val("ESP").trigger( "change" );
-            $("#CountriesList option[value='selectCountry']").remove();
-        });
+        $("#CountriesList").val("ITA").trigger("change");
+        $("#CountriesList option[value='selectCountry']").remove();
+    });
 
-        $("#Bundesliga_logo").click(function () {
+    $("#LaLiga_logo").click(function () {
         this.blur();
-            $("#CountriesList").val("DEU").trigger( "change" );
-            $("#CountriesList option[value='selectCountry']").remove();
-        });
+        $("#CountriesList").val("ESP").trigger("change");
+        $("#CountriesList option[value='selectCountry']").remove();
+    });
 
-        $("#Ligue1_logo").click(function () {
+    $("#Bundesliga_logo").click(function () {
         this.blur();
-            $("#CountriesList").val("FRA").trigger( "change" );
-            $("#CountriesList option[value='selectCountry']").remove();
-        });
+        $("#CountriesList").val("DEU").trigger("change");
+        $("#CountriesList option[value='selectCountry']").remove();
+    });
+
+    $("#Ligue1_logo").click(function () {
+        this.blur();
+        $("#CountriesList").val("FRA").trigger("change");
+        $("#CountriesList option[value='selectCountry']").remove();
+    });
 
     $("#CountriesList").change(function () {
 
