@@ -155,7 +155,7 @@ $(document).ready(function () {
                 $("#get-info-msg").hide();
 
                 if (data.length === 0) {
-                    alert("No results. Sorry. :(");
+                    /*alert("No results. Sorry. :(");*/
                 } else {
                     $("#tbl02").show();
                     $(".standings-row").show();
@@ -181,6 +181,25 @@ $(document).ready(function () {
                             }
                         }
                     }
+
+  /* -----------------------------------------------------------------
+setTimeout(
+  function()
+  {
+    var md = data[0].length;
+    var clName = ".GlsPts-"+ md;
+if ($(".expanded").length !== 0) {
+$(".expanded").hide();
+                                $(".expanded").toggleClass("expanded");
+                                $(".MD-selected").toggleClass("MD-selected");
+}
+     $(clName).toggle(1000);
+     $(clName).toggleClass("expanded");
+     $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[1]/th["+(md+1)+"]")).toggleClass("MD-selected");
+  }, 500);
+
+
+   ----------------------------------------------------------------- */
 
                     for (var i = data.length; i < 20; i++) {
                         $(document.getElementByXPath("//table[@id='tbl02']/tbody/tr[" + (i + 2) + "]")).hide();
@@ -236,6 +255,8 @@ $(document).ready(function () {
                         }
                     }
                 );
+
+
             },
             error: function (xhr, str) {
                 $("#get-info-msg").hide();
