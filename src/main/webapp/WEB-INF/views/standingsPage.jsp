@@ -161,7 +161,7 @@
 
     <div class="main-table">
 
-        <table id="tbl02" class="standings-table" cellspacing="1" cellpadding="2" align="center">
+        <table id="tbl20" class="standings-table" cellspacing="1" cellpadding="2" align="center">
             <tbody>
             <tr class="standings-row-header">
                 <th class="firstCell"></th>
@@ -1102,6 +1102,782 @@
             </tr>
             </tbody>
         </table>
+
+        <table id="tbl18" class="standings-table" cellspacing="1" cellpadding="2" align="center">
+                    <tbody>
+                    <tr class="standings-row-header">
+                        <th class="firstCell"></th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">1<span class="GlsPts-1 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">2<span class="GlsPts-2 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">3<span class="GlsPts-3 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">4<span class="GlsPts-4 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">5<span class="GlsPts-5 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">6<span class="GlsPts-6 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">7<span class="GlsPts-7 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">8<span class="GlsPts-8 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">9<span class="GlsPts-9 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">10<span class="GlsPts-10 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">11<span class="GlsPts-11 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">12<span class="GlsPts-12 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">13<span class="GlsPts-13 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">14<span class="GlsPts-14 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">15<span class="GlsPts-15 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">16<span class="GlsPts-16 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">17<span class="GlsPts-17 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">18<span class="GlsPts-18 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">19<span class="GlsPts-19 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">20<span class="GlsPts-20 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">21<span class="GlsPts-21 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">22<span class="GlsPts-22 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">23<span class="GlsPts-23 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">24<span class="GlsPts-24 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">25<span class="GlsPts-25 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">26<span class="GlsPts-26 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">27<span class="GlsPts-27 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">28<span class="GlsPts-28 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">29<span class="GlsPts-29 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">30<span class="GlsPts-30 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">31<span class="GlsPts-31 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">32<span class="GlsPts-32 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">33<span class="GlsPts-33 GP"> || Goals | Points</span></div>
+                        </th>
+                        <th class="standings-tcell-header" nowrap>
+                            <div class="header-MD">34<span class="GlsPts-34 GP"> || Goals | Points</span></div>
+                        </th>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">1</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">2</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                      </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">3</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">4</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">5</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">6</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">7</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">8</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">9</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">10</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">11</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">12</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">13</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">14</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">15</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">16</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">17</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                     </tr>
+                    <tr class="standings-row">
+                        <td class="standings-tcell-place">18</td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                        <td class="standings-tcell"></td>
+                    </tr>
+                    </tbody>
+                </table>
     </div>
 </div>
 </body>
