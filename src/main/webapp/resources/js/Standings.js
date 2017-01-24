@@ -7,7 +7,7 @@ $(document).ready(function () {
     $(".teams-tcell").empty();
     $("#teams-list").hide();
     $("#tbl20").hide();
-        $("#tbl18").hide();
+    $("#tbl18").hide();
     $("#get-info-msg").hide();
 
     $("select").change(function () {
@@ -50,7 +50,7 @@ $(document).ready(function () {
         $(".teams-buttons").removeClass("team-selected");
         $("#teams-list").hide();
         $("#tbl20").hide();
-            $("#tbl18").hide();
+        $("#tbl18").hide();
 
         var season = $("#SeasonsList").val();
         var tournament = $("#TournamentList").val();
@@ -159,12 +159,12 @@ $(document).ready(function () {
                 if (data.length === 0) {
                     /*alert("No results. Sorry. :(");*/
                 } else {
-                    var amountOfTeams=data.length;
-                    var tableName='tbl20';
-                    if(amountOfTeams===18){
-                        tableName="tbl18";
+                    var amountOfTeams = data.length;
+                    var tableName = 'tbl20';
+                    if (amountOfTeams === 18) {
+                        tableName = "tbl18";
                         $("#tbl18").show();
-                    }else{
+                    } else {
                         $("#tbl20").show();
                     }
 
@@ -184,43 +184,42 @@ $(document).ready(function () {
                     for (var i = 0; i < data.length; i++) {
                         for (var j = 0; j < data[i].length; j++) {
                             if (imgPath.hasOwnProperty(data[i][j].teamCode)) {
-                                $(document.getElementByXPath("//table[@id='"+tableName+"']/tbody/tr[" + (i + 2) + "]/td[" + (j + 2) + "]")).addClass(data[i][j].teamCode + "-" + (j + 1));
-                                $(document.getElementByXPath("//table[@id='"+tableName+"']/tbody/tr[" + (i + 2) + "]/td[" + (j + 2) + "]")).append("<div class='cell-div'  data-opponent='" + data[i][j].opponentCode + "-" + (j + 1) + "'><img title='" + data[i][j].result + "' class='" + data[i][j].teamCode + " cell-img' src=/resources/images/" + imgPath[data[i][j].teamCode] + " width='20px' height='20px' /><span class='GP1 GlsPts-" + (j + 1) + "' >   &nbsp;&nbsp;|| " + data[i][j].goalsScored + ":" + (data[i][j].goalsScored - data[i][j].goalsDiff) + " | " + data[i][j].points + "</span></div>");
+                                $(document.getElementByXPath("//table[@id='" + tableName + "']/tbody/tr[" + (i + 2) + "]/td[" + (j + 2) + "]")).addClass(data[i][j].teamCode + "-" + (j + 1));
+                                $(document.getElementByXPath("//table[@id='" + tableName + "']/tbody/tr[" + (i + 2) + "]/td[" + (j + 2) + "]")).append("<div class='cell-div'  data-opponent='" + data[i][j].opponentCode + "-" + (j + 1) + "'><img title='" + data[i][j].result + "' class='" + data[i][j].teamCode + " cell-img' src=/resources/images/" + imgPath[data[i][j].teamCode] + " width='20px' height='20px' /><span class='GP1 GlsPts-" + (j + 1) + "' >   &nbsp;&nbsp;|| " + data[i][j].goalsScored + ":" + (data[i][j].goalsScored - data[i][j].goalsDiff) + " | " + data[i][j].points + "</span></div>");
                             } else {
-                                $(document.getElementByXPath("//table[@id='"+tableName+"']/tbody/tr[" + (i + 2) + "]/td[" + (j + 2) + "]")).append("<div><img class='" + data[i][j].teamCode + " cell-img' src=/resources/images/Ball.png width='20px' height='20px' /><span class='GP1 GlsPts-" + (j + 1) + "' >   || " + data[i][j].goalsScored + ":" + (data[i][j].goalsScored - data[i][j].goalsDiff) + " | " + data[i][j].points + "</span></div>");
+                                $(document.getElementByXPath("//table[@id='" + tableName + "']/tbody/tr[" + (i + 2) + "]/td[" + (j + 2) + "]")).append("<div><img class='" + data[i][j].teamCode + " cell-img' src=/resources/images/Ball.png width='20px' height='20px' /><span class='GP1 GlsPts-" + (j + 1) + "' >   || " + data[i][j].goalsScored + ":" + (data[i][j].goalsScored - data[i][j].goalsDiff) + " | " + data[i][j].points + "</span></div>");
                             }
                         }
                     }
 
                     /* ----------------------------------------------------------------- */
-                     setTimeout(
-                     function()
-                     {
-                     var md = data[0].length;
-                     var clName = ".GlsPts-"+ md;
-                     if ($(".expanded").length !== 0) {
-                         $(".expanded").hide();
-                         $(".expanded").removeClass("expanded");
-                         $(".MD-selected").removeClass("MD-selected");
+                    setTimeout(
+                        function () {
+                            var md = data[0].length;
+                            var clName = ".GlsPts-" + md;
+                            if ($(".expanded").length !== 0) {
+                                $(".expanded").hide();
+                                $(".expanded").removeClass("expanded");
+                                $(".MD-selected").removeClass("MD-selected");
+                            }
+                            $(clName).show(1000);
+                            $(clName).addClass("expanded");
+                            $(document.getElementByXPath("//table[@id='" + tableName + "']/tbody/tr[1]/th[" + (md + 1) + "]")).addClass("MD-selected");
+                        }, 1000);
+
+
+                    /* -----------------------------------------------------------------
+
+                     for (var i = data.length; i < 20; i++) {
+                     $(document.getElementByXPath("//table[@id='"+tableName+"']/tbody/tr[" + (i + 2) + "]")).hide();
                      }
-                     $(clName).show(1000);
-                     $(clName).addClass("expanded");
-                     $(document.getElementByXPath("//table[@id='"+tableName+"']/tbody/tr[1]/th["+(md+1)+"]")).addClass("MD-selected");
-                     }, 1000);
 
-
-                     /* -----------------------------------------------------------------
-
-                    for (var i = data.length; i < 20; i++) {
-                        $(document.getElementByXPath("//table[@id='"+tableName+"']/tbody/tr[" + (i + 2) + "]")).hide();
-                    }
-
-                    for (var i = 0; i < data.length; i++) {
-                        for (var j = data.length * 2; j <= 39; j++) {
-                            $(document.getElementByXPath("//table[@id='"+tableName+"']/tbody/tr[1]/th[" + j + "]")).hide();
-                            $(document.getElementByXPath("//table[@id='"+tableName+"']/tbody/tr[" + (i + 2) + "]/td[" + j + "]")).hide();
-                        }
-                    }
+                     for (var i = 0; i < data.length; i++) {
+                     for (var j = data.length * 2; j <= 39; j++) {
+                     $(document.getElementByXPath("//table[@id='"+tableName+"']/tbody/tr[1]/th[" + j + "]")).hide();
+                     $(document.getElementByXPath("//table[@id='"+tableName+"']/tbody/tr[" + (i + 2) + "]/td[" + j + "]")).hide();
+                     }
+                     }
 
                      ----------------------------------------------------------------- */
                 }
