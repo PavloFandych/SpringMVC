@@ -66,27 +66,36 @@ body {
 
 .rt02-tcell {
     background-color: #FFFFFF;
-
+    width: 200px;
 }
 
-.even {
-    background-color: #f2f6ff;
-    background-color: #f3f6b0;
-}
+
+
+
 
 .rt02-tcell-header {
 
     background: radial-gradient(#909090, #595959);
     font-size: 11pt;
-
+    border: 1px solid #909090;
     font-family: "Arial", Helvetica, sans-serif;
 }
 
-.results-tcell, .results-tcell-title, .results-tcell-header, .rt02-tcell-date, .rt02-tcell-season, .rt02-tcell-matchday {
+/*.results-tcell, .results-tcell-title, .results-tcell-header,*/ .rt02-tcell-date, .rt02-tcell-season, .rt02-tcell-matchday {
     border: 1px solid #ccc;
-    width: 30px;
+    width: 70px;
     height: 30px;
 
+}
+
+.even {
+
+    background-color: #f3f6b0;
+}
+
+.dark {
+    background-color: #909090;
+    border: 1px solid #909090;
 }
 
 td, th {
@@ -104,6 +113,7 @@ td, th {
     color: white;
     -webkit-border-radius: 4px;
     border-color: #00AA00;
+    width: auto;
 }
 
 .draw {
@@ -111,6 +121,7 @@ td, th {
     color: white;
     -webkit-border-radius: 4px;
     border-color: #00AA00;
+    width: auto;
 }
 
 .lost {
@@ -118,6 +129,7 @@ td, th {
     color: white;
     -webkit-border-radius: 4px;
     border-color: #00AA00;
+    width: auto;
 }
 
 #rt02 {

@@ -141,7 +141,7 @@
         <br/>
         <br/>
 
-        <p><b>Requesting data... Please wait... </b></p>
+        <p><b>No matches in the selected season.</b></p>
     </div>
     <br/>
 

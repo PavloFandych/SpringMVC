@@ -154,30 +154,44 @@ $(document).ready(function () {
                          break;
                          }*/
 
+                        var totalCounter = 0;
+                        var winCounter = 0;
+                        var drawCounter = 0;
+                        var lossCounter = 0;
+
                         var classValue2 = 'odd';
+                        var classValue3 = 'light';
                         for (var i = 0; i < data.length; i++) {
                             var k = 4;
                             var classValue = 'win';
+                            totalCounter++;
                             switch (data[i].matchResultStatus.toLowerCase()) {
                                 case 'draw':
                                     k = 5;
                                     classValue = 'draw';
+                                    drawCounter++;
                                     break;
                                 case 'lost':
                                     k = 6;
                                     classValue = 'lost';
+                                    lossCounter++;
                                     break;
                             }
 
                             if (i > 0 && data[i].seasonCode !== data[i - 1].seasonCode) {
                                 if (classValue2 == 'odd') {
-                                    classValue2 = 'even'
+                                    classValue2 = 'even';
+                                    classValue3 = 'dark';
                                 } else {
                                     classValue2 = 'odd';
+                                    classValue3 = 'light';
                                 }
                             }
 
-                            $(document.getElementByXPath("//table[@id='rt02']/tbody")).append("<tr  class='rt02-row'><td class='rt02-tcell-season' nowrap>" + data[i].seasonName.substring(7, 16).split("-").join("/") + "</td><td class='rt02-tcell-matchday' align='middle'>" + data[i].matchDay + "</td><td class='rt02-tcell-date' nowrap><div>" + data[i].matchDate.substring(0, 10).split("-").reverse().join("/") + "</div></td><td class='rt02-tcell " + classValue2 + "' nowrap></td><td class='rt02-tcell " + classValue2 + "' nowrap></td><td class='rt02-tcell " + classValue2 + "' nowrap></td></tr>");
+                            $("#title-win").html("Win ("+(totalCounter-drawCounter-lossCounter)+")");
+                            $("#title-draw").html("Draw ("+drawCounter+")");
+                            $("#title-loss").html("Loss ("+lossCounter+")");
+                            $(document.getElementByXPath("//table[@id='rt02']/tbody")).append("<tr  class='rt02-row'><td class='rt02-tcell-season "+classValue3+"' align='middle' nowrap>" + data[i].seasonName.substring(7, 16).split("-").join("/") + "</td><td class='rt02-tcell-matchday "+classValue3+"' align='middle'>" + data[i].matchDay + "</td><td class='rt02-tcell-date "+classValue3+"' align='middle' nowrap><div>" + data[i].matchDate.substring(0, 10).split("-").reverse().join("/") + "</div></td><td class='rt02-tcell " + classValue2 + "' nowrap></td><td class='rt02-tcell " + classValue2 + "' nowrap></td><td class='rt02-tcell " + classValue2 + "' nowrap></td></tr>");
                             $(document.getElementByXPath("//table[@id='rt02']/tbody/tr[" + (i + 2) + "]/td[" + k + "]")).append("<div class='cell-div' align='middle'>" + data[i].hostTeamName + " " + data[i].goalsByHost + ":" + data[i].goalsByGuest + " " + data[i].guestTeamName + "</div>");
                             $(document.getElementByXPath("//table[@id='rt02']/tbody/tr[" + (i + 2) + "]/td[" + k + "]")).addClass(classValue);
                         }
