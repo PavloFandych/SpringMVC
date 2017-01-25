@@ -188,10 +188,10 @@ $(document).ready(function () {
                                 }
                             }
 
-                            $("#title-win").html("Win ("+(totalCounter-drawCounter-lossCounter)+")");
-                            $("#title-draw").html("Draw ("+drawCounter+")");
-                            $("#title-loss").html("Loss ("+lossCounter+")");
-                            $(document.getElementByXPath("//table[@id='rt02']/tbody")).append("<tr  class='rt02-row'><td class='rt02-tcell-season "+classValue3+"' align='middle' nowrap>" + data[i].seasonName.substring(7, 16).split("-").join("/") + "</td><td class='rt02-tcell-matchday "+classValue3+"' align='middle'>" + data[i].matchDay + "</td><td class='rt02-tcell-date "+classValue3+"' align='middle' nowrap><div>" + data[i].matchDate.substring(0, 10).split("-").reverse().join("/") + "</div></td><td class='rt02-tcell " + classValue2 + "' nowrap></td><td class='rt02-tcell " + classValue2 + "' nowrap></td><td class='rt02-tcell " + classValue2 + "' nowrap></td></tr>");
+                            $("#title-win").html("Win (" + (totalCounter - drawCounter - lossCounter) + ")");
+                            $("#title-draw").html("Draw (" + drawCounter + ")");
+                            $("#title-loss").html("Loss (" + lossCounter + ")");
+                            $(document.getElementByXPath("//table[@id='rt02']/tbody")).append("<tr  class='rt02-row'><td class='rt02-tcell-season " + classValue3 + "' align='middle' nowrap>" + data[i].seasonName.substring(7, 16).split("-").join("/") + "</td><td class='rt02-tcell-matchday " + classValue3 + "' align='middle'>" + data[i].matchDay + "</td><td class='rt02-tcell-date " + classValue3 + "' align='middle' nowrap><div>" + data[i].matchDate.substring(0, 10).split("-").reverse().join("/") + "</div></td><td class='rt02-tcell " + classValue2 + "' nowrap></td><td class='rt02-tcell " + classValue2 + "' nowrap></td><td class='rt02-tcell " + classValue2 + "' nowrap></td></tr>");
                             $(document.getElementByXPath("//table[@id='rt02']/tbody/tr[" + (i + 2) + "]/td[" + k + "]")).append("<div class='cell-div' align='middle'>" + data[i].hostTeamName + " " + data[i].goalsByHost + ":" + data[i].goalsByGuest + " " + data[i].guestTeamName + "</div>");
                             $(document.getElementByXPath("//table[@id='rt02']/tbody/tr[" + (i + 2) + "]/td[" + k + "]")).addClass(classValue);
                         }

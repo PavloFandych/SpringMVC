@@ -7,7 +7,8 @@
     <title>Teamstracker.com - football scores: Premier League, Bundesliga, Serie A, La Liga, Ligue 1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="description" content="Football scores: Premier League, Bundesliga, Serie A, La Liga, Ligue 1.">
-    <meta name="Keywords" content="football, soccer, standings, scores, Premier League, Bundesliga, Serie A, La Liga, Ligue 1">
+    <meta name="Keywords"
+          content="football, soccer, standings, scores, Premier League, Bundesliga, Serie A, La Liga, Ligue 1">
     <link rel="shortcut icon" href="/resources/images/app/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/app/favicon.ico" type="image/x-icon">
     <link href="<c:url value="/resources/css/rules.css" />" rel="stylesheet">

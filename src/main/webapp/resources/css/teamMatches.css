@@ -69,10 +69,6 @@ body {
     width: 200px;
 }
 
-
-
-
-
 .rt02-tcell-header {
 
     background: radial-gradient(#909090, #595959);
@@ -81,7 +77,8 @@ body {
     font-family: "Arial", Helvetica, sans-serif;
 }
 
-/*.results-tcell, .results-tcell-title, .results-tcell-header,*/ .rt02-tcell-date, .rt02-tcell-season, .rt02-tcell-matchday {
+/*.results-tcell, .results-tcell-title, .results-tcell-header,*/
+.rt02-tcell-date, .rt02-tcell-season, .rt02-tcell-matchday {
     border: 1px solid #ccc;
     width: 70px;
     height: 30px;
