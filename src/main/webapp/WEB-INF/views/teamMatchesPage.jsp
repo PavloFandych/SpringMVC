@@ -150,28 +150,28 @@
     <div id="matches">
         <div id='team-logo' align='middle'></div>
 
-        <%--<table align="center">--%>
-            <%--<tr align="center">--%>
-                <%--<td align="center">--%>
-                    <%--<div id="piechartgeneral" align="middle"></div>--%>
-                <%--</td>--%>
-                <%--<td align="center">--%>
-                    <%--<div id="piecharthome" align="middle"></div>--%>
-                <%--</td>--%>
-                <%--<td align="center">--%>
-                    <%--<div id="piechartaway" align="middle"></div>--%>
-                <%--</td>--%>
-                <%--<td align="center">--%>
-                    <%--<div id="piechartgoalstotal" align="middle"></div>--%>
-                <%--</td>--%>
-                <%--<td align="center">--%>
-                    <%--<div id="piechartgoalswin" align="middle"></div>--%>
-                <%--</td>--%>
-                <%--<td align="center">--%>
-                    <%--<div id="piechartgoalsloss" align="middle"></div>--%>
-                <%--</td>--%>
-            <%--</tr>--%>
-        <%--</table>--%>
+        <table align="center">
+            <tr align="center">
+                <td align="center">
+                    <div id="piechartgeneral" align="middle"></div>
+                </td>
+                <td align="center">
+                    <div id="piecharthome" align="middle"></div>
+                </td>
+                <td align="center">
+                    <div id="piechartaway" align="middle"></div>
+                </td>
+                <td align="center">
+                    <div id="piechartgoalstotal" align="middle"></div>
+                </td>
+                <td align="center">
+                    <div id="piechartgoalswin" align="middle"></div>
+                </td>
+                <td align="center">
+                    <div id="piechartgoalsloss" align="middle"></div>
+                </td>
+            </tr>
+        </table>
 
         <div id="mt02">
 
