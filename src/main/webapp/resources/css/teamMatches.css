@@ -1,8 +1,6 @@
-
 body {
     background-image: url(/resources/images/app/texture02.jpg);
     background-size: 100%;
-
 }
 
 .vertical-aligned {
@@ -20,7 +18,6 @@ body {
     /*background: radial-gradient(#cdcdcd, #727272);*/
     background: transparent;
     border-radius: 15px;
-
 }
 
 .country-img {
@@ -31,37 +28,31 @@ body {
 .ITA {
     background-image: url(/resources/images/app/ITA_flag.jpg);
     background-size: 100%;
-
 }
 
 .ENG {
     background-image: url(/resources/images/app/ENG_flag.jpg);
     background-size: 100%;
-
 }
 
 .FRA {
     background-image: url(/resources/images/app/FRA_flag.jpg);
     background-size: 100%;
-
 }
 
 .ESP {
     background-image: url(/resources/images/app/ESP_flag.jpg);
     background-size: 100%;
-
 }
 
 .DEU {
     background-image: url(/resources/images/app/DEU_flag.jpg);
     background-size: 100%;
-
 }
 
 .results-tcell-title, .results-tcell-header, .rt02-tcell-date, .rt02-tcell-season, .rt02-tcell-matchday, .rt02-tcell-header {
     /*background-color: #F4F4F4;*/
     background-color: #b8b8b8;
-
 }
 
 .rt02-tcell {
@@ -70,7 +61,6 @@ body {
 }
 
 .rt02-tcell-header {
-
     background: radial-gradient(#909090, #595959);
     font-size: 11pt;
     border: 1px solid #909090;
@@ -82,11 +72,9 @@ body {
     border: 1px solid #ccc;
     width: 70px;
     height: 30px;
-
 }
 
 .even {
-
     background-color: #f3f6b0;
 }
 
@@ -174,7 +162,6 @@ td, th {
 .menu-bar select.grey {
     /*background-color: #000;*/
     background-color: #595959;
-
 }
 
 button:hover {
@@ -186,11 +173,64 @@ button:hover {
 }
 
 button.countries-buttons:hover {
-
     background: transparent;
     opacity: 0.8;
     filter: alpha(opacity=80);
     -webkit-border-radius: 15px;
     border-color: #00AA00;
+}
 
+#wrap {
+    display: none;
+    opacity: 0.8;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 16px;
+    background-color: rgba(1, 1, 1, 0.725);
+    z-index: 100;
+    overflow: auto;
+}
+
+#window {
+    width: 600px;
+    height: 500px;
+    margin: 50px auto;
+    display: none;
+    background: #fff;
+    opacity: 0.9;
+    filter: alpha(Opacity=90);
+    z-index: 200;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 16px;
+    border-radius: 20px;
+}
+
+.close {
+    margin-left: 564px;
+    margin-top: 4px;
+    cursor: pointer;
+}
+
+.radiusAdvanced {
+    border: 0 !important; /*Removes border*/
+    -webkit-appearance: none; /*Removes default chrome and safari style*/
+    -moz-appearance: none; /* Removes Default Firefox style*/
+    appearance: none;
+    background: radial-gradient(#909090, #595959);
+    text-indent: 0.01px; /* Removes default arrow from firefox*/
+    text-overflow: ""; /*Removes default arrow from firefox*/
+    /*My custom style for fonts*/
+    color: #FFF;
+    border-radius: 15px;
+    padding: 5px;
+    box-shadow: inset 0 0 5px rgba(000, 000, 000, 0.5);
+    font-size: 9pt;
+    font-weight: bold;
 }

@@ -5,7 +5,6 @@ var imgPath = JSON.parse(teamsImgMap);
  var teams = JSON.parse(teamsData);*/
 
 $(document).ready(function () {
-
     $("#get-info-msg").hide();
     $("#CountriesList").val("selectCountry");
     $("#SeasonsList").val("");
@@ -84,12 +83,13 @@ $(document).ready(function () {
         $("#team-logo").empty();
         $("#rt02").hide();
 
-        $("#piechartgeneral").hide();
-        $("#piecharthome").hide();
-        $("#piechartaway").hide();
-        $("#piechartgoalstotal").hide();
-        $("#piechartgoalswin").hide();
-        $("#piechartgoalsloss").hide();
+        $("#diagramsScript").remove();
+        $("#wrap").remove();
+        $("#window").remove();
+        $("#diagramsScriptButton").remove();
+        $("#idBrbegin").remove();
+        $("#idBrend").remove();
+
         var team = $("#TeamsList").val();
         if (team.toLowerCase() !== "selectteam") {
             var season = $("#SeasonsList").val();
@@ -113,6 +113,13 @@ $(document).ready(function () {
                     'Authorization': 'Basic ' + btoa('User:user')
                 },
                 success: function (data, status) {
+                    $("#diagrams").append("<script id='diagramsScript' type=\"text/javascript\">function show(state){document.getElementById('window').style.display = state;document.getElementById('wrap').style.display = state;} </script>");
+                    $("#diagrams").append("<br id='idBrbegin'>");
+                    $("#diagrams").append("<div onclick='show(\"none\")' id='wrap'></div>");
+                    $("#diagrams").append("<div id='window'>" + "<img class='close' onclick='show(\"none\")' src='/resources/images/app/closeIcon.png'>" + "<table align='center'><tr align='center'><td align='center'><h5 align=center>Games</h5></td><td align='center'><h5 align='center'>Home Games</h5></td><td align='center'><h5 align='center'>Away Games</h5></td></tr><tr align='center'><td align='center'><div id='piechartgeneral' align='middle'></div></td><td align='center'><div id='piecharthome' align='middle'></div></td><td align='center'><div id='piechartaway' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align='center'>Goals</h5></td><td align='center'><h5 align='center'>Goals scored</h5></td><td align='center'><h5 align='center'>Goals conceded</h5></td></tr><tr align='center'><td align='center'><div id='piechartgoalstotal' align='middle'></div></td><td align='center'><div id='piechartgoalsscored' align='middle'></div></td><td align='center'><div id='piechartgoalsconceded' align='middle'></div></td></tr></table>" + "</div>");
+                    $("#diagrams").append("<center><button id='diagramsScriptButton' class='radiusAdvanced' onclick='show(\"block\")'>Advanced</button></center>");
+                    $("#diagrams").append("<br id='idBrend'>");
+
                     var total = data.length;
                     var startIndex = 0;
 
@@ -166,10 +173,10 @@ $(document).ready(function () {
                         var awayDrawCounter = 0;
                         var awayLossCounter = 0;
 
-                        var goalsHomeWinCounter = 0;
-                        var goalsAwayWinCounter = 0;
-                        var goalsHomeLossCounter = 0;
-                        var goalsAwayLossCounter = 0;
+                        var goalsHomeScoredCounter = 0;
+                        var goalsAwayScoredCounter = 0;
+                        var goalsHomeConcededCounter = 0;
+                        var goalsAwayConcededCounter = 0;
 
                         var totalCounter = 0;
                         var winCounter = 0;
@@ -213,8 +220,8 @@ $(document).ready(function () {
                             $(document.getElementByXPath("//table[@id='rt02']/tbody/tr[" + (i + 2) + "]/td[" + k + "]")).addClass(classValue);
 
                             if (data[i].hostTeamCode == team) {
-                                goalsHomeWinCounter = goalsHomeWinCounter + data[i].goalsByHost;
-                                goalsHomeLossCounter = goalsHomeLossCounter + data[i].goalsByGuest;
+                                goalsHomeScoredCounter = goalsHomeScoredCounter + data[i].goalsByHost;
+                                goalsHomeConcededCounter = goalsHomeConcededCounter + data[i].goalsByGuest;
                                 switch (data[i].matchResultStatus.toLowerCase()) {
                                     case 'won':
                                         homeWinCounter++;
@@ -227,8 +234,8 @@ $(document).ready(function () {
                                         break;
                                 }
                             } else {
-                                goalsAwayWinCounter = goalsAwayWinCounter + data[i].goalsByGuest;
-                                goalsAwayLossCounter = goalsAwayLossCounter + data[i].goalsByHost;
+                                goalsAwayScoredCounter = goalsAwayScoredCounter + data[i].goalsByGuest;
+                                goalsAwayConcededCounter = goalsAwayConcededCounter + data[i].goalsByHost;
                                 switch (data[i].matchResultStatus.toLowerCase()) {
                                     case 'won':
                                         awayWinCounter++;
@@ -258,19 +265,19 @@ $(document).ready(function () {
                         var options = {
                             is3D: true,
                             backgroundColor: 'transparent',
-                            'width': 100,
-                            'height': 100,
+                            'width': 175,
+                            'height': 175,
                             legend: 'none',
+                            pieSliceText: 'none',
 
                             slices: {
                                 0: {color: '#77DD00'},
                                 1: {color: '#ffaa00'},
                                 2: {color: '#BC1616'}
                             },
-                            chartArea: {left: 2, top: 2, width: '95%', height: '95%'},
+                            chartArea: {left: 5, top: 5, width: '95%', height: '95%'},
                             fontSize : 10
                         };
-                        $("#piechartgeneral").show();
                         var chart = new google.visualization.PieChart(document.getElementById('piechartgeneral'));
                         chart.draw(data, options);
                     }
@@ -287,19 +294,19 @@ $(document).ready(function () {
                         var options = {
                             is3D: true,
                             backgroundColor: 'transparent',
-                            'width': 100,
-                            'height': 100,
+                            'width': 175,
+                            'height': 175,
                             legend: 'none',
+                            pieSliceText: 'none',
 
                             slices: {
                                 0: {color: '#77DD00'},
                                 1: {color: '#ffaa00'},
                                 2: {color: '#BC1616'}
                             },
-                            chartArea: {left: 2, top: 2, width: '95%', height: '95%'},
+                            chartArea: {left: 5, top: 5, width: '95%', height: '95%'},
                             fontSize : 10
                         };
-                        $("#piecharthome").show();
                         var chart = new google.visualization.PieChart(document.getElementById('piecharthome'));
                         chart.draw(data, options);
                     }
@@ -316,19 +323,19 @@ $(document).ready(function () {
                         var options = {
                             is3D: true,
                             backgroundColor: 'transparent',
-                            'width': 100,
-                            'height': 100,
+                            'width': 175,
+                            'height': 175,
                             legend: 'none',
+                            pieSliceText: 'none',
 
                             slices: {
                                 0: {color: '#77DD00'},
                                 1: {color: '#ffaa00'},
                                 2: {color: '#BC1616'}
                             },
-                            chartArea: {left: 2, top: 2, width: '95%', height: '95%'},
+                            chartArea: {left: 5, top: 5, width: '95%', height: '95%'},
                             fontSize : 10
                         };
-                        $("#piechartaway").show();
                         var chart = new google.visualization.PieChart(document.getElementById('piechartaway'));
                         chart.draw(data, options);
                     }
@@ -337,25 +344,25 @@ $(document).ready(function () {
                     function drawChartGoalsTotal() {
                         var data = google.visualization.arrayToDataTable([
                             ['Goals Total', 'Count'],
-                            ['Goals Win', goalsHomeWinCounter+goalsAwayWinCounter],
-                            ['Goals Loss', goalsHomeLossCounter+goalsAwayLossCounter]
+                            ['Goals Scored', goalsHomeScoredCounter+goalsAwayScoredCounter],
+                            ['Goals Conceded', goalsHomeConcededCounter+goalsAwayConcededCounter]
                         ]);
 
                         var options = {
                             is3D: true,
                             backgroundColor: 'transparent',
-                            'width': 100,
-                            'height': 100,
+                            'width': 175,
+                            'height': 175,
                             legend: 'none',
+                            pieSliceText: 'none',
 
                             slices: {
                                 0: {color: '#77DD00'},
                                 1: {color: '#ffaa00'}
                             },
-                            chartArea: {left: 2, top: 2, width: '95%', height: '95%'},
+                            chartArea: {left: 5, top: 5, width: '95%', height: '95%'},
                             fontSize : 10
                         };
-                        $("#piechartgoalstotal").show();
                         var chart = new google.visualization.PieChart(document.getElementById('piechartgoalstotal'));
                         chart.draw(data, options);
                     }
@@ -364,26 +371,26 @@ $(document).ready(function () {
                     function drawChartGoalsWin() {
                         var data = google.visualization.arrayToDataTable([
                             ['Goals', 'Count'],
-                            ['Home Goals Win', goalsHomeWinCounter],
-                            ['Away Goals Win', goalsAwayWinCounter]
+                            ['Home Goals Scored', goalsHomeScoredCounter],
+                            ['Away Goals Scored', goalsAwayScoredCounter]
                         ]);
 
                         var options = {
                             is3D: true,
                             backgroundColor: 'transparent',
-                            'width': 100,
-                            'height': 100,
+                            'width': 175,
+                            'height': 175,
                             legend: 'none',
+                            pieSliceText: 'none',
 
                             slices: {
                                 0: {color: '#77DD00'},
                                 1: {color: '#ffaa00'}
                             },
-                            chartArea: {left: 2, top: 2, width: '95%', height: '95%'},
+                            chartArea: {left: 5, top: 5, width: '95%', height: '95%'},
                             fontSize : 10
                         };
-                        $("#piechartgoalswin").show();
-                        var chart = new google.visualization.PieChart(document.getElementById('piechartgoalswin'));
+                        var chart = new google.visualization.PieChart(document.getElementById('piechartgoalsscored'));
                         chart.draw(data, options);
                     }
 
@@ -391,29 +398,28 @@ $(document).ready(function () {
                     function drawChartGoalsLoss() {
                         var data = google.visualization.arrayToDataTable([
                             ['Goals Loss', 'Count'],
-                            ['Home Goals Loss', goalsHomeLossCounter],
-                            ['Away Goals Loss', goalsAwayLossCounter]
+                            ['Home Goals Conceded', goalsHomeConcededCounter],
+                            ['Away Goals Conceded', goalsAwayConcededCounter]
                         ]);
 
                         var options = {
                             is3D: true,
                             backgroundColor: 'transparent',
-                            'width': 100,
-                            'height': 100,
+                            'width': 175,
+                            'height': 175,
                             legend: 'none',
+                            pieSliceText: 'none',
 
                             slices: {
                                 0: {color: '#77DD00'},
                                 1: {color: '#ffaa00'}
                             },
-                            chartArea: {left: 2, top: 2, width: '95%', height: '95%'},
+                            chartArea: {left: 5, top: 5, width: '95%', height: '95%'},
                             fontSize : 10
                         };
-                        $("#piechartgoalsloss").show();
-                        var chart = new google.visualization.PieChart(document.getElementById('piechartgoalsloss'));
+                        var chart = new google.visualization.PieChart(document.getElementById('piechartgoalsconceded'));
                         chart.draw(data, options);
                     }
-
                 },
                 error: function (xhr, str) {
                     $("#rt02").hide();
