@@ -86,7 +86,6 @@ $(document).ready(function () {
         $("#window").remove();
         $("#diagramsScriptButtonId").remove();
         $("#idBrbegin").remove();
-        $("#idBrend").remove();
 
         var team = $("#TeamsList").val();
         if (team.toLowerCase() !== "selectteam") {
@@ -256,7 +255,6 @@ $(document).ready(function () {
 
                         $("#diagramsButtonDiv").width(totalTableWidth+35);
                         $("#diagramsButtonDiv").append("<button id='diagramsScriptButtonId' class='radiusAdvanced' onclick='show(\"block\")'></button>");
-                        $("#diagrams").append("<br id='idBrend'>");
                     }
 
                     google.charts.load('current', {'packages': ['corechart']});
