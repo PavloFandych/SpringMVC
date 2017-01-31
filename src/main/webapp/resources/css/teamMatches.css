@@ -118,7 +118,8 @@ td, th {
 }
 
 #rt02 {
-    background-color: #4f5b66;
+    /*background-color: #4f5b66;*/
+    background-color: transparent;
     -webkit-border-radius: 4px;
 }
 
@@ -229,8 +230,10 @@ button.countries-buttons:hover {
     /*My custom style for fonts*/
     color: #FFF;
     border-radius: 15px;
-    padding: 5px;
     box-shadow: inset 0 0 5px rgba(000, 000, 000, 0.5);
-    font-size: 9pt;
-    font-weight: bold;
+}
+
+#diagramsScriptButtonId {
+    width: 35px;
+    height: 17px;
 }

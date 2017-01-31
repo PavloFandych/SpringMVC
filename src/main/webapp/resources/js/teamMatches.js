@@ -44,7 +44,6 @@ $(document).ready(function () {
     });
 
     $("#CountriesList").change(function () {
-
         var country = $("#CountriesList").val();
         this.blur();
         $("#TeamsList").empty();
@@ -71,7 +70,6 @@ $(document).ready(function () {
                     }
                 },
                 error: function (xhr, str) {
-
                 }
             });
         }
@@ -86,7 +84,7 @@ $(document).ready(function () {
         $("#diagramsScript").remove();
         $("#wrap").remove();
         $("#window").remove();
-        $("#diagramsScriptButton").remove();
+        $("#diagramsScriptButtonId").remove();
         $("#idBrbegin").remove();
         $("#idBrend").remove();
 
@@ -113,13 +111,6 @@ $(document).ready(function () {
                     'Authorization': 'Basic ' + btoa('User:user')
                 },
                 success: function (data, status) {
-                    $("#diagrams").append("<script id='diagramsScript' type=\"text/javascript\">function show(state){document.getElementById('window').style.display = state;document.getElementById('wrap').style.display = state;} </script>");
-                    $("#diagrams").append("<br id='idBrbegin'>");
-                    $("#diagrams").append("<div onclick='show(\"none\")' id='wrap'></div>");
-                    $("#diagrams").append("<div id='window'>" + "<img class='close' onclick='show(\"none\")' src='/resources/images/app/closeIcon.png'>" + "<table align='center'><tr align='center'><td align='center'><h5 align=center>Games</h5></td><td align='center'><h5 align='center'>Home Games</h5></td><td align='center'><h5 align='center'>Away Games</h5></td></tr><tr align='center'><td align='center'><div id='piechartgeneral' align='middle'></div></td><td align='center'><div id='piecharthome' align='middle'></div></td><td align='center'><div id='piechartaway' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align='center'>Goals</h5></td><td align='center'><h5 align='center'>Goals scored</h5></td><td align='center'><h5 align='center'>Goals conceded</h5></td></tr><tr align='center'><td align='center'><div id='piechartgoalstotal' align='middle'></div></td><td align='center'><div id='piechartgoalsscored' align='middle'></div></td><td align='center'><div id='piechartgoalsconceded' align='middle'></div></td></tr></table>" + "</div>");
-                    $("#diagrams").append("<center><button id='diagramsScriptButton' class='radiusAdvanced' onclick='show(\"block\")'>Advanced</button></center>");
-                    $("#diagrams").append("<br id='idBrend'>");
-
                     var total = data.length;
                     var startIndex = 0;
 
@@ -249,6 +240,19 @@ $(document).ready(function () {
                                 }
                             }
                         }
+
+                        var homeGamesTotal = homeWinCounter + homeDrawCounter + homeLossCounter;
+                        var awayGamesTotal = awayWinCounter + awayDrawCounter + awayLossCounter;
+                        var goalsBalance = goalsHomeScoredCounter + goalsAwayScoredCounter + goalsHomeConcededCounter + goalsAwayConcededCounter;
+                        var goalsScored = goalsHomeScoredCounter + goalsAwayScoredCounter;
+                        var goalsConceded = goalsHomeConcededCounter + goalsAwayConcededCounter;
+
+                        $("#diagrams").append("<script id='diagramsScript' type=\"text/javascript\">function show(state){document.getElementById('window').style.display = state;document.getElementById('wrap').style.display = state;} </script>");
+                        $("#diagrams").append("<br id='idBrbegin'>");
+                        $("#diagrams").append("<div onclick='show(\"none\")' id='wrap'></div>");
+                        $("#diagrams").append("<div id='window'>" + "<img class='close' onclick='show(\"none\")' src='/resources/images/app/closeIcon.png'>" + "<table align='center'><tr align='center'><td align='center'><div id='piechartgeneral' align='middle'></div></td><td align='center'><div id='piecharthome' align='middle'></div></td><td align='center'><div id='piechartaway' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align=center>Games (" + totalCounter + ")</h5></td><td align='center'><h5 align='center'>Home Games (" + homeGamesTotal + ")</h5></td><td align='center'><h5 align='center'>Away Games (" + awayGamesTotal + ")</h5></td></tr><tr align='center'><td align='center'><div id='piechartgoalstotal' align='middle'></div></td><td align='center'><div id='piechartgoalsscored' align='middle'></div></td><td align='center'><div id='piechartgoalsconceded' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align='center'>Goals Balance (" + goalsBalance + ")</h5></td><td align='center'><h5 align='center'>Goals scored (" + goalsScored + ")</h5></td><td align='center'><h5 align='center'>Goals conceded (" + goalsConceded + ")</h5></td></tr></table>" + "</div>");
+                        $("#diagramsButtonDiv").append("<button id='diagramsScriptButtonId' class='radiusAdvanced' onclick='show(\"block\")'></button>");
+                        $("#diagrams").append("<br id='idBrend'>");
                     }
 
                     google.charts.load('current', {'packages': ['corechart']});
@@ -271,7 +275,7 @@ $(document).ready(function () {
                             pieSliceText: 'none',
 
                             slices: {
-                                0: {color: '#77DD00'},
+                                0: {color: '3DB32B'},
                                 1: {color: '#ffaa00'},
                                 2: {color: '#BC1616'}
                             },
@@ -300,7 +304,7 @@ $(document).ready(function () {
                             pieSliceText: 'none',
 
                             slices: {
-                                0: {color: '#77DD00'},
+                                0: {color: '3DB32B'},
                                 1: {color: '#ffaa00'},
                                 2: {color: '#BC1616'}
                             },
@@ -329,7 +333,7 @@ $(document).ready(function () {
                             pieSliceText: 'none',
 
                             slices: {
-                                0: {color: '#77DD00'},
+                                0: {color: '3DB32B'},
                                 1: {color: '#ffaa00'},
                                 2: {color: '#BC1616'}
                             },
@@ -357,8 +361,8 @@ $(document).ready(function () {
                             pieSliceText: 'none',
 
                             slices: {
-                                0: {color: '#77DD00'},
-                                1: {color: '#ffaa00'}
+                                0: {color: '3DB32B'},
+                                1: {color: '#BC1616'}
                             },
                             chartArea: {left: 5, top: 5, width: '95%', height: '95%'},
                             fontSize: 10
@@ -384,7 +388,7 @@ $(document).ready(function () {
                             pieSliceText: 'none',
 
                             slices: {
-                                0: {color: '#77DD00'},
+                                0: {color: '3DB32B'},
                                 1: {color: '#ffaa00'}
                             },
                             chartArea: {left: 5, top: 5, width: '95%', height: '95%'},
@@ -411,7 +415,7 @@ $(document).ready(function () {
                             pieSliceText: 'none',
 
                             slices: {
-                                0: {color: '#77DD00'},
+                                0: {color: '3DB32B'},
                                 1: {color: '#ffaa00'}
                             },
                             chartArea: {left: 5, top: 5, width: '95%', height: '95%'},

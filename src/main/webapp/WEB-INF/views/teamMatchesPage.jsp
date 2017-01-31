@@ -101,7 +101,6 @@
 
     <div id="countries">
         <br/>
-
         <table id="countries-table" align="center" style="border:10px; margin:auto; ">
             <tr>
                 <td class="countries-cell">
@@ -149,10 +148,22 @@
 
     <div id="matches">
         <div id='team-logo' align='middle'></div>
-
         <div id="diagrams"></div>
-
         <div id="mt02">
+            <table cellspacing="1" cellpadding="2" align="center">
+                <tbody>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th width="800px" align="right">
+                        <div id="diagramsButtonDiv"></div>
+                    </th>
+                </tr>
+            </table>
+
             <table id="rt02" cellspacing="1" cellpadding="2" align="center">
                 <tbody id="rt02-body">
                 <tr class="rt02-row-header">
@@ -165,12 +176,9 @@
                 </tr>
             </table>
         </div>
-
     </div>
-
 </div>
-
 </body>
 </html>
 
-<%--<table align='center'><tr align='center'><td align='center'><h5 align=center>Games</h5></td><td align='center'><h5 align='center'>Home Games</h5></td><td align='center'><h5 align='center'>Away Games</h5></td></tr><tr align='center'><td align='center'><div id='piechartgeneral' align='middle'></div></td><td align='center'><div id='piecharthome' align='middle'></div></td><td align='center'><div id='piechartaway' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align='center'>Goals</h5></td><td align='center'><h5 align='center'>Goals scored</h5></td><td align='center'><h5 align='center'>Goals conceded</h5></td></tr><tr align='center'><td align='center'><div id='piechartgoalstotal' align='middle'></div></td><td align='center'><div id='piechartgoalsscored' align='middle'></div></td><td align='center'><div id='piechartgoalsconceded' align='middle'></div></td></tr></table>--%>
+<%--<table align='center'><tr align='center'><td align='center'><div id='piechartgeneral' align='middle'></div></td><td align='center'><div id='piecharthome' align='middle'></div></td><td align='center'><div id='piechartaway' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align=center>Games</h5></td><td align='center'><h5 align='center'>Home Games</h5></td><td align='center'><h5 align='center'>Away Games</h5></td></tr><tr align='center'><td align='center'><div id='piechartgoalstotal' align='middle'></div></td><td align='center'><div id='piechartgoalsscored' align='middle'></div></td><td align='center'><div id='piechartgoalsconceded' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align='center'>Goals</h5></td><td align='center'><h5 align='center'>Goals scored</h5></td><td align='center'><h5 align='center'>Goals conceded</h5></td></tr></table>--%>
