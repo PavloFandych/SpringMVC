@@ -150,15 +150,9 @@
         <div id='team-logo' align='middle'></div>
         <div id="diagrams"></div>
         <div id="mt02">
-            <table cellspacing="1" cellpadding="2" align="center">
-                <tbody>
+            <table align="center">
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th width="800px" align="right">
+                    <th align="right">
                         <div id="diagramsButtonDiv"></div>
                     </th>
                 </tr>

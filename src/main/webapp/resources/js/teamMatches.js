@@ -251,6 +251,10 @@ $(document).ready(function () {
                         $("#diagrams").append("<br id='idBrbegin'>");
                         $("#diagrams").append("<div onclick='show(\"none\")' id='wrap'></div>");
                         $("#diagrams").append("<div id='window'>" + "<img class='close' onclick='show(\"none\")' src='/resources/images/app/closeIcon.png'>" + "<table align='center'><tr align='center'><td align='center'><div id='piechartgeneral' align='middle'></div></td><td align='center'><div id='piecharthome' align='middle'></div></td><td align='center'><div id='piechartaway' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align=center>Games (" + totalCounter + ")</h5></td><td align='center'><h5 align='center'>Home Games (" + homeGamesTotal + ")</h5></td><td align='center'><h5 align='center'>Away Games (" + awayGamesTotal + ")</h5></td></tr><tr align='center'><td align='center'><div id='piechartgoalstotal' align='middle'></div></td><td align='center'><div id='piechartgoalsscored' align='middle'></div></td><td align='center'><div id='piechartgoalsconceded' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align='center'>Goals Balance (" + goalsBalance + ")</h5></td><td align='center'><h5 align='center'>Goals scored (" + goalsScored + ")</h5></td><td align='center'><h5 align='center'>Goals conceded (" + goalsConceded + ")</h5></td></tr></table>" + "</div>");
+
+                        var totalTableWidth = $("#title-season").width() + $("#title-matchday").width() + $("#title-date").width() + $("#title-win").width() + $("#title-draw").width() + $("#title-loss").width();
+
+                        $("#diagramsButtonDiv").width(totalTableWidth+35);
                         $("#diagramsButtonDiv").append("<button id='diagramsScriptButtonId' class='radiusAdvanced' onclick='show(\"block\")'></button>");
                         $("#diagrams").append("<br id='idBrend'>");
                     }
