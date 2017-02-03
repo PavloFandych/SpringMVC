@@ -245,15 +245,18 @@ $(document).ready(function () {
                         var goalsBalance = goalsHomeScoredCounter + goalsAwayScoredCounter + goalsHomeConcededCounter + goalsAwayConcededCounter;
                         var goalsScored = goalsHomeScoredCounter + goalsAwayScoredCounter;
                         var goalsConceded = goalsHomeConcededCounter + goalsAwayConcededCounter;
+                        var pointsScored = (homeWinCounter + awayWinCounter) * 3 + (homeDrawCounter + awayDrawCounter);
+                        var pointsScoredHome = homeWinCounter * 3 + homeDrawCounter;
+                        var pointsScoredAway = awayWinCounter * 3 + awayDrawCounter;
 
                         $("#diagrams").append("<script id='diagramsScript' type=\"text/javascript\">function show(state){document.getElementById('window').style.display = state;document.getElementById('wrap').style.display = state;} </script>");
                         $("#diagrams").append("<br id='idBrbegin'>");
                         $("#diagrams").append("<div onclick='show(\"none\")' id='wrap'></div>");
-                        $("#diagrams").append("<div id='window'>" + "<img class='close' onclick='show(\"none\")' src='/resources/images/app/closeIcon.png'>" + "<table align='center'><tr align='center'><td align='center'><div id='piechartgeneral' align='middle'></div></td><td align='center'><div id='piecharthome' align='middle'></div></td><td align='center'><div id='piechartaway' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align=center>Games (" + totalCounter + ")</h5></td><td align='center'><h5 align='center'>Home Games (" + homeGamesTotal + ")</h5></td><td align='center'><h5 align='center'>Away Games (" + awayGamesTotal + ")</h5></td></tr><tr align='center'><td align='center'><div id='piechartgoalstotal' align='middle'></div></td><td align='center'><div id='piechartgoalsscored' align='middle'></div></td><td align='center'><div id='piechartgoalsconceded' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align='center'>Goals Balance (" + goalsBalance + ")</h5></td><td align='center'><h5 align='center'>Goals scored (" + goalsScored + ")</h5></td><td align='center'><h5 align='center'>Goals conceded (" + goalsConceded + ")</h5></td></tr></table>" + "</div>");
+                        $("#diagrams").append("<div id='window'>" + "<img class='close' onclick='show(\"none\")' src='/resources/images/app/closeIcon.png'>" + "<table align='center'><tr align='center'><td align='center'><div id='piechartgeneral' align='middle'></div></td><td align='center'><div id='piecharthome' align='middle'></div></td><td align='center'><div id='piechartaway' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align=center>Games (" + totalCounter + ")</h5></td><td align='center'><h5 align='center'>Home Games (" + homeGamesTotal + ")</h5></td><td align='center'><h5 align='center'>Away Games (" + awayGamesTotal + ")</h5></td></tr><tr align='center'><td align='center'><div id='piechartgoalstotal' align='middle'></div></td><td align='center'><div id='piechartgoalsscored' align='middle'></div></td><td align='center'><div id='piechartgoalsconceded' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align='center'>Goals Balance (" + goalsBalance + ")</h5></td><td align='center'><h5 align='center'>Goals scored (" + goalsScored + ")</h5></td><td align='center'><h5 align='center'>Goals conceded (" + goalsConceded + ")</h5></td></tr><tr align='center'><td align='center'><div id='piechartpointstotal' align='middle'></div></td><td align='center'><div id='piechartpointshome' align='middle'></div></td><td align='center'><div id='piechartpointsaway' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align='center'>Points Balance (" + totalCounter * 3 + ")</h5></td><td align='center'><h5 align='center'>Home Points (" + pointsScoredHome + ")</h5></td><td align='center'><h5 align='center'>Away Points (" + pointsScoredAway + ")</h5></td></tr></table>" + "</div>");
 
                         var totalTableWidth = $("#title-season").width() + $("#title-matchday").width() + $("#title-date").width() + $("#title-win").width() + $("#title-draw").width() + $("#title-loss").width();
 
-                        $("#diagramsButtonDiv").width(totalTableWidth+35);
+                        $("#diagramsButtonDiv").width(totalTableWidth + 35);
                         $("#diagramsButtonDiv").append("<button id='diagramsScriptButtonId' class='radiusAdvanced' onclick='show(\"block\")'></button>");
                     }
 
@@ -271,8 +274,8 @@ $(document).ready(function () {
                         var options = {
                             is3D: true,
                             backgroundColor: 'transparent',
-                            'width': 175,
-                            'height': 175,
+                            'width': 170,
+                            'height': 120,
                             legend: 'none',
                             pieSliceText: 'none',
 
@@ -281,7 +284,7 @@ $(document).ready(function () {
                                 1: {color: '#ffaa00'},
                                 2: {color: '#BC1616'}
                             },
-                            chartArea: {left: 5, top: 5, width: '95%', height: '95%'},
+                            chartArea: {left: 4, top: 3, width: '95%', height: '95%'},
                             fontSize: 10
                         };
                         var chart = new google.visualization.PieChart(document.getElementById('piechartgeneral'));
@@ -300,8 +303,8 @@ $(document).ready(function () {
                         var options = {
                             is3D: true,
                             backgroundColor: 'transparent',
-                            'width': 175,
-                            'height': 175,
+                            'width': 170,
+                            'height': 120,
                             legend: 'none',
                             pieSliceText: 'none',
 
@@ -310,7 +313,7 @@ $(document).ready(function () {
                                 1: {color: '#ffaa00'},
                                 2: {color: '#BC1616'}
                             },
-                            chartArea: {left: 5, top: 5, width: '95%', height: '95%'},
+                            chartArea: {left: 4, top: 3, width: '95%', height: '95%'},
                             fontSize: 10
                         };
                         var chart = new google.visualization.PieChart(document.getElementById('piecharthome'));
@@ -329,8 +332,8 @@ $(document).ready(function () {
                         var options = {
                             is3D: true,
                             backgroundColor: 'transparent',
-                            'width': 175,
-                            'height': 175,
+                            'width': 170,
+                            'height': 120,
                             legend: 'none',
                             pieSliceText: 'none',
 
@@ -339,7 +342,7 @@ $(document).ready(function () {
                                 1: {color: '#ffaa00'},
                                 2: {color: '#BC1616'}
                             },
-                            chartArea: {left: 5, top: 5, width: '95%', height: '95%'},
+                            chartArea: {left: 4, top: 3, width: '95%', height: '95%'},
                             fontSize: 10
                         };
                         var chart = new google.visualization.PieChart(document.getElementById('piechartaway'));
@@ -357,8 +360,8 @@ $(document).ready(function () {
                         var options = {
                             is3D: true,
                             backgroundColor: 'transparent',
-                            'width': 175,
-                            'height': 175,
+                            'width': 170,
+                            'height': 120,
                             legend: 'none',
                             pieSliceText: 'none',
 
@@ -366,7 +369,7 @@ $(document).ready(function () {
                                 0: {color: '3DB32B'},
                                 1: {color: '#BC1616'}
                             },
-                            chartArea: {left: 5, top: 5, width: '95%', height: '95%'},
+                            chartArea: {left: 4, top: 3, width: '95%', height: '95%'},
                             fontSize: 10
                         };
                         var chart = new google.visualization.PieChart(document.getElementById('piechartgoalstotal'));
@@ -384,8 +387,8 @@ $(document).ready(function () {
                         var options = {
                             is3D: true,
                             backgroundColor: 'transparent',
-                            'width': 175,
-                            'height': 175,
+                            'width': 170,
+                            'height': 120,
                             legend: 'none',
                             pieSliceText: 'none',
 
@@ -393,7 +396,7 @@ $(document).ready(function () {
                                 0: {color: '3DB32B'},
                                 1: {color: '#ffaa00'}
                             },
-                            chartArea: {left: 5, top: 5, width: '95%', height: '95%'},
+                            chartArea: {left: 4, top: 3, width: '95%', height: '95%'},
                             fontSize: 10
                         };
                         var chart = new google.visualization.PieChart(document.getElementById('piechartgoalsscored'));
@@ -411,8 +414,8 @@ $(document).ready(function () {
                         var options = {
                             is3D: true,
                             backgroundColor: 'transparent',
-                            'width': 175,
-                            'height': 175,
+                            'width': 170,
+                            'height': 120,
                             legend: 'none',
                             pieSliceText: 'none',
 
@@ -420,10 +423,91 @@ $(document).ready(function () {
                                 0: {color: '3DB32B'},
                                 1: {color: '#ffaa00'}
                             },
-                            chartArea: {left: 5, top: 5, width: '95%', height: '95%'},
+                            chartArea: {left: 4, top: 3, width: '95%', height: '95%'},
                             fontSize: 10
                         };
                         var chart = new google.visualization.PieChart(document.getElementById('piechartgoalsconceded'));
+                        chart.draw(data, options);
+                    }
+
+                    google.charts.setOnLoadCallback(drawChartPointsTotal);
+                    function drawChartPointsTotal() {
+                        var data = google.visualization.arrayToDataTable([
+                            ['Points', 'Count'],
+                            ['Scored', pointsScored],
+                            ['Loss', totalCounter * 3 - pointsScored]
+                        ]);
+
+                        var options = {
+                            is3D: true,
+                            backgroundColor: 'transparent',
+                            'width': 170,
+                            'height': 120,
+                            legend: 'none',
+                            pieSliceText: 'none',
+
+                            slices: {
+                                0: {color: '3DB32B'},
+                                1: {color: '#BC1616'}
+                            },
+                            chartArea: {left: 4, top: 3, width: '95%', height: '95%'},
+                            fontSize: 10
+                        };
+                        var chart = new google.visualization.PieChart(document.getElementById('piechartpointstotal'));
+                        chart.draw(data, options);
+                    }
+
+                    google.charts.setOnLoadCallback(drawChartPointsHome);
+                    function drawChartPointsHome() {
+                        var data = google.visualization.arrayToDataTable([
+                            ['Points', 'Count'],
+                            ['Scored', pointsScoredHome],
+                            ['Loss', homeGamesTotal * 3 - pointsScoredHome]
+                        ]);
+
+                        var options = {
+                            is3D: true,
+                            backgroundColor: 'transparent',
+                            'width': 170,
+                            'height': 120,
+                            legend: 'none',
+                            pieSliceText: 'none',
+
+                            slices: {
+                                0: {color: '3DB32B'},
+                                1: {color: '#BC1616'}
+                            },
+                            chartArea: {left: 4, top: 3, width: '95%', height: '95%'},
+                            fontSize: 10
+                        };
+                        var chart = new google.visualization.PieChart(document.getElementById('piechartpointshome'));
+                        chart.draw(data, options);
+                    }
+
+                    google.charts.setOnLoadCallback(drawChartPointsAway);
+                    function drawChartPointsAway() {
+                        var data = google.visualization.arrayToDataTable([
+                            ['Points', 'Count'],
+                            ['Scored', pointsScoredAway],
+                            ['Loss', awayGamesTotal * 3 - pointsScoredAway]
+                        ]);
+
+                        var options = {
+                            is3D: true,
+                            backgroundColor: 'transparent',
+                            'width': 170,
+                            'height': 120,
+                            legend: 'none',
+                            pieSliceText: 'none',
+
+                            slices: {
+                                0: {color: '3DB32B'},
+                                1: {color: '#BC1616'}
+                            },
+                            chartArea: {left: 4, top: 3, width: '95%', height: '95%'},
+                            fontSize: 10
+                        };
+                        var chart = new google.visualization.PieChart(document.getElementById('piechartpointsaway'));
                         chart.draw(data, options);
                     }
                 },

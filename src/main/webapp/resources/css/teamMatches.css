@@ -196,8 +196,8 @@ button.countries-buttons:hover {
 }
 
 #window {
-    width: 600px;
-    height: 500px;
+    width: 550px;
+    height: 545px;
     margin: 50px auto;
     display: none;
     background: #fff;
@@ -209,12 +209,12 @@ button.countries-buttons:hover {
     right: 0;
     top: 0;
     bottom: 0;
-    padding: 16px;
-    border-radius: 20px;
+    padding: 6px;
+    border-radius: 15px;
 }
 
 .close {
-    margin-left: 564px;
+    margin-left: 514px;
     margin-top: 4px;
     cursor: pointer;
 }
