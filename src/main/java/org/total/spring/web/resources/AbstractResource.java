@@ -6,7 +6,7 @@ import org.springframework.web.context.ContextLoader;
 import org.total.spring.root.response.Response;
 import org.total.spring.root.service.interfaces.UserService;
 import org.total.spring.root.util.PasswordManager;
-import org.total.spring.root.util.PermitionManager;
+import org.total.spring.root.util.PermissionManager;
 import org.total.spring.root.util.Validator;
 
 /**
@@ -21,7 +21,7 @@ public abstract class AbstractResource {
     private PasswordManager passwordManager;
 
     @Autowired
-    private PermitionManager permitionManager;
+    private PermissionManager permissionManager;
 
     @Autowired
     private Validator validator;
@@ -42,13 +42,13 @@ public abstract class AbstractResource {
         this.passwordManager = passwordManager;
     }
 
-    @Qualifier("permitionManagerCapability")
-    public PermitionManager getPermitionManager() {
-        return permitionManager;
+    @Qualifier("permissionManagerCapability")
+    public PermissionManager getPermissionManager() {
+        return permissionManager;
     }
 
-    public void setPermitionManager(PermitionManager permitionManager) {
-        this.permitionManager = permitionManager;
+    public void setPermissionManager(PermissionManager permissionManager) {
+        this.permissionManager = permissionManager;
     }
 
     @Qualifier("webInputParamsValidator")

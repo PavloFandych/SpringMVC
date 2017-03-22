@@ -64,7 +64,7 @@ public final class CountryResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermitionManager()
+                        if (getPermissionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
@@ -152,7 +152,7 @@ public final class CountryResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermitionManager()
+                        if (getPermissionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 

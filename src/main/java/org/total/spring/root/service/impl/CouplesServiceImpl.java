@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.total.spring.root.dao.CoulpesDAO;
+import org.total.spring.root.dao.CouplesDAO;
 import org.total.spring.root.service.interfaces.CouplesService;
 
 import java.util.List;
@@ -17,14 +17,14 @@ import java.util.List;
 @Service("couplesService")
 public final class CouplesServiceImpl implements CouplesService {
     @Autowired
-    private CoulpesDAO coulpesDAO;
+    private CouplesDAO couplesDAO;
 
-    public CoulpesDAO getCoulpesDAO() {
-        return coulpesDAO;
+    public CouplesDAO getCouplesDAO() {
+        return couplesDAO;
     }
 
-    public void setCoulpesDAO(CoulpesDAO coulpesDAO) {
-        this.coulpesDAO = coulpesDAO;
+    public void setCouplesDAO(CouplesDAO couplesDAO) {
+        this.couplesDAO = couplesDAO;
     }
 
     @Override
@@ -34,7 +34,7 @@ public final class CouplesServiceImpl implements CouplesService {
     )
     public List<List<String>> getCouples(final String seasonCode,
                                          final String tournamentCode) {
-        List<List<String>> couples = getCoulpesDAO().getEntities(seasonCode, tournamentCode);
+        List<List<String>> couples = getCouplesDAO().getEntities(seasonCode, tournamentCode);
         return (couples != null && !couples.isEmpty()) ? couples : null;
     }
 }

@@ -16,8 +16,8 @@ import java.util.Map;
  * Created by pavlo.fandych on 12/5/2016.
  */
 
-@Repository("coulpesDAO")
-public class CoulpesDAO extends GenericDAO<List<String>> {
+@Repository("couplesDAO")
+public class CouplesDAO extends GenericDAO<List<String>> {
     @Override
     public List<List<String>> getEntities(final Object... param) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())

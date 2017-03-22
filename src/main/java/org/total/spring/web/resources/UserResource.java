@@ -93,7 +93,7 @@ public final class UserResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermitionManager()
+                        if (getPermissionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
@@ -191,7 +191,7 @@ public final class UserResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermitionManager()
+                        if (getPermissionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
@@ -287,7 +287,7 @@ public final class UserResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermitionManager()
+                        if (getPermissionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
@@ -381,7 +381,7 @@ public final class UserResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermitionManager()
+                        if (getPermissionManager()
                                 .containEntity(getter, CapabilityType.READ)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
@@ -473,7 +473,7 @@ public final class UserResource extends AbstractResource {
                     if (deleter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.DELETER_FOUND));
 
-                        if (getPermitionManager()
+                        if (getPermissionManager()
                                 .containEntity(deleter, CapabilityType.DELETE)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
@@ -584,7 +584,7 @@ public final class UserResource extends AbstractResource {
                     if (creator != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.CREATOR_FOUND));
 
-                        if (getPermitionManager()
+                        if (getPermissionManager()
                                 .containEntity(creator, CapabilityType.CREATE)) {
 
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
@@ -715,7 +715,7 @@ public final class UserResource extends AbstractResource {
                     if (updater != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.UPDATER_FOUND));
 
-                        if (getPermitionManager()
+                        if (getPermissionManager()
                                 .containEntity(updater, CapabilityType.UPDATE)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
