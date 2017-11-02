@@ -1,9 +1,10 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.interfaces;
 
 /**
- * Created by pavlo.fandych on 11/2/2016.
+ * @author Pavlo.Fandych
  */
 
 public interface GoalsService {
-    public Integer calcMoreGoalsPerGame(final Integer goals);
+    Integer calcMoreGoalsPerGame(final Integer goals);
 }

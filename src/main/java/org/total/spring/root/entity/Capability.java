@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.entity;
 
 import org.total.spring.root.entity.enums.CapabilityType;
@@ -6,6 +7,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+/**
+ * @author Pavlo.Fandych
+ */
 
 @Entity
 @Table(

@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.total.spring.root.service.interfaces.SeasonService;
 import java.util.List;
 
 /**
- * Created by kostya on 10/15/16.
+ * @author kostya
  */
 
 @Repository

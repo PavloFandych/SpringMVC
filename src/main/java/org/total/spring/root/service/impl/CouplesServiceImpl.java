@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.total.spring.root.service.interfaces.CouplesService;
 import java.util.List;
 
 /**
- * Created by pavlo.fandych on 12/5/2016.
+ * @author Pavlo.Fandych
  */
 
 @Transactional
@@ -34,7 +35,7 @@ public final class CouplesServiceImpl implements CouplesService {
     )
     public List<List<String>> getCouples(final String seasonCode,
                                          final String tournamentCode) {
-        List<List<String>> couples = getCouplesDAO().getEntities(seasonCode, tournamentCode);
+        final List<List<String>> couples = getCouplesDAO().getEntities(seasonCode, tournamentCode);
         return (couples != null && !couples.isEmpty()) ? couples : null;
     }
 }

@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.proc;
 
 import com.fasterxml.jackson.annotation.JsonRawValue;
@@ -8,7 +9,7 @@ import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.entity.enums.TournamentCode;
 
 /**
- * Created by total on 12/19/16.
+ * @author Pavlo.Fandych
  */
 
 @Component("storedTeamsCache")

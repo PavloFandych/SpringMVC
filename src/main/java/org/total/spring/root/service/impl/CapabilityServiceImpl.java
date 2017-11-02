@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.total.spring.root.service.interfaces.CapabilityService;
 import java.util.List;
 
 /**
- * Created by total on 10/28/16.
+ * @author Pavlo.Fandych
  */
 
 @Repository

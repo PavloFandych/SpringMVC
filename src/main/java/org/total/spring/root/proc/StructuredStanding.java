@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.proc;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -5,7 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by total on 12/15/16.
+ * @author Pavlo.Fandych
  */
 
 @Component("structuredStanding")

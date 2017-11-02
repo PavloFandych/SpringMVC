@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.web.resources;
 
 import org.apache.log4j.Logger;
@@ -18,12 +19,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by total on 10/31/16.
+ * @author Pavlo.Fandych
  */
 
 @RestController
 public final class ResultResource extends AbstractResource {
-    private static transient final Logger LOGGER = Logger.getLogger(ResultResource.class);
+    private static final Logger LOGGER = Logger.getLogger(ResultResource.class);
+    private static final String HTTP_STATUS_EQUALS = " http status = ";
 
     @Autowired
     private ResultService resultService;
@@ -39,16 +41,16 @@ public final class ResultResource extends AbstractResource {
     @RequestMapping(value = "/results",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllResults(final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                             final @RequestHeader(name = "Content-Type",
-                                                     required = false) String contentType,
-                                             final @RequestHeader(name = "Version",
-                                                     required = false) String version) {
-        if (getValidator().validate(
-                new String[]{
-                        authorization,
-                        contentType,
-                        version})
+    public ResponseEntity<Object> fetchAllResults(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                  final @RequestHeader(name = "Content-Type",
+                                                          required = false) String contentType,
+                                                  final @RequestHeader(name = "Version",
+                                                          required = false) String version) {
+        final String[] params = new String[3];
+        params[0] = authorization;
+        params[1] = contentType;
+        params[2] = version;
+        if (getValidator().validate(params)
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
@@ -75,20 +77,20 @@ public final class ResultResource extends AbstractResource {
 
                             if (list == null || list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_RESULT_FOUND)
-                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
+                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_RESULT_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
+                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
+                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
@@ -96,7 +98,7 @@ public final class ResultResource extends AbstractResource {
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
+                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
@@ -104,7 +106,7 @@ public final class ResultResource extends AbstractResource {
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
+                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -119,7 +121,7 @@ public final class ResultResource extends AbstractResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
+                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -138,13 +140,13 @@ public final class ResultResource extends AbstractResource {
                                                      required = false) String pageIndex,
                                              final @RequestParam(name = "numRecPerPage",
                                                      required = false) String numRecPerPage) {
-        if (getValidator().validate(
-                new String[]{
-                        authorization,
-                        contentType,
-                        version,
-                        pageIndex,
-                        numRecPerPage})
+        final String[] params = new String[5];
+        params[0] = authorization;
+        params[1] = contentType;
+        params[2] = version;
+        params[3] = pageIndex;
+        params[4] = numRecPerPage;
+        if (getValidator().validate(params)
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
@@ -173,20 +175,20 @@ public final class ResultResource extends AbstractResource {
 
                             if (list == null || list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_RESULT_FOUND)
-                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
+                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_RESULT_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
+                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
+                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
@@ -194,7 +196,7 @@ public final class ResultResource extends AbstractResource {
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
+                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
@@ -202,7 +204,7 @@ public final class ResultResource extends AbstractResource {
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
+                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -217,7 +219,7 @@ public final class ResultResource extends AbstractResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
+                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -233,12 +235,12 @@ public final class ResultResource extends AbstractResource {
                                                              required = false) String contentType,
                                                      final @RequestHeader(name = "Version",
                                                              required = false) String version) {
-        if (getValidator().validate(
-                new String[]{
-                        resultCode,
-                        authorization,
-                        contentType,
-                        version})
+        final String[] params = new String[4];
+        params[0] = authorization;
+        params[1] = contentType;
+        params[2] = version;
+        params[3] = resultCode;
+        if (getValidator().validate(params)
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
@@ -264,20 +266,20 @@ public final class ResultResource extends AbstractResource {
 
                             if (list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_RESULT_FOUND)
-                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
+                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_RESULT_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
+                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
+                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
@@ -285,7 +287,7 @@ public final class ResultResource extends AbstractResource {
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
+                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
@@ -293,7 +295,7 @@ public final class ResultResource extends AbstractResource {
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
+                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -308,7 +310,7 @@ public final class ResultResource extends AbstractResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
+                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 

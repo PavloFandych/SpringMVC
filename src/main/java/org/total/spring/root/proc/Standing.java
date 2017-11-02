@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.proc;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 
 /**
- * Created by pavlo.fandych on 11/3/2016.
+ * @author Pavlo.Fandych
  */
 
 @Component("standing")

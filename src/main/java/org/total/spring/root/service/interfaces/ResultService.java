@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.interfaces;
 
 import org.total.spring.root.entity.Result;
@@ -5,21 +6,21 @@ import org.total.spring.root.entity.Result;
 import java.util.List;
 
 /**
- * Created by kostya on 10/21/16.
+ * @author kostya
  */
 
 public interface ResultService {
-    public List<Result> findAll();
+    List<Result> findAll();
 
-    public List<Result> findAll(final Integer pageIndex, final Integer numRecPerPage);
+    List<Result> findAll(final Integer pageIndex, final Integer numRecPerPage);
 
-    public Result findById(final Long resultId);
+    Result findById(final Long resultId);
 
-    public Result save(final Result entity);
+    Result save(final Result entity);
 
-    public Result update(final Result entity);
+    Result update(final Result entity);
 
-    public void deleteResultByResultId(final Long resultId);
+    void deleteResultByResultId(final Long resultId);
 
-    public Result findResultByResultCode(final String resultCode);
+    Result findResultByResultCode(final String resultCode);
 }

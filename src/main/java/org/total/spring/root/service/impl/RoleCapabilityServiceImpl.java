@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.impl;
 
 import org.apache.log4j.Logger;
@@ -14,9 +15,8 @@ import org.total.spring.root.service.interfaces.RoleCapabilityService;
 import org.total.spring.root.service.interfaces.RoleService;
 
 /**
- * Created by total on 10/28/16.
+ * @author Pavlo.Fandych
  */
-
 @Repository
 @Transactional
 @Service("roleCapabilityService")
@@ -47,9 +47,9 @@ public final class RoleCapabilityServiceImpl implements RoleCapabilityService {
 
     @Override
     public boolean assignCapability(final RoleType roleType, final CapabilityType capabilityType) {
-        Role roleToUpdate = getRoleService()
+        final Role roleToUpdate = getRoleService()
                 .findRoleByRoleType(roleType);
-        Capability capabilityToAssign = getCapabilityService()
+        final Capability capabilityToAssign = getCapabilityService()
                 .findCapabilityByCapabilityType(capabilityType);
 
         LOGGER.info("Role: " + roleToUpdate + " Capabilty: " + capabilityToAssign);

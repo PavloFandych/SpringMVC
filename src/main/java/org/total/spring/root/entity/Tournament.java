@@ -1,7 +1,8 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.entity;
 
 /**
- * Created by kostya on 10/20/16.
+ * @author kostya
  */
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

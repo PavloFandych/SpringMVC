@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.web.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.total.spring.root.util.PermissionManager;
 import org.total.spring.root.util.Validator;
 
 /**
- * Created by total on 12/4/16.
+ * @author Pavlo.Fandych
  */
 
 public abstract class AbstractResource {
@@ -61,7 +62,7 @@ public abstract class AbstractResource {
     }
 
     protected Response generateResponse(String message) {
-        Response response = ContextLoader.getCurrentWebApplicationContext()
+        final Response response = ContextLoader.getCurrentWebApplicationContext()
                 .getBean(Response.class);
         response.setMessage(message);
         return response;

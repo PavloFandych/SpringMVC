@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -9,7 +10,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 /**
- * Created by total on 12/20/16.
+ * @author Pavlo.Fandych
  */
 
 @Entity
@@ -37,9 +38,9 @@ public final class ArchResultFrance implements Serializable {
     }
 
     public ArchResultFrance(Team hostTeam,
-                  Team guestTeam,
-                  byte goalsByHost,
-                  byte goalsByGuest) {
+                            Team guestTeam,
+                            byte goalsByHost,
+                            byte goalsByGuest) {
         this.hostTeam = hostTeam;
         this.guestTeam = guestTeam;
         this.goalsByHost = goalsByHost;

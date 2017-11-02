@@ -1,6 +1,6 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.impl;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -21,11 +21,14 @@ import org.total.spring.root.service.interfaces.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @Repository
 @Transactional
 @Service("userService")
 public final class UserServiceImpl implements UserService {
-    private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -50,7 +53,7 @@ public final class UserServiceImpl implements UserService {
             )
     )
     public List<User> findAll() {
-        List<User> list = new ArrayList<>();
+        final List<User> list = new ArrayList<>();
         for (User item : getUserRepository().findAll()) {
             list.add(item);
         }
@@ -69,7 +72,7 @@ public final class UserServiceImpl implements UserService {
             )
     )
     public List<User> findAll(final Integer pageIndex, final Integer numRecPerPage) {
-        Sort sort = new Sort(Sort.Direction.ASC, "userName");
+        final Sort sort = new Sort(Sort.Direction.ASC, "userName");
         /*
         * @param page zero-based page index.
         * @param size the size of the page to be returned.
@@ -116,7 +119,7 @@ public final class UserServiceImpl implements UserService {
             cacheManager = "springCashManager"
     )
     public User findUserByUserName(final String userName) {
-        List<User> users = getUserRepository().findByUserName(userName);
+        final List<User> users = getUserRepository().findByUserName(userName);
         return (users != null && !users.isEmpty()) ? users.get(0) : null;
     }
 
@@ -126,7 +129,7 @@ public final class UserServiceImpl implements UserService {
     )
     public User findUserByUserNameAndPassword(final String userName,
                                               final String password) {
-        List<User> users = getUserRepository().findByUserNameAndPassword(userName, password);
+        final List<User> users = getUserRepository().findByUserNameAndPassword(userName, password);
         return (users != null && !users.isEmpty()) ? users.get(0) : null;
     }
 
@@ -135,15 +138,15 @@ public final class UserServiceImpl implements UserService {
             cacheManager = "springCashManager"
     )
     public User fetchUserByPassword(final String password) {
-        SearchCriteria searchCriteria = new SearchCriteria();
+        final SearchCriteria searchCriteria = new SearchCriteria();
         searchCriteria.setKey("password");
         searchCriteria.setOperation(":");
         searchCriteria.setValue(password);
 
-        UserSpecification spec = new UserSpecification();
+        final UserSpecification spec = new UserSpecification();
         spec.setCriteria(searchCriteria);
 
-        List<User> users = getUserRepository().findAll(spec);
+        final List<User> users = getUserRepository().findAll(spec);
 
         return (users != null && !users.isEmpty()) ? users.get(0) : null;
     }
@@ -154,23 +157,23 @@ public final class UserServiceImpl implements UserService {
     )
     public User fetchUserByUserIdAndUserName(final Long userId,
                                              final String userName) {
-        SearchCriteria searchCriteriaUserId = new SearchCriteria();
+        final SearchCriteria searchCriteriaUserId = new SearchCriteria();
         searchCriteriaUserId.setKey("userId");
         searchCriteriaUserId.setOperation(":");
         searchCriteriaUserId.setValue(userId);
 
-        UserSpecification specUserId = new UserSpecification();
+        final UserSpecification specUserId = new UserSpecification();
         specUserId.setCriteria(searchCriteriaUserId);
 
-        SearchCriteria searchCriteriaUserName = new SearchCriteria();
+        final SearchCriteria searchCriteriaUserName = new SearchCriteria();
         searchCriteriaUserName.setKey("userName");
         searchCriteriaUserName.setOperation(":");
         searchCriteriaUserName.setValue(userName);
 
-        UserSpecification specUserName = new UserSpecification();
+        final UserSpecification specUserName = new UserSpecification();
         specUserName.setCriteria(searchCriteriaUserName);
 
-        List<User> users = getUserRepository()
+        final List<User> users = getUserRepository()
                 .findAll(Specifications.where(specUserId).and(specUserName));
 
         return (users != null && !users.isEmpty()) ? users.get(0) : null;

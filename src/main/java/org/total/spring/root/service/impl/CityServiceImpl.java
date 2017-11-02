@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,10 @@ import org.total.spring.root.repository.CityRepository;
 import org.total.spring.root.service.interfaces.CityService;
 
 import java.util.List;
+
+/**
+ * @author Pavlo.Fandych
+ */
 
 @Repository
 @Transactional

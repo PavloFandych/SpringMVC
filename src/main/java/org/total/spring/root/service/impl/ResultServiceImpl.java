@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.root.entity.Result;
-import org.total.spring.root.entity.User;
 import org.total.spring.root.repository.ResultRepository;
 import org.total.spring.root.service.interfaces.ResultService;
 
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by kostya on 10/21/16.
+ * @author kostya
  */
 
 @Repository

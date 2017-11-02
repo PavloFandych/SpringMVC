@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by total on 12/20/16.
+ * @author Pavlo.Fandych
  */
 
 @Repository
@@ -47,7 +48,7 @@ public final class ArchResultEnglandServiceImpl implements ArchResultEnglandServ
             )
     )
     public List<ArchResultEngland> findAll() {
-        List<ArchResultEngland> list = new ArrayList<>();
+        final List<ArchResultEngland> list = new ArrayList<>();
         for (ArchResultEngland item : getArchResultEnglandRepository().findAll()) {
             list.add(item);
         }
@@ -67,7 +68,7 @@ public final class ArchResultEnglandServiceImpl implements ArchResultEnglandServ
     )
     public List<ArchResultEngland> findAll(final Integer pageIndex,
                                            final Integer numRecPerPage) {
-        Sort sort = new Sort(Sort.Direction.ASC, "date");
+        final Sort sort = new Sort(Sort.Direction.ASC, "date");
         /*
         * @param page zero-based page index.
         * @param size the size of the page to be returned.

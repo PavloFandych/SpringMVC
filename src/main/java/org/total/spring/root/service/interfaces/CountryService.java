@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.interfaces;
 
 import org.total.spring.root.entity.Country;
@@ -5,18 +6,22 @@ import org.total.spring.root.entity.enums.CountryCode;
 
 import java.util.List;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 public interface CountryService {
-    public List<Country> findAll();
+    List<Country> findAll();
 
-    public Country findById(final Long countryId);
+    Country findById(final Long countryId);
 
-    public Country save(final Country entity);
+    Country save(final Country entity);
 
-    public Country update(final Country entity);
+    Country update(final Country entity);
 
-    public void deleteCountryByCountryId(final Long countryId);
+    void deleteCountryByCountryId(final Long countryId);
 
-    public Country findCountryByCountryName(final String countryName);
+    Country findCountryByCountryName(final String countryName);
 
-    public Country findCountryByCountryCode(final CountryCode countryCode);
+    Country findCountryByCountryCode(final CountryCode countryCode);
 }

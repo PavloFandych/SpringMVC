@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,6 +8,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+/**
+ * @author Pavlo.Fandych
+ */
 
 @Entity
 @Table(name = "Role",
@@ -80,6 +85,10 @@ public final class Role implements Serializable {
         return users;
     }
 
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
     /*capabilities field mapping*/
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
@@ -105,10 +114,6 @@ public final class Role implements Serializable {
 
     public void setCapabilities(Set<Capability> capabilities) {
         this.capabilities = capabilities;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 
     @Override

@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.web.resources;
 
 import org.apache.log4j.Logger;
@@ -16,12 +17,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by pavlo.fandych on 12/5/2016.
+ * @author Pavlo.Fandych
  */
 
 @RestController
 public final class CouplesResource extends AbstractResource {
-    private static transient final Logger LOGGER = Logger.getLogger(CouplesResource.class);
+    private static final Logger LOGGER = Logger.getLogger(CouplesResource.class);
+    private static final String HTTP_STATUS_EQUALS = " http status = ";
 
     @Autowired
     private CouplesService couplesService;
@@ -37,22 +39,22 @@ public final class CouplesResource extends AbstractResource {
     @RequestMapping(value = "/couples",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchCouples(final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                          final @RequestHeader(name = "Content-Type",
-                                                  required = false) String contentType,
-                                          final @RequestHeader(name = "Version",
-                                                  required = false) String version,
-                                          final @RequestParam(name = "seasonCode",
-                                                  required = false) String seasonCode,
-                                          final @RequestParam(name = "tournamentCode",
-                                                  required = false) String tournamentCode) {
-        if (getValidator().validate(
-                new String[]{
-                        authorization,
-                        contentType,
-                        version,
-                        seasonCode,
-                        tournamentCode})
+    public ResponseEntity<Object> fetchCouples(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                               final @RequestHeader(name = "Content-Type",
+                                                       required = false) String contentType,
+                                               final @RequestHeader(name = "Version",
+                                                       required = false) String version,
+                                               final @RequestParam(name = "seasonCode",
+                                                       required = false) String seasonCode,
+                                               final @RequestParam(name = "tournamentCode",
+                                                       required = false) String tournamentCode) {
+        final String[] params = new String[5];
+        params[0] = authorization;
+        params[1] = contentType;
+        params[2] = version;
+        params[3] = seasonCode;
+        params[4] = tournamentCode;
+        if (getValidator().validate(params)
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
@@ -80,20 +82,20 @@ public final class CouplesResource extends AbstractResource {
 
                             if (list == null || list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_COUPLES_FOUND)
-                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
+                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_COUPLES_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
+                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
+                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
@@ -101,7 +103,7 @@ public final class CouplesResource extends AbstractResource {
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
+                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
@@ -109,7 +111,7 @@ public final class CouplesResource extends AbstractResource {
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
+                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -124,7 +126,7 @@ public final class CouplesResource extends AbstractResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
+                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 

@@ -1,9 +1,14 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.interfaces;
 
 import org.total.spring.root.entity.enums.RoleType;
 
-public interface UserRoleService {
-    public boolean assignRole(final String userName, final RoleType roleType);
+/**
+ * @author Pavlo.Fandych
+ */
 
-    public boolean revokeRole(final String userName, final RoleType roleType);
+public interface UserRoleService {
+    boolean assignRole(final String userName, final RoleType roleType);
+
+    boolean revokeRole(final String userName, final RoleType roleType);
 }

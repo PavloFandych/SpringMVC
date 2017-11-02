@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.web.controller;
 
 import org.slf4j.Logger;
@@ -15,6 +16,10 @@ import org.total.spring.root.util.Constants;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
+
+/**
+ * @author Pavlo.Fandych
+ */
 
 @Controller
 public final class UserInfoController {
@@ -69,7 +74,9 @@ public final class UserInfoController {
                 users.add(authorizedUser);
             }
 
-            LOGGER.debug("Users userInfo = ".concat(users.toString()));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Users userInfo = ".concat(users.toString()));
+            }
 
             request.setAttribute("Users", users);
         } catch (Exception e) {

@@ -1,27 +1,32 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.interfaces;
 
 import org.total.spring.root.entity.User;
 
 import java.util.List;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 public interface UserService {
-    public List<User> findAll();
+    List<User> findAll();
 
-    public List<User> findAll(final Integer pageIndex, final Integer numRecPerPage);
+    List<User> findAll(final Integer pageIndex, final Integer numRecPerPage);
 
-    public User findById(final Long userId);
+    User findById(final Long userId);
 
-    public User save(final User entity);
+    User save(final User entity);
 
-    public User update(final User entity);
+    User update(final User entity);
 
-    public void deleteUserByUserId(final Long userId);
+    void deleteUserByUserId(final Long userId);
 
-    public User findUserByUserName(final String userName);
+    User findUserByUserName(final String userName);
 
-    public User findUserByUserNameAndPassword(final String userName, final String password);
+    User findUserByUserNameAndPassword(final String userName, final String password);
 
-    public User fetchUserByPassword(final String password);
+    User fetchUserByPassword(final String password);
 
-    public User fetchUserByUserIdAndUserName(final Long userId, final String userName);
+    User fetchUserByUserIdAndUserName(final Long userId, final String userName);
 }

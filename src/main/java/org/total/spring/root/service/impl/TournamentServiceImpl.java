@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.total.spring.root.service.interfaces.TournamentService;
 import java.util.List;
 
 /**
- * Created by kostya on 10/21/16.
+ * @author kostya
  */
 
 @Repository
@@ -100,7 +101,7 @@ public final class TournamentServiceImpl implements TournamentService {
             sync = true
     )
     public Tournament findTournamentByTournamentName(final String tournamentName) {
-        List<Tournament> tournaments = getTournamentRepository()
+        final List<Tournament> tournaments = getTournamentRepository()
                 .findByTournamentName(tournamentName);
         return (tournaments != null && !tournaments.isEmpty()) ? tournaments.get(0) : null;
 
@@ -144,7 +145,7 @@ public final class TournamentServiceImpl implements TournamentService {
             )
     )
     public List<Tournament> findTournamentsByCountryCode(final String countryCode) {
-        List<Tournament> resultList = getTournamentDAO()
+        final List<Tournament> resultList = getTournamentDAO()
                 .getTournamentsByCountryCode(countryCode);
         return (resultList != null && !resultList.isEmpty()) ? resultList : null;
     }

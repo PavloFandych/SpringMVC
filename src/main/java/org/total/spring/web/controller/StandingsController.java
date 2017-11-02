@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.web.controller;
 
 import org.springframework.stereotype.Controller;
@@ -6,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Created by total on 11/15/16.
+ * @author Pavlo.Fandych
  */
 
 @Controller

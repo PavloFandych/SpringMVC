@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.web.resources;
 
 import org.apache.log4j.Logger;
@@ -17,12 +18,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by total on 12/20/16.
+ * @author Pavlo.Fandych
  */
 
 @RestController
 public final class ArchResultResource extends AbstractResource {
-    private static transient final Logger LOGGER = Logger.getLogger(ArchResultResource.class);
+    private static final Logger LOGGER = Logger.getLogger(ArchResultResource.class);
+    private static final String HTTP_STATUS_EQUALS = " http status = ";
 
     @Autowired
     private ArchResultEnglandService archResultEnglandService;
@@ -82,19 +84,20 @@ public final class ArchResultResource extends AbstractResource {
     @RequestMapping(value = "/results/arch/{countryCode}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllArchResults(final @PathVariable String countryCode,
-                                                 final @RequestHeader(name = "Authorization",
-                                                         required = false) String authorization,
-                                                 final @RequestHeader(name = "Content-Type",
-                                                         required = false) String contentType,
-                                                 final @RequestHeader(name = "Version",
-                                                         required = false) String version) {
-        if (getValidator().validate(
-                new String[]{
-                        countryCode,
-                        authorization,
-                        contentType,
-                        version})
+    public ResponseEntity<Object> fetchAllArchResults(final @PathVariable String countryCode,
+                                                      final @RequestHeader(name = "Authorization",
+                                                              required = false) String authorization,
+                                                      final @RequestHeader(name = "Content-Type",
+                                                              required = false) String contentType,
+                                                      final @RequestHeader(name = "Version",
+                                                              required = false) String version) {
+        final String[] params = new String[4];
+        params[0] = countryCode;
+        params[1] = authorization;
+        params[2] = contentType;
+        params[3] = version;
+
+        if (getValidator().validate(params)
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
@@ -138,20 +141,20 @@ public final class ArchResultResource extends AbstractResource {
 
                             if (list == null || list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_RESULT_FOUND)
-                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
+                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_RESULT_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
+                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
+                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
@@ -159,7 +162,7 @@ public final class ArchResultResource extends AbstractResource {
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
+                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
@@ -167,7 +170,7 @@ public final class ArchResultResource extends AbstractResource {
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
+                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -182,7 +185,7 @@ public final class ArchResultResource extends AbstractResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
+                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -192,25 +195,26 @@ public final class ArchResultResource extends AbstractResource {
     @RequestMapping(value = "/results/arch/pagination/{countryCode}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllArchResults(final @PathVariable String countryCode,
-                                                 final @RequestHeader(name = "Authorization",
-                                                         required = false) String authorization,
-                                                 final @RequestHeader(name = "Content-Type",
-                                                         required = false) String contentType,
-                                                 final @RequestHeader(name = "Version",
-                                                         required = false) String version,
-                                                 final @RequestParam(name = "pageIndex",
-                                                         required = false) String pageIndex,
-                                                 final @RequestParam(name = "numRecPerPage",
-                                                         required = false) String numRecPerPage) {
-        if (getValidator().validate(
-                new String[]{
-                        countryCode,
-                        authorization,
-                        contentType,
-                        version,
-                        pageIndex,
-                        numRecPerPage})
+    public ResponseEntity<Object> fetchAllArchResults(final @PathVariable String countryCode,
+                                                      final @RequestHeader(name = "Authorization",
+                                                              required = false) String authorization,
+                                                      final @RequestHeader(name = "Content-Type",
+                                                              required = false) String contentType,
+                                                      final @RequestHeader(name = "Version",
+                                                              required = false) String version,
+                                                      final @RequestParam(name = "pageIndex",
+                                                              required = false) String pageIndex,
+                                                      final @RequestParam(name = "numRecPerPage",
+                                                              required = false) String numRecPerPage) {
+        final String[] params = new String[6];
+        params[0] = countryCode;
+        params[1] = authorization;
+        params[2] = contentType;
+        params[3] = version;
+        params[4] = pageIndex;
+        params[5] = numRecPerPage;
+
+        if (getValidator().validate(params)
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
@@ -258,20 +262,20 @@ public final class ArchResultResource extends AbstractResource {
 
                             if (list == null || list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_RESULT_FOUND)
-                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
+                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_RESULT_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
+                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
+                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
@@ -279,7 +283,7 @@ public final class ArchResultResource extends AbstractResource {
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
+                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
@@ -287,7 +291,7 @@ public final class ArchResultResource extends AbstractResource {
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
+                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -302,7 +306,7 @@ public final class ArchResultResource extends AbstractResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
+                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 

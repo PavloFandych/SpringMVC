@@ -1,7 +1,8 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.entity.enums;
 
 /**
- * Created by kostya on 10/15/16.
+ * @author Pavlo.Fandych
  */
 
 public enum SeasonCode {

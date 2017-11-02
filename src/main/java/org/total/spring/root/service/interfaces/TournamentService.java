@@ -1,3 +1,4 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.interfaces;
 
 import org.total.spring.root.entity.Tournament;
@@ -6,25 +7,25 @@ import org.total.spring.root.entity.enums.TournamentCode;
 import java.util.List;
 
 /**
- * Created by kostya on 10/21/16.
+ * @author kostya
  */
 
 public interface TournamentService {
-    public List<Tournament> findAll();
+    List<Tournament> findAll();
 
-    public Tournament findById(final Long tournamentId);
+    Tournament findById(final Long tournamentId);
 
-    public Tournament save(final Tournament entity);
+    Tournament save(final Tournament entity);
 
-    public Tournament update(final Tournament entity);
+    Tournament update(final Tournament entity);
 
-    public void deleteTournamentByTournamentId(final Long tournamentId);
+    void deleteTournamentByTournamentId(final Long tournamentId);
 
-    public Tournament findTournamentByTournamentName(final String tournamentName);
+    Tournament findTournamentByTournamentName(final String tournamentName);
 
-    public Tournament findTournamentByTournamentCode(final TournamentCode tournamentCode);
+    Tournament findTournamentByTournamentCode(final TournamentCode tournamentCode);
 
-    public List<Tournament> getActualTournaments();
+    List<Tournament> getActualTournaments();
 
-    public List<Tournament> findTournamentsByCountryCode(final String countryCode);
+    List<Tournament> findTournamentsByCountryCode(final String countryCode);
 }

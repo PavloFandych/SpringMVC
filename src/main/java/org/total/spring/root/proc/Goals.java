@@ -1,10 +1,11 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.proc;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by pavlo.fandych on 11/2/2016.
+ * @author Pavlo.Fandych
  */
 
 @Entity
