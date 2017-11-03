@@ -19,6 +19,12 @@ import org.total.spring.root.util.PasswordManager;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static org.total.spring.root.util.Constants.INDEX_PAGE_STRING;
+
+/**
+ * @author Pavlo.Fandych
+ */
+
 @Controller
 public final class RegisterController {
     private static final Logger LOGGER = Logger.getLogger(RegisterController.class);
@@ -127,25 +133,7 @@ public final class RegisterController {
 
                     LOGGER.debug("User created. ".concat(userToRegister.toString()));
 
-                    try {
-                        getUserService().save(userToRegister);
-                        getUserRoleService().assignRole(registrationBean.getUserName(),
-                                RoleType.USER);
-
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS
-                                .concat(" role \"")
-                                .concat(RoleType.USER.name())
-                                .concat("\" to user ")
-                                .concat(registrationBean.getUserName())
-                                .concat(" assigned successful"));
-
-                        request.getSession().setAttribute("User", userToRegister);
-                        return "/index";
-                    } catch (Exception e) {
-                        LOGGER.error(Constants.STATUS_REQ_FAIL
-                                .concat(" ")
-                                .concat("Error while performing registration"));
-                    }
+                    if (userProcessing(registrationBean, request, userToRegister)) return INDEX_PAGE_STRING;
                 }
             } else {
                 LOGGER.error(Constants.ERROR
@@ -155,6 +143,29 @@ public final class RegisterController {
         } catch (Exception e) {
             LOGGER.error(e);
         }
-        return "/index";
+        return INDEX_PAGE_STRING;
+    }
+
+    private boolean userProcessing(@ModelAttribute("registrationBean") RegistrationBean registrationBean, HttpServletRequest request, User userToRegister) {
+        try {
+            getUserService().save(userToRegister);
+            getUserRoleService().assignRole(registrationBean.getUserName(),
+                    RoleType.USER);
+
+            LOGGER.debug(Constants.STATUS_REQ_SUCCESS
+                    .concat(" role \"")
+                    .concat(RoleType.USER.name())
+                    .concat("\" to user ")
+                    .concat(registrationBean.getUserName())
+                    .concat(" assigned successful"));
+
+            request.getSession().setAttribute("User", userToRegister);
+            return true;
+        } catch (Exception e) {
+            LOGGER.error(Constants.STATUS_REQ_FAIL
+                    .concat(" ")
+                    .concat("Error while performing registration"));
+        }
+        return false;
     }
 }

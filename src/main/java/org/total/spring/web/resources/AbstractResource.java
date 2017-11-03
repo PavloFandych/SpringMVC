@@ -1,19 +1,34 @@
 package org.total.spring.web.resources;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.ContextLoader;
+import org.total.spring.root.entity.Role;
+import org.total.spring.root.entity.User;
+import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.response.Response;
+import org.total.spring.root.service.interfaces.CapabilityService;
 import org.total.spring.root.service.interfaces.UserService;
+import org.total.spring.root.util.Constants;
 import org.total.spring.root.util.PasswordManager;
 import org.total.spring.root.util.PermissionManager;
 import org.total.spring.root.util.Validator;
 
+import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
+
 /**
- * Created by total on 12/4/16.
+ * @author Pavlo.Fandych
  */
 
 public abstract class AbstractResource {
+    @Autowired
+    private CapabilityService capabilityService;
+
     @Autowired
     private UserService userService;
 
@@ -42,6 +57,14 @@ public abstract class AbstractResource {
         this.passwordManager = passwordManager;
     }
 
+    public CapabilityService getCapabilityService() {
+        return capabilityService;
+    }
+
+    public void setCapabilityService(CapabilityService capabilityService) {
+        this.capabilityService = capabilityService;
+    }
+
     @Qualifier("permissionManagerCapability")
     public PermissionManager getPermissionManager() {
         return permissionManager;
@@ -61,9 +84,60 @@ public abstract class AbstractResource {
     }
 
     protected Response generateResponse(String message) {
-        Response response = ContextLoader.getCurrentWebApplicationContext()
+        final Response response = ContextLoader.getCurrentWebApplicationContext()
                 .getBean(Response.class);
         response.setMessage(message);
+
         return response;
+    }
+
+    ResponseEntity<? super Response> getNegativeResponseEntity(final String reason,
+                                                               final HttpStatus httpStatus,
+                                                               final Logger logger) {
+        logger.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(reason)
+                .concat(" http status = ").concat(httpStatus.name()));
+
+        return new ResponseEntity<>(generateResponse(reason), httpStatus);
+    }
+
+    ResponseEntity<? super Response> getPositiveResponseEntity(final Object payload,
+                                                               final Logger logger) {
+        logger.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
+                .concat(" http status = ").concat(HttpStatus.OK.name()));
+
+        return new ResponseEntity<>(payload, HttpStatus.OK);
+    }
+
+    boolean isValidHeaders(final List<String> params,
+                           final Predicate<List<String>> predicate) {
+        return (params != null) && predicate.test(params) && params.contains(Constants.CONTENT_TYPE_APPLICATION_JSON);
+    }
+
+    boolean hasPermissions(final User user,
+                           final CapabilityType target,
+                           final BiPredicate<User, CapabilityType> biPredicate) {
+        return biPredicate.test(user, target);
+    }
+
+    boolean predicateHeaderLogic(final List<String> strings) {
+        for (String item : strings) {
+            if (item == null || item.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    boolean biPredicatePermissionsLogic(User user, CapabilityType capabilityType) {
+        boolean hasCapability = false;
+        for (Role role : user.getRoles()) {
+            if (role.getCapabilities()
+                    .contains(getCapabilityService()
+                            .findCapabilityByCapabilityType(capabilityType))) {
+                hasCapability = true;
+                break;
+            }
+        }
+        return hasCapability;
     }
 }

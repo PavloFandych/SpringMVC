@@ -1,7 +1,6 @@
 package org.total.spring.web.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @Controller
 public final class UserInfoController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserInfoController.class);
+    private static final Logger LOGGER = Logger.getLogger(UserInfoController.class);
 
     @Autowired
     private UserService userService;
@@ -50,16 +53,16 @@ public final class UserInfoController {
         Collection<User> users = null;
 
         try {
-            User user = (User) request.getSession().getAttribute("User");
+            final User user = (User) request.getSession().getAttribute("User");
 
-            String authorizedUserName = user.getUserName();
+            final String authorizedUserName = user.getUserName();
 
             /*need to fetch user by userName because jpa has closed
              * persistence-session and roles need to be loaded again.
              * RegisterController saved user into http-session without
              * initialized roles.
              */
-            User authorizedUser = getUserService().findUserByUserName(authorizedUserName);
+            final User authorizedUser = getUserService().findUserByUserName(authorizedUserName);
 
             if (authorizedUser.getRoles().contains(getRoleService()
                     .findRoleByRoleType(RoleType.ADMIN))) {

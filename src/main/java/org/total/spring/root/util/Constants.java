@@ -61,6 +61,9 @@ public final class Constants {
     public static final String CALL_GET_COUPLES = "getCouplesBySeasonCodeAndTournamentCode";
     public static final String CALL_GET_STANDINGS_LIST = "getStandingsList";
 
+    /*MVC constants*/
+    public static final String INDEX_PAGE_STRING = "/index";
+
     private Constants() {
     }
 }

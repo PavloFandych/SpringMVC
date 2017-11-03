@@ -1,7 +1,6 @@
 package org.total.spring.web.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +15,15 @@ import org.total.spring.root.util.PasswordManager;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static org.total.spring.root.util.Constants.INDEX_PAGE_STRING;
+
+/**
+ * @author Pavlo.Fandych
+ */
+
 @Controller
 public final class AuthController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
+    private static final Logger LOGGER = Logger.getLogger(AuthController.class);
 
     @Autowired
     private UserService userService;
@@ -73,14 +78,14 @@ public final class AuthController {
                     LOGGER.debug(Constants.STATUS_REQ_SUCCESS
                             .concat(" Authorization successful"));
                     request.getSession().setAttribute("User", user);
-                    return "/index";
+                    return INDEX_PAGE_STRING;
                 } else {
                     if (getUserService().findUserByUserName(loginBean.getLogin()) != null) {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL
                                 .concat(" ")
                                 .concat(Constants.INVALID_CREDENTIALS));
                         request.setAttribute(Constants.ERROR, Constants.INVALID_CREDENTIALS);
-                        return "/index";
+                        return INDEX_PAGE_STRING;
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL
                                 .concat(" No user ")
@@ -89,7 +94,7 @@ public final class AuthController {
                         request.setAttribute(Constants.ERROR, " No user "
                                 .concat(loginBean.getLogin())
                                 .concat(" found."));
-                        return "/index";
+                        return INDEX_PAGE_STRING;
                     }
                 }
             }
@@ -97,13 +102,13 @@ public final class AuthController {
             LOGGER.error(Constants.STATUS_REQ_FAIL.concat(" Error while performing auth "), e);
         }
         request.setAttribute(Constants.ERROR, Constants.INVALID_CREDENTIALS);
-        return "/index";
+        return INDEX_PAGE_STRING;
     }
 
     @RequestMapping(value = "/logout",
             method = RequestMethod.GET)
     public String logout(HttpServletRequest request) {
         request.getSession().invalidate();
-        return "/index";
+        return INDEX_PAGE_STRING;
     }
 }
