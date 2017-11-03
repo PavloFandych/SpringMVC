@@ -8,7 +8,7 @@ import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.service.interfaces.CapabilityService;
 
 /**
- * Created by pavlo.fandych on 11/7/2016.
+ * @author Pavlo.Fandych
  */
 
 @Component("permissionManagerCapability")

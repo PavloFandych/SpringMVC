@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.root.entity.Result;
-import org.total.spring.root.entity.User;
 import org.total.spring.root.repository.ResultRepository;
 import org.total.spring.root.service.interfaces.ResultService;
 
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by kostya on 10/21/16.
+ * @author Pavlo.Fandych
  */
 
 @Repository
@@ -49,7 +48,7 @@ public final class ResultServiceImpl implements ResultService {
             )
     )
     public List<Result> findAll() {
-        List<Result> list = new ArrayList<>();
+        final List<Result> list = new ArrayList<>();
         for (Result item : getResultRepository().findAll()) {
             list.add(item);
         }
@@ -68,7 +67,7 @@ public final class ResultServiceImpl implements ResultService {
             )
     )
     public List<Result> findAll(final Integer pageIndex, final Integer numRecPerPage) {
-        Sort sort = new Sort(Sort.Direction.ASC, "date");
+        final Sort sort = new Sort(Sort.Direction.ASC, "date");
         /*
         * @param page zero-based page index.
         * @param size the size of the page to be returned.

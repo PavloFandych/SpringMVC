@@ -6,25 +6,25 @@ import org.total.spring.root.entity.enums.SeasonCode;
 import java.util.List;
 
 /**
- * Created by kostya on 10/15/16.
+ * @author kostya
  */
 
 public interface SeasonService {
-    public List<Season> findAll();
+    List<Season> findAll();
 
-    public List<List<String>> findAllStoredProc();
+    List<List<String>> findAllStoredProc();
 
-    public Season findById(final Long seasonId);
+    Season findById(final Long seasonId);
 
-    public Season save(final Season entity);
+    Season save(final Season entity);
 
-    public Season update(final Season entity);
+    Season update(final Season entity);
 
-    public void deleteSeasonBySeasonId(final Long seasonId);
+    void deleteSeasonBySeasonId(final Long seasonId);
 
-    public Season findSeasonBySeasonName(final String seasonName);
+    Season findSeasonBySeasonName(final String seasonName);
 
-    public Season findSeasonBySeasonCode(final SeasonCode seasonCode);
+    Season findSeasonBySeasonCode(final SeasonCode seasonCode);
 
-    public List<Season> getActualSeasons();
+    List<Season> getActualSeasons();
 }

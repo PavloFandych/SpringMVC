@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by pavlo.fandych on 11/3/2016.
+ * @author Pavlo.Fandych
  */
 
 @Transactional
@@ -70,16 +70,16 @@ public final class StandingServiceImpl implements StandingService {
     )
     public String getCachedStandings(final String seasonCode,
                                      final String tournamentCode) {
-        String result = getStandingDAO().getCachedStandings(seasonCode, tournamentCode);
+        final String result = getStandingDAO().getCachedStandings(seasonCode, tournamentCode);
         return (result != null && !result.isEmpty()) ? result : null;
     }
 
     public List<List<StructuredStanding>> getStructuredStandings(final String seasonCode,
                                                                  final String tournamentCode) {
-        List<StructuredStanding> list = getStandingDAO()
+        final List<StructuredStanding> list = getStandingDAO()
                 .getStructuredStandings(seasonCode, tournamentCode);
 
-        List<List<StructuredStanding>> result = new ArrayList<>();
+        final List<List<StructuredStanding>> result = new ArrayList<>();
 
         byte place = 0;
         for (StructuredStanding structuredStanding : list) {
@@ -89,7 +89,7 @@ public final class StandingServiceImpl implements StandingService {
         }
 
         for (byte index = 1; index <= place; index++) {
-            List<StructuredStanding> structuredStandingList = new ArrayList<>();
+            final List<StructuredStanding> structuredStandingList = new ArrayList<>();
             for (StructuredStanding structuredStanding : list) {
                 if (structuredStanding.getPlace() == index) {
                     structuredStandingList.add(structuredStanding);

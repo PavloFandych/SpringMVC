@@ -7,10 +7,10 @@ import org.total.spring.root.entity.ArchResultSpain;
 import java.util.List;
 
 /**
- * Created by total on 12/20/16.
+ * @author Pavlo.Fandych
  */
 
 public interface ArchResultSpainRepository extends PagingAndSortingRepository<ArchResultSpain, Long>,
         JpaSpecificationExecutor<ArchResultSpain> {
-    public List<ArchResultSpain> findByResultCode(final String resultCode);
+    List<ArchResultSpain> findByResultCode(final String resultCode);
 }

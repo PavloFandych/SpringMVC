@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by total on 12/20/16.
+ * @author Pavlo.Fandych
  */
 
 @Repository
@@ -47,7 +47,7 @@ public final class ArchResultGermanyServiceImpl implements ArchResultGermanyServ
             )
     )
     public List<ArchResultGermany> findAll() {
-        List<ArchResultGermany> list = new ArrayList<>();
+        final List<ArchResultGermany> list = new ArrayList<>();
         for (ArchResultGermany item : getArchResultGermanyRepository().findAll()) {
             list.add(item);
         }
@@ -67,7 +67,7 @@ public final class ArchResultGermanyServiceImpl implements ArchResultGermanyServ
     )
     public List<ArchResultGermany> findAll(final Integer pageIndex,
                                            final Integer numRecPerPage) {
-        Sort sort = new Sort(Sort.Direction.ASC, "date");
+        final Sort sort = new Sort(Sort.Direction.ASC, "date");
         /*
         * @param page zero-based page index.
         * @param size the size of the page to be returned.

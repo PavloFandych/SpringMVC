@@ -7,10 +7,10 @@ import org.total.spring.root.entity.Result;
 import java.util.List;
 
 /**
- * Created by kostya on 10/21/16.
+ * @author kostya
  */
 
 public interface ResultRepository extends PagingAndSortingRepository<Result, Long>,
         JpaSpecificationExecutor<Result> {
-    public List<Result> findByResultCode(final String resultCode);
+    List<Result> findByResultCode(final String resultCode);
 }

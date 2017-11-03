@@ -6,10 +6,10 @@ import org.springframework.data.repository.query.Param;
 import org.total.spring.root.proc.Goals;
 
 /**
- * Created by pavlo.fandych on 11/2/2016.
+ * @author Pavlo.Fandych
  */
 
 public interface GoalsRepository extends JpaRepository<Goals, Long> {
     @Procedure(name = "moreGoalsPerGameProcedure")
-    public Integer calcMoreGoalsPerGame(final @Param("goals") Integer goals);
+    Integer calcMoreGoalsPerGame(final @Param("goals") Integer goals);
 }

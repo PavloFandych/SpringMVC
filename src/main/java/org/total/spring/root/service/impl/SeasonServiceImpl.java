@@ -17,7 +17,7 @@ import org.total.spring.root.service.interfaces.SeasonService;
 import java.util.List;
 
 /**
- * Created by kostya on 10/15/16.
+ * @author kostya
  */
 
 @Repository
@@ -115,9 +115,8 @@ public final class SeasonServiceImpl implements SeasonService {
             sync = true
     )
     public Season findSeasonBySeasonName(final String seasonName) {
-        List<Season> seasons = getSeasonRepository().findBySeasonName(seasonName);
+        final List<Season> seasons = getSeasonRepository().findBySeasonName(seasonName);
         return (seasons != null && !seasons.isEmpty()) ? seasons.get(0) : null;
-
     }
 
     @Override
@@ -126,7 +125,7 @@ public final class SeasonServiceImpl implements SeasonService {
             sync = true
     )
     public Season findSeasonBySeasonCode(final SeasonCode seasonCode) {
-        List<Season> seasons = getSeasonRepository().findBySeasonCode(seasonCode);
+        final List<Season> seasons = getSeasonRepository().findBySeasonCode(seasonCode);
         return (seasons != null && !seasons.isEmpty()) ? seasons.get(0) : null;
     }
 

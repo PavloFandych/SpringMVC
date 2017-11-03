@@ -16,7 +16,7 @@ import org.total.spring.root.service.interfaces.CapabilityService;
 import java.util.List;
 
 /**
- * Created by total on 10/28/16.
+ * @author Pavlo.Fandych
  */
 
 @Repository
@@ -86,7 +86,7 @@ public final class CapabilityServiceImpl implements CapabilityService {
             cacheManager = "springCashManager"
     )
     public Capability findCapabilityByCapabilityType(final CapabilityType capabilityType) {
-        List<Capability> capabilities = getCapabilityRepository().findByCapabilityType(capabilityType);
+        final List<Capability> capabilities = getCapabilityRepository().findByCapabilityType(capabilityType);
         return (capabilities != null && !capabilities.isEmpty()) ? capabilities.get(0) : null;
     }
 }

@@ -4,6 +4,10 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @Component("passwordManager")
 public final class PasswordManagerImpl implements PasswordManager {
 
@@ -21,6 +25,6 @@ public final class PasswordManagerImpl implements PasswordManager {
     @Override
     public synchronized String decodeBase64(final String input) {
         return new String(Base64.decodeBase64(input
-                .substring(input.indexOf(" ") + 1).getBytes()));
+                .substring(input.indexOf(' ') + 1).getBytes()));
     }
 }

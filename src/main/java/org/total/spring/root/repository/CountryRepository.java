@@ -6,8 +6,12 @@ import org.total.spring.root.entity.enums.CountryCode;
 
 import java.util.List;
 
-public interface CountryRepository extends JpaRepository<Country, Long> {
-    public List<Country> findByCountryName(final String CountryName);
+/**
+ * @author Pavlo.Fandych
+ */
 
-    public List<Country> findByCountryCode(final CountryCode countryCode);
+public interface CountryRepository extends JpaRepository<Country, Long> {
+    List<Country> findByCountryName(final String CountryName);
+
+    List<Country> findByCountryCode(final CountryCode countryCode);
 }

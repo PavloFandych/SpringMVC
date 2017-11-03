@@ -9,7 +9,7 @@ import org.total.spring.root.repository.GoalsRepository;
 import org.total.spring.root.service.interfaces.GoalsService;
 
 /**
- * Created by pavlo.fandych on 11/2/2016.
+ * @author Pavlo.Fandych
  */
 
 @Repository

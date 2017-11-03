@@ -14,7 +14,7 @@ import org.total.spring.root.service.interfaces.RoleCapabilityService;
 import org.total.spring.root.service.interfaces.RoleService;
 
 /**
- * Created by total on 10/28/16.
+ * @author Pavlo.Fandych
  */
 
 @Repository
@@ -47,12 +47,12 @@ public final class RoleCapabilityServiceImpl implements RoleCapabilityService {
 
     @Override
     public boolean assignCapability(final RoleType roleType, final CapabilityType capabilityType) {
-        Role roleToUpdate = getRoleService()
+        final Role roleToUpdate = getRoleService()
                 .findRoleByRoleType(roleType);
-        Capability capabilityToAssign = getCapabilityService()
+        final Capability capabilityToAssign = getCapabilityService()
                 .findCapabilityByCapabilityType(capabilityType);
 
-        LOGGER.info("Role: " + roleToUpdate + " Capabilty: " + capabilityToAssign);
+        LOGGER.info("Role: " + roleToUpdate + " Capability: " + capabilityToAssign);
 
         if (roleToUpdate != null && capabilityToAssign != null) {
             if (!roleToUpdate.getCapabilities().contains(capabilityToAssign)) {

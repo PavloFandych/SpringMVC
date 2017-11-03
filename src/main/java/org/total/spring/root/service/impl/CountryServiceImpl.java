@@ -15,6 +15,10 @@ import org.total.spring.root.service.interfaces.CountryService;
 
 import java.util.List;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @Repository
 @Transactional
 @Service("countryService")
@@ -94,7 +98,7 @@ public final class CountryServiceImpl implements CountryService {
             sync = true
     )
     public Country findCountryByCountryCode(final CountryCode countryCode) {
-        List<Country> countries = getCountryRepository().findByCountryCode(countryCode);
+        final List<Country> countries = getCountryRepository().findByCountryCode(countryCode);
         return (countries != null && !countries.isEmpty()) ? countries.get(0) : null;
     }
 }

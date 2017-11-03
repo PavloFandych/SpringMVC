@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by total on 12/15/16.
+ * @author Pavlo.Fandych
  */
 
 @Component("structuredStanding")

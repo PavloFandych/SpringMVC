@@ -15,6 +15,10 @@ import org.total.spring.root.service.interfaces.RoleService;
 
 import java.util.List;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @Repository
 @Transactional
 @Service("roleService")
@@ -82,7 +86,7 @@ public final class RoleServiceImpl implements RoleService {
             cacheManager = "springCashManager"
     )
     public Role findRoleByRoleType(final RoleType roleType) {
-        List<Role> roles = getRoleRepository().findByRoleType(roleType);
+        final List<Role> roles = getRoleRepository().findByRoleType(roleType);
         return (roles != null && !roles.isEmpty()) ? roles.get(0) : null;
     }
 }

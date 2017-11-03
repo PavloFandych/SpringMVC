@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by total on 12/20/16.
+ * @author Pavlo.Fandych
  */
 
 @Repository
@@ -47,7 +47,7 @@ public final class ArchResultEnglandServiceImpl implements ArchResultEnglandServ
             )
     )
     public List<ArchResultEngland> findAll() {
-        List<ArchResultEngland> list = new ArrayList<>();
+        final List<ArchResultEngland> list = new ArrayList<>();
         for (ArchResultEngland item : getArchResultEnglandRepository().findAll()) {
             list.add(item);
         }

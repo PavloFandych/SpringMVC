@@ -10,7 +10,7 @@ import org.total.spring.root.service.interfaces.CouplesService;
 import java.util.List;
 
 /**
- * Created by pavlo.fandych on 12/5/2016.
+ * @author Pavlo.Fandych
  */
 
 @Transactional
@@ -34,7 +34,7 @@ public final class CouplesServiceImpl implements CouplesService {
     )
     public List<List<String>> getCouples(final String seasonCode,
                                          final String tournamentCode) {
-        List<List<String>> couples = getCouplesDAO().getEntities(seasonCode, tournamentCode);
+        final List<List<String>> couples = getCouplesDAO().getEntities(seasonCode, tournamentCode);
         return (couples != null && !couples.isEmpty()) ? couples : null;
     }
 }

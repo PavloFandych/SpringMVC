@@ -7,9 +7,9 @@ import org.total.spring.root.entity.enums.CapabilityType;
 import java.util.List;
 
 /**
- * Created by total on 10/28/16.
+ * @author Pavlo.Fandych
  */
 
 public interface CapabilityRepository extends JpaRepository<Capability, Long> {
-    public List<Capability> findByCapabilityType(final CapabilityType capabilityType);
+    List<Capability> findByCapabilityType(final CapabilityType capabilityType);
 }

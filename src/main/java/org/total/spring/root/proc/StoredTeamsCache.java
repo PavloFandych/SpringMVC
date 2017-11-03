@@ -8,7 +8,7 @@ import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.entity.enums.TournamentCode;
 
 /**
- * Created by total on 12/19/16.
+ * @author Pavlo.Fandych
  */
 
 @Component("storedTeamsCache")

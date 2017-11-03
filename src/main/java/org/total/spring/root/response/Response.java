@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 
 /**
- * Created by pavlo.fandych on 11/9/2016.
+ * @author Pavlo.Fandych
  */
 
 @Component("response")

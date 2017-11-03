@@ -18,6 +18,10 @@ import org.total.spring.root.service.interfaces.TeamService;
 
 import java.util.List;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @Repository
 @Transactional
 @Service("teamService")
@@ -88,7 +92,7 @@ public final class TeamServiceImpl implements TeamService {
     )
     public List<StoredTeamsCache> getStoredTeamsList(final String seasonCode,
                                                      final String tournamentCode) {
-        List<StoredTeamsCache> result = getTeamDAO()
+        final List<StoredTeamsCache> result = getTeamDAO()
                 .getStoredTeamsList(SeasonCode.valueOf(seasonCode), TournamentCode.valueOf(tournamentCode));
         return (result != null && !result.isEmpty()) ? result : null;
     }
@@ -149,7 +153,7 @@ public final class TeamServiceImpl implements TeamService {
             )
     )
     public List<Team> findTeamsByCountryCode(final String countryCode) {
-        List<Team> teams = getTeamDAO()
+        final List<Team> teams = getTeamDAO()
                 .getTeamsByCountryCode(countryCode);
         return (teams != null && !teams.isEmpty()) ? teams : null;
     }

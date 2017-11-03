@@ -6,6 +6,10 @@ import org.total.spring.root.entity.enums.RoleType;
 
 import java.util.List;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 public interface RoleRepository extends JpaRepository<Role, Long> {
-    public List<Role> findByRoleType(final RoleType roleType);
+    List<Role> findByRoleType(final RoleType roleType);
 }

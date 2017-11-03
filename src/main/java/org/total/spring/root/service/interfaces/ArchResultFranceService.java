@@ -5,12 +5,12 @@ import org.total.spring.root.entity.ArchResultFrance;
 import java.util.List;
 
 /**
- * Created by total on 12/20/16.
+ * @author Pavlo.Fandych
  */
 
 public interface ArchResultFranceService {
-    public List<ArchResultFrance> findAll();
+    List<ArchResultFrance> findAll();
 
-    public List<ArchResultFrance> findAll(final Integer pageIndex,
-                                          final Integer numRecPerPage);
+    List<ArchResultFrance> findAll(final Integer pageIndex,
+                                   final Integer numRecPerPage);
 }

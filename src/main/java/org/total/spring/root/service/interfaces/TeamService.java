@@ -7,24 +7,28 @@ import org.total.spring.root.proc.StoredTeamsCache;
 
 import java.util.List;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 public interface TeamService {
-    public List<Team> findAll();
+    List<Team> findAll();
 
-    public List<List<String>> findAllStoredProc(final SeasonCode seasonCode,
-                                                final TournamentCode tournamentCode);
+    List<List<String>> findAllStoredProc(final SeasonCode seasonCode,
+                                         final TournamentCode tournamentCode);
 
-    public List<StoredTeamsCache> getStoredTeamsList(final String seasonCode,
-                                                     final String tournamentCode);
+    List<StoredTeamsCache> getStoredTeamsList(final String seasonCode,
+                                              final String tournamentCode);
 
-    public Team findById(final Long teamId);
+    Team findById(final Long teamId);
 
-    public Team save(final Team entity);
+    Team save(final Team entity);
 
-    public Team update(final Team entity);
+    Team update(final Team entity);
 
-    public void deleteTeamByTeamId(final Long teamId);
+    void deleteTeamByTeamId(final Long teamId);
 
-    public Team findTeamByTeamName(final String teamName);
+    Team findTeamByTeamName(final String teamName);
 
-    public List<Team> findTeamsByCountryCode(final String countryCode);
+    List<Team> findTeamsByCountryCode(final String countryCode);
 }

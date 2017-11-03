@@ -5,18 +5,22 @@ import org.total.spring.root.entity.enums.CityCode;
 
 import java.util.List;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 public interface CityService {
-    public List<City> findAll();
+    List<City> findAll();
 
-    public City findById(final Long cityId);
+    City findById(final Long cityId);
 
-    public City save(final City entity);
+    City save(final City entity);
 
-    public City update(final City entity);
+    City update(final City entity);
 
-    public void deleteCityByCityId(final Long cityId);
+    void deleteCityByCityId(final Long cityId);
 
-    public City findCityByCityName(final String cityName);
+    City findCityByCityName(final String cityName);
 
-    public City findCityByCityCode(final CityCode cityCode);
+    City findCityByCityCode(final CityCode cityCode);
 }

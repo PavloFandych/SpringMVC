@@ -15,6 +15,10 @@ import org.total.spring.root.service.interfaces.CityService;
 
 import java.util.List;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @Repository
 @Transactional
 @Service("cityService")
@@ -84,7 +88,7 @@ public final class CityServiceImpl implements CityService {
             sync = true
     )
     public City findCityByCityName(final String cityName) {
-        List<City> cities = getCityRepository().findByCityName(cityName);
+        final List<City> cities = getCityRepository().findByCityName(cityName);
         return (cities != null && !cities.isEmpty()) ? cities.get(0) : null;
     }
 
@@ -94,7 +98,7 @@ public final class CityServiceImpl implements CityService {
             sync = true
     )
     public City findCityByCityCode(final CityCode cityCode) {
-        List<City> cities = getCityRepository().findByCityCode(cityCode);
+        final List<City> cities = getCityRepository().findByCityCode(cityCode);
         return (cities != null && !cities.isEmpty()) ? cities.get(0) : null;
     }
 }
