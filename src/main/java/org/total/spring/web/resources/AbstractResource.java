@@ -1,10 +1,7 @@
 package org.total.spring.web.resources;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.ContextLoader;
 import org.total.spring.root.entity.Role;
 import org.total.spring.root.entity.User;
@@ -14,7 +11,6 @@ import org.total.spring.root.service.interfaces.CapabilityService;
 import org.total.spring.root.service.interfaces.UserService;
 import org.total.spring.root.util.Constants;
 import org.total.spring.root.util.PasswordManager;
-import org.total.spring.root.util.PermissionManager;
 import org.total.spring.root.util.Validator;
 
 import java.util.List;
@@ -26,6 +22,7 @@ import java.util.function.Predicate;
  */
 
 public abstract class AbstractResource {
+
     @Autowired
     private CapabilityService capabilityService;
 
@@ -34,9 +31,6 @@ public abstract class AbstractResource {
 
     @Autowired
     private PasswordManager passwordManager;
-
-    @Autowired
-    private PermissionManager permissionManager;
 
     @Autowired
     private Validator validator;
@@ -65,15 +59,6 @@ public abstract class AbstractResource {
         this.capabilityService = capabilityService;
     }
 
-    @Qualifier("permissionManagerCapability")
-    public PermissionManager getPermissionManager() {
-        return permissionManager;
-    }
-
-    public void setPermissionManager(PermissionManager permissionManager) {
-        this.permissionManager = permissionManager;
-    }
-
     @Qualifier("webInputParamsValidator")
     public Validator getValidator() {
         return validator;
@@ -89,23 +74,6 @@ public abstract class AbstractResource {
         response.setMessage(message);
 
         return response;
-    }
-
-    ResponseEntity<? super Response> getNegativeResponseEntity(final String reason,
-                                                               final HttpStatus httpStatus,
-                                                               final Logger logger) {
-        logger.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(reason)
-                .concat(" http status = ").concat(httpStatus.name()));
-
-        return new ResponseEntity<>(generateResponse(reason), httpStatus);
-    }
-
-    ResponseEntity<? super Response> getPositiveResponseEntity(final Object payload,
-                                                               final Logger logger) {
-        logger.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                .concat(" http status = ").concat(HttpStatus.OK.name()));
-
-        return new ResponseEntity<>(payload, HttpStatus.OK);
     }
 
     boolean isValidHeaders(final List<String> params,

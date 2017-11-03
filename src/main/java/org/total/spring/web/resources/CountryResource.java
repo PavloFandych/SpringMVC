@@ -18,9 +18,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @RestController
 public final class CountryResource extends AbstractResource {
-    private static transient final Logger LOGGER = Logger.getLogger(CountryResource.class);
+    private static final Logger LOGGER = Logger.getLogger(CountryResource.class);
 
     @Autowired
     private CountryService countryService;
@@ -36,11 +40,11 @@ public final class CountryResource extends AbstractResource {
     @RequestMapping(value = "/countries",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllCountries(final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                               final @RequestHeader(name = "Content-Type",
-                                                       required = false) String contentType,
-                                               final @RequestHeader(name = "Version",
-                                                       required = false) String version) {
+    public ResponseEntity<Object> fetchAllCountries(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                    final @RequestHeader(name = "Content-Type",
+                                                            required = false) String contentType,
+                                                    final @RequestHeader(name = "Version",
+                                                            required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -64,8 +68,7 @@ public final class CountryResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<Country> list = getCountryService().findAll();
@@ -126,12 +129,12 @@ public final class CountryResource extends AbstractResource {
     @RequestMapping(value = "/countries/{countryCode}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchCountryByCountryCode(final @PathVariable String countryCode,
-                                                       final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                                       final @RequestHeader(name = "Content-Type",
-                                                               required = false) String contentType,
-                                                       final @RequestHeader(name = "Version",
-                                                               required = false) String version) {
+    public ResponseEntity<Object> fetchCountryByCountryCode(final @PathVariable String countryCode,
+                                                            final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                            final @RequestHeader(name = "Content-Type",
+                                                                    required = false) String contentType,
+                                                            final @RequestHeader(name = "Version",
+                                                                    required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         countryCode,
@@ -152,11 +155,10 @@ public final class CountryResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
-                            List<Country> list = new ArrayList<Country>();
+                            List<Country> list = new ArrayList<>();
                             list.add(getCountryService()
                                     .findCountryByCountryCode(CountryCode
                                             .valueOf(countryCode)));

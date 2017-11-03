@@ -17,12 +17,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by total on 12/20/16.
+ * @author Pavlo.Fandych
  */
 
 @RestController
 public final class ArchResultResource extends AbstractResource {
-    private static transient final Logger LOGGER = Logger.getLogger(ArchResultResource.class);
+    private static final Logger LOGGER = Logger.getLogger(ArchResultResource.class);
 
     @Autowired
     private ArchResultEnglandService archResultEnglandService;
@@ -82,13 +82,13 @@ public final class ArchResultResource extends AbstractResource {
     @RequestMapping(value = "/results/arch/{countryCode}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllArchResults(final @PathVariable String countryCode,
-                                                 final @RequestHeader(name = "Authorization",
-                                                         required = false) String authorization,
-                                                 final @RequestHeader(name = "Content-Type",
-                                                         required = false) String contentType,
-                                                 final @RequestHeader(name = "Version",
-                                                         required = false) String version) {
+    public ResponseEntity<Object> fetchAllArchResults(final @PathVariable String countryCode,
+                                                      final @RequestHeader(name = "Authorization",
+                                                              required = false) String authorization,
+                                                      final @RequestHeader(name = "Content-Type",
+                                                              required = false) String contentType,
+                                                      final @RequestHeader(name = "Version",
+                                                              required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         countryCode,
@@ -113,8 +113,7 @@ public final class ArchResultResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List list = null;
@@ -192,17 +191,17 @@ public final class ArchResultResource extends AbstractResource {
     @RequestMapping(value = "/results/arch/pagination/{countryCode}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllArchResults(final @PathVariable String countryCode,
-                                                 final @RequestHeader(name = "Authorization",
-                                                         required = false) String authorization,
-                                                 final @RequestHeader(name = "Content-Type",
-                                                         required = false) String contentType,
-                                                 final @RequestHeader(name = "Version",
-                                                         required = false) String version,
-                                                 final @RequestParam(name = "pageIndex",
-                                                         required = false) String pageIndex,
-                                                 final @RequestParam(name = "numRecPerPage",
-                                                         required = false) String numRecPerPage) {
+    public ResponseEntity<Object> fetchAllArchResults(final @PathVariable String countryCode,
+                                                      final @RequestHeader(name = "Authorization",
+                                                              required = false) String authorization,
+                                                      final @RequestHeader(name = "Content-Type",
+                                                              required = false) String contentType,
+                                                      final @RequestHeader(name = "Version",
+                                                              required = false) String version,
+                                                      final @RequestParam(name = "pageIndex",
+                                                              required = false) String pageIndex,
+                                                      final @RequestParam(name = "numRecPerPage",
+                                                              required = false) String numRecPerPage) {
         if (getValidator().validate(
                 new String[]{
                         countryCode,
@@ -229,8 +228,7 @@ public final class ArchResultResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List list = null;

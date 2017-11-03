@@ -16,12 +16,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by pavlo.fandych on 12/5/2016.
+ * @author Pavlo.Fandych
  */
 
 @RestController
 public final class CouplesResource extends AbstractResource {
-    private static transient final Logger LOGGER = Logger.getLogger(CouplesResource.class);
+    private static final Logger LOGGER = Logger.getLogger(CouplesResource.class);
 
     @Autowired
     private CouplesService couplesService;
@@ -37,15 +37,15 @@ public final class CouplesResource extends AbstractResource {
     @RequestMapping(value = "/couples",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchCouples(final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                          final @RequestHeader(name = "Content-Type",
-                                                  required = false) String contentType,
-                                          final @RequestHeader(name = "Version",
-                                                  required = false) String version,
-                                          final @RequestParam(name = "seasonCode",
-                                                  required = false) String seasonCode,
-                                          final @RequestParam(name = "tournamentCode",
-                                                  required = false) String tournamentCode) {
+    public ResponseEntity<Object> fetchCouples(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                               final @RequestHeader(name = "Content-Type",
+                                                       required = false) String contentType,
+                                               final @RequestHeader(name = "Version",
+                                                       required = false) String version,
+                                               final @RequestParam(name = "seasonCode",
+                                                       required = false) String seasonCode,
+                                               final @RequestParam(name = "tournamentCode",
+                                                       required = false) String tournamentCode) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -71,8 +71,7 @@ public final class CouplesResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<List<String>> list = getCouplesService()

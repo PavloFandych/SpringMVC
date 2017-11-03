@@ -19,9 +19,13 @@ import org.total.spring.root.version.Version;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @RestController
 public final class TeamResource extends AbstractResource {
-    private static transient final Logger LOGGER = Logger.getLogger(TeamResource.class);
+    private static final Logger LOGGER = Logger.getLogger(TeamResource.class);
 
     @Autowired
     private TeamService teamService;
@@ -37,15 +41,15 @@ public final class TeamResource extends AbstractResource {
     @RequestMapping(value = "/teams",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllTeams(final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                           final @RequestHeader(name = "Content-Type",
-                                                   required = false) String contentType,
-                                           final @RequestHeader(name = "Version",
-                                                   required = false) String version,
-                                           final @RequestParam(name = "seasonCode",
-                                                   required = false) String seasonCode,
-                                           final @RequestParam(name = "tournamentCode",
-                                                   required = false) String tournamentCode) {
+    public ResponseEntity<Object> fetchAllTeams(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                final @RequestHeader(name = "Content-Type",
+                                                        required = false) String contentType,
+                                                final @RequestHeader(name = "Version",
+                                                        required = false) String version,
+                                                final @RequestParam(name = "seasonCode",
+                                                        required = false) String seasonCode,
+                                                final @RequestParam(name = "tournamentCode",
+                                                        required = false) String tournamentCode) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -71,8 +75,7 @@ public final class TeamResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<List<String>> list = getTeamService()
@@ -135,12 +138,12 @@ public final class TeamResource extends AbstractResource {
     @RequestMapping(value = "/teams/{countryCode}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchTeamsByCountryCode(final @PathVariable String countryCode,
-                                                     final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                                     final @RequestHeader(name = "Content-Type",
-                                                             required = false) String contentType,
-                                                     final @RequestHeader(name = "Version",
-                                                             required = false) String version) {
+    public ResponseEntity<Object> fetchTeamsByCountryCode(final @PathVariable String countryCode,
+                                                          final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                          final @RequestHeader(name = "Content-Type",
+                                                                  required = false) String contentType,
+                                                          final @RequestHeader(name = "Version",
+                                                                  required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -165,8 +168,7 @@ public final class TeamResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<Team> list = getTeamService()
@@ -228,15 +230,15 @@ public final class TeamResource extends AbstractResource {
     @RequestMapping(value = "/storedteams",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchStoredTeamsList(final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                                  final @RequestHeader(name = "Content-Type",
-                                                          required = false) String contentType,
-                                                  final @RequestHeader(name = "Version",
-                                                          required = false) String version,
-                                                  final @RequestParam(name = "seasonCode",
-                                                          required = false) String seasonCode,
-                                                  final @RequestParam(name = "tournamentCode",
-                                                          required = false) String tournamentCode) {
+    public ResponseEntity<Object> fetchStoredTeamsList(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                       final @RequestHeader(name = "Content-Type",
+                                                               required = false) String contentType,
+                                                       final @RequestHeader(name = "Version",
+                                                               required = false) String version,
+                                                       final @RequestParam(name = "seasonCode",
+                                                               required = false) String seasonCode,
+                                                       final @RequestParam(name = "tournamentCode",
+                                                               required = false) String tournamentCode) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -262,8 +264,7 @@ public final class TeamResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<StoredTeamsCache> list = getTeamService()

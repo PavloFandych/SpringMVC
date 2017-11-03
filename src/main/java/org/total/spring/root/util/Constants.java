@@ -64,6 +64,9 @@ public final class Constants {
     /*MVC constants*/
     public static final String INDEX_PAGE_STRING = "/index";
 
+    /*logging constants*/
+    public static final String HTTP_STATUS_STRING = " http status = ";
+
     private Constants() {
     }
 }

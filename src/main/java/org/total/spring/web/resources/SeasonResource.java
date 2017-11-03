@@ -20,12 +20,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by total on 10/31/16.
+ * @author Pavlo.Fandych
  */
 
 @RestController
 public final class SeasonResource extends AbstractResource {
-    private static transient final Logger LOGGER = Logger.getLogger(SeasonResource.class);
+    private static final Logger LOGGER = Logger.getLogger(SeasonResource.class);
 
     @Autowired
     private SeasonService seasonService;
@@ -41,11 +41,11 @@ public final class SeasonResource extends AbstractResource {
     @RequestMapping(value = "/seasons",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllSeasons(final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                             final @RequestHeader(name = "Content-Type",
-                                                     required = false) String contentType,
-                                             final @RequestHeader(name = "Version",
-                                                     required = false) String version) {
+    public ResponseEntity<Object> fetchAllSeasons(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                  final @RequestHeader(name = "Content-Type",
+                                                          required = false) String contentType,
+                                                  final @RequestHeader(name = "Version",
+                                                          required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -69,8 +69,7 @@ public final class SeasonResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<List<String>> list = getSeasonService().findAllStoredProc();
@@ -131,11 +130,11 @@ public final class SeasonResource extends AbstractResource {
     @RequestMapping(value = "/actualseasons",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchActualSeasons(final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                                final @RequestHeader(name = "Content-Type",
-                                                        required = false) String contentType,
-                                                final @RequestHeader(name = "Version",
-                                                        required = false) String version) {
+    public ResponseEntity<Object> fetchActualSeasons(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                     final @RequestHeader(name = "Content-Type",
+                                                             required = false) String contentType,
+                                                     final @RequestHeader(name = "Version",
+                                                             required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -159,8 +158,7 @@ public final class SeasonResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<Season> list = getSeasonService().getActualSeasons();

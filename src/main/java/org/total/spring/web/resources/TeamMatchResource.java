@@ -17,12 +17,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by total on 11/22/16.
+ * @author Pavlo.Fandych
  */
 
 @RestController
 public final class TeamMatchResource extends AbstractResource {
-    private static transient final Logger LOGGER = Logger.getLogger(TeamMatchResource.class);
+    private static final Logger LOGGER = Logger.getLogger(TeamMatchResource.class);
 
     @Autowired
     private TeamMatchService teamMatchService;
@@ -38,19 +38,19 @@ public final class TeamMatchResource extends AbstractResource {
     @RequestMapping(value = "/teamMatches",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchTeamMatches(final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                              final @RequestHeader(name = "Content-Type",
-                                                      required = false) String contentType,
-                                              final @RequestHeader(name = "Version",
-                                                      required = false) String version,
-                                              final @RequestParam(name = "teamCode",
-                                                      required = false) String teamCode,
-                                              final @RequestParam(name = "opponentTeamCode",
-                                                      required = false) String opponentTeamCode,
-                                              final @RequestParam(name = "seasonCode",
-                                                      required = false) String seasonCode,
-                                              final @RequestParam(name = "tournamentCode",
-                                                      required = false) String tournamentCode) {
+    public ResponseEntity<Object> fetchTeamMatches(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                   final @RequestHeader(name = "Content-Type",
+                                                           required = false) String contentType,
+                                                   final @RequestHeader(name = "Version",
+                                                           required = false) String version,
+                                                   final @RequestParam(name = "teamCode",
+                                                           required = false) String teamCode,
+                                                   final @RequestParam(name = "opponentTeamCode",
+                                                           required = false) String opponentTeamCode,
+                                                   final @RequestParam(name = "seasonCode",
+                                                           required = false) String seasonCode,
+                                                   final @RequestParam(name = "tournamentCode",
+                                                           required = false) String tournamentCode) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -75,8 +75,7 @@ public final class TeamMatchResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             String opponentTeamCodeArgument = null;

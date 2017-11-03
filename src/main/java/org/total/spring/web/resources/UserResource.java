@@ -25,9 +25,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @RestController
 public final class UserResource extends AbstractResource {
-    private static transient final Logger LOGGER = Logger.getLogger(UserResource.class);
+    private static final Logger LOGGER = Logger.getLogger(UserResource.class);
 
     @Autowired
     private RoleService roleService;
@@ -65,11 +69,11 @@ public final class UserResource extends AbstractResource {
     @RequestMapping(value = "/users",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllUsers(final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                           final @RequestHeader(name = "Content-Type",
-                                                   required = false) String contentType,
-                                           final @RequestHeader(name = "Version",
-                                                   required = false) String version) {
+    public ResponseEntity<Object> fetchAllUsers(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                final @RequestHeader(name = "Content-Type",
+                                                        required = false) String contentType,
+                                                final @RequestHeader(name = "Version",
+                                                        required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -93,8 +97,7 @@ public final class UserResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<User> list = getUserService().findAll();
@@ -155,15 +158,15 @@ public final class UserResource extends AbstractResource {
     @RequestMapping(value = "/users/pagination",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchAllUsers(final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                           final @RequestHeader(name = "Content-Type",
-                                                   required = false) String contentType,
-                                           final @RequestHeader(name = "Version",
-                                                   required = false) String version,
-                                           final @RequestParam(name = "pageIndex",
-                                                   required = false) String pageIndex,
-                                           final @RequestParam(name = "numRecPerPage",
-                                                   required = false) String numRecPerPage) {
+    public ResponseEntity<Object> fetchAllUsers(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                                final @RequestHeader(name = "Content-Type",
+                                                        required = false) String contentType,
+                                                final @RequestHeader(name = "Version",
+                                                        required = false) String version,
+                                                final @RequestParam(name = "pageIndex",
+                                                        required = false) String pageIndex,
+                                                final @RequestParam(name = "numRecPerPage",
+                                                        required = false) String numRecPerPage) {
         if (getValidator().validate(
                 new String[]{
                         authorization,
@@ -191,8 +194,7 @@ public final class UserResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<User> list = getUserService()
@@ -255,13 +257,13 @@ public final class UserResource extends AbstractResource {
     @RequestMapping(value = "/users/{id}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchUserByUserId(final @PathVariable String id,
-                                               final @RequestHeader(name = "Authorization",
-                                                       required = false) String authorization,
-                                               final @RequestHeader(name = "Content-Type",
-                                                       required = false) String contentType,
-                                               final @RequestHeader(name = "Version",
-                                                       required = false) String version) {
+    public ResponseEntity<Object> fetchUserByUserId(final @PathVariable String id,
+                                                    final @RequestHeader(name = "Authorization",
+                                                            required = false) String authorization,
+                                                    final @RequestHeader(name = "Content-Type",
+                                                            required = false) String contentType,
+                                                    final @RequestHeader(name = "Version",
+                                                            required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         id,
@@ -287,8 +289,7 @@ public final class UserResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<User> list = new ArrayList<>();
@@ -350,13 +351,13 @@ public final class UserResource extends AbstractResource {
     @RequestMapping(value = "/userName/{userName}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> fetchUserByUserName(final @PathVariable String userName,
-                                                 final @RequestHeader(name = "Authorization",
-                                                         required = false) String authorization,
-                                                 final @RequestHeader(name = "Content-Type",
-                                                         required = false) String contentType,
-                                                 final @RequestHeader(name = "Version",
-                                                         required = false) String version) {
+    public ResponseEntity<Object> fetchUserByUserName(final @PathVariable String userName,
+                                                      final @RequestHeader(name = "Authorization",
+                                                              required = false) String authorization,
+                                                      final @RequestHeader(name = "Content-Type",
+                                                              required = false) String contentType,
+                                                      final @RequestHeader(name = "Version",
+                                                              required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         userName,
@@ -381,8 +382,7 @@ public final class UserResource extends AbstractResource {
                     if (getter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(getter, CapabilityType.READ)) {
+                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             List<User> list = new ArrayList<>();
@@ -444,13 +444,13 @@ public final class UserResource extends AbstractResource {
     @RequestMapping(value = "/users/{userName}",
             method = RequestMethod.DELETE,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> deleteUserByUserName(final @PathVariable String userName,
-                                                  final @RequestHeader(name = "Authorization",
-                                                          required = false) String authorization,
-                                                  final @RequestHeader(name = "Content-Type",
-                                                          required = false) String contentType,
-                                                  final @RequestHeader(name = "Version",
-                                                          required = false) String version) {
+    public ResponseEntity<Object> deleteUserByUserName(final @PathVariable String userName,
+                                                       final @RequestHeader(name = "Authorization",
+                                                               required = false) String authorization,
+                                                       final @RequestHeader(name = "Content-Type",
+                                                               required = false) String contentType,
+                                                       final @RequestHeader(name = "Version",
+                                                               required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         userName,
@@ -473,8 +473,7 @@ public final class UserResource extends AbstractResource {
                     if (deleter != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.DELETER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(deleter, CapabilityType.DELETE)) {
+                        if (hasPermissions(deleter, CapabilityType.DELETE, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             User userToDelete = getUserService()
@@ -553,13 +552,13 @@ public final class UserResource extends AbstractResource {
     @RequestMapping(value = "/users",
             method = RequestMethod.POST,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> createUser(final @RequestBody String body,
-                                        final @RequestHeader(name = "Authorization",
-                                                required = false) String authorization,
-                                        final @RequestHeader(name = "Content-Type",
-                                                required = false) String contentType,
-                                        final @RequestHeader(name = "Version",
-                                                required = false) String version) {
+    public ResponseEntity<Object> createUser(final @RequestBody String body,
+                                             final @RequestHeader(name = "Authorization",
+                                                     required = false) String authorization,
+                                             final @RequestHeader(name = "Content-Type",
+                                                     required = false) String contentType,
+                                             final @RequestHeader(name = "Version",
+                                                     required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         body,
@@ -584,9 +583,7 @@ public final class UserResource extends AbstractResource {
                     if (creator != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.CREATOR_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(creator, CapabilityType.CREATE)) {
-
+                        if (hasPermissions(creator, CapabilityType.CREATE, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             try {
@@ -684,13 +681,13 @@ public final class UserResource extends AbstractResource {
     @RequestMapping(value = "/users",
             method = RequestMethod.PUT,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<?> updateUser(final @RequestBody String body,
-                                        final @RequestHeader(name = "Authorization",
-                                                required = false) String authorization,
-                                        final @RequestHeader(name = "Content-Type",
-                                                required = false) String contentType,
-                                        final @RequestHeader(name = "Version",
-                                                required = false) String version) {
+    public ResponseEntity<Object> updateUser(final @RequestBody String body,
+                                             final @RequestHeader(name = "Authorization",
+                                                     required = false) String authorization,
+                                             final @RequestHeader(name = "Content-Type",
+                                                     required = false) String contentType,
+                                             final @RequestHeader(name = "Version",
+                                                     required = false) String version) {
         if (getValidator().validate(
                 new String[]{
                         body,
@@ -715,8 +712,7 @@ public final class UserResource extends AbstractResource {
                     if (updater != null) {
                         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.UPDATER_FOUND));
 
-                        if (getPermissionManager()
-                                .containEntity(updater, CapabilityType.UPDATE)) {
+                        if (hasPermissions(updater, CapabilityType.UPDATE, this::biPredicatePermissionsLogic)) {
                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
                             try {
