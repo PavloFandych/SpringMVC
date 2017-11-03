@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,9 +7,9 @@ import org.total.spring.root.entity.enums.CapabilityType;
 import java.util.List;
 
 /**
- * @author Pavlo.Fandych
+ * Created by total on 10/28/16.
  */
 
 public interface CapabilityRepository extends JpaRepository<Capability, Long> {
-    List<Capability> findByCapabilityType(final CapabilityType capabilityType);
+    public List<Capability> findByCapabilityType(final CapabilityType capabilityType);
 }

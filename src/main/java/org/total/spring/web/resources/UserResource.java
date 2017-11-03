@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.web.resources;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -26,14 +25,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author Pavlo.Fandych
- */
-
 @RestController
 public final class UserResource extends AbstractResource {
-    private static final Logger LOGGER = Logger.getLogger(UserResource.class);
-    private static final String HTTP_STATUS_EQUALS = " http status = ";
+    private static transient final Logger LOGGER = Logger.getLogger(UserResource.class);
 
     @Autowired
     private RoleService roleService;
@@ -71,16 +65,16 @@ public final class UserResource extends AbstractResource {
     @RequestMapping(value = "/users",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<Object> fetchAllUsers(final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                                final @RequestHeader(name = "Content-Type",
-                                                        required = false) String contentType,
-                                                final @RequestHeader(name = "Version",
-                                                        required = false) String version) {
-        final String[] params = new String[3];
-        params[0] = authorization;
-        params[1] = contentType;
-        params[2] = version;
-        if (getValidator().validate(params)
+    public ResponseEntity<?> fetchAllUsers(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                           final @RequestHeader(name = "Content-Type",
+                                                   required = false) String contentType,
+                                           final @RequestHeader(name = "Version",
+                                                   required = false) String version) {
+        if (getValidator().validate(
+                new String[]{
+                        authorization,
+                        contentType,
+                        version})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
@@ -107,20 +101,20 @@ public final class UserResource extends AbstractResource {
 
                             if (list == null || list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
-                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_FOUND.name()));
+                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_USER_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.OK.name()));
+                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
@@ -128,7 +122,7 @@ public final class UserResource extends AbstractResource {
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
@@ -136,7 +130,7 @@ public final class UserResource extends AbstractResource {
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_ACCEPTABLE.name()));
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -151,7 +145,7 @@ public final class UserResource extends AbstractResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.BAD_REQUEST.name()));
+                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -161,22 +155,22 @@ public final class UserResource extends AbstractResource {
     @RequestMapping(value = "/users/pagination",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<Object> fetchAllUsers(final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                                final @RequestHeader(name = "Content-Type",
-                                                        required = false) String contentType,
-                                                final @RequestHeader(name = "Version",
-                                                        required = false) String version,
-                                                final @RequestParam(name = "pageIndex",
-                                                        required = false) String pageIndex,
-                                                final @RequestParam(name = "numRecPerPage",
-                                                        required = false) String numRecPerPage) {
-        final String[] params = new String[5];
-        params[0] = authorization;
-        params[1] = contentType;
-        params[2] = version;
-        params[3] = pageIndex;
-        params[4] = numRecPerPage;
-        if (getValidator().validate(params)
+    public ResponseEntity<?> fetchAllUsers(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                           final @RequestHeader(name = "Content-Type",
+                                                   required = false) String contentType,
+                                           final @RequestHeader(name = "Version",
+                                                   required = false) String version,
+                                           final @RequestParam(name = "pageIndex",
+                                                   required = false) String pageIndex,
+                                           final @RequestParam(name = "numRecPerPage",
+                                                   required = false) String numRecPerPage) {
+        if (getValidator().validate(
+                new String[]{
+                        authorization,
+                        contentType,
+                        version,
+                        pageIndex,
+                        numRecPerPage})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)
                 && StringUtils.isNumeric(pageIndex)
                 && StringUtils.isNumeric(numRecPerPage)) {
@@ -207,20 +201,20 @@ public final class UserResource extends AbstractResource {
 
                             if (list == null || list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
-                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_FOUND.name()));
+                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_USER_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.OK.name()));
+                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
@@ -228,7 +222,7 @@ public final class UserResource extends AbstractResource {
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
@@ -236,7 +230,7 @@ public final class UserResource extends AbstractResource {
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_ACCEPTABLE.name()));
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -251,7 +245,7 @@ public final class UserResource extends AbstractResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.BAD_REQUEST.name()));
+                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -261,19 +255,19 @@ public final class UserResource extends AbstractResource {
     @RequestMapping(value = "/users/{id}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<Object> fetchUserByUserId(final @PathVariable String id,
-                                                    final @RequestHeader(name = "Authorization",
-                                                            required = false) String authorization,
-                                                    final @RequestHeader(name = "Content-Type",
-                                                            required = false) String contentType,
-                                                    final @RequestHeader(name = "Version",
-                                                            required = false) String version) {
-        final String[] params = new String[4];
-        params[0] = authorization;
-        params[1] = contentType;
-        params[2] = version;
-        params[3] = id;
-        if (getValidator().validate(params)
+    public ResponseEntity<?> fetchUserByUserId(final @PathVariable String id,
+                                               final @RequestHeader(name = "Authorization",
+                                                       required = false) String authorization,
+                                               final @RequestHeader(name = "Content-Type",
+                                                       required = false) String contentType,
+                                               final @RequestHeader(name = "Version",
+                                                       required = false) String version) {
+        if (getValidator().validate(
+                new String[]{
+                        id,
+                        authorization,
+                        contentType,
+                        version})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)
                 && StringUtils.isNumeric(id)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
@@ -302,20 +296,20 @@ public final class UserResource extends AbstractResource {
 
                             if (list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
-                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_FOUND.name()));
+                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_USER_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.OK.name()));
+                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
@@ -323,7 +317,7 @@ public final class UserResource extends AbstractResource {
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
@@ -331,7 +325,7 @@ public final class UserResource extends AbstractResource {
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_ACCEPTABLE.name()));
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -346,7 +340,7 @@ public final class UserResource extends AbstractResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.BAD_REQUEST.name()));
+                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -356,19 +350,19 @@ public final class UserResource extends AbstractResource {
     @RequestMapping(value = "/userName/{userName}",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<Object> fetchUserByUserName(final @PathVariable String userName,
-                                                      final @RequestHeader(name = "Authorization",
-                                                              required = false) String authorization,
-                                                      final @RequestHeader(name = "Content-Type",
-                                                              required = false) String contentType,
-                                                      final @RequestHeader(name = "Version",
-                                                              required = false) String version) {
-        final String[] params = new String[4];
-        params[0] = authorization;
-        params[1] = contentType;
-        params[2] = version;
-        params[3] = userName;
-        if (getValidator().validate(params)
+    public ResponseEntity<?> fetchUserByUserName(final @PathVariable String userName,
+                                                 final @RequestHeader(name = "Authorization",
+                                                         required = false) String authorization,
+                                                 final @RequestHeader(name = "Content-Type",
+                                                         required = false) String contentType,
+                                                 final @RequestHeader(name = "Version",
+                                                         required = false) String version) {
+        if (getValidator().validate(
+                new String[]{
+                        userName,
+                        authorization,
+                        contentType,
+                        version})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
@@ -396,20 +390,20 @@ public final class UserResource extends AbstractResource {
 
                             if (list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
-                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_FOUND.name()));
+                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_USER_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.OK.name()));
+                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
@@ -417,7 +411,7 @@ public final class UserResource extends AbstractResource {
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
@@ -425,7 +419,7 @@ public final class UserResource extends AbstractResource {
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_ACCEPTABLE.name()));
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -440,7 +434,7 @@ public final class UserResource extends AbstractResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.BAD_REQUEST.name()));
+                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -450,19 +444,19 @@ public final class UserResource extends AbstractResource {
     @RequestMapping(value = "/users/{userName}",
             method = RequestMethod.DELETE,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<Object> deleteUserByUserName(final @PathVariable String userName,
-                                                       final @RequestHeader(name = "Authorization",
-                                                               required = false) String authorization,
-                                                       final @RequestHeader(name = "Content-Type",
-                                                               required = false) String contentType,
-                                                       final @RequestHeader(name = "Version",
-                                                               required = false) String version) {
-        final String[] params = new String[4];
-        params[0] = authorization;
-        params[1] = contentType;
-        params[2] = version;
-        params[3] = userName;
-        if (getValidator().validate(params)
+    public ResponseEntity<?> deleteUserByUserName(final @PathVariable String userName,
+                                                  final @RequestHeader(name = "Authorization",
+                                                          required = false) String authorization,
+                                                  final @RequestHeader(name = "Content-Type",
+                                                          required = false) String contentType,
+                                                  final @RequestHeader(name = "Version",
+                                                          required = false) String version) {
+        if (getValidator().validate(
+                new String[]{
+                        userName,
+                        authorization,
+                        contentType,
+                        version})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
@@ -493,7 +487,7 @@ public final class UserResource extends AbstractResource {
                                 if (userToDelete.getUserName()
                                         .equals(deleter.getUserName())) {
                                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.CANNOT_DELETE_USER)
-                                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                            .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                                     Response response = generateResponse(Constants.CANNOT_DELETE_USER);
 
@@ -502,7 +496,7 @@ public final class UserResource extends AbstractResource {
                                     getUserService().deleteUserByUserId(userToDelete.getUserId());
 
                                     LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.OK.name()));
+                                            .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                     Response response = generateResponse(Constants.SUCCESS);
 
@@ -510,7 +504,7 @@ public final class UserResource extends AbstractResource {
                                 }
                             } else {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
-                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                        .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                                 Response response = generateResponse(Constants.NO_USER_FOUND);
 
@@ -518,7 +512,7 @@ public final class UserResource extends AbstractResource {
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
@@ -526,7 +520,7 @@ public final class UserResource extends AbstractResource {
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_DELETER_FOUND)
-                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_DELETER_FOUND);
 
@@ -534,7 +528,7 @@ public final class UserResource extends AbstractResource {
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_ACCEPTABLE.name()));
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -549,7 +543,7 @@ public final class UserResource extends AbstractResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.BAD_REQUEST.name()));
+                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -559,19 +553,19 @@ public final class UserResource extends AbstractResource {
     @RequestMapping(value = "/users",
             method = RequestMethod.POST,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<Object> createUser(final @RequestBody String body,
-                                             final @RequestHeader(name = "Authorization",
-                                                     required = false) String authorization,
-                                             final @RequestHeader(name = "Content-Type",
-                                                     required = false) String contentType,
-                                             final @RequestHeader(name = "Version",
-                                                     required = false) String version) {
-        final String[] params = new String[4];
-        params[0] = authorization;
-        params[1] = contentType;
-        params[2] = version;
-        params[3] = body;
-        if (getValidator().validate(params)
+    public ResponseEntity<?> createUser(final @RequestBody String body,
+                                        final @RequestHeader(name = "Authorization",
+                                                required = false) String authorization,
+                                        final @RequestHeader(name = "Content-Type",
+                                                required = false) String contentType,
+                                        final @RequestHeader(name = "Version",
+                                                required = false) String version) {
+        if (getValidator().validate(
+                new String[]{
+                        body,
+                        authorization,
+                        contentType,
+                        version})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
@@ -607,7 +601,7 @@ public final class UserResource extends AbstractResource {
 
                                     if (userToCreate != null) {
                                         LOGGER.debug(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.USER_ALREADY_EXISTS)
-                                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                                         Response response = generateResponse(Constants.USER_ALREADY_EXISTS);
 
@@ -625,7 +619,7 @@ public final class UserResource extends AbstractResource {
 
                                         if (getUserService().save(userToCreate) != null) {
                                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.OK.name()));
+                                                    .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                             Response response = generateResponse(Constants.SUCCESS);
 
@@ -634,7 +628,7 @@ public final class UserResource extends AbstractResource {
                                     }
                                 } else {
                                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.UNMARSHALING_FAILED)
-                                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.EXPECTATION_FAILED.name()));
+                                            .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
 
                                     Response response = generateResponse(Constants.UNMARSHALING_FAILED);
 
@@ -649,7 +643,7 @@ public final class UserResource extends AbstractResource {
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
@@ -657,7 +651,7 @@ public final class UserResource extends AbstractResource {
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_CREATOR_FOUND)
-                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_CREATOR_FOUND);
 
@@ -665,7 +659,7 @@ public final class UserResource extends AbstractResource {
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_ACCEPTABLE.name()));
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -680,7 +674,7 @@ public final class UserResource extends AbstractResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.BAD_REQUEST.name()));
+                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 
@@ -690,19 +684,19 @@ public final class UserResource extends AbstractResource {
     @RequestMapping(value = "/users",
             method = RequestMethod.PUT,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<Object> updateUser(final @RequestBody String body,
-                                             final @RequestHeader(name = "Authorization",
-                                                     required = false) String authorization,
-                                             final @RequestHeader(name = "Content-Type",
-                                                     required = false) String contentType,
-                                             final @RequestHeader(name = "Version",
-                                                     required = false) String version) {
-        final String[] params = new String[4];
-        params[0] = authorization;
-        params[1] = contentType;
-        params[2] = version;
-        params[3] = body;
-        if (getValidator().validate(params)
+    public ResponseEntity<?> updateUser(final @RequestBody String body,
+                                        final @RequestHeader(name = "Authorization",
+                                                required = false) String authorization,
+                                        final @RequestHeader(name = "Content-Type",
+                                                required = false) String contentType,
+                                        final @RequestHeader(name = "Version",
+                                                required = false) String version) {
+        if (getValidator().validate(
+                new String[]{
+                        body,
+                        authorization,
+                        contentType,
+                        version})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
@@ -760,14 +754,14 @@ public final class UserResource extends AbstractResource {
 
                                         if (getUserService().update(userToUpdate) != null) {
                                             LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.OK.name()));
+                                                    .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                             Response response = generateResponse(Constants.SUCCESS);
 
                                             return new ResponseEntity<>(response, HttpStatus.OK);
                                         } else {
                                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.EXPECTATION_FAILED.name()));
+                                                    .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
 
                                             Response response = generateResponse(Constants.ERROR);
 
@@ -775,7 +769,7 @@ public final class UserResource extends AbstractResource {
                                         }
                                     } else {
                                         LOGGER.debug(Constants.STATUS_REQ_FAIL.concat(" ").concat("User for updating not found")
-                                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.EXPECTATION_FAILED.name()));
+                                                .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
 
                                         Response response = generateResponse(Constants.NO_USER_FOUND);
 
@@ -783,7 +777,7 @@ public final class UserResource extends AbstractResource {
                                     }
                                 } else {
                                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.UNMARSHALING_FAILED)
-                                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.EXPECTATION_FAILED.name()));
+                                            .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
 
                                     Response response = generateResponse(Constants.UNMARSHALING_FAILED);
 
@@ -798,7 +792,7 @@ public final class UserResource extends AbstractResource {
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
@@ -806,7 +800,7 @@ public final class UserResource extends AbstractResource {
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_UPDATER_FOUND)
-                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_UPDATER_FOUND);
 
@@ -814,7 +808,7 @@ public final class UserResource extends AbstractResource {
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_ACCEPTABLE.name()));
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 
@@ -829,7 +823,7 @@ public final class UserResource extends AbstractResource {
             }
         }
         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.BAD_REQUEST.name()));
+                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
         Response response = generateResponse(Constants.ERROR);
 

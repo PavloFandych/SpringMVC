@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.web.controller;
 
 import org.apache.log4j.Logger;
@@ -19,10 +18,6 @@ import org.total.spring.root.util.Constants;
 import org.total.spring.root.util.PasswordManager;
 
 import javax.servlet.http.HttpServletRequest;
-
-/**
- * @author Pavlo.Fandych
- */
 
 @Controller
 public final class RegisterController {

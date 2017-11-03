@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.interfaces;
 
 import org.total.spring.root.entity.ArchResultItaly;
@@ -6,12 +5,12 @@ import org.total.spring.root.entity.ArchResultItaly;
 import java.util.List;
 
 /**
- * @author Pavlo.Fandych
+ * Created by total on 12/20/16.
  */
 
 public interface ArchResultItalyService {
-    List<ArchResultItaly> findAll();
+    public List<ArchResultItaly> findAll();
 
-    List<ArchResultItaly> findAll(final Integer pageIndex,
-                                  final Integer numRecPerPage);
+    public List<ArchResultItaly> findAll(final Integer pageIndex,
+                                         final Integer numRecPerPage);
 }

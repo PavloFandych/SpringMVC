@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.entity.specification;
 
 import org.springframework.data.jpa.domain.Specification;
@@ -9,18 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Pavlo.Fandych
+ * Created by total on 11/6/16.
  */
 
 public final class UserSpecificationsBuilder {
     private final List<SearchCriteria> params;
 
     public UserSpecificationsBuilder() {
-        params = new ArrayList<>();
+        params = new ArrayList<SearchCriteria>();
     }
 
     public UserSpecificationsBuilder with(String key, String operation, Object value) {
-        final SearchCriteria searchCriteria = new SearchCriteria();
+        SearchCriteria searchCriteria = new SearchCriteria();
         searchCriteria.setKey(key);
         searchCriteria.setOperation(operation);
         searchCriteria.setValue(value);
@@ -29,11 +28,11 @@ public final class UserSpecificationsBuilder {
     }
 
     public Specification<User> build() {
-        if (params.isEmpty()) {
+        if (params.size() == 0) {
             return null;
         }
 
-        final List<Specification<User>> specs = new ArrayList<>();
+        List<Specification<User>> specs = new ArrayList<Specification<User>>();
         for (SearchCriteria param : params) {
             UserSpecification userSpecification = new UserSpecification();
             userSpecification.setCriteria(param);

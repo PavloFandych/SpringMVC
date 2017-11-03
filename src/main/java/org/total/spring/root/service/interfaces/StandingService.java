@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.interfaces;
 
 import org.total.spring.root.proc.Standing;
@@ -7,18 +6,18 @@ import org.total.spring.root.proc.StructuredStanding;
 import java.util.List;
 
 /**
- * @author Pavlo.Fandych
+ * Created by pavlo.fandych on 11/3/2016.
  */
 
 public interface StandingService {
-    List<List<String>> getStandings(final String seasonCode, final String tournamentCode);
+    public List<List<String>> getStandings(final String seasonCode, final String tournamentCode);
 
-    List<Standing> getMatchDayStandings(final String seasonCode,
-                                        final String tournamentCode,
-                                        final Integer matchDay);
+    public List<Standing> getMatchDayStandings(final String seasonCode,
+                                               final String tournamentCode,
+                                               final Integer matchDay);
 
-    String getCachedStandings(final String seasonCode, final String tournamentCode);
+    public String getCachedStandings(final String seasonCode, final String tournamentCode);
 
-    List<List<StructuredStanding>> getStructuredStandings(final String seasonCode,
-                                                          final String tournamentCode);
+    public List<List<StructuredStanding>> getStructuredStandings(final String seasonCode,
+                                                                 final String tournamentCode);
 }

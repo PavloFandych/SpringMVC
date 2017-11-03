@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Pavlo.Fandych
+ * Created by pavlo.fandych on 11/3/2016.
  */
 
 @Transactional
@@ -40,7 +39,7 @@ public final class StandingServiceImpl implements StandingService {
     )
     public List<List<String>> getStandings(final String seasonCode,
                                            final String tournamentCode) {
-        final List<List<String>> standings = getStandingDAO().getEntities(seasonCode, tournamentCode);
+        List<List<String>> standings = getStandingDAO().getEntities(seasonCode, tournamentCode);
         return (standings != null && !standings.isEmpty()) ? standings : null;
     }
 
@@ -71,16 +70,16 @@ public final class StandingServiceImpl implements StandingService {
     )
     public String getCachedStandings(final String seasonCode,
                                      final String tournamentCode) {
-        final String result = getStandingDAO().getCachedStandings(seasonCode, tournamentCode);
+        String result = getStandingDAO().getCachedStandings(seasonCode, tournamentCode);
         return (result != null && !result.isEmpty()) ? result : null;
     }
 
     public List<List<StructuredStanding>> getStructuredStandings(final String seasonCode,
                                                                  final String tournamentCode) {
-        final List<StructuredStanding> list = getStandingDAO()
+        List<StructuredStanding> list = getStandingDAO()
                 .getStructuredStandings(seasonCode, tournamentCode);
 
-        final List<List<StructuredStanding>> result = new ArrayList<>();
+        List<List<StructuredStanding>> result = new ArrayList<>();
 
         byte place = 0;
         for (StructuredStanding structuredStanding : list) {
@@ -90,7 +89,7 @@ public final class StandingServiceImpl implements StandingService {
         }
 
         for (byte index = 1; index <= place; index++) {
-            final List<StructuredStanding> structuredStandingList = new ArrayList<>();
+            List<StructuredStanding> structuredStandingList = new ArrayList<>();
             for (StructuredStanding structuredStanding : list) {
                 if (structuredStanding.getPlace() == index) {
                     structuredStandingList.add(structuredStanding);

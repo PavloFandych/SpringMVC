@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.interfaces;
 
 import org.total.spring.root.entity.Capability;
@@ -7,19 +6,19 @@ import org.total.spring.root.entity.enums.CapabilityType;
 import java.util.List;
 
 /**
- * @author Pavlo.Fandych
+ * Created by total on 10/28/16.
  */
 
 public interface CapabilityService {
-    List<Capability> findAll();
+    public List<Capability> findAll();
 
-    Capability findByCapabilityId(final Long capabilityId);
+    public Capability findByCapabilityId(final Long capabilityId);
 
-    Capability save(final Capability entity);
+    public Capability save(final Capability entity);
 
-    Capability update(final Capability entity);
+    public Capability update(final Capability entity);
 
-    void deleteCapabilityByCapabilityId(final Long capabilityId);
+    public void deleteCapabilityByCapabilityId(final Long capabilityId);
 
-    Capability findCapabilityByCapabilityType(final CapabilityType capabilityType);
+    public Capability findCapabilityByCapabilityType(final CapabilityType capabilityType);
 }

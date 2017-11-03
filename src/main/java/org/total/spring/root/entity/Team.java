@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,10 +6,6 @@ import org.total.spring.root.util.Constants;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
-
-/**
- * @author Pavlo.Fandych
- */
 
 @Entity
 @Table(name = "Team",

@@ -1,14 +1,9 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
-/**
- * @author Pavlo.Fandych
- */
 
 @Entity
 @Table(name = "User",
@@ -160,6 +155,7 @@ public final class User implements Serializable {
         return "User{" +
                 "userId=" + userId +
                 ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
                 ", roles=" + roles +
                 ", userEmail='" + userEmail + '\'' +
                 ", city='" + city + '\'' +

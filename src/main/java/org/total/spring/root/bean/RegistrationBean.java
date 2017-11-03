@@ -1,9 +1,4 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.bean;
-
-/**
- * @author Pavlo.Fandych
- */
 
 public class RegistrationBean {
     private String userName;
@@ -47,6 +42,7 @@ public class RegistrationBean {
     public String toString() {
         return "RegistrationBean{" +
                 "userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
                 ", cityName='" + cityName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 '}';

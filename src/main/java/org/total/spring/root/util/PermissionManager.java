@@ -1,10 +1,9 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.util;
 
 /**
- * @author Pavlo.Fandych
+ * Created by pavlo.fandych on 11/7/2016.
  */
 
 public interface PermissionManager<K, V> {
-    boolean containEntity(final K owner, final V target);
+    public boolean containEntity(final K owner, final V target);
 }

@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.interfaces;
 
 import org.total.spring.root.entity.Season;
@@ -7,25 +6,25 @@ import org.total.spring.root.entity.enums.SeasonCode;
 import java.util.List;
 
 /**
- * @author kostya
+ * Created by kostya on 10/15/16.
  */
 
 public interface SeasonService {
-    List<Season> findAll();
+    public List<Season> findAll();
 
-    List<List<String>> findAllStoredProc();
+    public List<List<String>> findAllStoredProc();
 
-    Season findById(final Long seasonId);
+    public Season findById(final Long seasonId);
 
-    Season save(final Season entity);
+    public Season save(final Season entity);
 
-    Season update(final Season entity);
+    public Season update(final Season entity);
 
-    void deleteSeasonBySeasonId(final Long seasonId);
+    public void deleteSeasonBySeasonId(final Long seasonId);
 
-    Season findSeasonBySeasonName(final String seasonName);
+    public Season findSeasonBySeasonName(final String seasonName);
 
-    Season findSeasonBySeasonCode(final SeasonCode seasonCode);
+    public Season findSeasonBySeasonCode(final SeasonCode seasonCode);
 
-    List<Season> getActualSeasons();
+    public List<Season> getActualSeasons();
 }

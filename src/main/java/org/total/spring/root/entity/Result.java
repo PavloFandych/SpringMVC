@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -10,7 +9,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 /**
- * @author kostya
+ * Created by kostya on 10/15/16.
  */
 
 @Entity

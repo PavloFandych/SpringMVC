@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.web.controller;
 
 import org.slf4j.Logger;
@@ -16,10 +15,6 @@ import org.total.spring.root.util.Constants;
 import org.total.spring.root.util.PasswordManager;
 
 import javax.servlet.http.HttpServletRequest;
-
-/**
- * @author Pavlo.Fandych
- */
 
 @Controller
 public final class AuthController {
@@ -59,9 +54,7 @@ public final class AuthController {
     public String authorization(final @ModelAttribute("loginBean") LoginBean loginBean,
                                 final HttpServletRequest request) {
         try {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug(Constants.STATUS_REQ_ENTRY.concat(" ").concat("Authorization begins"));
-            }
+            LOGGER.debug(Constants.STATUS_REQ_ENTRY.concat(" ").concat("Authorization begins"));
 
             if (loginBean != null &&
                     loginBean.getLogin() != null &&
@@ -69,38 +62,30 @@ public final class AuthController {
                     loginBean.getPassword() != null &&
                     !loginBean.getPassword().isEmpty()) {
 
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug(Constants.STATUS_REQ_SUCCESS
-                            .concat(" Login = ")
-                            .concat(loginBean.getLogin()));
-                }
+                LOGGER.debug(Constants.STATUS_REQ_SUCCESS
+                        .concat(" Login = ")
+                        .concat(loginBean.getLogin()));
 
                 User user = getUserService().findUserByUserNameAndPassword(loginBean.getLogin(),
                         getPasswordManager().encodeMD5(loginBean.getPassword()));
 
                 if (user != null) {
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS
-                                .concat(" Authorization successful"));
-                    }
+                    LOGGER.debug(Constants.STATUS_REQ_SUCCESS
+                            .concat(" Authorization successful"));
                     request.getSession().setAttribute("User", user);
                     return "/index";
                 } else {
                     if (getUserService().findUserByUserName(loginBean.getLogin()) != null) {
-                        if (LOGGER.isWarnEnabled()) {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL
-                                    .concat(" ")
-                                    .concat(Constants.INVALID_CREDENTIALS));
-                        }
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL
+                                .concat(" ")
+                                .concat(Constants.INVALID_CREDENTIALS));
                         request.setAttribute(Constants.ERROR, Constants.INVALID_CREDENTIALS);
                         return "/index";
                     } else {
-                        if (LOGGER.isWarnEnabled()) {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL
-                                    .concat(" No user ")
-                                    .concat(loginBean.getLogin()
-                                            .concat(" found.")));
-                        }
+                        LOGGER.warn(Constants.STATUS_REQ_FAIL
+                                .concat(" No user ")
+                                .concat(loginBean.getLogin()
+                                        .concat(" found.")));
                         request.setAttribute(Constants.ERROR, " No user "
                                 .concat(loginBean.getLogin())
                                 .concat(" found."));

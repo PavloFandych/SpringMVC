@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,7 @@ import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.service.interfaces.CapabilityService;
 
 /**
- * @author Pavlo.Fandych
+ * Created by pavlo.fandych on 11/7/2016.
  */
 
 @Component("permissionManagerCapability")

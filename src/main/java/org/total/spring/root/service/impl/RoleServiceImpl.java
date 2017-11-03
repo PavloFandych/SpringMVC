@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,6 @@ import org.total.spring.root.repository.RoleRepository;
 import org.total.spring.root.service.interfaces.RoleService;
 
 import java.util.List;
-
-/**
- * @author Pavlo.Fandych
- */
 
 @Repository
 @Transactional
@@ -87,7 +82,7 @@ public final class RoleServiceImpl implements RoleService {
             cacheManager = "springCashManager"
     )
     public Role findRoleByRoleType(final RoleType roleType) {
-        final List<Role> roles = getRoleRepository().findByRoleType(roleType);
+        List<Role> roles = getRoleRepository().findByRoleType(roleType);
         return (roles != null && !roles.isEmpty()) ? roles.get(0) : null;
     }
 }

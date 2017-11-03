@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import org.total.spring.root.repository.GoalsRepository;
 import org.total.spring.root.service.interfaces.GoalsService;
 
 /**
- * @author Pavlo.Fandych
+ * Created by pavlo.fandych on 11/2/2016.
  */
 
 @Repository

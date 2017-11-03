@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.web.resources;
 
 import org.apache.log4j.Logger;
@@ -18,13 +17,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author Pavlo.Fandych
+ * Created by total on 11/22/16.
  */
 
 @RestController
 public final class TeamMatchResource extends AbstractResource {
-    private static final Logger LOGGER = Logger.getLogger(TeamMatchResource.class);
-    private static final String HTTP_STATUS_EQUALS = " http status = ";
+    private static transient final Logger LOGGER = Logger.getLogger(TeamMatchResource.class);
 
     @Autowired
     private TeamMatchService teamMatchService;
@@ -40,28 +38,25 @@ public final class TeamMatchResource extends AbstractResource {
     @RequestMapping(value = "/teamMatches",
             method = RequestMethod.GET,
             produces = Constants.CONTENT_TYPE_APPLICATION_JSON)
-    public ResponseEntity<Object> fetchTeamMatches(final @RequestHeader(name = "Authorization", required = false) String authorization,
-                                                   final @RequestHeader(name = "Content-Type",
-                                                           required = false) String contentType,
-                                                   final @RequestHeader(name = "Version",
-                                                           required = false) String version,
-                                                   final @RequestParam(name = "teamCode",
-                                                           required = false) String teamCode,
-                                                   final @RequestParam(name = "opponentTeamCode",
-                                                           required = false) String opponentTeamCode,
-                                                   final @RequestParam(name = "seasonCode",
-                                                           required = false) String seasonCode,
-                                                   final @RequestParam(name = "tournamentCode",
-                                                           required = false) String tournamentCode) {
-        final String[] params = new String[7];
-        params[0] = authorization;
-        params[1] = contentType;
-        params[2] = version;
-        params[3] = teamCode;
-        params[4] = opponentTeamCode;
-        params[5] = seasonCode;
-        params[6] = tournamentCode;
-        if (getValidator().validate(params)
+    public ResponseEntity<?> fetchTeamMatches(final @RequestHeader(name = "Authorization", required = false) String authorization,
+                                              final @RequestHeader(name = "Content-Type",
+                                                      required = false) String contentType,
+                                              final @RequestHeader(name = "Version",
+                                                      required = false) String version,
+                                              final @RequestParam(name = "teamCode",
+                                                      required = false) String teamCode,
+                                              final @RequestParam(name = "opponentTeamCode",
+                                                      required = false) String opponentTeamCode,
+                                              final @RequestParam(name = "seasonCode",
+                                                      required = false) String seasonCode,
+                                              final @RequestParam(name = "tournamentCode",
+                                                      required = false) String tournamentCode) {
+        if (getValidator().validate(
+                new String[]{
+                        authorization,
+                        contentType,
+                        version,
+                        teamCode})
                 && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
             LOGGER.debug(Constants.STATUS_REQ_ENTRY);
             try {
@@ -108,20 +103,20 @@ public final class TeamMatchResource extends AbstractResource {
 
                             if (list == null || list.isEmpty()) {
                                 LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_TEAM_MATCHES_FOUND)
-                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_FOUND.name()));
+                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
 
                                 Response response = generateResponse(Constants.NO_TEAM_MATCHES_FOUND);
 
                                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                             } else {
                                 LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.OK.name()));
+                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
 
                                 return new ResponseEntity<>(list, HttpStatus.OK);
                             }
                         } else {
                             LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                             Response response = generateResponse(Constants.PERMISSION_DENIED);
 
@@ -129,7 +124,7 @@ public final class TeamMatchResource extends AbstractResource {
                         }
                     } else {
                         LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.CONFLICT.name()));
+                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
 
                         Response response = generateResponse(Constants.NO_GETTER_FOUND);
 
@@ -137,7 +132,7 @@ public final class TeamMatchResource extends AbstractResource {
                     }
                 } else {
                     LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(HTTP_STATUS_EQUALS).concat(HttpStatus.NOT_ACCEPTABLE.name()));
+                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
 
                     Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
 

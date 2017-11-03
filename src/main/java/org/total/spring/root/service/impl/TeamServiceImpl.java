@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +17,6 @@ import org.total.spring.root.repository.TeamRepository;
 import org.total.spring.root.service.interfaces.TeamService;
 
 import java.util.List;
-
-/**
- * @author Pavlo.Fandych
- */
 
 @Repository
 @Transactional
@@ -93,7 +88,7 @@ public final class TeamServiceImpl implements TeamService {
     )
     public List<StoredTeamsCache> getStoredTeamsList(final String seasonCode,
                                                      final String tournamentCode) {
-        final List<StoredTeamsCache> result = getTeamDAO()
+        List<StoredTeamsCache> result = getTeamDAO()
                 .getStoredTeamsList(SeasonCode.valueOf(seasonCode), TournamentCode.valueOf(tournamentCode));
         return (result != null && !result.isEmpty()) ? result : null;
     }
@@ -137,7 +132,7 @@ public final class TeamServiceImpl implements TeamService {
             sync = true
     )
     public Team findTeamByTeamName(final String teamName) {
-        final List<Team> teams = getTeamRepository()
+        List<Team> teams = getTeamRepository()
                 .findByTeamName(teamName);
         return (teams != null && !teams.isEmpty()) ? teams.get(0) : null;
     }
@@ -154,7 +149,7 @@ public final class TeamServiceImpl implements TeamService {
             )
     )
     public List<Team> findTeamsByCountryCode(final String countryCode) {
-        final List<Team> teams = getTeamDAO()
+        List<Team> teams = getTeamDAO()
                 .getTeamsByCountryCode(countryCode);
         return (teams != null && !teams.isEmpty()) ? teams : null;
     }

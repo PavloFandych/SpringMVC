@@ -1,10 +1,9 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.util;
 
 /**
- * @author Pavlo.Fandych
+ * Created by total on 11/9/16.
  */
 
 public interface Validator<T> {
-    boolean validate(final T... params);
+    public boolean validate(final T... params);
 }

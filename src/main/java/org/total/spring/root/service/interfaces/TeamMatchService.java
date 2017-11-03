@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.interfaces;
 
 import org.total.spring.root.proc.TeamMatch;
@@ -6,11 +5,12 @@ import org.total.spring.root.proc.TeamMatch;
 import java.util.List;
 
 /**
- * @author Pavlo.Fandych
+ * Created by total on 11/22/16.
  */
+
 public interface TeamMatchService {
-    List<TeamMatch> getTeamMatches(final String teamCode,
-                                   final String opponentTeamCode,
-                                   final String seasonCode,
-                                   final String tournamentCode);
+    public List<TeamMatch> getTeamMatches(final String teamCode,
+                                          final String opponentTeamCode,
+                                          final String seasonCode,
+                                          final String tournamentCode);
 }

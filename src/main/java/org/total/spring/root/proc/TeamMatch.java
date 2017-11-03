@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.proc;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,13 +12,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author Pavlo.Fandych
+ * Created by total on 11/21/16.
  */
 
 @Component("teamMatch")
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public final class TeamMatch implements Serializable {
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private Date matchDate;
     private SeasonCode seasonCode;
     private String seasonName;

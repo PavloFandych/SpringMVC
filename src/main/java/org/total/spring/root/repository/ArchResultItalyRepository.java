@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.repository;
 
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -8,10 +7,10 @@ import org.total.spring.root.entity.ArchResultItaly;
 import java.util.List;
 
 /**
- * @author Pavlo.Fandych
+ * Created by total on 12/20/16.
  */
 
 public interface ArchResultItalyRepository extends PagingAndSortingRepository<ArchResultItaly, Long>,
         JpaSpecificationExecutor<ArchResultItaly> {
-    List<ArchResultItaly> findByResultCode(final String resultCode);
+    public List<ArchResultItaly> findByResultCode(final String resultCode);
 }

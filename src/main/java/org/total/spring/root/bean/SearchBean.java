@@ -1,8 +1,7 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.bean;
 
 /**
- * @author Pavlo.Fandych
+ * Created by total on 10/26/16.
  */
 public class SearchBean {
     private String target;

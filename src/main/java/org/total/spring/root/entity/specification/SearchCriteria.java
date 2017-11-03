@@ -1,8 +1,7 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.entity.specification;
 
 /**
- * @author Pavlo.Fandych
+ * Created by total on 11/6/16.
  */
 
 public final class SearchCriteria {

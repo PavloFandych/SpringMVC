@@ -1,10 +1,9 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.exceptions;
 
 import org.springframework.http.HttpStatus;
 
 /**
- * @author Pavlo.Fandych
+ * Created by pavlo.fandych on 11/9/2016.
  */
 
 public final class ApplicationException extends Exception {

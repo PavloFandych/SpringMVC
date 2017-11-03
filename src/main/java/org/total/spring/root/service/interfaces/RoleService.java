@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.service.interfaces;
 
 import org.total.spring.root.entity.Role;
@@ -6,20 +5,16 @@ import org.total.spring.root.entity.enums.RoleType;
 
 import java.util.List;
 
-/**
- * @author Pavlo.Fandych
- */
-
 public interface RoleService {
-    List<Role> findAll();
+    public List<Role> findAll();
 
-    Role findById(final Long roleId);
+    public Role findById(final Long roleId);
 
-    Role save(final Role entity);
+    public Role save(final Role entity);
 
-    Role update(final Role entity);
+    public Role update(final Role entity);
 
-    void deleteRoleByRoleId(final Long roleId);
+    public void deleteRoleByRoleId(final Long roleId);
 
-    Role findRoleByRoleType(final RoleType roleType);
+    public Role findRoleByRoleType(final RoleType roleType);
 }

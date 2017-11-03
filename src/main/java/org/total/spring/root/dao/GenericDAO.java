@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.dao;
 
 import org.apache.log4j.Logger;
@@ -8,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 
 /**
- * @author Pavlo.Fandych
+ * Created by total on 11/4/16.
  */
 
 public abstract class GenericDAO<T> {

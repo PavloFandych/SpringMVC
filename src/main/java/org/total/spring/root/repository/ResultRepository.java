@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.repository;
 
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -8,10 +7,10 @@ import org.total.spring.root.entity.Result;
 import java.util.List;
 
 /**
- * @author kostya
+ * Created by kostya on 10/21/16.
  */
 
 public interface ResultRepository extends PagingAndSortingRepository<Result, Long>,
         JpaSpecificationExecutor<Result> {
-    List<Result> findByResultCode(final String resultCode);
+    public List<Result> findByResultCode(final String resultCode);
 }

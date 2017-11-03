@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.root.entity.specification;
 
 import org.springframework.data.jpa.domain.Specification;
@@ -10,7 +9,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
- * @author Pavlo.Fandych
+ * Created by total on 11/6/16.
  */
 
 public final class UserSpecification implements Specification<User> {
