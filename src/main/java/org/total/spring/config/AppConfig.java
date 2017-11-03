@@ -1,7 +1,9 @@
+/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import net.sf.ehcache.config.CacheConfiguration;
+import org.apache.log4j.Logger;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -22,17 +24,23 @@ import org.total.spring.root.util.Constants;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories("org.total.spring.root.repository")
 @ComponentScan(value = {"org.total.spring.root"}, lazyInit = true)
 @EnableCaching
 public class AppConfig {
+    private static final Logger LOGGER = Logger.getLogger(AppConfig.class);
+
     @Bean
     public DataSource getDataSource() {
-        ComboPooledDataSource dataSource = new ComboPooledDataSource();
+        final ComboPooledDataSource dataSource = new ComboPooledDataSource();
         try {
-            Properties credentials = new Properties();
+            final Properties credentials = new Properties();
             credentials.load(AppConfig.class.getClassLoader()
                     .getResourceAsStream("credentials.properties"));
 
@@ -46,13 +54,14 @@ public class AppConfig {
             dataSource.setAcquireIncrement(5);
             dataSource.setMaxStatements(100);
         } catch (Exception e) {
+            LOGGER.error(e, e);
         }
         return dataSource;
     }
 
     @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(getDataSource());
         entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         entityManagerFactoryBean.setPackagesToScan("org.total.spring.root.entity",
@@ -63,7 +72,7 @@ public class AppConfig {
 
     @Bean
     public JpaTransactionManager transactionManager() {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        final JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
     }
@@ -75,7 +84,7 @@ public class AppConfig {
 
     @Bean(destroyMethod = "shutdown")
     public net.sf.ehcache.CacheManager ehCacheManager() {
-        CacheConfiguration cacheConfiguration = new CacheConfiguration();
+        final CacheConfiguration cacheConfiguration = new CacheConfiguration();
         cacheConfiguration.setName("applicationCache");
 
 
@@ -109,27 +118,25 @@ public class AppConfig {
 
     @Bean
     public JdbcTemplate jdbcTemplate() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        final JdbcTemplate jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.setDataSource(getDataSource());
         return jdbcTemplate;
     }
 
     Properties hibernateProperties() {
-        return new Properties() {
-            {
-                setProperty("hibernate.order_updates", "true");
-                setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-                setProperty("hibernate.globally_quoted_identifiers", "false");
-                setProperty("hibernate.hbm2ddl.auto", "update");
-                setProperty("hibernate.c3p0.min_size", "10");
-                setProperty("hibernate.c3p0.max_size", "20");
-                setProperty("hibernate.c3p0.acquire_increment", "1");
-                setProperty("hibernate.c3p0.idle_test_period", "3000");
-                setProperty("hibernate.c3p0.max_statements", "50");
-                setProperty("hibernate.c3p0.timeout", "1800");
-                setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false");
-                setProperty("hibernate.cache.use_second_level_cache", "true");
-            }
-        };
+        final Properties properties = new Properties();
+        properties.setProperty("hibernate.order_updates", "true");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        properties.setProperty("hibernate.globally_quoted_identifiers", "false");
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.c3p0.min_size", "10");
+        properties.setProperty("hibernate.c3p0.max_size", "20");
+        properties.setProperty("hibernate.c3p0.acquire_increment", "1");
+        properties.setProperty("hibernate.c3p0.idle_test_period", "3000");
+        properties.setProperty("hibernate.c3p0.max_statements", "50");
+        properties.setProperty("hibernate.c3p0.timeout", "1800");
+        properties.setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false");
+        properties.setProperty("hibernate.cache.use_second_level_cache", "true");
+        return properties;
     }
 }
