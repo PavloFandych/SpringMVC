@@ -1,4 +1,3 @@
-/* Copyright 2016-2017 by Teamstracker */
 package org.total.spring.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;

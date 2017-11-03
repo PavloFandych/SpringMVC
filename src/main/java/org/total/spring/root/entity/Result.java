@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 /**
- * Created by kostya on 10/15/16.
+ * @author kostya
  */
 
 @Entity

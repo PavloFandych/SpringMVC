@@ -15,32 +15,29 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by total on 12/8/16.
+ * @author Pavlo.Fandych
  */
 
 @Repository("tournamentDAO")
 public class TournamentDAO extends GenericDAO<Tournament> {
     @Override
     public List<Tournament> getEntities(Object... param) {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+        final SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_ACTUAL_TOURNAMENT_LIST)
-                .returningResultSet("tournamentList", new RowMapper<Tournament>() {
-                    @Override
-                    public Tournament mapRow(ResultSet resultSet, int i) throws SQLException {
-                        Tournament tournament = new Tournament();
-                        tournament.setTournamentId(resultSet.getLong("tournamentId"));
-                        tournament.setTournamentType(TournamentType
-                                .valueOf(resultSet.getString("tournamentType")));
-                        tournament.setTournamentCode(TournamentCode
-                                .valueOf(resultSet.getString("tournamentCode")));
-                        tournament.setTournamentName(resultSet.getString("tournamentName"));
-                        return tournament;
-                    }
-                });
-        Map<String, Object> out = simpleJdbcCall
-                .execute();
+                .returningResultSet("tournamentList", (resultSet, i) -> {
+                    final Tournament tournament = new Tournament();
+                    tournament.setTournamentId(resultSet.getLong("tournamentId"));
+                    tournament.setTournamentType(TournamentType
+                            .valueOf(resultSet.getString("tournamentType")));
+                    tournament.setTournamentCode(TournamentCode
+                            .valueOf(resultSet.getString("tournamentCode")));
+                    tournament.setTournamentName(resultSet.getString("tournamentName"));
 
-        List<Tournament> resultList = (List<Tournament>) out.get("tournamentList");
+                    return tournament;
+                });
+        final Map<String, Object> out = simpleJdbcCall.execute();
+
+        final List<Tournament> resultList = (List<Tournament>) out.get("tournamentList");
 
         return (resultList != null && !resultList.isEmpty()) ? resultList : null;
     }

@@ -1,8 +1,9 @@
 package org.total.spring.root.bean;
 
 /**
- * Created by total on 10/26/16.
+ * @author Pavlo.Fandych
  */
+
 public class SearchBean {
     private String target;
 

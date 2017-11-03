@@ -7,6 +7,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @Entity
 @Table(name = "Team",
         uniqueConstraints = {

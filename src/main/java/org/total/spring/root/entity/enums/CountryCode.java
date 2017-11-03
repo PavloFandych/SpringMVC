@@ -1,5 +1,9 @@
 package org.total.spring.root.entity.enums;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 public enum CountryCode {
     ABW,
     AFG,

@@ -7,6 +7,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @Entity
 @Table(
         name = "Capability",

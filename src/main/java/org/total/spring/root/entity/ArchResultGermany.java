@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 /**
- * Created by total on 12/20/16.
+ * @author Pavlo.Fandych
  */
 
 @Entity

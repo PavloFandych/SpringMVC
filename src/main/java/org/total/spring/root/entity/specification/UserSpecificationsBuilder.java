@@ -8,31 +8,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by total on 11/6/16.
+ * @author Pavlo.Fandych
  */
 
 public final class UserSpecificationsBuilder {
     private final List<SearchCriteria> params;
 
     public UserSpecificationsBuilder() {
-        params = new ArrayList<SearchCriteria>();
+        params = new ArrayList<>();
     }
 
     public UserSpecificationsBuilder with(String key, String operation, Object value) {
-        SearchCriteria searchCriteria = new SearchCriteria();
+        final SearchCriteria searchCriteria = new SearchCriteria();
         searchCriteria.setKey(key);
         searchCriteria.setOperation(operation);
         searchCriteria.setValue(value);
         params.add(searchCriteria);
+
         return this;
     }
 
     public Specification<User> build() {
-        if (params.size() == 0) {
+        if (params.isEmpty()) {
             return null;
         }
 
-        List<Specification<User>> specs = new ArrayList<Specification<User>>();
+        final List<Specification<User>> specs = new ArrayList<>();
         for (SearchCriteria param : params) {
             UserSpecification userSpecification = new UserSpecification();
             userSpecification.setCriteria(param);

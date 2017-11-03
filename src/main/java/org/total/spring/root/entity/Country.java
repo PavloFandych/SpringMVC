@@ -8,6 +8,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @Entity
 @Table(name = "Country",
         uniqueConstraints = {
@@ -27,7 +31,7 @@ public final class Country implements Serializable {
     public Country() {
     }
 
-    public Country(long countryId, String countryName, CountryCode countryCode, Set<Team> teams) {
+    public Country(long countryId, String countryName, CountryCode countryCode) {
         this.countryId = countryId;
         this.countryName = countryName;
         this.countryCode = countryCode;

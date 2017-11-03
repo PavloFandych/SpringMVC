@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 
 /**
- * Created by total on 11/4/16.
+ * @author Pavlo.Fandych
  */
 
 public abstract class GenericDAO<T> {

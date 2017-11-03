@@ -8,6 +8,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 @Entity
 @Table(name = "Role",
         uniqueConstraints = {
@@ -80,6 +84,10 @@ public final class Role implements Serializable {
         return users;
     }
 
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
     /*capabilities field mapping*/
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
@@ -105,10 +113,6 @@ public final class Role implements Serializable {
 
     public void setCapabilities(Set<Capability> capabilities) {
         this.capabilities = capabilities;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 
     @Override

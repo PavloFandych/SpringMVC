@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * Created by kostya on 10/15/16.
+ * @author kostya
  */
 
 @Entity

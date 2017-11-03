@@ -1,7 +1,7 @@
 package org.total.spring.root.entity.enums;
 
 /**
- * Created by kostya on 10/15/16.
+ * @author kostya
  */
 
 public enum SeasonCode {

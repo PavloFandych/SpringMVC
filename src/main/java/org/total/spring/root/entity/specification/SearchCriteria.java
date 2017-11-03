@@ -1,7 +1,7 @@
 package org.total.spring.root.entity.specification;
 
 /**
- * Created by total on 11/6/16.
+ * @author Pavlo.Fandych
  */
 
 public final class SearchCriteria {

@@ -1,5 +1,9 @@
 package org.total.spring.root.bean;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 public class RegistrationBean {
     private String userName;
     private String password;
@@ -42,7 +46,6 @@ public class RegistrationBean {
     public String toString() {
         return "RegistrationBean{" +
                 "userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
                 ", cityName='" + cityName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 '}';

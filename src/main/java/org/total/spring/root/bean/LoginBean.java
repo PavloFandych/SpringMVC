@@ -1,5 +1,9 @@
 package org.total.spring.root.bean;
 
+/**
+ * @author Pavlo.Fandych
+ */
+
 public class LoginBean {
     private String login;
     private String password;

@@ -1,7 +1,7 @@
 package org.total.spring.root.entity.enums;
 
 /**
- * Created by kostya on 10/20/16.
+ * @author kostya
  */
 
 public enum TournamentCode {
