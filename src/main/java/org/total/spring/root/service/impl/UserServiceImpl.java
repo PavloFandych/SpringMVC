@@ -52,7 +52,7 @@ public final class UserServiceImpl implements UserService {
             )
     )
     public List<User> findAll() {
-        List<User> list = new ArrayList<>();
+        final List<User> list = new ArrayList<>();
         for (User item : getUserRepository().findAll()) {
             list.add(item);
         }

@@ -7,6 +7,7 @@ import org.total.spring.root.entity.enums.SeasonCode;
 import org.total.spring.root.util.Constants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -34,14 +35,14 @@ public class SeasonDAO extends GenericDAO<List<String>> {
 
         final List<List<String>> resultList = (List<List<String>>) out.get("seasonList");
 
-        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
+        return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
 
     public List<Season> getActualSeasons() {
         final SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_ACTUAL_SEASON_LIST)
                 .returningResultSet("seasonList", (resultSet, i) -> {
-                    Season season = new Season();
+                    final Season season = new Season();
                     season.setSeasonId(resultSet.getLong("seasonId"));
                     season.setSeasonCode(SeasonCode.valueOf(resultSet.getString("seasonCode")));
                     season.setSeasonName(resultSet.getString("seasonName"));
@@ -52,6 +53,6 @@ public class SeasonDAO extends GenericDAO<List<String>> {
 
         final List<Season> resultList = (List<Season>) out.get("seasonList");
 
-        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
+        return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
 }

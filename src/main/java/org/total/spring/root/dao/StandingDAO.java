@@ -9,6 +9,7 @@ import org.total.spring.root.proc.StructuredStanding;
 import org.total.spring.root.util.Constants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +45,7 @@ public class StandingDAO extends GenericDAO<List<String>> {
 
         final List<List<String>> resultList = (List<List<String>>) out.get("standings");
 
-        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
+        return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
 
     public List<Standing> getMatchDayStandings(final String seasonCode,
@@ -73,7 +74,7 @@ public class StandingDAO extends GenericDAO<List<String>> {
 
         final List<Standing> resultList = (List<Standing>) out.get("standings");
 
-        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
+        return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
 
     public String getCachedStandings(final String seasonCode,
@@ -118,6 +119,6 @@ public class StandingDAO extends GenericDAO<List<String>> {
 
         final List<StructuredStanding> resultList = (List<StructuredStanding>) out.get("structuredStandings");
 
-        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
+        return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
 }

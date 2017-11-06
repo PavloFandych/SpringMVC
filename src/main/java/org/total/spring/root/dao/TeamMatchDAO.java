@@ -12,6 +12,7 @@ import org.total.spring.root.util.Constants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -59,6 +60,6 @@ public class TeamMatchDAO extends GenericDAO<TeamMatch> {
 
         final List<TeamMatch> resultList = (List<TeamMatch>) out.get("teamMatches");
 
-        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
+        return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
 }

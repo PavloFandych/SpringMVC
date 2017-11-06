@@ -16,8 +16,6 @@ import org.total.spring.root.version.Version;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.total.spring.root.util.Constants.HTTP_STATUS_STRING;
-
 /**
  * @author Pavlo.Fandych
  */
@@ -49,13 +47,12 @@ public final class StandingResource extends AbstractResource {
                                                          required = false) String seasonCode,
                                                  final @RequestParam(name = "tournamentCode",
                                                          required = false) String tournamentCode) {
+        HttpStatus status;
         final List<String> headerValues = Arrays.asList(authorization, contentType, version, seasonCode, tournamentCode);
 
         if (!isValidHeaders(headerValues, this::predicateHeaderLogic)) {
-            final HttpStatus status = HttpStatus.BAD_REQUEST;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                    .concat(" ").concat(headerValues.toString()).concat(" ")
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.BAD_REQUEST;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.ERROR, status, headerValues));
             return new ResponseEntity<>(generateResponse(Constants.ERROR), status);
         }
 
@@ -65,17 +62,14 @@ public final class StandingResource extends AbstractResource {
         try {
             localVersion = Version.valueOf(version);
         } catch (Exception e) {
-            final HttpStatus status = HttpStatus.FORBIDDEN;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(e.getMessage())
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, e.getMessage(), status, version));
             return new ResponseEntity<>(generateResponse(e.getMessage()), status);
         }
 
         if (!localVersion.equals(Version.V1)) {
-            final HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                    .concat(" ").concat(localVersion.name()).concat(" ")
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.NOT_ACCEPTABLE;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.VERSION_NOT_SUPPORTED, status, localVersion));
             return new ResponseEntity<>(generateResponse(Constants.VERSION_NOT_SUPPORTED), status);
         }
 
@@ -85,19 +79,16 @@ public final class StandingResource extends AbstractResource {
                 getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
         if (getter == null) {
-            final HttpStatus status = HttpStatus.CONFLICT;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_GETTER_FOUND, status, getter));
             return new ResponseEntity<>(generateResponse(Constants.NO_GETTER_FOUND), status);
         }
 
         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
         if (!hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
-            final HttpStatus status = HttpStatus.CONFLICT;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                    .concat(" ").concat(getter.getRoles().toString()).concat(" ")
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.PERMISSION_DENIED, status, getter.getRoles()));
             return new ResponseEntity<>(generateResponse(Constants.PERMISSION_DENIED), status);
         }
 
@@ -106,13 +97,14 @@ public final class StandingResource extends AbstractResource {
         final List<List<String>> list = getStandingService().getStandings(seasonCode, tournamentCode);
 
         if (list == null || list.isEmpty()) {
-            final HttpStatus status = HttpStatus.NOT_FOUND;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_STANDINGS_FOUND)
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.NOT_FOUND;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_STANDINGS_FOUND, status, list));
             return new ResponseEntity<>(generateResponse(Constants.NO_STANDINGS_FOUND), status);
         }
 
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        status = HttpStatus.OK;
+        LOGGER.info(generateLogMessage(Constants.STATUS_REQ_SUCCESS, Constants.SUCCESS, status, list));
+        return new ResponseEntity<>(list, status);
     }
 
     @RequestMapping(value = "/cachedstandings",
@@ -127,13 +119,12 @@ public final class StandingResource extends AbstractResource {
                                                                required = false) String seasonCode,
                                                        final @RequestParam(name = "tournamentCode",
                                                                required = false) String tournamentCode) {
+        HttpStatus status;
         final List<String> headerValues = Arrays.asList(authorization, contentType, version, seasonCode, tournamentCode);
 
         if (!isValidHeaders(headerValues, this::predicateHeaderLogic)) {
-            final HttpStatus status = HttpStatus.BAD_REQUEST;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                    .concat(" ").concat(headerValues.toString()).concat(" ")
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.BAD_REQUEST;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.ERROR, status, headerValues));
             return new ResponseEntity<>(generateResponse(Constants.ERROR), status);
         }
 
@@ -143,17 +134,14 @@ public final class StandingResource extends AbstractResource {
         try {
             localVersion = Version.valueOf(version);
         } catch (Exception e) {
-            final HttpStatus status = HttpStatus.FORBIDDEN;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(e.getMessage())
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, e.getMessage(), status, version));
             return new ResponseEntity<>(generateResponse(e.getMessage()), status);
         }
 
         if (!localVersion.equals(Version.V1)) {
-            final HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                    .concat(" ").concat(localVersion.name()).concat(" ")
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.NOT_ACCEPTABLE;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.VERSION_NOT_SUPPORTED, status, localVersion));
             return new ResponseEntity<>(generateResponse(Constants.VERSION_NOT_SUPPORTED), status);
         }
 
@@ -163,19 +151,16 @@ public final class StandingResource extends AbstractResource {
                 getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
         if (getter == null) {
-            final HttpStatus status = HttpStatus.CONFLICT;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_GETTER_FOUND, status, getter));
             return new ResponseEntity<>(generateResponse(Constants.NO_GETTER_FOUND), status);
         }
 
         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
         if (!hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
-            final HttpStatus status = HttpStatus.CONFLICT;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                    .concat(" ").concat(getter.getRoles().toString()).concat(" ")
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.PERMISSION_DENIED, status, getter.getRoles()));
             return new ResponseEntity<>(generateResponse(Constants.PERMISSION_DENIED), status);
         }
 
@@ -184,13 +169,14 @@ public final class StandingResource extends AbstractResource {
         final String result = getStandingService().getCachedStandings(seasonCode, tournamentCode);
 
         if (result == null || result.isEmpty()) {
-            final HttpStatus status = HttpStatus.NOT_FOUND;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_STANDINGS_FOUND)
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.NOT_FOUND;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_STANDINGS_FOUND, status, result));
             return new ResponseEntity<>(generateResponse(Constants.NO_STANDINGS_FOUND), status);
         }
 
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        status = HttpStatus.OK;
+        LOGGER.info(generateLogMessage(Constants.STATUS_REQ_SUCCESS, Constants.SUCCESS, status, result));
+        return new ResponseEntity<>(result, status);
     }
 
     @RequestMapping(value = "/standings/{matchDay}",
@@ -207,13 +193,12 @@ public final class StandingResource extends AbstractResource {
                                                                  required = false) String seasonCode,
                                                          final @RequestParam(name = "tournamentCode",
                                                                  required = false) String tournamentCode) {
+        HttpStatus status;
         final List<String> headerValues = Arrays.asList(authorization, contentType, version, matchDay, seasonCode, tournamentCode);
 
         if (!isValidHeaders(headerValues, this::predicateHeaderLogic)) {
-            final HttpStatus status = HttpStatus.BAD_REQUEST;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                    .concat(" ").concat(headerValues.toString()).concat(" ")
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.BAD_REQUEST;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.ERROR, status, headerValues));
             return new ResponseEntity<>(generateResponse(Constants.ERROR), status);
         }
 
@@ -223,17 +208,14 @@ public final class StandingResource extends AbstractResource {
         try {
             localVersion = Version.valueOf(version);
         } catch (Exception e) {
-            final HttpStatus status = HttpStatus.FORBIDDEN;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(e.getMessage())
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, e.getMessage(), status, version));
             return new ResponseEntity<>(generateResponse(e.getMessage()), status);
         }
 
         if (!localVersion.equals(Version.V1)) {
-            final HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                    .concat(" ").concat(localVersion.name()).concat(" ")
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.NOT_ACCEPTABLE;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.VERSION_NOT_SUPPORTED, status, localVersion));
             return new ResponseEntity<>(generateResponse(Constants.VERSION_NOT_SUPPORTED), status);
         }
 
@@ -243,19 +225,16 @@ public final class StandingResource extends AbstractResource {
                 getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
         if (getter == null) {
-            final HttpStatus status = HttpStatus.CONFLICT;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_GETTER_FOUND, status, getter));
             return new ResponseEntity<>(generateResponse(Constants.NO_GETTER_FOUND), status);
         }
 
         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
         if (!hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
-            final HttpStatus status = HttpStatus.CONFLICT;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                    .concat(" ").concat(getter.getRoles().toString()).concat(" ")
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.PERMISSION_DENIED, status, getter.getRoles()));
             return new ResponseEntity<>(generateResponse(Constants.PERMISSION_DENIED), status);
         }
 
@@ -265,20 +244,20 @@ public final class StandingResource extends AbstractResource {
         try {
             list = getStandingService().getMatchDayStandings(seasonCode, tournamentCode, Integer.parseInt(matchDay));
         } catch (Exception e) {
-            final HttpStatus status = HttpStatus.FORBIDDEN;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(e.getMessage())
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, e.getMessage(), status, version));
             return new ResponseEntity<>(generateResponse(e.getMessage()), status);
         }
 
         if (list == null || list.isEmpty()) {
-            final HttpStatus status = HttpStatus.NOT_FOUND;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_STANDINGS_FOUND)
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.NOT_FOUND;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_STANDINGS_FOUND, status, list));
             return new ResponseEntity<>(generateResponse(Constants.NO_STANDINGS_FOUND), status);
         }
 
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        status = HttpStatus.OK;
+        LOGGER.info(generateLogMessage(Constants.STATUS_REQ_SUCCESS, Constants.SUCCESS, status, list));
+        return new ResponseEntity<>(list, status);
     }
 
     @RequestMapping(value = "/structuredstandings",
@@ -293,13 +272,12 @@ public final class StandingResource extends AbstractResource {
                                                                    required = false) String seasonCode,
                                                            final @RequestParam(name = "tournamentCode",
                                                                    required = false) String tournamentCode) {
+        HttpStatus status;
         final List<String> headerValues = Arrays.asList(authorization, contentType, version, seasonCode, tournamentCode);
 
         if (!isValidHeaders(headerValues, this::predicateHeaderLogic)) {
-            final HttpStatus status = HttpStatus.BAD_REQUEST;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                    .concat(" ").concat(headerValues.toString()).concat(" ")
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.BAD_REQUEST;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.ERROR, status, headerValues));
             return new ResponseEntity<>(generateResponse(Constants.ERROR), status);
         }
 
@@ -309,17 +287,14 @@ public final class StandingResource extends AbstractResource {
         try {
             localVersion = Version.valueOf(version);
         } catch (Exception e) {
-            final HttpStatus status = HttpStatus.FORBIDDEN;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(e.getMessage())
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, e.getMessage(), status, version));
             return new ResponseEntity<>(generateResponse(e.getMessage()), status);
         }
 
         if (!localVersion.equals(Version.V1)) {
-            final HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                    .concat(" ").concat(localVersion.name()).concat(" ")
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.NOT_ACCEPTABLE;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.VERSION_NOT_SUPPORTED, status, localVersion));
             return new ResponseEntity<>(generateResponse(Constants.VERSION_NOT_SUPPORTED), status);
         }
 
@@ -329,19 +304,16 @@ public final class StandingResource extends AbstractResource {
                 getPasswordManager().encodeMD5(loginAndPassword.get(1)));
 
         if (getter == null) {
-            final HttpStatus status = HttpStatus.CONFLICT;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_GETTER_FOUND, status, getter));
             return new ResponseEntity<>(generateResponse(Constants.NO_GETTER_FOUND), status);
         }
 
         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
 
         if (!hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
-            final HttpStatus status = HttpStatus.CONFLICT;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                    .concat(" ").concat(getter.getRoles().toString()).concat(" ")
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.PERMISSION_DENIED, status, getter.getRoles()));
             return new ResponseEntity<>(generateResponse(Constants.PERMISSION_DENIED), status);
         }
 
@@ -350,12 +322,13 @@ public final class StandingResource extends AbstractResource {
         final List<List<StructuredStanding>> list = getStandingService().getStructuredStandings(seasonCode, tournamentCode);
 
         if (list == null || list.isEmpty()) {
-            final HttpStatus status = HttpStatus.NOT_FOUND;
-            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_STANDINGS_FOUND)
-                    .concat(HTTP_STATUS_STRING).concat(status.name()));
+            status = HttpStatus.NOT_FOUND;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_STANDINGS_FOUND, status, list));
             return new ResponseEntity<>(generateResponse(Constants.NO_STANDINGS_FOUND), status);
         }
 
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        status = HttpStatus.OK;
+        LOGGER.info(generateLogMessage(Constants.STATUS_REQ_SUCCESS, Constants.SUCCESS, status, list));
+        return new ResponseEntity<>(list, status);
     }
 }

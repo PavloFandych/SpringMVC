@@ -136,8 +136,7 @@ public final class TeamServiceImpl implements TeamService {
             sync = true
     )
     public Team findTeamByTeamName(final String teamName) {
-        List<Team> teams = getTeamRepository()
-                .findByTeamName(teamName);
+        final List<Team> teams = getTeamRepository().findByTeamName(teamName);
         return (teams != null && !teams.isEmpty()) ? teams.get(0) : null;
     }
 
@@ -153,8 +152,7 @@ public final class TeamServiceImpl implements TeamService {
             )
     )
     public List<Team> findTeamsByCountryCode(final String countryCode) {
-        final List<Team> teams = getTeamDAO()
-                .getTeamsByCountryCode(countryCode);
+        final List<Team> teams = getTeamDAO().getTeamsByCountryCode(countryCode);
         return (teams != null && !teams.isEmpty()) ? teams : null;
     }
 }

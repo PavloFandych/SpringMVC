@@ -100,8 +100,7 @@ public final class TournamentServiceImpl implements TournamentService {
             sync = true
     )
     public Tournament findTournamentByTournamentName(final String tournamentName) {
-        final List<Tournament> tournaments = getTournamentRepository()
-                .findByTournamentName(tournamentName);
+        final List<Tournament> tournaments = getTournamentRepository().findByTournamentName(tournamentName);
         return (tournaments != null && !tournaments.isEmpty()) ? tournaments.get(0) : null;
     }
 
@@ -111,8 +110,7 @@ public final class TournamentServiceImpl implements TournamentService {
             sync = true
     )
     public Tournament findTournamentByTournamentCode(final TournamentCode tournamentCode) {
-        final List<Tournament> tournaments = getTournamentRepository()
-                .findByTournamentCode(tournamentCode);
+        final List<Tournament> tournaments = getTournamentRepository().findByTournamentCode(tournamentCode);
         return (tournaments != null && !tournaments.isEmpty()) ? tournaments.get(0) : null;
     }
 
@@ -143,8 +141,7 @@ public final class TournamentServiceImpl implements TournamentService {
             )
     )
     public List<Tournament> findTournamentsByCountryCode(final String countryCode) {
-        final List<Tournament> resultList = getTournamentDAO()
-                .getTournamentsByCountryCode(countryCode);
+        final List<Tournament> resultList = getTournamentDAO().getTournamentsByCountryCode(countryCode);
         return (resultList != null && !resultList.isEmpty()) ? resultList : null;
     }
 }

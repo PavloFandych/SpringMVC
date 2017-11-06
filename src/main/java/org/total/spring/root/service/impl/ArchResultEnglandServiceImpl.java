@@ -67,7 +67,7 @@ public final class ArchResultEnglandServiceImpl implements ArchResultEnglandServ
     )
     public List<ArchResultEngland> findAll(final Integer pageIndex,
                                            final Integer numRecPerPage) {
-        Sort sort = new Sort(Sort.Direction.ASC, "date");
+        final Sort sort = new Sort(Sort.Direction.ASC, "date");
         /*
         * @param page zero-based page index.
         * @param size the size of the page to be returned.

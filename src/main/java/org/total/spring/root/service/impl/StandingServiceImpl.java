@@ -13,6 +13,7 @@ import org.total.spring.root.service.interfaces.StandingService;
 import org.total.spring.root.util.Constants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,7 +40,7 @@ public final class StandingServiceImpl implements StandingService {
     )
     public List<List<String>> getStandings(final String seasonCode,
                                            final String tournamentCode) {
-        List<List<String>> standings = getStandingDAO().getEntities(seasonCode, tournamentCode);
+        final List<List<String>> standings = getStandingDAO().getEntities(seasonCode, tournamentCode);
         return (standings != null && !standings.isEmpty()) ? standings : null;
     }
 
@@ -54,7 +55,7 @@ public final class StandingServiceImpl implements StandingService {
         if (matchDay >= 1 && matchDay <= Constants.MAX_MATCH_DAY) {
             list = getStandingDAO().getMatchDayStandings(seasonCode, tournamentCode, matchDay);
         }
-        return (list != null && !list.isEmpty()) ? list : null;
+        return (list != null && !list.isEmpty()) ? list : Collections.emptyList();
     }
 
     @Override

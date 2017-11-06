@@ -1,9 +1,10 @@
 package org.total.spring.web.resources;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.context.ContextLoader;
-import org.total.spring.root.entity.Role;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.response.Response;
@@ -16,6 +17,8 @@ import org.total.spring.root.util.Validator;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
+
+import static org.total.spring.root.util.Constants.HTTP_STATUS_STRING;
 
 /**
  * @author Pavlo.Fandych
@@ -88,24 +91,36 @@ public abstract class AbstractResource {
     }
 
     boolean predicateHeaderLogic(final List<String> strings) {
-        for (String item : strings) {
-            if (item == null || item.isEmpty()) {
-                return false;
-            }
-        }
-        return true;
+        return strings.stream().noneMatch(StringUtils::isBlank);
     }
 
-    boolean biPredicatePermissionsLogic(User user, CapabilityType capabilityType) {
-        boolean hasCapability = false;
-        for (Role role : user.getRoles()) {
-            if (role.getCapabilities()
-                    .contains(getCapabilityService()
-                            .findCapabilityByCapabilityType(capabilityType))) {
-                hasCapability = true;
-                break;
-            }
+    boolean biPredicatePermissionsLogic(final User user,
+                                        final CapabilityType capabilityType) {
+        return user.getRoles().stream().anyMatch(role -> role.getCapabilities()
+                .contains(getCapabilityService()
+                        .findCapabilityByCapabilityType(capabilityType)));
+
+    }
+
+    String generateLogMessage(final String requestMessage,
+                              final String message,
+                              final HttpStatus httpStatus,
+                              final Object payload) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(requestMessage)
+                .append("; ")
+                .append(message)
+                .append("; ");
+
+        if (payload != null) {
+            builder.append("Payload = ")
+                    .append(payload.toString())
+                    .append("; ");
         }
-        return hasCapability;
+
+        builder.append(HTTP_STATUS_STRING)
+                .append(httpStatus.name());
+
+        return builder.toString();
     }
 }

@@ -116,7 +116,7 @@ public final class ResultServiceImpl implements ResultService {
             sync = true
     )
     public Result findResultByResultCode(final String resultCode) {
-        List<Result> results = getResultRepository().findByResultCode(resultCode);
+        final List<Result> results = getResultRepository().findByResultCode(resultCode);
         return (results != null && !results.isEmpty()) ? results.get(0) : null;
     }
 }

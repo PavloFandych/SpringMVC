@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.total.spring.root.util.Constants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +36,6 @@ public class CouplesDAO extends GenericDAO<List<String>> {
 
         final List<List<String>> resultList = (List<List<String>>) out.get("couples");
 
-        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
+        return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
 }

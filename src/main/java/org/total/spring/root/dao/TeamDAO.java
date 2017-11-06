@@ -11,6 +11,7 @@ import org.total.spring.root.proc.StoredTeamsCache;
 import org.total.spring.root.util.Constants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +27,6 @@ public class TeamDAO extends GenericDAO<List<String>> {
                 .withProcedureName(Constants.CALL_GET_TEAM_LIST)
                 .returningResultSet("teams", (resultSet, i) -> {
                     final List<String> list = new ArrayList<>();
-
                     list.add(resultSet.getString(1));
                     list.add(resultSet.getString(2));
 
@@ -40,7 +40,7 @@ public class TeamDAO extends GenericDAO<List<String>> {
 
         final List<List<String>> resultList = (List<List<String>>) out.get("teams");
 
-        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
+        return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
 
     public List<StoredTeamsCache> getStoredTeamsList(final SeasonCode seasonCode,
@@ -66,7 +66,7 @@ public class TeamDAO extends GenericDAO<List<String>> {
 
         final List<StoredTeamsCache> resultList = (List<StoredTeamsCache>) out.get("storedTeamsList");
 
-        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
+        return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
 
     public List<Team> getTeamsByCountryCode(final String countryCode) {
@@ -86,6 +86,6 @@ public class TeamDAO extends GenericDAO<List<String>> {
 
         final List<Team> resultList = (List<Team>) out.get("teamsList");
 
-        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
+        return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
 }

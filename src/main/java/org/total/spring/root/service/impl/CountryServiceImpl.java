@@ -88,7 +88,7 @@ public final class CountryServiceImpl implements CountryService {
             sync = true
     )
     public Country findCountryByCountryName(final String countryName) {
-        List<Country> countries = getCountryRepository().findByCountryName(countryName);
+        final List<Country> countries = getCountryRepository().findByCountryName(countryName);
         return (countries != null && !countries.isEmpty()) ? countries.get(0) : null;
     }
 
