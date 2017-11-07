@@ -14,6 +14,7 @@ import org.total.spring.root.repository.ArchResultEnglandRepository;
 import org.total.spring.root.service.interfaces.ArchResultEnglandService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,7 +52,7 @@ public final class ArchResultEnglandServiceImpl implements ArchResultEnglandServ
         for (ArchResultEngland item : getArchResultEnglandRepository().findAll()) {
             list.add(item);
         }
-        return list;
+        return (!list.isEmpty()) ? list : Collections.emptyList();
     }
 
     @Override

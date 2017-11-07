@@ -1,5 +1,6 @@
 package org.total.spring.common;
 
+import org.junit.Test;
 import org.total.spring.root.util.PasswordManager;
 import org.total.spring.root.util.PasswordManagerImpl;
 
@@ -7,15 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by total on 11/11/16.
+ * @author Pavlo.Fandych
  */
 
 public class PasswordManagerTest {
+
     private static final PasswordManager PASSWORD_MANAGER = new PasswordManagerImpl();
-    private static List<String> result = new ArrayList<>();
     private static List<String> targets = new ArrayList<>();
     private static List<String> expected = new ArrayList<>();
-
 
     static {
         targets.add("tiger");
@@ -32,7 +32,7 @@ public class PasswordManagerTest {
     }
 
     public static void main(String[] args) {
-        List<String> list = new ArrayList<>();
+        final List<String> list = new ArrayList<>();
 
         for (Integer i = 0; i < targets.size(); i++) {
             new PasswordManagerTest.Task(PASSWORD_MANAGER, targets.get(i), list);
@@ -47,20 +47,24 @@ public class PasswordManagerTest {
         System.out.println(list);
     }
 
+    @Test
+    public void test() throws Exception {
+    }
+
     private static class Task implements Runnable {
         private PasswordManager passwordManager;
         private String target;
         private List<String> results;
-
-        public PasswordManager getPasswordManager() {
-            return passwordManager;
-        }
 
         public Task(PasswordManager passwordManager, String target, List<String> results) {
             this.passwordManager = passwordManager;
             this.target = target;
             this.results = results;
             new Thread(this).start();
+        }
+
+        public PasswordManager getPasswordManager() {
+            return passwordManager;
         }
 
         @Override

@@ -8,6 +8,7 @@ import org.total.spring.root.dao.TeamMatchDAO;
 import org.total.spring.root.proc.TeamMatch;
 import org.total.spring.root.service.interfaces.TeamMatchService;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -41,6 +42,6 @@ public final class TeamMatchServiceImpl implements TeamMatchService {
                 opponentTeamCode,
                 seasonCode,
                 tournamentCode);
-        return (list != null && !list.isEmpty()) ? list : null;
+        return (list != null && !list.isEmpty()) ? list : Collections.emptyList();
     }
 }

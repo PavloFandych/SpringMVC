@@ -14,6 +14,7 @@ import org.total.spring.root.entity.enums.TournamentCode;
 import org.total.spring.root.repository.TournamentRepository;
 import org.total.spring.root.service.interfaces.TournamentService;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -142,6 +143,6 @@ public final class TournamentServiceImpl implements TournamentService {
     )
     public List<Tournament> findTournamentsByCountryCode(final String countryCode) {
         final List<Tournament> resultList = getTournamentDAO().getTournamentsByCountryCode(countryCode);
-        return (resultList != null && !resultList.isEmpty()) ? resultList : null;
+        return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
 }

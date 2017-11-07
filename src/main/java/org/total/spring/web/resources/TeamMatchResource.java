@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.proc.TeamMatch;
-import org.total.spring.root.response.Response;
 import org.total.spring.root.service.interfaces.TeamMatchService;
 import org.total.spring.root.util.Constants;
 import org.total.spring.root.version.Version;
@@ -51,105 +50,80 @@ public final class TeamMatchResource extends AbstractResource {
                                                            required = false) String seasonCode,
                                                    final @RequestParam(name = "tournamentCode",
                                                            required = false) String tournamentCode) {
-        if (getValidator().validate(
-                new String[]{
-                        authorization,
-                        contentType,
-                        version,
-                        teamCode})
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager()
-                            .decodeBase64(authorization);
+        HttpStatus status;
+        final List<String> headerValues = Arrays.asList(authorization, contentType, version, teamCode);
 
-                    List<String> loginAndPassword = Arrays
-                            .asList(credentials.split(":"));
-
-                    User getter = getUserService()
-                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
-                                    getPasswordManager()
-                                            .encodeMD5(loginAndPassword.get(1)));
-
-                    if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
-
-                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
-
-                            String opponentTeamCodeArgument = null;
-                            String seasonCodeArgument = null;
-                            String tournamentCodeArgument = null;
-
-                            if (opponentTeamCode == null || !opponentTeamCode.isEmpty()) {
-                                opponentTeamCodeArgument = opponentTeamCode;
-                            }
-
-                            if (seasonCode == null || !seasonCode.isEmpty()) {
-                                seasonCodeArgument = seasonCode;
-                            }
-
-                            if (tournamentCode == null || !tournamentCode.isEmpty()) {
-                                tournamentCodeArgument = tournamentCode;
-                            }
-
-                            List<TeamMatch> list = getTeamMatchService()
-                                    .getTeamMatches(teamCode,
-                                            opponentTeamCodeArgument,
-                                            seasonCodeArgument,
-                                            tournamentCodeArgument);
-
-                            if (list == null || list.isEmpty()) {
-                                LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_TEAM_MATCHES_FOUND)
-                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
-
-                                Response response = generateResponse(Constants.NO_TEAM_MATCHES_FOUND);
-
-                                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-                            } else {
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
-
-                                return new ResponseEntity<>(list, HttpStatus.OK);
-                            }
-                        } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                            Response response = generateResponse(Constants.PERMISSION_DENIED);
-
-                            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                        }
-                    } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                        Response response = generateResponse(Constants.NO_GETTER_FOUND);
-
-                        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                    }
-                } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
-
-                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
-
-                    return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
-                }
-            } catch (Exception e) {
-                LOGGER.error(e, e);
-
-                Response response = generateResponse(e.getMessage());
-
-                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-            }
+        if (!isValidHeaders(headerValues, this::predicateHeaderLogic)) {
+            status = HttpStatus.BAD_REQUEST;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.ERROR, status, headerValues));
+            return new ResponseEntity<>(generateResponse(Constants.ERROR), status);
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
-        Response response = generateResponse(Constants.ERROR);
+        LOGGER.debug(Constants.STATUS_REQ_ENTRY);
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        Version localVersion;
+        try {
+            localVersion = Version.valueOf(version);
+        } catch (Exception e) {
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, e.getMessage(), status, version));
+            return new ResponseEntity<>(generateResponse(e.getMessage()), status);
+        }
+
+        if (!localVersion.equals(Version.V1)) {
+            status = HttpStatus.NOT_ACCEPTABLE;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.VERSION_NOT_SUPPORTED, status, localVersion));
+            return new ResponseEntity<>(generateResponse(Constants.VERSION_NOT_SUPPORTED), status);
+        }
+
+        final String credentials = getPasswordManager().decodeBase64(authorization);
+        final List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+        final User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
+                getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+
+        if (getter == null) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_GETTER_FOUND, status, getter));
+            return new ResponseEntity<>(generateResponse(Constants.NO_GETTER_FOUND), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
+
+        if (!hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.PERMISSION_DENIED, status, getter.getRoles()));
+            return new ResponseEntity<>(generateResponse(Constants.PERMISSION_DENIED), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
+
+        String opponentTeamCodeArgument = null;
+        String seasonCodeArgument = null;
+        String tournamentCodeArgument = null;
+
+        if (opponentTeamCode == null || !opponentTeamCode.isEmpty()) {
+            opponentTeamCodeArgument = opponentTeamCode;
+        }
+
+        if (seasonCode == null || !seasonCode.isEmpty()) {
+            seasonCodeArgument = seasonCode;
+        }
+
+        if (tournamentCode == null || !tournamentCode.isEmpty()) {
+            tournamentCodeArgument = tournamentCode;
+        }
+
+        final List<TeamMatch> list = getTeamMatchService().getTeamMatches(teamCode,
+                opponentTeamCodeArgument, seasonCodeArgument, tournamentCodeArgument);
+
+        if (list == null || list.isEmpty()) {
+            status = HttpStatus.NOT_FOUND;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_TEAM_MATCHES_FOUND, status, list));
+            return new ResponseEntity<>(generateResponse(Constants.NO_TEAM_MATCHES_FOUND), status);
+        }
+
+        status = HttpStatus.OK;
+        LOGGER.info(generateLogMessage(Constants.STATUS_REQ_SUCCESS, Constants.SUCCESS, status, list));
+        return new ResponseEntity<>(list, status);
     }
 }

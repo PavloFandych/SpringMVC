@@ -3,7 +3,6 @@ package org.total.spring.repository;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DbUnitConfiguration;
 import org.apache.commons.io.Charsets;
-import org.apache.log4j.Logger;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
@@ -23,7 +22,7 @@ import java.io.File;
 import java.util.Properties;
 
 /**
- * Created by total on 10/27/16.
+ * @author Pavlo.Fandych
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,8 +32,7 @@ import java.util.Properties;
         DbUnitTestExecutionListener.class})
 @DbUnitConfiguration(databaseConnection = "h2DataSource")
 public abstract class AbstractRepositoryDBUnitTEst {
-    protected static final Logger LOGGER = Logger.getLogger(AbstractRepositoryDBUnitTEst.class);
-    protected static boolean setUpIsDone = false;
+    private static boolean setUpIsDone = false;
 
     @Before
     public void importDataSet() throws Exception {
@@ -42,7 +40,7 @@ public abstract class AbstractRepositoryDBUnitTEst {
             return;
         }
 
-        Properties configProperties = new Properties();
+        final Properties configProperties = new Properties();
         configProperties.load(CityRepositoryDBUnitTest.class.getClassLoader()
                 .getResourceAsStream("config/config.properties"));
 
@@ -53,7 +51,7 @@ public abstract class AbstractRepositoryDBUnitTEst {
                 Charsets.UTF_8,
                 false);
 
-        IDataSet dataSet = new FlatXmlDataSetBuilder()
+        final IDataSet dataSet = new FlatXmlDataSetBuilder()
                 .build(new File(configProperties.getProperty(getDataSetName())));
 
         IDatabaseTester databaseTester = new JdbcDatabaseTester(org.h2.Driver.class.getName(),

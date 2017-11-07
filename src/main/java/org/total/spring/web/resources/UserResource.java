@@ -14,7 +14,6 @@ import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.entity.enums.CityCode;
 import org.total.spring.root.entity.enums.RoleType;
-import org.total.spring.root.response.Response;
 import org.total.spring.root.service.interfaces.CityService;
 import org.total.spring.root.service.interfaces.RoleService;
 import org.total.spring.root.service.interfaces.UserRoleService;
@@ -74,85 +73,64 @@ public final class UserResource extends AbstractResource {
                                                         required = false) String contentType,
                                                 final @RequestHeader(name = "Version",
                                                         required = false) String version) {
-        if (getValidator().validate(
-                new String[]{
-                        authorization,
-                        contentType,
-                        version})
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager()
-                            .decodeBase64(authorization);
+        HttpStatus status;
+        final List<String> headerValues = Arrays.asList(authorization, contentType, version);
 
-                    List<String> loginAndPassword = Arrays
-                            .asList(credentials.split(":"));
-
-                    User getter = getUserService()
-                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
-                                    getPasswordManager()
-                                            .encodeMD5(loginAndPassword.get(1)));
-
-                    if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
-
-                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
-
-                            List<User> list = getUserService().findAll();
-
-                            if (list == null || list.isEmpty()) {
-                                LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
-                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
-
-                                Response response = generateResponse(Constants.NO_USER_FOUND);
-
-                                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-                            } else {
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
-
-                                return new ResponseEntity<>(list, HttpStatus.OK);
-                            }
-                        } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                            Response response = generateResponse(Constants.PERMISSION_DENIED);
-
-                            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                        }
-                    } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                        Response response = generateResponse(Constants.NO_GETTER_FOUND);
-
-                        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                    }
-                } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
-
-                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
-
-                    return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
-                }
-            } catch (Exception e) {
-                LOGGER.error(e, e);
-
-                Response response = generateResponse(e.getMessage());
-
-                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-            }
+        if (!isValidHeaders(headerValues, this::predicateHeaderLogic)) {
+            status = HttpStatus.BAD_REQUEST;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.ERROR, status, headerValues));
+            return new ResponseEntity<>(generateResponse(Constants.ERROR), status);
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
-        Response response = generateResponse(Constants.ERROR);
+        LOGGER.debug(Constants.STATUS_REQ_ENTRY);
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        Version localVersion;
+        try {
+            localVersion = Version.valueOf(version);
+        } catch (Exception e) {
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, e.getMessage(), status, version));
+            return new ResponseEntity<>(generateResponse(e.getMessage()), status);
+        }
+
+        if (!localVersion.equals(Version.V1)) {
+            status = HttpStatus.NOT_ACCEPTABLE;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.VERSION_NOT_SUPPORTED, status, localVersion));
+            return new ResponseEntity<>(generateResponse(Constants.VERSION_NOT_SUPPORTED), status);
+        }
+
+        final String credentials = getPasswordManager().decodeBase64(authorization);
+        final List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+        final User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
+                getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+
+        if (getter == null) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_GETTER_FOUND, status, getter));
+            return new ResponseEntity<>(generateResponse(Constants.NO_GETTER_FOUND), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
+
+        if (!hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.PERMISSION_DENIED, status, getter.getRoles()));
+            return new ResponseEntity<>(generateResponse(Constants.PERMISSION_DENIED), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
+
+        final List<User> list = getUserService().findAll();
+
+        if (list == null || list.isEmpty()) {
+            status = HttpStatus.NOT_FOUND;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_USER_FOUND, status, list));
+            return new ResponseEntity<>(generateResponse(Constants.NO_USER_FOUND), status);
+        }
+
+        status = HttpStatus.OK;
+        LOGGER.info(generateLogMessage(Constants.STATUS_REQ_SUCCESS, Constants.SUCCESS, status, list));
+        return new ResponseEntity<>(list, status);
     }
 
     @RequestMapping(value = "/users/pagination",
@@ -167,91 +145,72 @@ public final class UserResource extends AbstractResource {
                                                         required = false) String pageIndex,
                                                 final @RequestParam(name = "numRecPerPage",
                                                         required = false) String numRecPerPage) {
-        if (getValidator().validate(
-                new String[]{
-                        authorization,
-                        contentType,
-                        version,
-                        pageIndex,
-                        numRecPerPage})
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)
-                && StringUtils.isNumeric(pageIndex)
-                && StringUtils.isNumeric(numRecPerPage)) {
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager()
-                            .decodeBase64(authorization);
+        HttpStatus status;
+        final List<String> headerValues = Arrays.asList(authorization, contentType, version, pageIndex, numRecPerPage);
 
-                    List<String> loginAndPassword = Arrays
-                            .asList(credentials.split(":"));
-
-                    User getter = getUserService()
-                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
-                                    getPasswordManager()
-                                            .encodeMD5(loginAndPassword.get(1)));
-
-                    if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
-
-                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
-
-                            List<User> list = getUserService()
-                                    .findAll(Integer.parseInt(pageIndex),
-                                            Integer.parseInt(numRecPerPage));
-
-                            if (list == null || list.isEmpty()) {
-                                LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
-                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
-
-                                Response response = generateResponse(Constants.NO_USER_FOUND);
-
-                                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-                            } else {
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
-
-                                return new ResponseEntity<>(list, HttpStatus.OK);
-                            }
-                        } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                            Response response = generateResponse(Constants.PERMISSION_DENIED);
-
-                            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                        }
-                    } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                        Response response = generateResponse(Constants.NO_GETTER_FOUND);
-
-                        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                    }
-                } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
-
-                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
-
-                    return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
-                }
-            } catch (Exception e) {
-                LOGGER.error(e, e);
-
-                Response response = generateResponse(e.getMessage());
-
-                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-            }
+        if (!isValidHeaders(headerValues, this::predicateHeaderLogic)) {
+            status = HttpStatus.BAD_REQUEST;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.ERROR, status, headerValues));
+            return new ResponseEntity<>(generateResponse(Constants.ERROR), status);
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
-        Response response = generateResponse(Constants.ERROR);
+        LOGGER.debug(Constants.STATUS_REQ_ENTRY);
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        Version localVersion;
+        try {
+            localVersion = Version.valueOf(version);
+        } catch (Exception e) {
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, e.getMessage(), status, version));
+            return new ResponseEntity<>(generateResponse(e.getMessage()), status);
+        }
+
+        if (!localVersion.equals(Version.V1)) {
+            status = HttpStatus.NOT_ACCEPTABLE;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.VERSION_NOT_SUPPORTED, status, localVersion));
+            return new ResponseEntity<>(generateResponse(Constants.VERSION_NOT_SUPPORTED), status);
+        }
+
+        final String credentials = getPasswordManager().decodeBase64(authorization);
+        final List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+        final User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
+                getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+
+        if (getter == null) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_GETTER_FOUND, status, getter));
+            return new ResponseEntity<>(generateResponse(Constants.NO_GETTER_FOUND), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
+
+        if (!hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.PERMISSION_DENIED, status, getter.getRoles()));
+            return new ResponseEntity<>(generateResponse(Constants.PERMISSION_DENIED), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
+
+        if (!StringUtils.isNumeric(pageIndex) && !StringUtils.isNumeric(numRecPerPage)) {
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, pageIndex + " or "
+                    + numRecPerPage + " are " + Constants.NOT_NUMERIC, status, version));
+            return new ResponseEntity<>(generateResponse(Constants.NOT_NUMERIC), status);
+        }
+
+        final List<User> list = getUserService().findAll(Integer.parseInt(pageIndex),
+                Integer.parseInt(numRecPerPage));
+
+        if (list == null || list.isEmpty()) {
+            status = HttpStatus.NOT_FOUND;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_USER_FOUND, status, list));
+            return new ResponseEntity<>(generateResponse(Constants.NO_USER_FOUND), status);
+        }
+
+        status = HttpStatus.OK;
+        LOGGER.info(generateLogMessage(Constants.STATUS_REQ_SUCCESS, Constants.SUCCESS, status, list));
+        return new ResponseEntity<>(list, status);
     }
 
     @RequestMapping(value = "/users/{id}",
@@ -264,88 +223,71 @@ public final class UserResource extends AbstractResource {
                                                             required = false) String contentType,
                                                     final @RequestHeader(name = "Version",
                                                             required = false) String version) {
-        if (getValidator().validate(
-                new String[]{
-                        id,
-                        authorization,
-                        contentType,
-                        version})
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)
-                && StringUtils.isNumeric(id)) {
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager()
-                            .decodeBase64(authorization);
+        HttpStatus status;
+        final List<String> headerValues = Arrays.asList(authorization, contentType, version, id);
 
-                    List<String> loginAndPassword = Arrays
-                            .asList(credentials.split(":"));
-
-                    User getter = getUserService()
-                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
-                                    getPasswordManager()
-                                            .encodeMD5(loginAndPassword.get(1)));
-
-                    if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
-
-                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
-
-                            List<User> list = new ArrayList<>();
-                            list.add(getUserService().findById(Long.parseLong(id)));
-
-                            if (list.isEmpty()) {
-                                LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
-                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
-
-                                Response response = generateResponse(Constants.NO_USER_FOUND);
-
-                                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-                            } else {
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
-
-                                return new ResponseEntity<>(list, HttpStatus.OK);
-                            }
-                        } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                            Response response = generateResponse(Constants.PERMISSION_DENIED);
-
-                            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                        }
-                    } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                        Response response = generateResponse(Constants.NO_GETTER_FOUND);
-
-                        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                    }
-                } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
-
-                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
-
-                    return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
-                }
-            } catch (Exception e) {
-                LOGGER.error(e, e);
-
-                Response response = generateResponse(e.getMessage());
-
-                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-            }
+        if (!isValidHeaders(headerValues, this::predicateHeaderLogic)) {
+            status = HttpStatus.BAD_REQUEST;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.ERROR, status, headerValues));
+            return new ResponseEntity<>(generateResponse(Constants.ERROR), status);
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
-        Response response = generateResponse(Constants.ERROR);
+        LOGGER.debug(Constants.STATUS_REQ_ENTRY);
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        Version localVersion;
+        try {
+            localVersion = Version.valueOf(version);
+        } catch (Exception e) {
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, e.getMessage(), status, version));
+            return new ResponseEntity<>(generateResponse(e.getMessage()), status);
+        }
+
+        if (!localVersion.equals(Version.V1)) {
+            status = HttpStatus.NOT_ACCEPTABLE;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.VERSION_NOT_SUPPORTED, status, localVersion));
+            return new ResponseEntity<>(generateResponse(Constants.VERSION_NOT_SUPPORTED), status);
+        }
+
+        final String credentials = getPasswordManager().decodeBase64(authorization);
+        final List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+        final User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
+                getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+
+        if (getter == null) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_GETTER_FOUND, status, getter));
+            return new ResponseEntity<>(generateResponse(Constants.NO_GETTER_FOUND), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
+
+        if (!hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.PERMISSION_DENIED, status, getter.getRoles()));
+            return new ResponseEntity<>(generateResponse(Constants.PERMISSION_DENIED), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
+
+        if (!StringUtils.isNumeric(id)) {
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, id + " is " + Constants.NOT_NUMERIC, status, version));
+            return new ResponseEntity<>(generateResponse(Constants.NOT_NUMERIC), status);
+        }
+
+        final List<User> list = new ArrayList<>();
+        list.add(getUserService().findById(Long.parseLong(id)));
+
+        if (list.isEmpty()) {
+            status = HttpStatus.NOT_FOUND;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_USER_FOUND, status, list));
+            return new ResponseEntity<>(generateResponse(Constants.NO_USER_FOUND), status);
+        }
+
+        status = HttpStatus.OK;
+        LOGGER.info(generateLogMessage(Constants.STATUS_REQ_SUCCESS, Constants.SUCCESS, status, list));
+        return new ResponseEntity<>(list, status);
     }
 
     @RequestMapping(value = "/userName/{userName}",
@@ -358,87 +300,65 @@ public final class UserResource extends AbstractResource {
                                                               required = false) String contentType,
                                                       final @RequestHeader(name = "Version",
                                                               required = false) String version) {
-        if (getValidator().validate(
-                new String[]{
-                        userName,
-                        authorization,
-                        contentType,
-                        version})
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager()
-                            .decodeBase64(authorization);
+        HttpStatus status;
+        final List<String> headerValues = Arrays.asList(authorization, contentType, version, userName);
 
-                    List<String> loginAndPassword = Arrays
-                            .asList(credentials.split(":"));
-
-                    User getter = getUserService()
-                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
-                                    getPasswordManager()
-                                            .encodeMD5(loginAndPassword.get(1)));
-
-                    if (getter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
-
-                        if (hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
-
-                            List<User> list = new ArrayList<>();
-                            list.add(getUserService().findUserByUserName(userName));
-
-                            if (list.isEmpty()) {
-                                LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
-                                        .concat(" http status = ").concat(HttpStatus.NOT_FOUND.name()));
-
-                                Response response = generateResponse(Constants.NO_USER_FOUND);
-
-                                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-                            } else {
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                        .concat(" http status = ").concat(HttpStatus.OK.name()));
-
-                                return new ResponseEntity<>(list, HttpStatus.OK);
-                            }
-                        } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                            Response response = generateResponse(Constants.PERMISSION_DENIED);
-
-                            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                        }
-                    } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_GETTER_FOUND)
-                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                        Response response = generateResponse(Constants.NO_GETTER_FOUND);
-
-                        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                    }
-                } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
-
-                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
-
-                    return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
-                }
-            } catch (Exception e) {
-                LOGGER.error(e, e);
-
-                Response response = generateResponse(e.getMessage());
-
-                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-            }
+        if (!isValidHeaders(headerValues, this::predicateHeaderLogic)) {
+            status = HttpStatus.BAD_REQUEST;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.ERROR, status, headerValues));
+            return new ResponseEntity<>(generateResponse(Constants.ERROR), status);
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
-        Response response = generateResponse(Constants.ERROR);
+        LOGGER.debug(Constants.STATUS_REQ_ENTRY);
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        Version localVersion;
+        try {
+            localVersion = Version.valueOf(version);
+        } catch (Exception e) {
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, e.getMessage(), status, version));
+            return new ResponseEntity<>(generateResponse(e.getMessage()), status);
+        }
+
+        if (!localVersion.equals(Version.V1)) {
+            status = HttpStatus.NOT_ACCEPTABLE;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.VERSION_NOT_SUPPORTED, status, localVersion));
+            return new ResponseEntity<>(generateResponse(Constants.VERSION_NOT_SUPPORTED), status);
+        }
+
+        final String credentials = getPasswordManager().decodeBase64(authorization);
+        final List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+        final User getter = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
+                getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+
+        if (getter == null) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_GETTER_FOUND, status, getter));
+            return new ResponseEntity<>(generateResponse(Constants.NO_GETTER_FOUND), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.GETTER_FOUND));
+
+        if (!hasPermissions(getter, CapabilityType.READ, this::biPredicatePermissionsLogic)) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.PERMISSION_DENIED, status, getter.getRoles()));
+            return new ResponseEntity<>(generateResponse(Constants.PERMISSION_DENIED), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
+
+        final List<User> list = new ArrayList<>();
+        list.add(getUserService().findUserByUserName(userName));
+
+        if (list.isEmpty()) {
+            status = HttpStatus.NOT_FOUND;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_USER_FOUND, status, list));
+            return new ResponseEntity<>(generateResponse(Constants.NO_USER_FOUND), status);
+        }
+
+        status = HttpStatus.OK;
+        LOGGER.info(generateLogMessage(Constants.STATUS_REQ_SUCCESS, Constants.SUCCESS, status, list));
+        return new ResponseEntity<>(list, status);
     }
 
     @RequestMapping(value = "/users/{userName}",
@@ -451,102 +371,76 @@ public final class UserResource extends AbstractResource {
                                                                required = false) String contentType,
                                                        final @RequestHeader(name = "Version",
                                                                required = false) String version) {
-        if (getValidator().validate(
-                new String[]{
-                        userName,
-                        authorization,
-                        contentType,
-                        version})
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager().decodeBase64(authorization);
+        HttpStatus status;
+        final List<String> headerValues = Arrays.asList(authorization, contentType, version, userName);
 
-                    List<String> loginAndPassword = Arrays
-                            .asList(credentials.split(":"));
-
-                    User deleter = getUserService().findUserByUserNameAndPassword(
-                            loginAndPassword.get(0), getPasswordManager()
-                                    .encodeMD5(loginAndPassword.get(1)));
-
-                    if (deleter != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.DELETER_FOUND));
-
-                        if (hasPermissions(deleter, CapabilityType.DELETE, this::biPredicatePermissionsLogic)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
-
-                            User userToDelete = getUserService()
-                                    .findUserByUserName(userName);
-
-                            if (userToDelete != null) {
-                                LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat("User with id ")
-                                        .concat(String.valueOf(userToDelete.getUserId())).concat(" found"));
-
-                                if (userToDelete.getUserName()
-                                        .equals(deleter.getUserName())) {
-                                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.CANNOT_DELETE_USER)
-                                            .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                                    Response response = generateResponse(Constants.CANNOT_DELETE_USER);
-
-                                    return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                                } else {
-                                    getUserService().deleteUserByUserId(userToDelete.getUserId());
-
-                                    LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                            .concat(" http status = ").concat(HttpStatus.OK.name()));
-
-                                    Response response = generateResponse(Constants.SUCCESS);
-
-                                    return new ResponseEntity<>(response, HttpStatus.OK);
-                                }
-                            } else {
-                                LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_USER_FOUND)
-                                        .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                                Response response = generateResponse(Constants.NO_USER_FOUND);
-
-                                return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                            }
-                        } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                            Response response = generateResponse(Constants.PERMISSION_DENIED);
-
-                            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                        }
-                    } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_DELETER_FOUND)
-                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                        Response response = generateResponse(Constants.NO_DELETER_FOUND);
-
-                        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                    }
-                } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
-
-                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
-
-                    return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
-                }
-            } catch (Exception e) {
-                LOGGER.error(e, e);
-
-                Response response = generateResponse(e.getMessage());
-
-                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-            }
+        if (!isValidHeaders(headerValues, this::predicateHeaderLogic)) {
+            status = HttpStatus.BAD_REQUEST;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.ERROR, status, headerValues));
+            return new ResponseEntity<>(generateResponse(Constants.ERROR), status);
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
-        Response response = generateResponse(Constants.ERROR);
+        LOGGER.debug(Constants.STATUS_REQ_ENTRY);
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        Version localVersion;
+        try {
+            localVersion = Version.valueOf(version);
+        } catch (Exception e) {
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, e.getMessage(), status, version));
+            return new ResponseEntity<>(generateResponse(e.getMessage()), status);
+        }
+
+        if (!localVersion.equals(Version.V1)) {
+            status = HttpStatus.NOT_ACCEPTABLE;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.VERSION_NOT_SUPPORTED, status, localVersion));
+            return new ResponseEntity<>(generateResponse(Constants.VERSION_NOT_SUPPORTED), status);
+        }
+
+        final String credentials = getPasswordManager().decodeBase64(authorization);
+        final List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+        final User deleter = getUserService().findUserByUserNameAndPassword(
+                loginAndPassword.get(0), getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+
+        if (deleter == null) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_DELETER_FOUND, status, deleter));
+            return new ResponseEntity<>(generateResponse(Constants.NO_DELETER_FOUND), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.DELETER_FOUND));
+
+        if (!hasPermissions(deleter, CapabilityType.DELETE, this::biPredicatePermissionsLogic)) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.PERMISSION_DENIED, status, deleter.getRoles()));
+            return new ResponseEntity<>(generateResponse(Constants.PERMISSION_DENIED), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
+
+        final User userToDelete = getUserService().findUserByUserName(userName);
+
+        if (userToDelete == null) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_USER_FOUND, status, userToDelete));
+            return new ResponseEntity<>(generateResponse(Constants.NO_USER_FOUND), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat("User with id ")
+                .concat(String.valueOf(userToDelete.getUserId())).concat(" found"));
+
+        if (userToDelete.getUserName().equals(deleter.getUserName())) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.CANNOT_DELETE_USER, status,
+                    "User can not delete itself"));
+            return new ResponseEntity<>(generateResponse(Constants.CANNOT_DELETE_USER), status);
+        }
+
+        getUserService().deleteUserByUserId(userToDelete.getUserId());
+
+        status = HttpStatus.OK;
+        LOGGER.info(generateLogMessage(Constants.STATUS_REQ_SUCCESS, Constants.SUCCESS, status, ""));
+        return new ResponseEntity<>(generateResponse(Constants.SUCCESS), status);
     }
 
     @RequestMapping(value = "/users",
@@ -559,124 +453,96 @@ public final class UserResource extends AbstractResource {
                                                      required = false) String contentType,
                                              final @RequestHeader(name = "Version",
                                                      required = false) String version) {
-        if (getValidator().validate(
-                new String[]{
-                        body,
-                        authorization,
-                        contentType,
-                        version})
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager()
-                            .decodeBase64(authorization);
+        HttpStatus status;
+        final List<String> headerValues = Arrays.asList(authorization, contentType, version, body);
 
-                    List<String> loginAndPassword = Arrays
-                            .asList(credentials.split(":"));
-
-                    User creator = getUserService()
-                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
-                                    getPasswordManager()
-                                            .encodeMD5(loginAndPassword.get(1)));
-
-                    if (creator != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.CREATOR_FOUND));
-
-                        if (hasPermissions(creator, CapabilityType.CREATE, this::biPredicatePermissionsLogic)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
-
-                            try {
-                                ObjectMapper mapper = new ObjectMapper();
-
-                                User userJSON = mapper.readValue(body, new TypeReference<User>() {
-                                });
-
-                                if (userJSON != null) {
-                                    User userToCreate = getUserService()
-                                            .findUserByUserName(userJSON.getUserName());
-
-                                    if (userToCreate != null) {
-                                        LOGGER.debug(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.USER_ALREADY_EXISTS)
-                                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                                        Response response = generateResponse(Constants.USER_ALREADY_EXISTS);
-
-                                        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                                    } else {
-                                        userToCreate = new User();
-                                        userToCreate.setUserName(userJSON.getUserName());
-                                        userToCreate.setPassword(getPasswordManager()
-                                                .encodeMD5(userJSON.getPassword()));
-                                        userToCreate.setUserEmail(userJSON.getUserEmail());
-                                        userToCreate.getRoles().add(
-                                                getRoleService().findRoleByRoleType(RoleType.USER));
-                                        userToCreate.setCity(getCityService()
-                                                .findCityByCityName(userJSON.getCity().getCityName()));
-
-                                        if (getUserService().save(userToCreate) != null) {
-                                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                                    .concat(" http status = ").concat(HttpStatus.OK.name()));
-
-                                            Response response = generateResponse(Constants.SUCCESS);
-
-                                            return new ResponseEntity<>(response, HttpStatus.OK);
-                                        }
-                                    }
-                                } else {
-                                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.UNMARSHALING_FAILED)
-                                            .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
-
-                                    Response response = generateResponse(Constants.UNMARSHALING_FAILED);
-
-                                    return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
-                                }
-                            } catch (Exception ex) {
-                                LOGGER.error(ex, ex);
-
-                                Response response = generateResponse(ex.getMessage());
-
-                                return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
-                            }
-                        } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                            Response response = generateResponse(Constants.PERMISSION_DENIED);
-
-                            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                        }
-                    } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_CREATOR_FOUND)
-                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                        Response response = generateResponse(Constants.NO_CREATOR_FOUND);
-
-                        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                    }
-                } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
-
-                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
-
-                    return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
-                }
-            } catch (Exception e) {
-                LOGGER.error(e, e);
-
-                Response response = generateResponse(e.getMessage());
-
-                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-            }
+        if (!isValidHeaders(headerValues, this::predicateHeaderLogic)) {
+            status = HttpStatus.BAD_REQUEST;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.ERROR, status, headerValues));
+            return new ResponseEntity<>(generateResponse(Constants.ERROR), status);
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
-        Response response = generateResponse(Constants.ERROR);
+        LOGGER.debug(Constants.STATUS_REQ_ENTRY);
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        Version localVersion;
+        try {
+            localVersion = Version.valueOf(version);
+        } catch (Exception e) {
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, e.getMessage(), status, version));
+            return new ResponseEntity<>(generateResponse(e.getMessage()), status);
+        }
+
+        if (!localVersion.equals(Version.V1)) {
+            status = HttpStatus.NOT_ACCEPTABLE;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.VERSION_NOT_SUPPORTED, status, localVersion));
+            return new ResponseEntity<>(generateResponse(Constants.VERSION_NOT_SUPPORTED), status);
+        }
+
+        final String credentials = getPasswordManager().decodeBase64(authorization);
+        final List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+        final User creator = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
+                getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+
+        if (creator == null) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_CREATOR_FOUND, status, creator));
+            return new ResponseEntity<>(generateResponse(Constants.NO_CREATOR_FOUND), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.CREATOR_FOUND));
+
+        if (!hasPermissions(creator, CapabilityType.CREATE, this::biPredicatePermissionsLogic)) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.PERMISSION_DENIED, status, creator.getRoles()));
+            return new ResponseEntity<>(generateResponse(Constants.PERMISSION_DENIED), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
+
+        User userJSON;
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            userJSON = mapper.readValue(body, new TypeReference<User>() {
+            });
+        } catch (Exception ex) {
+            status = HttpStatus.EXPECTATION_FAILED;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, ex.getMessage(), status, body));
+            return new ResponseEntity<>(generateResponse(ex.getMessage()), status);
+        }
+
+        if (userJSON == null) {
+            status = HttpStatus.EXPECTATION_FAILED;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.UNMARSHALING_FAILED, status, userJSON));
+            return new ResponseEntity<>(generateResponse(Constants.UNMARSHALING_FAILED), status);
+        }
+
+        User userToCreate = getUserService().findUserByUserName(userJSON.getUserName());
+
+        if (userToCreate != null) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.USER_ALREADY_EXISTS, status, userToCreate));
+            return new ResponseEntity<>(generateResponse(Constants.USER_ALREADY_EXISTS), status);
+        }
+
+        userToCreate = new User();
+        userToCreate.setUserName(userJSON.getUserName());
+        userToCreate.setPassword(getPasswordManager().encodeMD5(userJSON.getPassword()));
+        userToCreate.setUserEmail(userJSON.getUserEmail());
+        userToCreate.getRoles().add(getRoleService().findRoleByRoleType(RoleType.USER));
+        userToCreate.setCity(getCityService().findCityByCityName(userJSON.getCity().getCityName()));
+
+        if (getUserService().save(userToCreate) == null) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.ERROR, status, userToCreate));
+            return new ResponseEntity<>(generateResponse(Constants.ERROR), status);
+        }
+
+        status = HttpStatus.OK;
+        LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_SUCCESS, Constants.SUCCESS, status, userToCreate));
+        return new ResponseEntity<>(generateResponse(Constants.SUCCESS), status);
     }
+
 
     @RequestMapping(value = "/users",
             method = RequestMethod.PUT,
@@ -688,141 +554,104 @@ public final class UserResource extends AbstractResource {
                                                      required = false) String contentType,
                                              final @RequestHeader(name = "Version",
                                                      required = false) String version) {
-        if (getValidator().validate(
-                new String[]{
-                        body,
-                        authorization,
-                        contentType,
-                        version})
-                && contentType.equals(Constants.CONTENT_TYPE_APPLICATION_JSON)) {
-            LOGGER.debug(Constants.STATUS_REQ_ENTRY);
-            try {
-                if (Version.valueOf(version).equals(Version.V1)) {
-                    String credentials = getPasswordManager()
-                            .decodeBase64(authorization);
+        HttpStatus status;
+        final List<String> headerValues = Arrays.asList(authorization, contentType, version, body);
 
-                    List<String> loginAndPassword = Arrays
-                            .asList(credentials.split(":"));
-
-                    User updater = getUserService()
-                            .findUserByUserNameAndPassword(loginAndPassword.get(0),
-                                    getPasswordManager()
-                                            .encodeMD5(loginAndPassword.get(1)));
-
-                    if (updater != null) {
-                        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.UPDATER_FOUND));
-
-                        if (hasPermissions(updater, CapabilityType.UPDATE, this::biPredicatePermissionsLogic)) {
-                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
-
-                            try {
-                                ObjectMapper mapper = new ObjectMapper();
-
-                                User userJSON = mapper.readValue(body, new TypeReference<User>() {
-                                });
-                                if (userJSON != null) {
-                                    User userToUpdate = getUserService()
-                                            .findUserByUserName(userJSON.getUserName());
-
-                                    if (userToUpdate != null) {
-                                        userToUpdate.setUserName(userJSON.getUserName());
-                                        userToUpdate.setPassword(getPasswordManager()
-                                                .encodeMD5(userJSON.getPassword()));
-                                        userToUpdate.setUserEmail(userJSON.getUserEmail());
-                                        userToUpdate.getRoles().clear();
-
-                                        for (Role item : userJSON.getRoles()) {
-                                            getUserRoleService()
-                                                    .assignRole(userToUpdate.getUserName(),
-                                                            item.getRoleType());
-                                        }
-
-                                        City city = getCityService()
-                                                .findCityByCityName(userJSON.
-                                                        getCity().getCityName());
-
-                                        if (city != null) {
-                                            userToUpdate.setCity(city);
-                                        } else {
-                                            userToUpdate.setCity(getCityService()
-                                                    .findCityByCityCode(CityCode.NKWN));
-                                        }
-
-                                        if (getUserService().update(userToUpdate) != null) {
-                                            LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.SUCCESS)
-                                                    .concat(" http status = ").concat(HttpStatus.OK.name()));
-
-                                            Response response = generateResponse(Constants.SUCCESS);
-
-                                            return new ResponseEntity<>(response, HttpStatus.OK);
-                                        } else {
-                                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                                                    .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
-
-                                            Response response = generateResponse(Constants.ERROR);
-
-                                            return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
-                                        }
-                                    } else {
-                                        LOGGER.debug(Constants.STATUS_REQ_FAIL.concat(" ").concat("User for updating not found")
-                                                .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
-
-                                        Response response = generateResponse(Constants.NO_USER_FOUND);
-
-                                        return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
-                                    }
-                                } else {
-                                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.UNMARSHALING_FAILED)
-                                            .concat(" http status = ").concat(HttpStatus.EXPECTATION_FAILED.name()));
-
-                                    Response response = generateResponse(Constants.UNMARSHALING_FAILED);
-
-                                    return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
-                                }
-                            } catch (Exception ex) {
-                                LOGGER.error(ex, ex);
-
-                                Response response = generateResponse(ex.getMessage());
-
-                                return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
-                            }
-                        } else {
-                            LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.PERMISSION_DENIED)
-                                    .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                            Response response = generateResponse(Constants.PERMISSION_DENIED);
-
-                            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                        }
-                    } else {
-                        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.NO_UPDATER_FOUND)
-                                .concat(" http status = ").concat(HttpStatus.CONFLICT.name()));
-
-                        Response response = generateResponse(Constants.NO_UPDATER_FOUND);
-
-                        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-                    }
-                } else {
-                    LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.VERSION_NOT_SUPPORTED)
-                            .concat(" http status = ").concat(HttpStatus.NOT_ACCEPTABLE.name()));
-
-                    Response response = generateResponse(Constants.VERSION_NOT_SUPPORTED);
-
-                    return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
-                }
-            } catch (Exception e) {
-                LOGGER.error(e, e);
-
-                Response response = generateResponse(e.getMessage());
-
-                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-            }
+        if (!isValidHeaders(headerValues, this::predicateHeaderLogic)) {
+            status = HttpStatus.BAD_REQUEST;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.ERROR, status, headerValues));
+            return new ResponseEntity<>(generateResponse(Constants.ERROR), status);
         }
-        LOGGER.warn(Constants.STATUS_REQ_FAIL.concat(" ").concat(Constants.ERROR)
-                .concat(" http status = ").concat(HttpStatus.BAD_REQUEST.name()));
 
-        Response response = generateResponse(Constants.ERROR);
+        LOGGER.debug(Constants.STATUS_REQ_ENTRY);
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        Version localVersion;
+        try {
+            localVersion = Version.valueOf(version);
+        } catch (Exception e) {
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, e.getMessage(), status, version));
+            return new ResponseEntity<>(generateResponse(e.getMessage()), status);
+        }
+
+        if (!localVersion.equals(Version.V1)) {
+            status = HttpStatus.NOT_ACCEPTABLE;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.VERSION_NOT_SUPPORTED, status, localVersion));
+            return new ResponseEntity<>(generateResponse(Constants.VERSION_NOT_SUPPORTED), status);
+        }
+
+        final String credentials = getPasswordManager().decodeBase64(authorization);
+        final List<String> loginAndPassword = Arrays.asList(credentials.split(":"));
+        final User updater = getUserService().findUserByUserNameAndPassword(loginAndPassword.get(0),
+                getPasswordManager().encodeMD5(loginAndPassword.get(1)));
+
+        if (updater == null) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_UPDATER_FOUND, status, updater));
+            return new ResponseEntity<>(generateResponse(Constants.NO_UPDATER_FOUND), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.UPDATER_FOUND));
+
+        if (!hasPermissions(updater, CapabilityType.UPDATE, this::biPredicatePermissionsLogic)) {
+            status = HttpStatus.CONFLICT;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.PERMISSION_DENIED, status, updater.getRoles()));
+            return new ResponseEntity<>(generateResponse(Constants.PERMISSION_DENIED), status);
+        }
+
+        LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
+
+        User userJSON;
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            userJSON = mapper.readValue(body, new TypeReference<User>() {
+            });
+        } catch (Exception ex) {
+            status = HttpStatus.EXPECTATION_FAILED;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, ex.getMessage(), status, body));
+            return new ResponseEntity<>(generateResponse(ex.getMessage()), status);
+        }
+
+        if (userJSON == null) {
+            status = HttpStatus.EXPECTATION_FAILED;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.UNMARSHALING_FAILED, status, userJSON));
+            return new ResponseEntity<>(generateResponse(Constants.UNMARSHALING_FAILED), status);
+        }
+
+        final User userToUpdate = getUserService().findUserByUserName(userJSON.getUserName());
+
+        if (userToUpdate == null) {
+            status = HttpStatus.EXPECTATION_FAILED;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_USER_FOUND, status, userJSON));
+            return new ResponseEntity<>(generateResponse(Constants.NO_USER_FOUND), status);
+        }
+
+        userToUpdate.setUserName(userJSON.getUserName());
+        userToUpdate.setPassword(getPasswordManager().encodeMD5(userJSON.getPassword()));
+        userToUpdate.setUserEmail(userJSON.getUserEmail());
+        userToUpdate.getRoles().clear();
+
+        for (Role item : userJSON.getRoles()) {
+            getUserRoleService().assignRole(userToUpdate.getUserName(), item.getRoleType());
+        }
+
+        final City city = getCityService().findCityByCityName(userJSON.getCity().getCityName());
+
+        if (city == null) {
+            userToUpdate.setCity(getCityService()
+                    .findCityByCityCode(CityCode.NKWN));
+        }
+
+        userToUpdate.setCity(city);
+
+        if (getUserService().update(userToUpdate) == null) {
+            status = HttpStatus.EXPECTATION_FAILED;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.ERROR, status, userJSON));
+            return new ResponseEntity<>(generateResponse(Constants.ERROR), status);
+        }
+
+        status = HttpStatus.OK;
+        LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_SUCCESS, Constants.SUCCESS, status, userToUpdate));
+        return new ResponseEntity<>(generateResponse(Constants.SUCCESS), status);
     }
 }

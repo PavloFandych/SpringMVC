@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.total.spring.root.dao.CouplesDAO;
 import org.total.spring.root.service.interfaces.CouplesService;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,6 +36,6 @@ public final class CouplesServiceImpl implements CouplesService {
     public List<List<String>> getCouples(final String seasonCode,
                                          final String tournamentCode) {
         final List<List<String>> couples = getCouplesDAO().getEntities(seasonCode, tournamentCode);
-        return (couples != null && !couples.isEmpty()) ? couples : null;
+        return (couples != null && !couples.isEmpty()) ? couples : Collections.emptyList();
     }
 }

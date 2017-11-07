@@ -26,10 +26,10 @@
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
         a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
+            m = s.getElementsByTagName(o)[0];
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m)
@@ -174,5 +174,3 @@
 </div>
 </body>
 </html>
-
-<%--<table align='center'><tr align='center'><td align='center'><div id='piechartgeneral' align='middle'></div></td><td align='center'><div id='piecharthome' align='middle'></div></td><td align='center'><div id='piechartaway' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align=center>Games (" + totalCounter + ")</h5></td><td align='center'><h5 align='center'>Home Games (" + homeGamesTotal + ")</h5></td><td align='center'><h5 align='center'>Away Games (" + awayGamesTotal + ")</h5></td></tr><tr align='center'><td align='center'><div id='piechartgoalstotal' align='middle'></div></td><td align='center'><div id='piechartgoalsscored' align='middle'></div></td><td align='center'><div id='piechartgoalsconceded' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align='center'>Goals Balance (" + goalsBalance + ")</h5></td><td align='center'><h5 align='center'>Goals scored (" + goalsScored + ")</h5></td><td align='center'><h5 align='center'>Goals conceded (" + goalsConceded + ")</h5></td></tr><tr align='center'><td align='center'><div id='piechartpointstotal' align='middle'></div></td><td align='center'><div id='piechartpointshome' align='middle'></div></td><td align='center'><div id='piechartpointsaway' align='middle'></div></td></tr><tr align='center'><td align='center'><h5 align='center'>Points Balance (" + pointsScored + ")</h5></td><td align='center'><h5 align='center'>Home Points (" + pointsScoredHome + ")</h5></td><td align='center'><h5 align='center'>Away Points (" + pointsScoredAway + ")</h5></td></tr></table>--%>

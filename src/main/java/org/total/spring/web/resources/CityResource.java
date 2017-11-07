@@ -93,6 +93,7 @@ public final class CityResource extends AbstractResource {
         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
         final List<City> list = getCityService().findAll();
+
         if (list == null || list.isEmpty()) {
             status = HttpStatus.NOT_FOUND;
             LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, Constants.NO_CITY_FOUND, status, list));
@@ -162,8 +163,17 @@ public final class CityResource extends AbstractResource {
 
         LOGGER.debug(Constants.STATUS_REQ_SUCCESS.concat(" ").concat(Constants.PERMISSION_RECEIVED));
 
+        CityCode cityCodeLocal;
+        try {
+            cityCodeLocal = CityCode.valueOf(cityCode);
+        } catch (Exception e) {
+            status = HttpStatus.FORBIDDEN;
+            LOGGER.warn(generateLogMessage(Constants.STATUS_REQ_FAIL, e.getMessage(), status, cityCode));
+            return new ResponseEntity<>(generateResponse(e.getMessage()), status);
+        }
+
         final List<City> list = new ArrayList<>();
-        list.add(getCityService().findCityByCityCode(CityCode.valueOf(cityCode)));
+        list.add(getCityService().findCityByCityCode(cityCodeLocal));
 
         if (list.isEmpty()) {
             status = HttpStatus.NOT_FOUND;

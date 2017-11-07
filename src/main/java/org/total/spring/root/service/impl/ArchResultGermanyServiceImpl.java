@@ -14,6 +14,7 @@ import org.total.spring.root.repository.ArchResultGermanyRepository;
 import org.total.spring.root.service.interfaces.ArchResultGermanyService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,7 +52,7 @@ public final class ArchResultGermanyServiceImpl implements ArchResultGermanyServ
         for (ArchResultGermany item : getArchResultGermanyRepository().findAll()) {
             list.add(item);
         }
-        return list;
+        return (!list.isEmpty()) ? list : Collections.emptyList();
     }
 
     @Override

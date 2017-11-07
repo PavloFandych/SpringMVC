@@ -15,6 +15,7 @@ import org.total.spring.root.repository.ResultRepository;
 import org.total.spring.root.service.interfaces.ResultService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -73,8 +74,9 @@ public final class ResultServiceImpl implements ResultService {
         * @param size the size of the page to be returned.
         * @param sort can be {@literal null}.
         */
-        return getResultRepository()
+        final List<Result> list = getResultRepository()
                 .findAll(new PageRequest(pageIndex, numRecPerPage, sort)).getContent();
+        return (list != null && !list.isEmpty()) ? list : Collections.emptyList();
     }
 
     @Override

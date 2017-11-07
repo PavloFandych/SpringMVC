@@ -2,7 +2,6 @@ package org.total.spring.web.resources;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.context.ContextLoader;
 import org.total.spring.root.entity.User;
@@ -12,7 +11,6 @@ import org.total.spring.root.service.interfaces.CapabilityService;
 import org.total.spring.root.service.interfaces.UserService;
 import org.total.spring.root.util.Constants;
 import org.total.spring.root.util.PasswordManager;
-import org.total.spring.root.util.Validator;
 
 import java.util.List;
 import java.util.function.BiPredicate;
@@ -34,9 +32,6 @@ public abstract class AbstractResource {
 
     @Autowired
     private PasswordManager passwordManager;
-
-    @Autowired
-    private Validator validator;
 
     public UserService getUserService() {
         return userService;
@@ -60,15 +55,6 @@ public abstract class AbstractResource {
 
     public void setCapabilityService(CapabilityService capabilityService) {
         this.capabilityService = capabilityService;
-    }
-
-    @Qualifier("webInputParamsValidator")
-    public Validator getValidator() {
-        return validator;
-    }
-
-    public void setValidator(Validator validator) {
-        this.validator = validator;
     }
 
     protected Response generateResponse(String message) {

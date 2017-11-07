@@ -16,6 +16,7 @@ import org.total.spring.root.proc.StoredTeamsCache;
 import org.total.spring.root.repository.TeamRepository;
 import org.total.spring.root.service.interfaces.TeamService;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -76,7 +77,8 @@ public final class TeamServiceImpl implements TeamService {
     )
     public List<List<String>> findAllStoredProc(final SeasonCode seasonCode,
                                                 final TournamentCode tournamentCode) {
-        return getTeamDAO().getEntities(seasonCode, tournamentCode);
+        final List<List<String>> lists = getTeamDAO().getEntities(seasonCode, tournamentCode);
+        return (lists != null && !lists.isEmpty()) ? lists : Collections.emptyList();
     }
 
     @Override
@@ -94,7 +96,7 @@ public final class TeamServiceImpl implements TeamService {
                                                      final String tournamentCode) {
         final List<StoredTeamsCache> result = getTeamDAO()
                 .getStoredTeamsList(SeasonCode.valueOf(seasonCode), TournamentCode.valueOf(tournamentCode));
-        return (result != null && !result.isEmpty()) ? result : null;
+        return (result != null && !result.isEmpty()) ? result : Collections.emptyList();
     }
 
     @Override
@@ -153,6 +155,6 @@ public final class TeamServiceImpl implements TeamService {
     )
     public List<Team> findTeamsByCountryCode(final String countryCode) {
         final List<Team> teams = getTeamDAO().getTeamsByCountryCode(countryCode);
-        return (teams != null && !teams.isEmpty()) ? teams : null;
+        return (teams != null && !teams.isEmpty()) ? teams : Collections.emptyList();
     }
 }

@@ -14,6 +14,7 @@ import org.total.spring.root.repository.ArchResultFranceRepository;
 import org.total.spring.root.service.interfaces.ArchResultFranceService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,7 +52,7 @@ public final class ArchResultFranceServiceImpl implements ArchResultFranceServic
         for (ArchResultFrance item : getArchResultFranceRepository().findAll()) {
             list.add(item);
         }
-        return list;
+        return (!list.isEmpty()) ? list : Collections.emptyList();
     }
 
     @Override

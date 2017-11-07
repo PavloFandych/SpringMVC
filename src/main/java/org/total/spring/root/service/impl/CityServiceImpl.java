@@ -13,6 +13,7 @@ import org.total.spring.root.entity.enums.CityCode;
 import org.total.spring.root.repository.CityRepository;
 import org.total.spring.root.service.interfaces.CityService;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -46,7 +47,8 @@ public final class CityServiceImpl implements CityService {
             )
     )
     public List<City> findAll() {
-        return getCityRepository().findAll();
+        final List<City> cities = getCityRepository().findAll();
+        return (cities != null && !cities.isEmpty()) ? cities : Collections.emptyList();
     }
 
     @Override

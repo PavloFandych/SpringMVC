@@ -14,6 +14,7 @@ import org.total.spring.root.repository.ArchResultItalyRepository;
 import org.total.spring.root.service.interfaces.ArchResultItalyService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,7 +52,7 @@ public final class ArchResultItalyServiceImpl implements ArchResultItalyService 
         for (ArchResultItaly item : getArchResultItalyRepository().findAll()) {
             list.add(item);
         }
-        return list;
+        return (!list.isEmpty()) ? list : Collections.emptyList();
     }
 
     @Override

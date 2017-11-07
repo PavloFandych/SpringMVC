@@ -8,7 +8,7 @@ import org.total.spring.root.entity.enums.TournamentCode;
 import org.total.spring.root.repository.TournamentRepository;
 
 /**
- * Created by pavlo.fandych on 10/27/2016.
+ * @author Pavlo.Fandych
  */
 
 public class TournamentRepositoryDBUnitTest extends AbstractRepositoryDBUnitTEst {

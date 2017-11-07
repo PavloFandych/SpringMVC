@@ -8,7 +8,7 @@ import org.total.spring.root.entity.enums.CityCode;
 import org.total.spring.root.repository.CityRepository;
 
 /**
- * Created by pavlo.fandych on 10/26/2016.
+ * @author Pavlo.Fandych
  */
 
 public class CityRepositoryDBUnitTest extends AbstractRepositoryDBUnitTEst {

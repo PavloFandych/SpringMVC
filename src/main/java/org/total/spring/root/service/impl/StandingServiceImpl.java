@@ -41,7 +41,7 @@ public final class StandingServiceImpl implements StandingService {
     public List<List<String>> getStandings(final String seasonCode,
                                            final String tournamentCode) {
         final List<List<String>> standings = getStandingDAO().getEntities(seasonCode, tournamentCode);
-        return (standings != null && !standings.isEmpty()) ? standings : null;
+        return (standings != null && !standings.isEmpty()) ? standings : Collections.emptyList();
     }
 
     @Override

@@ -55,39 +55,6 @@ $(document).ready(function () {
         var season = $("#SeasonsList").val();
         var tournament = $("#TournamentList").val();
 
-        /*        switch (tournament.substring(0, 3)) {
-         case 'ITA':
-         if (!$('body').hasClass('ITA')) {
-         $('body').removeClass('NoCountry ENG DEU FRA ESP')
-         $('body').addClass('ITA');
-         }
-         break;
-         case 'ENG':
-         if (!$('body').hasClass('ENG')) {
-         $('body').removeClass('NoCountry ITA DEU FRA ESP')
-         $('body').addClass('ENG');
-         }
-         break;
-         case 'FRA':
-         if (!$('body').hasClass('FRA')) {
-         $('body').removeClass('NoCountry ITA DEU ENG ESP')
-         $('body').addClass('FRA');
-         }
-         break;
-         case 'ESP':
-         if (!$('body').hasClass('ESP')) {
-         $('body').removeClass('NoCountry ITA DEU FRA ENG')
-         $('body').addClass('ESP');
-         }
-         break;
-         case 'DEU':
-         if (!$('body').hasClass('DEU')) {
-         $('body').removeClass('NoCountry ITA ENG FRA ESP')
-         $('body').addClass('DEU');
-         }
-         break;
-         }*/
-
         $.ajax({
             data: {"seasonCode": season, "tournamentCode": tournament},
             url: '/storedteams',
@@ -177,7 +144,6 @@ $(document).ready(function () {
                     $(".GP").removeClass("expanded");
                     $(".GP").hide();
                     $(".MD-selected").toggleClass("MD-selected");
-
                     $("#TournamentList option[value='']").remove();
 
                     $("#teams-list").show();
@@ -206,22 +172,6 @@ $(document).ready(function () {
                             $(clName).addClass("expanded");
                             $(document.getElementByXPath("//table[@id='" + tableName + "']/tbody/tr[1]/th[" + (md + 1) + "]")).addClass("MD-selected");
                         }, 1000);
-
-
-                    /* -----------------------------------------------------------------
-
-                     for (var i = data.length; i < 20; i++) {
-                     $(document.getElementByXPath("//table[@id='"+tableName+"']/tbody/tr[" + (i + 2) + "]")).hide();
-                     }
-
-                     for (var i = 0; i < data.length; i++) {
-                     for (var j = data.length * 2; j <= 39; j++) {
-                     $(document.getElementByXPath("//table[@id='"+tableName+"']/tbody/tr[1]/th[" + j + "]")).hide();
-                     $(document.getElementByXPath("//table[@id='"+tableName+"']/tbody/tr[" + (i + 2) + "]/td[" + j + "]")).hide();
-                     }
-                     }
-
-                     ----------------------------------------------------------------- */
                 }
 
                 $(".standings-tcell").unbind('mouseenter mouseleave');
@@ -241,23 +191,18 @@ $(document).ready(function () {
                         $(".team-selected").toggleClass("team-selected");
 
                         var className = '.' + $(this).find('.GP').attr('class').split(' ')[0];
-                        //alert(className);
                         if ($(".expanded").length === 0) {
-                            //alert(0);
                             $(className).toggle(800);
                             $(className).toggleClass("expanded");
                             $(this).toggleClass("MD-selected");
                         } else {
                             if ($(className).hasClass("expanded")) {
-                                //alert(1);
                                 $(className).toggle(800);
                                 $(className).toggleClass("expanded");
                                 $(this).toggleClass("MD-selected");
                             } else {
-                                //alert(2);
                                 $(".expanded").hide();
                                 $(className).toggle(800);
-
                                 $(".expanded").toggleClass("expanded");
                                 $(".MD-selected").toggleClass("MD-selected");
                                 $(className).toggleClass("expanded");
@@ -266,17 +211,13 @@ $(document).ready(function () {
                         }
                     }
                 );
-
-
             },
             error: function (xhr, str) {
                 $("#get-info-msg").hide();
                 $(".expanded").hide(800);
                 $(".expanded").removeClass("expanded");
                 $(".MD-selected").toggleClass("MD-selected");
-
                 $(".teams-buttons").removeClass("team-selected");
-                //alert('Sorry, no results for the ' + $("#TournamentList").val() + '-' + $("#SeasonsList").val());
             }
         });
     });

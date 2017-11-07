@@ -14,6 +14,7 @@ import org.total.spring.root.repository.ArchResultSpainRepository;
 import org.total.spring.root.service.interfaces.ArchResultSpainService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,7 +52,7 @@ public final class ArchResultSpainServiceImpl implements ArchResultSpainService 
         for (ArchResultSpain item : getArchResultSpainRepository().findAll()) {
             list.add(item);
         }
-        return list;
+        return (!list.isEmpty()) ? list : Collections.emptyList();
     }
 
     @Override

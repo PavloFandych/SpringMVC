@@ -32,6 +32,7 @@ public final class Constants {
     public static final String NO_TOURNAMENT_FOUND = "No tournament found";
     public static final String NO_TEAM_FOUND = "No team found";
     public static final String NO_SEASON_FOUND = "No season found";
+    public static final String NOT_NUMERIC = "Not numeric";
     public static final String PERMISSION_DENIED = "Permission denied";
     public static final String PERMISSION_RECEIVED = "Permission received";
     public static final String VERSION_NOT_SUPPORTED = "Version not supported";

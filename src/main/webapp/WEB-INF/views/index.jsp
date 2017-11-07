@@ -7,7 +7,8 @@
     <title>Teamstracker.com - football statistics: Premier League, Bundesliga, Serie A, La Liga, Ligue 1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="description" content="Football statistics: Premier League, Bundesliga, Serie A, La Liga, Ligue 1.">
-    <meta name="Keywords" content="football, soccer, standings, scores, Premier League, Bundesliga, Serie A, La Liga, Ligue 1">
+    <meta name="Keywords"
+          content="football, soccer, standings, scores, Premier League, Bundesliga, Serie A, La Liga, Ligue 1">
     <link rel="shortcut icon" href="/resources/images/app/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/app/favicon.ico" type="image/x-icon">
     <link href="<c:url value="/resources/css/rules.css" />" rel="stylesheet">
@@ -20,10 +21,10 @@
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
         a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
+            m = s.getElementsByTagName(o)[0];
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m)
