@@ -18,7 +18,7 @@ import java.util.Map;
 public class CouplesDAO extends GenericDAO<List<String>> {
     @Override
     public List<List<String>> getEntities(final Object... param) {
-        final SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+        setSimpleJdbcCallOperations(new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_COUPLES)
                 .returningResultSet("couples", (resultSet, i) -> {
                     final List<String> list = new ArrayList<>();
@@ -27,13 +27,11 @@ public class CouplesDAO extends GenericDAO<List<String>> {
                     list.add(resultSet.getString("guestTeam"));
 
                     return list;
-                });
-
-        final Map<String, Object> out = simpleJdbcCall
+                }));
+        final Map<String, Object> out = getSimpleJdbcCallOperations()
                 .execute(new MapSqlParameterSource()
                         .addValue("seasonCodeVar", (String) param[0])
                         .addValue("tournamentCodeVar", (String) param[1]));
-
         final List<List<String>> resultList = (List<List<String>>) out.get("couples");
 
         return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();

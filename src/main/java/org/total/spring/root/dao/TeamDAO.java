@@ -23,7 +23,7 @@ import java.util.Map;
 public class TeamDAO extends GenericDAO<List<String>> {
     @Override
     public List<List<String>> getEntities(final Object... param) {
-        final SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+        setSimpleJdbcCallOperations(new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_TEAM_LIST)
                 .returningResultSet("teams", (resultSet, i) -> {
                     final List<String> list = new ArrayList<>();
@@ -31,13 +31,11 @@ public class TeamDAO extends GenericDAO<List<String>> {
                     list.add(resultSet.getString(2));
 
                     return list;
-                });
-
-        final Map<String, Object> out = simpleJdbcCall
+                }));
+        final Map<String, Object> out = getSimpleJdbcCallOperations()
                 .execute(new MapSqlParameterSource()
                         .addValue("seasonCode", ((SeasonCode) param[0]).name())
                         .addValue("tournamentCode", ((TournamentCode) param[1]).name()));
-
         final List<List<String>> resultList = (List<List<String>>) out.get("teams");
 
         return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
@@ -45,7 +43,7 @@ public class TeamDAO extends GenericDAO<List<String>> {
 
     public List<StoredTeamsCache> getStoredTeamsList(final SeasonCode seasonCode,
                                                      final TournamentCode tournamentCode) {
-        final SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+        setSimpleJdbcCallOperations(new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_STORED_TEAMS_LIST)
                 .returningResultSet("storedTeamsList", (resultSet, i) -> {
                     final StoredTeamsCache storedTeamsCache = ContextLoader.getCurrentWebApplicationContext()
@@ -57,20 +55,18 @@ public class TeamDAO extends GenericDAO<List<String>> {
                     storedTeamsCache.setContent(resultSet.getString(3));
 
                     return storedTeamsCache;
-                });
-
-        final Map<String, Object> out = simpleJdbcCall
+                }));
+        final Map<String, Object> out = getSimpleJdbcCallOperations()
                 .execute(new MapSqlParameterSource()
                         .addValue("seasonCode", seasonCode.name())
                         .addValue("tournamentCode", tournamentCode.name()));
-
         final List<StoredTeamsCache> resultList = (List<StoredTeamsCache>) out.get("storedTeamsList");
 
         return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
 
     public List<Team> getTeamsByCountryCode(final String countryCode) {
-        final SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+        setSimpleJdbcCallOperations(new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_TEAMS_BY_COUNTRY_CODE)
                 .returningResultSet("teamsList", (resultSet, i) -> {
                     final Team team = new Team();
@@ -78,12 +74,10 @@ public class TeamDAO extends GenericDAO<List<String>> {
                     team.setTeamName(resultSet.getString("teamName"));
 
                     return team;
-                });
-
-        final Map<String, Object> out = simpleJdbcCall
+                }));
+        final Map<String, Object> out = getSimpleJdbcCallOperations()
                 .execute(new MapSqlParameterSource()
                         .addValue("countryCode", countryCode));
-
         final List<Team> resultList = (List<Team>) out.get("teamsList");
 
         return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();

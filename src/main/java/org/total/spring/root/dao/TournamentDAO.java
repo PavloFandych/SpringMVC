@@ -20,7 +20,7 @@ import java.util.Map;
 public class TournamentDAO extends GenericDAO<Tournament> {
     @Override
     public List<Tournament> getEntities(Object... param) {
-        final SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+        setSimpleJdbcCallOperations(new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_ACTUAL_TOURNAMENT_LIST)
                 .returningResultSet("tournamentList", (resultSet, i) -> {
                     final Tournament tournament = new Tournament();
@@ -32,16 +32,15 @@ public class TournamentDAO extends GenericDAO<Tournament> {
                     tournament.setTournamentName(resultSet.getString("tournamentName"));
 
                     return tournament;
-                });
-        final Map<String, Object> out = simpleJdbcCall.execute();
-
+                }));
+        final Map<String, Object> out = getSimpleJdbcCallOperations().execute();
         final List<Tournament> resultList = (List<Tournament>) out.get("tournamentList");
 
         return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
 
     public List<Tournament> getTournamentsByCountryCode(final String countryCode) {
-        final SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+        setSimpleJdbcCallOperations(new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_TOURNAMENTS_BY_COUNTRY_CODE)
                 .returningResultSet("tournamentsList", (resultSet, i) -> {
                     final Tournament tournament = new Tournament();
@@ -52,11 +51,9 @@ public class TournamentDAO extends GenericDAO<Tournament> {
                             .valueOf(resultSet.getString("tournamentType")));
 
                     return tournament;
-                });
-
-        final Map<String, Object> out = simpleJdbcCall
+                }));
+        final Map<String, Object> out = getSimpleJdbcCallOperations()
                 .execute(new MapSqlParameterSource().addValue("countryCode", countryCode));
-
         final List<Tournament> resultList = (List<Tournament>) out.get("tournamentsList");
 
         return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();

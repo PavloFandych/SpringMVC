@@ -25,7 +25,7 @@ import java.util.Map;
 public class TeamMatchDAO extends GenericDAO<TeamMatch> {
     @Override
     public List<TeamMatch> getEntities(final Object... param) {
-        final SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+        setSimpleJdbcCallOperations(new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_TEAM_MATCHES)
                 .returningResultSet("teamMatches", (resultSet, i) -> {
                     final TeamMatch teamMatch = ContextLoader
@@ -49,15 +49,13 @@ public class TeamMatchDAO extends GenericDAO<TeamMatch> {
                         LOGGER.error(e, e);
                     }
                     return teamMatch;
-                });
-
-        final Map<String, Object> out = simpleJdbcCall
+                }));
+        final Map<String, Object> out = getSimpleJdbcCallOperations()
                 .execute(new MapSqlParameterSource()
                         .addValue("teamCode", (String) param[0])
                         .addValue("opponentTeamCode", (String) param[1])
                         .addValue("seasonCode", (String) param[2])
                         .addValue("tournamentCode", (String) param[3]));
-
         final List<TeamMatch> resultList = (List<TeamMatch>) out.get("teamMatches");
 
         return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
