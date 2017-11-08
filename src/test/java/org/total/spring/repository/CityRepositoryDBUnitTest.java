@@ -25,12 +25,12 @@ public class CityRepositoryDBUnitTest extends AbstractRepositoryDBUnitTest {
 
     /*
     * See dataset.xml.
-    * Four instances are located there
+    * Six instances are located there
     * */
     @Test
     @Transactional
     public void testCountCitiesPositive() throws Exception {
-        int cities = 4;
+        int cities = 6;
         Assert.assertEquals(cities, cityRepository.findAll().size());
     }
 
@@ -52,5 +52,9 @@ public class CityRepositoryDBUnitTest extends AbstractRepositoryDBUnitTest {
                 .findByCityCode(CityCode.MUNI).get(0).getCityCode());
         Assert.assertEquals(CityCode.DORT, cityRepository
                 .findByCityCode(CityCode.DORT).get(0).getCityCode());
+        Assert.assertEquals(CityCode.FRAN, cityRepository
+                .findByCityCode(CityCode.FRAN).get(0).getCityCode());
+        Assert.assertEquals(CityCode.KOLN, cityRepository
+                .findByCityCode(CityCode.KOLN).get(0).getCityCode());
     }
 }

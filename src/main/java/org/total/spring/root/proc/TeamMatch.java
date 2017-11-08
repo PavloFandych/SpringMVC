@@ -136,4 +136,23 @@ public final class TeamMatch implements Serializable {
     public void setMatchResultStatus(MatchStatus matchResultStatus) {
         this.matchResultStatus = matchResultStatus;
     }
+
+    @Override
+    public String toString() {
+        return "TeamMatch{" +
+                "matchDate=" + matchDate +
+                ", seasonCode=" + seasonCode +
+                ", seasonName='" + seasonName + '\'' +
+                ", tournamentCode=" + tournamentCode +
+                ", tournamentName='" + tournamentName + '\'' +
+                ", matchDay=" + matchDay +
+                ", hostTeamCode='" + hostTeamCode + '\'' +
+                ", hostTeamName='" + hostTeamName + '\'' +
+                ", guestTeamCode='" + guestTeamCode + '\'' +
+                ", guestTeamName='" + guestTeamName + '\'' +
+                ", goalsByHost=" + goalsByHost +
+                ", goalsByGuest=" + goalsByGuest +
+                ", matchResultStatus=" + matchResultStatus +
+                '}';
+    }
 }

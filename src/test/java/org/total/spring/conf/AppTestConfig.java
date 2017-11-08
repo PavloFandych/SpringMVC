@@ -72,6 +72,7 @@ public class AppTestConfig {
         properties.setProperty("hibernate.c3p0.max_statements", "50");
         properties.setProperty("hibernate.c3p0.timeout", "1800");
         properties.setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false");
+        properties.setProperty("hibernate.enable_lazy_load_no_trans", "true");
 
         return properties;
     }

@@ -6,6 +6,8 @@
     <City cityId="2" cityCode="HAMB" cityName="HAMBURG" countryId="1"/>
     <City cityId="3" cityCode="MUNI" cityName="MUNICH" countryId="1"/>
     <City cityId="4" cityCode="DORT" cityName="DORTMUND" countryId="1"/>
+    <City cityId="5" cityCode="FRAN" cityName="FRANKFURT" countryId="1"/>
+    <City cityId="6" cityCode="KOLN" cityName="KOLN" countryId="1"/>
 
     <Tournament tournamentId="1" tournamentCode="DEU_BUNDESLIGA_1" tournamentType="LEAGUE01"
                 tournamentName="Bundes Liga 1" countryId="1"/>
@@ -22,7 +24,15 @@
 
     <Team teamId="1" teamCode="DEU047" teamName="Hertha BSC" cityId="1"/>
     <Team teamId="2" teamCode="DEU228" teamName="Borussia Dortmund" cityId="4"/>
+    <Team teamId="3" teamCode="DEU230" teamName="Hamburger SV" cityId="2"/>
+    <Team teamId="4" teamCode="DEU137" teamName="FC Bayern Munich" cityId="3"/>
+    <Team teamId="5" teamCode="DEU112" teamName="1. FC Koln" cityId="6"/>
+    <Team teamId="6" teamCode="DEU091" teamName="Eintracht Frankfurt" cityId="5"/>
 
-    <Result resultId="1" date="2016-08-13 11:30:00" goalsByGuest="2" goalsByHost="1" matchDay="1"
+    <Result resultId="1" date="2016-08-13 11:30:00" goalsByGuest="4" goalsByHost="1" matchDay="1"
             resultCode="13082016DEU047DEU228XXXX" guestTeamId="2" hostTeamId="1" seasonId="1" tournamentId="1"/>
+    <Result resultId="2" date="2016-08-14 12:00:00" goalsByGuest="3" goalsByHost="0" matchDay="1"
+            resultCode="14082016DEU230DEU137XXXX" guestTeamId="4" hostTeamId="3" seasonId="1" tournamentId="1"/>
+    <Result resultId="3" date="2016-08-14 18:00:00" goalsByGuest="1" goalsByHost="1" matchDay="1"
+            resultCode="14082016DEU112DEU091XXXX" guestTeamId="5" hostTeamId="6" seasonId="1" tournamentId="1"/>
 </dataset>
