@@ -14,4 +14,11 @@ public class SearchBean {
     public void setTarget(String target) {
         this.target = target;
     }
+
+    @Override
+    public String toString() {
+        return "SearchBean{" +
+                "target='" + target + '\'' +
+                '}';
+    }
 }

@@ -21,7 +21,7 @@ public class CouplesDAO extends GenericDAO<List<String>> {
         final SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_COUPLES)
                 .returningResultSet("couples", (resultSet, i) -> {
-                    List<String> list = new ArrayList<>();
+                    final List<String> list = new ArrayList<>();
                     list.add(resultSet.getString("matchDay"));
                     list.add(resultSet.getString("hostTeam"));
                     list.add(resultSet.getString("guestTeam"));

@@ -11,7 +11,7 @@ import org.total.spring.root.repository.CityRepository;
  * @author Pavlo.Fandych
  */
 
-public class CityRepositoryDBUnitTest extends AbstractRepositoryDBUnitTEst {
+public class CityRepositoryDBUnitTest extends AbstractRepositoryDBUnitTest {
     @Autowired
     private CityRepository cityRepository;
 

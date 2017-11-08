@@ -31,7 +31,7 @@ import java.util.Properties;
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
 @DbUnitConfiguration(databaseConnection = "h2DataSource")
-public abstract class AbstractRepositoryDBUnitTEst {
+public abstract class AbstractRepositoryDBUnitTest {
     private static boolean setUpIsDone = false;
 
     @Before
@@ -49,7 +49,7 @@ public abstract class AbstractRepositoryDBUnitTEst {
                 configProperties.getProperty("h2dbPassword"),
                 new File(configProperties.getProperty(getSchemaName())).getAbsolutePath(),
                 Charsets.UTF_8,
-                false);
+                true);
 
         final IDataSet dataSet = new FlatXmlDataSetBuilder()
                 .build(new File(configProperties.getProperty(getDataSetName())));

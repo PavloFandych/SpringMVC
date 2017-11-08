@@ -7,7 +7,22 @@
     <City cityId="3" cityCode="MUNI" cityName="MUNICH" countryId="1"/>
     <City cityId="4" cityCode="DORT" cityName="DORTMUND" countryId="1"/>
 
-    <Tournament tournamentId="1" tournamentCode="DEU_BUNDESLIGA_1" tournamentType="LEAGUE01" tournamentName="Bundes Liga 1"  countryId="1"/>
-    <Tournament tournamentId="2" tournamentCode="DEU_BUNDESLIGA_2" tournamentType="LEAGUE02" tournamentName="Bundes Liga 2" countryId="1"/>
-    <Tournament tournamentId="3" tournamentCode="DEU_BUNDESLIGA_3" tournamentType="LEAGUE03" tournamentName="Bundes Liga 3" countryId="1"/>
+    <Tournament tournamentId="1" tournamentCode="DEU_BUNDESLIGA_1" tournamentType="LEAGUE01"
+                tournamentName="Bundes Liga 1" countryId="1"/>
+    <Tournament tournamentId="2" tournamentCode="DEU_BUNDESLIGA_2" tournamentType="LEAGUE02"
+                tournamentName="Bundes Liga 2" countryId="1"/>
+    <Tournament tournamentId="3" tournamentCode="DEU_BUNDESLIGA_3" tournamentType="LEAGUE03"
+                tournamentName="Bundes Liga 3" countryId="1"/>
+
+    <Season seasonId="1" seasonCode="S20162017" seasonName="Season 2016-2017"/>
+    <Season seasonId="2" seasonCode="S20172018" seasonName="Season 2017-2018"/>
+    <Season seasonId="3" seasonCode="S20182019" seasonName="Season 2018-2019"/>
+    <Season seasonId="4" seasonCode="S20192020" seasonName="Season 2019-2020"/>
+    <Season seasonId="5" seasonCode="S20202021" seasonName="Season 2020-2021"/>
+
+    <Team teamId="1" teamCode="DEU047" teamName="Hertha BSC" cityId="1"/>
+    <Team teamId="2" teamCode="DEU228" teamName="Borussia Dortmund" cityId="4"/>
+
+    <Result resultId="1" date="2016-08-13 11:30:00" goalsByGuest="2" goalsByHost="1" matchDay="1"
+            resultCode="13082016DEU047DEU228XXXX" guestTeamId="2" hostTeamId="1" seasonId="1" tournamentId="1"/>
 </dataset>

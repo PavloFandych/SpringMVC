@@ -11,7 +11,7 @@ import org.total.spring.root.repository.TournamentRepository;
  * @author Pavlo.Fandych
  */
 
-public class TournamentRepositoryDBUnitTest extends AbstractRepositoryDBUnitTEst {
+public class TournamentRepositoryDBUnitTest extends AbstractRepositoryDBUnitTest {
     @Autowired
     private TournamentRepository tournamentRepository;
 
