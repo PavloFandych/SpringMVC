@@ -1,5 +1,6 @@
 package org.total.spring.root.dao;
 
+import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
@@ -23,6 +24,8 @@ import java.util.Map;
 
 @Repository("teamMatchDAO")
 public class TeamMatchDAO extends GenericDAO<TeamMatch> {
+    private static final Logger LOGGER = Logger.getLogger(TeamMatchDAO.class);
+
     @Override
     public List<TeamMatch> getEntities(final Object... param) {
         setSimpleJdbcCallOperations(new SimpleJdbcCall(getJdbcTemplate())

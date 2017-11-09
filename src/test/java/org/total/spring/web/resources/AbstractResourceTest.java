@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * @author Pavlo.Fandych
  */
+
 public class AbstractResourceTest {
     private final ClassFocusOn classFocusOn = new ClassFocusOn();
 
@@ -53,6 +54,6 @@ public class AbstractResourceTest {
         Assert.assertTrue(result);
     }
 
-    final class ClassFocusOn extends AbstractResource {
+    private final class ClassFocusOn extends AbstractResource {
     }
 }

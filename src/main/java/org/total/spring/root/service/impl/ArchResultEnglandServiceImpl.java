@@ -28,7 +28,7 @@ public final class ArchResultEnglandServiceImpl implements ArchResultEnglandServ
     @Autowired
     private ArchResultEnglandRepository archResultEnglandRepository;
 
-    public ArchResultEnglandRepository getArchResultEnglandRepository() {
+    private ArchResultEnglandRepository getArchResultEnglandRepository() {
         return archResultEnglandRepository;
     }
 

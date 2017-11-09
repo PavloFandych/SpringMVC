@@ -49,7 +49,7 @@ public abstract class AbstractResource {
         this.passwordManager = passwordManager;
     }
 
-    public CapabilityService getCapabilityService() {
+    private CapabilityService getCapabilityService() {
         return capabilityService;
     }
 

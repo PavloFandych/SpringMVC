@@ -25,7 +25,7 @@ public final class CouplesResource extends AbstractResource {
     @Autowired
     private CouplesService couplesService;
 
-    public CouplesService getCouplesService() {
+    private CouplesService getCouplesService() {
         return couplesService;
     }
 

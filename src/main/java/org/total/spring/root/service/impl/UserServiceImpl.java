@@ -32,7 +32,7 @@ public final class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public UserRepository getUserRepository() {
+    private UserRepository getUserRepository() {
         return userRepository;
     }
 

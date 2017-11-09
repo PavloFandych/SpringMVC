@@ -20,7 +20,7 @@ public final class CouplesServiceImpl implements CouplesService {
     @Autowired
     private CouplesDAO couplesDAO;
 
-    public CouplesDAO getCouplesDAO() {
+    private CouplesDAO getCouplesDAO() {
         return couplesDAO;
     }
 

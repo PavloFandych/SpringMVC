@@ -28,7 +28,7 @@ public final class ArchResultSpainServiceImpl implements ArchResultSpainService 
     @Autowired
     private ArchResultSpainRepository archResultSpainRepository;
 
-    public ArchResultSpainRepository getArchResultSpainRepository() {
+    private ArchResultSpainRepository getArchResultSpainRepository() {
         return archResultSpainRepository;
     }
 

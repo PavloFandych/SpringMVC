@@ -34,7 +34,7 @@ public final class UserRoleServiceImpl implements UserRoleService {
         this.userService = userService;
     }
 
-    public RoleService getRoleService() {
+    private RoleService getRoleService() {
         return roleService;
     }
 

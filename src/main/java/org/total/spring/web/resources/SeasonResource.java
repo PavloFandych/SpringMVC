@@ -29,7 +29,7 @@ public final class SeasonResource extends AbstractResource {
     @Autowired
     private SeasonService seasonService;
 
-    public SeasonService getSeasonService() {
+    private SeasonService getSeasonService() {
         return seasonService;
     }
 

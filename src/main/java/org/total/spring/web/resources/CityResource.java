@@ -28,7 +28,7 @@ public final class CityResource extends AbstractResource {
     @Autowired
     private CityService cityService;
 
-    public CityService getCityService() {
+    private CityService getCityService() {
         return cityService;
     }
 

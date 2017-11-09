@@ -39,7 +39,7 @@ public final class ArchResultResource extends AbstractResource {
     @Autowired
     private ArchResultFranceService archResultFranceService;
 
-    public ArchResultEnglandService getArchResultEnglandService() {
+    private ArchResultEnglandService getArchResultEnglandService() {
         return archResultEnglandService;
     }
 
@@ -47,7 +47,7 @@ public final class ArchResultResource extends AbstractResource {
         this.archResultEnglandService = archResultEnglandService;
     }
 
-    public ArchResultGermanyService getArchResultGermanyService() {
+    private ArchResultGermanyService getArchResultGermanyService() {
         return archResultGermanyService;
     }
 
@@ -55,7 +55,7 @@ public final class ArchResultResource extends AbstractResource {
         this.archResultGermanyService = archResultGermanyService;
     }
 
-    public ArchResultItalyService getArchResultItalyService() {
+    private ArchResultItalyService getArchResultItalyService() {
         return archResultItalyService;
     }
 
@@ -63,7 +63,7 @@ public final class ArchResultResource extends AbstractResource {
         this.archResultItalyService = archResultItalyService;
     }
 
-    public ArchResultSpainService getArchResultSpainService() {
+    private ArchResultSpainService getArchResultSpainService() {
         return archResultSpainService;
     }
 
@@ -71,7 +71,7 @@ public final class ArchResultResource extends AbstractResource {
         this.archResultSpainService = archResultSpainService;
     }
 
-    public ArchResultFranceService getArchResultFranceService() {
+    private ArchResultFranceService getArchResultFranceService() {
         return archResultFranceService;
     }
 

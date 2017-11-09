@@ -21,7 +21,7 @@ public final class TeamMatchServiceImpl implements TeamMatchService {
     @Autowired
     private TeamMatchDAO teamMatchDAO;
 
-    public TeamMatchDAO getTeamMatchDAO() {
+    private TeamMatchDAO getTeamMatchDAO() {
         return teamMatchDAO;
     }
 

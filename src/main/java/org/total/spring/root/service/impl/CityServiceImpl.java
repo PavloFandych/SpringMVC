@@ -27,7 +27,7 @@ public final class CityServiceImpl implements CityService {
     @Autowired
     private CityRepository cityRepository;
 
-    public CityRepository getCityRepository() {
+    private CityRepository getCityRepository() {
         return cityRepository;
     }
 

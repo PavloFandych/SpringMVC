@@ -19,7 +19,7 @@ public final class GoalsServiceImpl implements GoalsService {
     @Autowired
     private GoalsRepository goalsRepository;
 
-    public GoalsRepository getGoalsRepository() {
+    private GoalsRepository getGoalsRepository() {
         return goalsRepository;
     }
 

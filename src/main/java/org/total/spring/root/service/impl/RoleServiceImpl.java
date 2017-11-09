@@ -26,7 +26,7 @@ public final class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
-    public RoleRepository getRoleRepository() {
+    private RoleRepository getRoleRepository() {
         return roleRepository;
     }
 

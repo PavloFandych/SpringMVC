@@ -26,7 +26,7 @@ public final class CapabilityServiceImpl implements CapabilityService {
     @Autowired
     private CapabilityRepository capabilityRepository;
 
-    public CapabilityRepository getCapabilityRepository() {
+    private CapabilityRepository getCapabilityRepository() {
         return capabilityRepository;
     }
 

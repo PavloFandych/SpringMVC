@@ -55,24 +55,3 @@ CREATE TABLE IF NOT EXISTS `Team` (
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
-
-CREATE TABLE `Result` (
-  `resultId`     BIGINT(20)  NOT NULL AUTO_INCREMENT,
-  `date`         DATETIME             DEFAULT NULL,
-  `goalsByGuest` TINYINT(4)           DEFAULT NULL,
-  `goalsByHost`  TINYINT(4)           DEFAULT NULL,
-  `matchDay`     TINYINT(4)  NOT NULL,
-  `resultCode`   VARCHAR(24) NOT NULL,
-  `guestTeamId`  BIGINT(20)  NOT NULL,
-  `hostTeamId`   BIGINT(20)  NOT NULL,
-  `seasonId`     BIGINT(20)  NOT NULL,
-  `tournamentId` BIGINT(20)  NOT NULL,
-  PRIMARY KEY (`resultId`),
-  UNIQUE KEY `resultCode` (`resultCode`),
-  CONSTRAINT `FK_guestTeamId` FOREIGN KEY (`guestTeamId`) REFERENCES `Team` (`teamId`),
-  CONSTRAINT `FK_hostTeamId` FOREIGN KEY (`hostTeamId`) REFERENCES `Team` (`teamId`),
-  CONSTRAINT `FK_seasonId` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`),
-  CONSTRAINT `FK_tournamentId` FOREIGN KEY (`tournamentId`) REFERENCES `Tournament` (`tournamentId`)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;

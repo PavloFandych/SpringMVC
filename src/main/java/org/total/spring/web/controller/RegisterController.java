@@ -49,7 +49,7 @@ public final class RegisterController {
         this.userService = userService;
     }
 
-    public UserRoleService getUserRoleService() {
+    private UserRoleService getUserRoleService() {
         return userRoleService;
     }
 
@@ -65,7 +65,7 @@ public final class RegisterController {
         this.passwordManager = passwordManager;
     }
 
-    public CityService getCityService() {
+    private CityService getCityService() {
         return cityService;
     }
 

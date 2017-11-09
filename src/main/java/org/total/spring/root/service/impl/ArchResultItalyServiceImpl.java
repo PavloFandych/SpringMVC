@@ -28,7 +28,7 @@ public final class ArchResultItalyServiceImpl implements ArchResultItalyService 
     @Autowired
     private ArchResultItalyRepository archResultItalyRepository;
 
-    public ArchResultItalyRepository getArchResultItalyRepository() {
+    private ArchResultItalyRepository getArchResultItalyRepository() {
         return archResultItalyRepository;
     }
 

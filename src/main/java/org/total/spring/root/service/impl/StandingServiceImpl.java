@@ -26,7 +26,7 @@ public final class StandingServiceImpl implements StandingService {
     @Autowired
     private StandingDAO standingDAO;
 
-    public StandingDAO getStandingDAO() {
+    private StandingDAO getStandingDAO() {
         return standingDAO;
     }
 

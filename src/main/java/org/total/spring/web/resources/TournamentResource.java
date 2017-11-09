@@ -4,7 +4,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.total.spring.root.entity.Tournament;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
@@ -26,7 +30,7 @@ public final class TournamentResource extends AbstractResource {
     @Autowired
     private TournamentService tournamentService;
 
-    public TournamentService getTournamentService() {
+    private TournamentService getTournamentService() {
         return tournamentService;
     }
 

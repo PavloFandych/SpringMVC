@@ -29,7 +29,7 @@ public final class RoleCapabilityServiceImpl implements RoleCapabilityService {
     @Autowired
     private RoleService roleService;
 
-    public CapabilityService getCapabilityService() {
+    private CapabilityService getCapabilityService() {
         return capabilityService;
     }
 
@@ -37,7 +37,7 @@ public final class RoleCapabilityServiceImpl implements RoleCapabilityService {
         this.capabilityService = capabilityService;
     }
 
-    public RoleService getRoleService() {
+    private RoleService getRoleService() {
         return roleService;
     }
 

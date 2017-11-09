@@ -15,7 +15,9 @@ import org.total.spring.root.entity.enums.TournamentCode;
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public final class StoredTeamsCache {
     private SeasonCode seasonCode;
+
     private TournamentCode tournamentCode;
+
     @JsonRawValue
     private String content;
 
@@ -41,5 +43,14 @@ public final class StoredTeamsCache {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "StoredTeamsCache{" +
+                "seasonCode=" + seasonCode +
+                ", tournamentCode=" + tournamentCode +
+                ", content='" + content + '\'' +
+                '}';
     }
 }

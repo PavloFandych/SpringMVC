@@ -29,7 +29,7 @@ public final class ResultServiceImpl implements ResultService {
     @Autowired
     private ResultRepository resultRepository;
 
-    public ResultRepository getResultRepository() {
+    private ResultRepository getResultRepository() {
         return resultRepository;
     }
 

@@ -30,7 +30,7 @@ public final class SeasonServiceImpl implements SeasonService {
     @Autowired
     private SeasonDAO seasonDAO;
 
-    public SeasonRepository getSeasonRepository() {
+    private SeasonRepository getSeasonRepository() {
         return seasonRepository;
     }
 
@@ -38,7 +38,7 @@ public final class SeasonServiceImpl implements SeasonService {
         this.seasonRepository = seasonRepository;
     }
 
-    public SeasonDAO getSeasonDAO() {
+    private SeasonDAO getSeasonDAO() {
         return seasonDAO;
     }
 

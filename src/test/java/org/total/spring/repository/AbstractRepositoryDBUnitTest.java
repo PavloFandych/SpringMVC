@@ -49,7 +49,7 @@ public abstract class AbstractRepositoryDBUnitTest {
                 configProperties.getProperty("h2dbPassword"),
                 new File(configProperties.getProperty(getSchemaName())).getAbsolutePath(),
                 Charsets.UTF_8,
-                true);
+                false);
 
         final IDataSet dataSet = new FlatXmlDataSetBuilder()
                 .build(new File(configProperties.getProperty(getDataSetName())));

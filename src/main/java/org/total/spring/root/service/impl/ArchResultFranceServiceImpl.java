@@ -28,7 +28,7 @@ public final class ArchResultFranceServiceImpl implements ArchResultFranceServic
     @Autowired
     private ArchResultFranceRepository archResultFranceRepository;
 
-    public ArchResultFranceRepository getArchResultFranceRepository() {
+    private ArchResultFranceRepository getArchResultFranceRepository() {
         return archResultFranceRepository;
     }
 

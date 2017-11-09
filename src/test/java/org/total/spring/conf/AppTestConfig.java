@@ -24,7 +24,7 @@ import java.util.Properties;
 @ComponentScan(value = {"org.total.spring.root"}, lazyInit = true)
 public class AppTestConfig {
     @Bean(name = "h2DataSource")
-    public DataSource getH2DataSource() {
+    DataSource getH2DataSource() {
         final BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName("org.h2.Driver");
         basicDataSource.setUrl("jdbc:h2:mem:test");
@@ -35,7 +35,7 @@ public class AppTestConfig {
     }
 
     @Bean(name = "entityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(getH2DataSource());
         entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
@@ -59,7 +59,7 @@ public class AppTestConfig {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-    Properties hibernateProperties() {
+    private Properties hibernateProperties() {
         final Properties properties = new Properties();
         properties.setProperty("hibernate.order_updates", "true");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");

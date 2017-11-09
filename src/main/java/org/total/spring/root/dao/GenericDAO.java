@@ -1,6 +1,5 @@
 package org.total.spring.root.dao;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCallOperations;
@@ -12,22 +11,20 @@ import java.util.List;
  */
 
 public abstract class GenericDAO<T> {
-    protected static final Logger LOGGER = Logger.getLogger(GenericDAO.class);
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
-    protected SimpleJdbcCallOperations simpleJdbcCallOperations;
+    private SimpleJdbcCallOperations simpleJdbcCallOperations;
 
-    public SimpleJdbcCallOperations getSimpleJdbcCallOperations() {
+    SimpleJdbcCallOperations getSimpleJdbcCallOperations() {
         return simpleJdbcCallOperations;
     }
 
-    public void setSimpleJdbcCallOperations(SimpleJdbcCallOperations simpleJdbcCallOperations) {
+    void setSimpleJdbcCallOperations(SimpleJdbcCallOperations simpleJdbcCallOperations) {
         this.simpleJdbcCallOperations = simpleJdbcCallOperations;
     }
 
-    @Autowired
-    protected JdbcTemplate jdbcTemplate;
-
-    public JdbcTemplate getJdbcTemplate() {
+    JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
     }
 

@@ -28,7 +28,7 @@ public final class ArchResultGermanyServiceImpl implements ArchResultGermanyServ
     @Autowired
     private ArchResultGermanyRepository archResultGermanyRepository;
 
-    public ArchResultGermanyRepository getArchResultGermanyRepository() {
+    private ArchResultGermanyRepository getArchResultGermanyRepository() {
         return archResultGermanyRepository;
     }
 

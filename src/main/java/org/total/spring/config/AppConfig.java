@@ -36,7 +36,7 @@ public class AppConfig {
     private static final Logger LOGGER = Logger.getLogger(AppConfig.class);
 
     @Bean
-    public DataSource getDataSource() {
+    DataSource getDataSource() {
         final ComboPooledDataSource dataSource = new ComboPooledDataSource();
         try {
             final Properties credentials = new Properties();
@@ -59,7 +59,7 @@ public class AppConfig {
     }
 
     @Bean(name = "entityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(getDataSource());
         entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
@@ -82,7 +82,7 @@ public class AppConfig {
     }
 
     @Bean(destroyMethod = "shutdown")
-    public net.sf.ehcache.CacheManager ehCacheManager() {
+    net.sf.ehcache.CacheManager ehCacheManager() {
         final CacheConfiguration cacheConfiguration = new CacheConfiguration();
         cacheConfiguration.setName("applicationCache");
 
@@ -122,7 +122,7 @@ public class AppConfig {
         return jdbcTemplate;
     }
 
-    Properties hibernateProperties() {
+    private Properties hibernateProperties() {
         final Properties properties = new Properties();
         properties.setProperty("hibernate.order_updates", "true");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
@@ -136,6 +136,7 @@ public class AppConfig {
         properties.setProperty("hibernate.c3p0.timeout", "1800");
         properties.setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false");
         properties.setProperty("hibernate.cache.use_second_level_cache", "true");
+
         return properties;
     }
 }

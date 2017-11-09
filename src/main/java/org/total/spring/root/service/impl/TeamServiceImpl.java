@@ -33,7 +33,7 @@ public final class TeamServiceImpl implements TeamService {
     @Autowired
     private TeamDAO teamDAO;
 
-    public TeamRepository getTeamRepository() {
+    private TeamRepository getTeamRepository() {
         return teamRepository;
     }
 
@@ -41,7 +41,7 @@ public final class TeamServiceImpl implements TeamService {
         this.teamRepository = teamRepository;
     }
 
-    public TeamDAO getTeamDAO() {
+    private TeamDAO getTeamDAO() {
         return teamDAO;
     }
 

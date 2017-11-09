@@ -37,7 +37,7 @@ public final class UserInfoController {
         this.userService = userService;
     }
 
-    public RoleService getRoleService() {
+    private RoleService getRoleService() {
         return roleService;
     }
 

@@ -31,7 +31,7 @@ public final class TournamentServiceImpl implements TournamentService {
     @Autowired
     private TournamentRepository tournamentRepository;
 
-    public TournamentRepository getTournamentRepository() {
+    private TournamentRepository getTournamentRepository() {
         return tournamentRepository;
     }
 
@@ -39,7 +39,7 @@ public final class TournamentServiceImpl implements TournamentService {
         this.tournamentRepository = tournamentRepository;
     }
 
-    public TournamentDAO getTournamentDAO() {
+    private TournamentDAO getTournamentDAO() {
         return tournamentDAO;
     }
 

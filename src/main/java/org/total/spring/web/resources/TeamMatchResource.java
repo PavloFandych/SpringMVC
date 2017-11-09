@@ -4,7 +4,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.proc.TeamMatch;
@@ -26,7 +30,7 @@ public final class TeamMatchResource extends AbstractResource {
     @Autowired
     private TeamMatchService teamMatchService;
 
-    public TeamMatchService getTeamMatchService() {
+    private TeamMatchService getTeamMatchService() {
         return teamMatchService;
     }
 
