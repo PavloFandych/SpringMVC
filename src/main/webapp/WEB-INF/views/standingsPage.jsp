@@ -53,7 +53,8 @@
                 <td class="menu-tcell">
                     <div class="menu-bar">
                         <select id="SeasonsList" class="grey" name="SeasonsList">
-                            <option selected value="S20162017">Season 2016-2017</option>
+                            <option selected value="S20172018">Season 2017-2018</option>
+                            <option value="S20162017">Season 2016-2017</option>
                             <option value="S20152016">Season 2015-2016</option>
                             <option value="S20142015">Season 2014-2015</option>
                             <option value="S20132014">Season 2013-2014</option>
