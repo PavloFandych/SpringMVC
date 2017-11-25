@@ -71,7 +71,7 @@ public final class AuthController {
                         .concat(" Login = ")
                         .concat(loginBean.getLogin()));
 
-                User user = getUserService().findUserByUserNameAndPassword(loginBean.getLogin(),
+                final User user = getUserService().findUserByUserNameAndPassword(loginBean.getLogin(),
                         getPasswordManager().encodeMD5(loginBean.getPassword()));
 
                 if (user != null) {

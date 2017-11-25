@@ -85,7 +85,6 @@ public abstract class AbstractResource {
         return user.getRoles().stream().anyMatch(role -> role.getCapabilities()
                 .contains(getCapabilityService()
                         .findCapabilityByCapabilityType(capabilityType)));
-
     }
 
     String generateLogMessage(final String requestMessage,

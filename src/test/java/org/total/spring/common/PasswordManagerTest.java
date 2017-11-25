@@ -74,6 +74,7 @@ public class PasswordManagerTest {
                 System.out.println(getPasswordManager().encodeMD5(target));
                 this.results.add("i");
             } catch (InterruptedException e) {
+                /*NOP*/
             }
         }
     }
