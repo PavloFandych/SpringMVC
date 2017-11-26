@@ -92,4 +92,19 @@ public final class StructuredStanding {
     public void setOpponentCode(String opponentCode) {
         this.opponentCode = opponentCode;
     }
+
+    @Override
+    public String toString() {
+        return "StructuredStanding{" +
+                "place=" + place +
+                ", matchDay=" + matchDay +
+                ", teamCode='" + teamCode + '\'' +
+                ", teamName='" + teamName + '\'' +
+                ", goalsScored=" + goalsScored +
+                ", goalsDiff=" + goalsDiff +
+                ", points=" + points +
+                ", result='" + result + '\'' +
+                ", opponentCode='" + opponentCode + '\'' +
+                '}';
+    }
 }
