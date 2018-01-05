@@ -17,11 +17,13 @@ import java.util.Map;
 
 @Repository("seasonDAO")
 public class SeasonDAO extends GenericDAO<List<String>> {
+    private static final String SEASON_LIST = "seasonList";
+
     @Override
     public List<List<String>> getEntities(final Object... param) {
         setSimpleJdbcCallOperations(new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_SEASON_LIST)
-                .returningResultSet("seasonList", (resultSet, i) -> {
+                .returningResultSet(SEASON_LIST, (resultSet, i) -> {
                     final List<String> list = new ArrayList<>();
                     list.add(resultSet.getString(1));
                     list.add(resultSet.getString(2));
@@ -30,7 +32,7 @@ public class SeasonDAO extends GenericDAO<List<String>> {
                     return list;
                 }));
         final Map<String, Object> out = getSimpleJdbcCallOperations().execute();
-        final List<List<String>> resultList = (List<List<String>>) out.get("seasonList");
+        final List<List<String>> resultList = (List<List<String>>) out.get(SEASON_LIST);
 
         return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
@@ -38,7 +40,7 @@ public class SeasonDAO extends GenericDAO<List<String>> {
     public List<Season> getActualSeasons() {
         setSimpleJdbcCallOperations(new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName(Constants.CALL_GET_ACTUAL_SEASON_LIST)
-                .returningResultSet("seasonList", (resultSet, i) -> {
+                .returningResultSet(SEASON_LIST, (resultSet, i) -> {
                     final Season season = new Season();
                     season.setSeasonId(resultSet.getLong("seasonId"));
                     season.setSeasonCode(SeasonCode.valueOf(resultSet.getString("seasonCode")));
@@ -47,7 +49,7 @@ public class SeasonDAO extends GenericDAO<List<String>> {
                     return season;
                 }));
         final Map<String, Object> out = getSimpleJdbcCallOperations().execute();
-        final List<Season> resultList = (List<Season>) out.get("seasonList");
+        final List<Season> resultList = (List<Season>) out.get(SEASON_LIST);
 
         return (resultList != null && !resultList.isEmpty()) ? resultList : Collections.emptyList();
     }
