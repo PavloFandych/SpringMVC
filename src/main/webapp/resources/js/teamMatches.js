@@ -106,7 +106,6 @@ $(document).ready(function () {
                 },
                 success: function (data, status) {
                     var total = data.length;
-                    var startIndex = 0;
 
                     if (total !== 0) {
                         $("#main").removeClass("vertical-aligned");
@@ -131,7 +130,6 @@ $(document).ready(function () {
                         var goalsAwayConcededCounter = 0;
 
                         var totalCounter = 0;
-                        var winCounter = 0;
                         var drawCounter = 0;
                         var lossCounter = 0;
 
@@ -225,6 +223,7 @@ $(document).ready(function () {
                     google.charts.load('current', {'packages': ['corechart']});
 
                     google.charts.setOnLoadCallback(drawChartGeneral);
+
                     function drawChartGeneral() {
                         var data = google.visualization.arrayToDataTable([
                             ['Result', 'Count'],
@@ -254,6 +253,7 @@ $(document).ready(function () {
                     }
 
                     google.charts.setOnLoadCallback(drawChartHome);
+
                     function drawChartHome() {
                         var data = google.visualization.arrayToDataTable([
                             ['Result', 'Count'],
@@ -283,6 +283,7 @@ $(document).ready(function () {
                     }
 
                     google.charts.setOnLoadCallback(drawChartAway);
+
                     function drawChartAway() {
                         var data = google.visualization.arrayToDataTable([
                             ['Result', 'Count'],
@@ -312,6 +313,7 @@ $(document).ready(function () {
                     }
 
                     google.charts.setOnLoadCallback(drawChartGoalsTotal);
+
                     function drawChartGoalsTotal() {
                         var data = google.visualization.arrayToDataTable([
                             ['Goals Total', 'Count'],
@@ -339,6 +341,7 @@ $(document).ready(function () {
                     }
 
                     google.charts.setOnLoadCallback(drawChartGoalsScored);
+
                     function drawChartGoalsScored() {
                         var data = google.visualization.arrayToDataTable([
                             ['Goals', 'Count'],
@@ -366,6 +369,7 @@ $(document).ready(function () {
                     }
 
                     google.charts.setOnLoadCallback(drawChartGoalsConceded);
+
                     function drawChartGoalsConceded() {
                         var data = google.visualization.arrayToDataTable([
                             ['Goals', 'Count'],
@@ -393,6 +397,7 @@ $(document).ready(function () {
                     }
 
                     google.charts.setOnLoadCallback(drawChartPointsTotal);
+
                     function drawChartPointsTotal() {
                         var data = google.visualization.arrayToDataTable([
                             ['Points', 'Count'],
@@ -420,6 +425,7 @@ $(document).ready(function () {
                     }
 
                     google.charts.setOnLoadCallback(drawChartPointsHome);
+
                     function drawChartPointsHome() {
                         var data = google.visualization.arrayToDataTable([
                             ['Points', 'Count'],
@@ -447,6 +453,7 @@ $(document).ready(function () {
                     }
 
                     google.charts.setOnLoadCallback(drawChartPointsAway);
+
                     function drawChartPointsAway() {
                         var data = google.visualization.arrayToDataTable([
                             ['Points', 'Count'],

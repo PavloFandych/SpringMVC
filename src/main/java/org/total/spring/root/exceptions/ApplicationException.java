@@ -7,12 +7,8 @@ import org.springframework.http.HttpStatus;
  */
 
 public final class ApplicationException extends Exception {
-    private HttpStatus httpStatus;
-    private String errorMessage;
-
-    public ApplicationException() {
-        super();
-    }
+    private final HttpStatus httpStatus;
+    private final String errorMessage;
 
     public ApplicationException(HttpStatus httpStatus, String errorMessage) {
         super(errorMessage);

@@ -15,15 +15,15 @@ import org.total.spring.root.response.Response;
 public final class GlobalExceptionController {
 
     @ExceptionHandler(ApplicationException.class)
-    public ResponseEntity<Response> applicationExceptionHandler(ApplicationException e) {
-        Response error = new Response();
+    public ResponseEntity<Response> applicationExceptionHandler(final ApplicationException e) {
+        final Response error = new Response();
         error.setMessage(e.getMessage());
         return new ResponseEntity<>(error, e.getHttpStatus());
     }
 
     @ExceptionHandler(Throwable.class)
-    public ResponseEntity<Response> throwableHandler(Throwable e) {
-        Response error = new Response();
+    public ResponseEntity<Response> throwableHandler(final Throwable e) {
+        final Response error = new Response();
         error.setMessage(e.getMessage());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
