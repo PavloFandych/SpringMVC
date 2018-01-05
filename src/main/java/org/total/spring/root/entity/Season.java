@@ -101,10 +101,9 @@ public final class Season implements Serializable {
         Season season = (Season) o;
 
         if (seasonId != season.seasonId) return false;
-        if (seasonCode != season.seasonCode) return false;
         if (!seasonName.equals(season.seasonName)) return false;
 
-        return true;
+        return seasonCode == season.seasonCode;
     }
 
     @Override

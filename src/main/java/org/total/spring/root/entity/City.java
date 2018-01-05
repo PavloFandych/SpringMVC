@@ -127,9 +127,8 @@ public final class City implements Serializable {
         if (cityId != city.cityId) return false;
         if (!cityCode.equals(city.cityCode)) return false;
         if (!cityName.equals(city.cityName)) return false;
-        if (!country.equals(city.country)) return false;
 
-        return true;
+        return country.equals(city.country);
     }
 
     @Override

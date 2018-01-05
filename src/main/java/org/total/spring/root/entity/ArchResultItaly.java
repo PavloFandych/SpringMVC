@@ -177,21 +177,19 @@ public final class ArchResultItaly implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ArchResultItaly result = (ArchResultItaly) o;
+        ArchResultItaly that = (ArchResultItaly) o;
 
-        if ((resultId != result.resultId)
-                || (!resultCode.equals(result.resultCode))
-                || (!tournament.equals(result.tournament))
-                || (!season.equals(result.season))
-                || (matchDay != result.matchDay)
-                || (!hostTeam.equals(result.hostTeam))
-                || (!guestTeam.equals(result.guestTeam))
-                || (goalsByHost != result.goalsByHost)
-                || (goalsByGuest != result.goalsByGuest)
-                || (!date.equals(result.date))
-                ) return false;
+        if (resultId != that.resultId) return false;
+        if (matchDay != that.matchDay) return false;
+        if (goalsByHost != that.goalsByHost) return false;
+        if (goalsByGuest != that.goalsByGuest) return false;
+        if (!resultCode.equals(that.resultCode)) return false;
+        if (!tournament.equals(that.tournament)) return false;
+        if (!season.equals(that.season)) return false;
+        if (!hostTeam.equals(that.hostTeam)) return false;
+        if (!guestTeam.equals(that.guestTeam)) return false;
 
-        return true;
+        return date.equals(that.date);
     }
 
     @Override

@@ -123,11 +123,10 @@ public final class Team implements Serializable {
         Team team = (Team) o;
 
         if (teamId != team.teamId) return false;
-        if (!city.equals(team.city)) return false;
-        if (!teamCode.equals(team.teamCode)) return false;
         if (!teamName.equals(team.teamName)) return false;
+        if (!teamCode.equals(team.teamCode)) return false;
 
-        return true;
+        return city.equals(team.city);
     }
 
     @Override

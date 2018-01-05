@@ -179,19 +179,17 @@ public final class Result implements Serializable {
 
         Result result = (Result) o;
 
-        if ((resultId != result.resultId)
-                || (!resultCode.equals(result.resultCode))
-                || (!tournament.equals(result.tournament))
-                || (!season.equals(result.season))
-                || (matchDay != result.matchDay)
-                || (!hostTeam.equals(result.hostTeam))
-                || (!guestTeam.equals(result.guestTeam))
-                || (goalsByHost != result.goalsByHost)
-                || (goalsByGuest != result.goalsByGuest)
-                || (!date.equals(result.date))
-                ) return false;
+        if (resultId != result.resultId) return false;
+        if (matchDay != result.matchDay) return false;
+        if (goalsByHost != result.goalsByHost) return false;
+        if (goalsByGuest != result.goalsByGuest) return false;
+        if (!resultCode.equals(result.resultCode)) return false;
+        if (!tournament.equals(result.tournament)) return false;
+        if (!season.equals(result.season)) return false;
+        if (!hostTeam.equals(result.hostTeam)) return false;
+        if (!guestTeam.equals(result.guestTeam)) return false;
 
-        return true;
+        return date.equals(result.date);
     }
 
     @Override

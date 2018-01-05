@@ -131,9 +131,8 @@ public final class Role implements Serializable {
         Role role = (Role) o;
 
         if (roleId != role.roleId) return false;
-        if (roleType != null ? !roleType.equals(role.roleType) : role.roleType != null) return false;
-
-        return true;
+        
+        return roleType == role.roleType;
     }
 
     @Override

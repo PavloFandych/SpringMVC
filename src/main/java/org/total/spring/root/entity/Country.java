@@ -112,9 +112,8 @@ public final class Country implements Serializable {
 
         if (countryId != country.countryId) return false;
         if (countryCode != country.countryCode) return false;
-        if (!countryName.equals(country.countryName)) return false;
 
-        return true;
+        return countryName.equals(country.countryName);
     }
 
     @Override
