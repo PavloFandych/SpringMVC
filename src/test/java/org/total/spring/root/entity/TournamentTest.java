@@ -148,7 +148,8 @@ public final class TournamentTest {
 
     @Test
     public void equalsTest() {
-        assertEquals(TOURNAMENT, TOURNAMENT);
+        final Tournament tournament = TOURNAMENT;
+        assertEquals(TOURNAMENT, tournament);
         assertNotEquals(TOURNAMENT, DEFAULT_TOURNAMENT);
     }
 
