@@ -115,8 +115,6 @@ $(document).ready(function () {
                         $("#TeamsList option[value='selectTeam']").remove();
                         $("#team-logo").append("<img id='team-img' src=/resources/images/" + imgPath[team] + "  width='100px' height='100px' />");
 
-                        var country = $("#CountriesList").val();
-
                         var homeWinCounter = 0;
                         var homeDrawCounter = 0;
                         var homeLossCounter = 0;

@@ -1042,6 +1042,7 @@
                             i = 0;
                         // Can't trust NodeList.length
                         while ((target[j++] = els[i++])) {
+                            //some code
                         }
                         target.length = j - 1;
                     }
@@ -5279,6 +5280,7 @@
 
     function sibling(cur, dir) {
         while ((cur = cur[dir]) && cur.nodeType !== 1) {
+            //some code
         }
 
         return cur;

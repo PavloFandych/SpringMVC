@@ -34,7 +34,7 @@ $(document).ready(function () {
                 el.appendChild(node2);
             },
             error: function (xhr, str) {
-                alert('Error: ' + xhr.responseCode);
+                //some code
             }
         });
     });
