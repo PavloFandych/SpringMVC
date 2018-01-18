@@ -1,5 +1,6 @@
 package org.total.spring.web.controller;
 
+import net.bull.javamelody.MonitoredWithSpring;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import java.util.Collection;
  */
 
 @Controller
+@MonitoredWithSpring
 public final class UserInfoController {
     private static final Logger LOGGER = Logger.getLogger(UserInfoController.class);
 
@@ -57,7 +59,8 @@ public final class UserInfoController {
 
             final String authorizedUserName = user.getUserName();
 
-            /*need to fetch user by userName because jpa has closed
+            /*
+             * Need to fetch user by userName because jpa has closed
              * persistence-session and roles need to be loaded again.
              * RegisterController saved user into http-session without
              * initialized roles.

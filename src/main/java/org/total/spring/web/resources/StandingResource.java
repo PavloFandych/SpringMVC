@@ -1,15 +1,11 @@
 package org.total.spring.web.resources;
 
+import net.bull.javamelody.MonitoredWithSpring;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.total.spring.root.entity.User;
 import org.total.spring.root.entity.enums.CapabilityType;
 import org.total.spring.root.proc.Standing;
@@ -26,6 +22,7 @@ import java.util.List;
  */
 
 @RestController
+@MonitoredWithSpring
 public final class StandingResource extends AbstractResource {
     private static final Logger LOGGER = Logger.getLogger(StandingResource.class);
 

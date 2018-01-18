@@ -1,9 +1,12 @@
 package org.total.spring.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import net.bull.javamelody.MonitoringSpringAdvisor;
+import net.bull.javamelody.SpringDataSourceBeanPostProcessor;
 import net.sf.ehcache.config.CacheConfiguration;
 import org.apache.log4j.Logger;
 import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.springframework.aop.support.annotation.AnnotationMatchingPointcut;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
@@ -17,7 +20,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.bind.annotation.RestController;
 import org.total.spring.root.util.Constants;
 
 import javax.sql.DataSource;
@@ -55,6 +60,7 @@ public class AppConfig {
         } catch (Exception e) {
             LOGGER.error(e, e);
         }
+
         return dataSource;
     }
 
@@ -66,6 +72,7 @@ public class AppConfig {
         entityManagerFactoryBean.setPackagesToScan("org.total.spring.root.entity",
                 "org.total.spring.root.proc");
         entityManagerFactoryBean.setJpaProperties(hibernateProperties());
+
         return entityManagerFactoryBean;
     }
 
@@ -73,6 +80,7 @@ public class AppConfig {
     public JpaTransactionManager transactionManager() {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+
         return transactionManager;
     }
 
@@ -85,11 +93,8 @@ public class AppConfig {
     net.sf.ehcache.CacheManager ehCacheManager() {
         final CacheConfiguration cacheConfiguration = new CacheConfiguration();
         cacheConfiguration.setName("applicationCache");
-
-
         cacheConfiguration.setMaxEntriesLocalHeap(Constants.MAX_ENTRIES_LOCAL_HEAP);
         cacheConfiguration.setMaxEntriesLocalDisk(Constants.MAX_ENTRIES_LOCAL_DISK);
-
         cacheConfiguration.setMemoryStoreEvictionPolicy("LRU");
 
         /*
@@ -119,7 +124,46 @@ public class AppConfig {
     public JdbcTemplate jdbcTemplate() {
         final JdbcTemplate jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.setDataSource(getDataSource());
+
         return jdbcTemplate;
+    }
+
+    /**
+     * For monitoring of jdbc data sources:
+     *
+     * @return SpringDataSourceBeanPostProcessor
+     */
+    @Bean
+    public SpringDataSourceBeanPostProcessor monitoringDataSourceBeanPostProcessor() {
+        final SpringDataSourceBeanPostProcessor processor = new SpringDataSourceBeanPostProcessor();
+        processor.setExcludedDatasources(null);
+
+        return processor;
+    }
+
+    /**
+     * For monitoring of all services and controllers (even without having @MonitoredWithSpring):
+     *
+     * @return MonitoringSpringAdvisor
+     */
+    @Bean
+    public MonitoringSpringAdvisor springServiceMonitoringAdvisor() {
+        final MonitoringSpringAdvisor interceptor = new MonitoringSpringAdvisor();
+        interceptor.setPointcut(new AnnotationMatchingPointcut(Service.class));
+
+        return interceptor;
+    }
+
+    /**
+     * For monitoring of all services and controllers
+     *
+     * @return MonitoringSpringAdvisor
+     */
+    @Bean
+    public MonitoringSpringAdvisor springRestControllerMonitoringAdvisor() {
+        final MonitoringSpringAdvisor interceptor = new MonitoringSpringAdvisor();
+        interceptor.setPointcut(new AnnotationMatchingPointcut(RestController.class));
+        return interceptor;
     }
 
     private Properties hibernateProperties() {

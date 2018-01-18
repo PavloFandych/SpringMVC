@@ -2,18 +2,13 @@ package org.total.spring.web.resources;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.bull.javamelody.MonitoredWithSpring;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.total.spring.root.entity.City;
 import org.total.spring.root.entity.Role;
 import org.total.spring.root.entity.User;
@@ -35,6 +30,7 @@ import java.util.List;
  */
 
 @RestController
+@MonitoredWithSpring
 public final class UserResource extends AbstractResource {
     private static final Logger LOGGER = Logger.getLogger(UserResource.class);
 

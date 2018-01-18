@@ -7,4 +7,5 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
     <context:component-scan base-package="org.total.spring.config"/>
+    <import resource="classpath:net/bull/javamelody/monitoring-spring.xml"/>
 </beans>

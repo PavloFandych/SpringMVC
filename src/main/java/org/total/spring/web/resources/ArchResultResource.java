@@ -1,5 +1,6 @@
 package org.total.spring.web.resources;
 
+import net.bull.javamelody.MonitoredWithSpring;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 
 @RestController
+@MonitoredWithSpring
 public final class ArchResultResource extends AbstractResource {
     private static final Logger LOGGER = Logger.getLogger(ArchResultResource.class);
 

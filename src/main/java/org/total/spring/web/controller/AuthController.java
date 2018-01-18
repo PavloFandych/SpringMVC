@@ -1,5 +1,6 @@
 package org.total.spring.web.controller;
 
+import net.bull.javamelody.MonitoredWithSpring;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import static org.total.spring.root.util.Constants.INDEX_PAGE_STRING;
  */
 
 @Controller
+@MonitoredWithSpring
 public final class AuthController {
     private static final Logger LOGGER = Logger.getLogger(AuthController.class);
 

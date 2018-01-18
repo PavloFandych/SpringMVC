@@ -1,5 +1,6 @@
 package org.total.spring.web.resources;
 
+import net.bull.javamelody.MonitoredWithSpring;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.util.List;
  */
 
 @RestController
+@MonitoredWithSpring
 public final class CityResource extends AbstractResource {
     private static final Logger LOGGER = Logger.getLogger(CityResource.class);
 
