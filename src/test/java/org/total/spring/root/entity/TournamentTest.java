@@ -154,6 +154,333 @@ public final class TournamentTest {
     }
 
     @Test
+    public void equalsNullObjectTest() {
+        assertFalse(TOURNAMENT.equals(null));
+    }
+
+    @Test
+    public void equalsNewObjectTest() {
+        assertFalse(TOURNAMENT.equals(new Object()));
+    }
+
+    @Test
+    public void equalsTournamentTypeTest() {
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE02);
+
+        assertFalse(tournament1.equals(tournament2));
+    }
+
+    @Test
+    public void equalsTournamentCodeTest() {
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.CHAMPIONS_LEAGUE);
+
+        assertFalse(tournament1.equals(tournament2));
+    }
+
+    @Test
+    public void equalsTournamentNameTest() {
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament1.setTournamentName("Name");
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament2.setTournamentName("DifferentName");
+
+        assertFalse(tournament1.equals(tournament2));
+    }
+
+    @Test
+    public void equalsTournamentNameNullTest() {
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament1.setTournamentName("Name");
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament2.setTournamentName(null);
+
+        assertFalse(tournament1.equals(tournament2));
+    }
+
+    @Test
+    public void equalsTournamentNameNull2Test() {
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament1.setTournamentName(null);
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament2.setTournamentName("Name");
+
+        assertFalse(tournament1.equals(tournament2));
+    }
+
+    @Test
+    public void equalsTournamentNamePositiveTest() {
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament1.setTournamentName("Name");
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament2.setTournamentName("Name");
+
+        assertTrue(tournament1.equals(tournament2));
+    }
+
+    @Test
+    public void equalsTournamentNameNull3Test() {
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament1.setTournamentName(null);
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament2.setTournamentName(null);
+
+        assertTrue(tournament1.equals(tournament2));
+    }
+
+    @Test
+    public void equalsCountryNullTest() {
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament1.setTournamentName("Name");
+        tournament1.setCountry(null);
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament2.setTournamentName("Name");
+        tournament2.setCountry(null);
+
+        assertTrue(tournament1.equals(tournament2));
+    }
+
+    @Test
+    public void equalsCountryNull2Test() {
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament1.setTournamentName("Name");
+        tournament1.setCountry(null);
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament2.setTournamentName("Name");
+        tournament2.setCountry(new Country());
+
+        assertFalse(tournament1.equals(tournament2));
+    }
+
+    @Test
+    public void equalsCountryNull3Test() {
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament1.setTournamentName("Name");
+        tournament1.setCountry(new Country());
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament2.setTournamentName("Name");
+        tournament2.setCountry(null);
+
+        assertFalse(tournament1.equals(tournament2));
+    }
+
+    @Test
+    public void equalsCountryPositiveTest() {
+        final Country country = new Country();
+
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament1.setTournamentName("Name");
+        tournament1.setCountry(country);
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament2.setTournamentName("Name");
+        tournament2.setCountry(country);
+
+        assertTrue(tournament1.equals(tournament2));
+    }
+
+    @Test
+    public void equalsResultsNullTest() {
+        final Country country = new Country();
+
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament1.setTournamentName("Name");
+        tournament1.setCountry(country);
+        tournament1.setResults(null);
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament2.setTournamentName("Name");
+        tournament2.setCountry(country);
+        tournament2.setResults(null);
+
+        assertTrue(tournament1.equals(tournament2));
+    }
+
+    @Test
+    public void equalsResultsNull2Test() {
+        final Country country = new Country();
+
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament1.setTournamentName("Name");
+        tournament1.setCountry(country);
+        tournament1.setResults(null);
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament2.setTournamentName("Name");
+        tournament2.setCountry(country);
+        tournament2.setResults(new HashSet<>());
+
+        assertFalse(tournament1.equals(tournament2));
+    }
+
+    @Test
+    public void equalsResultsNull3Test() {
+        final Country country = new Country();
+
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament1.setTournamentName("Name");
+        tournament1.setCountry(country);
+        tournament1.setResults(new HashSet<>());
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament2.setTournamentName("Name");
+        tournament2.setCountry(country);
+        tournament2.setResults(null);
+
+        assertFalse(tournament1.equals(tournament2));
+    }
+
+    @Test
+    public void hashCodePositiveTest() {
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament1.setTournamentName("Name");
+
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+        tournament2.setTournamentName("Name");
+
+        assertTrue(tournament1.hashCode() == tournament2.hashCode());
+    }
+
+    @Test
+    public void hashCodeTest() {
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(12L);
+
+        assertFalse(tournament1.hashCode() == tournament2.hashCode());
+    }
+
+    @Test
+    public void hashCodeTournamentTypeTest() {
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE02);
+
+        assertFalse(tournament1.hashCode() == tournament2.hashCode());
+    }
+
+    @Test
+    public void hashCodeTournamentCodeTest() {
+        final Tournament tournament1 = new Tournament();
+        tournament1.setTournamentId(1L);
+        tournament1.setTournamentType(TournamentType.LEAGUE01);
+        tournament1.setTournamentCode(TournamentCode.DEU_BUNDESLIGA_1);
+
+        final Tournament tournament2 = new Tournament();
+        tournament2.setTournamentId(1L);
+        tournament2.setTournamentType(TournamentType.LEAGUE01);
+        tournament2.setTournamentCode(TournamentCode.ENG_CHAMPIONSHIP);
+
+        assertFalse(tournament1.hashCode() == tournament2.hashCode());
+    }
+
+    @Test
     public void toStringTest() {
         assertEquals("Tournament{tournamentId=1, tournamentType=LEAGUE01," +
                 " tournamentCode=DEU_BUNDESLIGA_1, tournamentName='String'," +
