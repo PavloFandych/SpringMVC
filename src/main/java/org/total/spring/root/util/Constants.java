@@ -69,5 +69,6 @@ public final class Constants {
     public static final String HTTP_STATUS_STRING = " http status = ";
 
     private Constants() {
+        throw new UnsupportedOperationException("new instance should never be used!");
     }
 }

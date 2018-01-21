@@ -30,4 +30,13 @@ public class MatchStatusTest {
         assertEquals(MatchStatus.DRAW, MatchStatus.valueOf("DRAW"));
         assertEquals(MatchStatus.WON, MatchStatus.valueOf("WON"));
     }
+
+    /**
+     * This test case fails if new {@link MatchStatus} is added or
+     * removed
+     */
+    @Test
+    public void numberOf() {
+        assertEquals(3, MatchStatus.values().length);
+    }
 }
